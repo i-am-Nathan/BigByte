@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class PlayerCam : MonoBehaviour
 {
-	public float m_DampTime = 0.1f;                 // Approximate time for the camera to refocus.
-	public float m_ScreenEdgeBuffer = 20f;           // Space between the top/bottom most target and the screen edge.
-	public float m_MinSize = 6.5f;                  // The smallest orthographic size the camera can be.
-	public float m_MaxSize = 20f;                  // The smallest orthographic size the camera can be.
-	/*[HideInInspector]*/ public Transform[] m_Targets; // All the targets the camera needs to encompass.
+    //These are all modified in inspector
+	public float m_DampTime;                 // Approximate time for the camera to refocus.
+	public float m_ScreenEdgeBuffer;           // Space between the top/bottom most target and the screen edge.
+    public float m_ScreenEdgeBufferTop;           // Space between the top/bottom most target and the screen edge.
+    public float m_MinSize;                  // The smallest orthographic size the camera can be.
+	public float m_MaxSize;                  // The smallest orthographic size the camera can be.
+    public float m_XOffset;                 //Offsets the camera to account for it being on an angle
+    /*[HideInInspector]*/
+    public Transform[] m_Targets; // All the targets the camera needs to encompass.
 
 
 	private Camera m_Camera;                        // Used for referencing the camera.
@@ -34,7 +41,7 @@ public class PlayerCam : MonoBehaviour
 	private void Move ()
 	{
 		// Find the average position of the targets.
-		FindAveragePosition ();
+		FindAveragePosition();
 
 		// Smoothly transition to that position.
 		transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
@@ -64,6 +71,10 @@ public class PlayerCam : MonoBehaviour
 
 		// Keep the same y value.
 		averagePos.y = transform.position.y;
+
+        //Offset the camera to account for it being on an angle
+        averagePos.x += m_XOffset; 
+
 
 		// The desired position is the average position;
 		m_DesiredPosition = averagePos;
@@ -122,6 +133,8 @@ public class PlayerCam : MonoBehaviour
 	{
 		// Find the desired position.
 		FindAveragePosition ();
+
+    
 
 		// Set the camera's position to the desired position without damping.
 		transform.position = m_DesiredPosition;
