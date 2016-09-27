@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void ControlWASD()
     {
-        Vector3 input = new Vector3(-Input.GetAxisRaw("Horizontal"), 0, -Input.GetAxisRaw("Vertical"));
+        Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
 
         if (input != Vector3.zero)
         {
