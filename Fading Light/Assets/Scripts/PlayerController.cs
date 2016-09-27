@@ -6,11 +6,9 @@ public class PlayerController : MonoBehaviour
 {
 
     // Handling
-    public float rotationSpeed = 20000;
-    public float walkSpeed = .0000002f;
-    public TextMesh levelText;
-    public bool dead = false;
-
+    public float rotationSpeed = 1000;
+    public float walkSpeed = 20;
+  
     // System
     private Quaternion targetRotation;
 
@@ -44,11 +42,8 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 motion = input;
-        //motion *= (-Mathf.Abs(input.x) == 1 && -Mathf.Abs(input.z) == 1) ? .7f : 1;
         motion.x = motion.x * walkSpeed;
         motion.z = motion.z * walkSpeed;
-        //motion *=  walkSpeed;
-       // motion += Vector3.up * -8;
 
         controller.Move(motion * Time.deltaTime);
     }
