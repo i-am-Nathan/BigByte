@@ -60,7 +60,7 @@ public class Player2Controller : MonoBehaviour
 			motion.x = motion.x * walkSpeed;
 		}
 
-		if ((difference.z > 80f && difference.z+motion.x*walkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*walkSpeed > difference.z)) {
+		if ((difference.z > 80f && difference.z+motion.z*walkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*walkSpeed > difference.z)) {
 			print ("THE DIFFERENCE OF Z IS " +difference.z);
 			motion.z = 0;
 		}else{
