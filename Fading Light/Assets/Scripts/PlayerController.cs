@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
        
         ControlWASD();
         //transform.Rotate(Vector3.up * Time.deltaTime * 1000);
+			
        
     }
 
@@ -45,11 +46,20 @@ public class PlayerController : MonoBehaviour
 
         Vector3 motion = input;
         //motion *= (-Mathf.Abs(input.x) == 1 && -Mathf.Abs(input.z) == 1) ? .7f : 1;
-        motion.x = motion.x * walkSpeed;
-        motion.z = motion.z * walkSpeed;
-        //motion *=  walkSpeed;
-       // motion += Vector3.up * -8;
-
+		Vector3 pos = GameObject.FindGameObjectWithTag("Player2").transform.position;
+		Vector3 difference = pos - transform.position;
+		if ((difference.x > 80f && difference.x+motion.x*walkSpeed < difference.x) ||  (difference.x < -80f && difference.x+motion.x*walkSpeed > difference.x)) {
+			print ("THE DIFFERENCE OF X P1 IS " +difference.x);
+			motion.x = 0;
+		}else{
+			motion.x = motion.x * walkSpeed;
+		}
+		if ((difference.z > 80f && difference.z+motion.z*walkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*walkSpeed > difference.z)) {
+			print ("THE DIFFERENCE OF Z P1 IS " +difference.z);
+			motion.z = 0;
+		}else{
+			motion.z = motion.z * walkSpeed;
+		}
         controller.Move(motion * Time.deltaTime);
     }
 
