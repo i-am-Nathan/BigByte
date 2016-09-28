@@ -85,8 +85,9 @@ public class PlayerCam : MonoBehaviour
 	{
 		// Find the required size based on the desired position and smoothly transition to that size.
 		float requiredSize = FindRequiredSize();
-		m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, _dampTime);
-	}
+		//m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, _dampTime);
+        m_Camera.fieldOfView = Mathf.SmoothDamp(m_Camera.fieldOfView, requiredSize, ref m_ZoomSpeed, _dampTime);
+    }
 
 
 	private float FindRequiredSize ()
