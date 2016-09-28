@@ -6,12 +6,12 @@
 public class PlayerCam : MonoBehaviour
 {
     //These are all modified in inspector
-	public float m_DampTime;                 // Approximate time for the camera to refocus.
-	public float m_ScreenEdgeBuffer;           // Space between the top/bottom most target and the screen edge.
-    public float m_ScreenEdgeBufferTop;           // Space between the top/bottom most target and the screen edge.
-    public float m_MinSize;                  // The smallest orthographic size the camera can be.
-	public float m_MaxSize;                  // The smallest orthographic size the camera can be.
-    public float m_XOffset;                 //Offsets the camera to account for it being on an angle
+	public float _dampTime;                 // Approximate time for the camera to refocus.
+	public float _screenEdgeBuffer;           // Space between the top/bottom most target and the screen edge.
+    public float _screenEdgeBufferTop;           // Space between the top/bottom most target and the screen edge.
+    public float _minSize;                  // The smallest orthographic size the camera can be.
+	public float _maxSize;                  // The smallest orthographic size the camera can be.
+    public float _xOffset;                 //Offsets the camera to account for it being on an angle
     /*[HideInInspector]*/
     public Transform[] m_Targets; // All the targets the camera needs to encompass.
 
@@ -44,7 +44,7 @@ public class PlayerCam : MonoBehaviour
 		FindAveragePosition();
 
 		// Smoothly transition to that position.
-		transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
+		transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, _dampTime);
 	}
 
 
@@ -73,7 +73,7 @@ public class PlayerCam : MonoBehaviour
 		averagePos.y = transform.position.y;
 
         //Offset the camera to account for it being on an angle
-        averagePos.x += m_XOffset; 
+        averagePos.x += _xOffset; 
 
 
 		// The desired position is the average position;
@@ -85,7 +85,7 @@ public class PlayerCam : MonoBehaviour
 	{
 		// Find the required size based on the desired position and smoothly transition to that size.
 		float requiredSize = FindRequiredSize();
-		m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
+		m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, _dampTime);
 	}
 
 
@@ -118,12 +118,12 @@ public class PlayerCam : MonoBehaviour
 		}
 
 		// Add the edge buffer to the size.
-		size += m_ScreenEdgeBuffer;
+		size += _screenEdgeBuffer;
 
 		// Make sure the camera's size isn't below the minimum.
-		size = Mathf.Max (size, m_MinSize);
+		size = Mathf.Max (size, _minSize);
 
-		size = Mathf.Min (size, m_MaxSize);
+		size = Mathf.Min (size, _maxSize);
 
 		return size;
 	}
