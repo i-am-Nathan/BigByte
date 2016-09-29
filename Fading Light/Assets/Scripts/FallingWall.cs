@@ -15,7 +15,6 @@ public class FallingWall : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (pressurePlate1 && pressurePlate2) {
-			Debug.Log ("Falling");
 			animator.enabled = true;
 		}
 	}
