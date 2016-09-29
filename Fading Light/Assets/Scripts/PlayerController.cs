@@ -28,11 +28,47 @@ public class PlayerController : MonoBehaviour
        
         ControlWASD();
         //transform.Rotate(Vector3.up * Time.deltaTime * 1000);
-			
-       
+
     }
 
 
+	// When collision occurs between two objects
+	void OnTriggerStay(Collider other) {
+
+		// Checking if players are next to each other
+		if (other.gameObject.tag == "Player2") {
+
+			// Checking if users wanted to swap the torch
+			if (Input.GetButtonDown ("SwapTorch")) {
+
+				// Checking with which player the torch is
+				bool inPlayer1 = false;
+				Transform[] ts = GetComponentsInChildren<Transform> ();
+				foreach (Transform t in ts) {
+					if (t.tag == "Torch") {
+						inPlayer1 = true;
+					}
+				}
+
+				GameObject player;
+				GameObject torchPos;
+				if (inPlayer1) {
+					player = GameObject.FindWithTag ("Player2");
+					torchPos = GameObject.FindWithTag ("Torch Position 2");
+				} else {
+					player = GameObject.FindWithTag ("Player");
+					torchPos = GameObject.FindWithTag ("Torch Position 1");
+				}
+
+				GameObject torch = GameObject.FindWithTag ("Torch");
+
+				// Assigning parent of torch to the corresponding player
+				torch.transform.parent = player.transform;
+				Debug.Log (torch.transform.parent.tag);
+				torch.transform.localPosition = torchPos.transform.localPosition;
+			}
+		}
+	}
 
     void ControlWASD()
     {
