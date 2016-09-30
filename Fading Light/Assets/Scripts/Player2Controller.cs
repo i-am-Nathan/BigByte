@@ -20,12 +20,12 @@ public class Player2Controller : MonoBehaviour
     private Animation _animator;
 
     // Components
-    private CharacterController controller;
+    private CharacterController _controller;
 
 	void Start()
 	{
         _animator = GetComponentInChildren<Animation>();//need this...
-        controller = GetComponent<CharacterController>();
+        _controller = GetComponent<CharacterController>();
        
     }
 
@@ -63,28 +63,37 @@ public class Player2Controller : MonoBehaviour
             input = Vector3.zero;
         }
 
+        if (Input.GetKeyDown("e"))
+        {
+            transform.Translate(Vector3.up * 260 * Time.deltaTime, Space.World);
+        }
+
         Vector3 motion = input;
-		//motion *= (-Mathf.Abs(input.x) == 1 && -Mathf.Abs(input.z) == 1) ? .7f : 1;
-		Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
-		Vector3 difference = pos - transform.position;
+        Vector3 pos = GameObject.FindGameObjectWithTag("Player2").transform.position;
+        Vector3 difference = pos - transform.position;
 
-		if ((difference.x > 80f && difference.x+motion.x*WalkSpeed < difference.x) ||  (difference.x < -80f && difference.x+motion.x*WalkSpeed > difference.x)) {
-			motion.x = 0;
-		}else{
-			motion.x = motion.x * WalkSpeed;
-		}
+        if ((difference.x > 80f && difference.x + motion.x * WalkSpeed < difference.x) || (difference.x < -80f && difference.x + motion.x * WalkSpeed > difference.x))
+        {
+            motion.x = 0;
+        }
+        else
+        {
+            motion.x = motion.x * WalkSpeed;
+        }
 
-		if ((difference.z > 80f && difference.z+motion.z*WalkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*WalkSpeed > difference.z)) {
-			print ("THE DIFFERENCE OF Z IS " +difference.z);
-			motion.z = 0;
-		}else{
-			motion.z = motion.z * WalkSpeed;
-		}
-		//motion.z = motion.z * walkSpeed;
-		//motion *=  walkSpeed;
-		// motion += Vector3.up * -8;
+        if ((difference.z > 80f && difference.z + motion.z * WalkSpeed < difference.z) || (difference.z < -80f && difference.z + motion.z * WalkSpeed > difference.z))
+        {
+            motion.z = 0;
+        }
+        else
+        {
+            motion.z = motion.z * WalkSpeed;
+        }
 
-		controller.Move(motion * Time.deltaTime);
+        motion.y = transform.position.y;
+        _controller.Move(motion * Time.deltaTime);
+
+        //return;
 
 
         if (!CanMove)
