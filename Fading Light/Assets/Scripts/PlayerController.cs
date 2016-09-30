@@ -15,6 +15,11 @@ public class PlayerController : MonoBehaviour
     public bool dead = false;
     bool inPlayer1 = true;
     public bool wasAttacking;// we need this so we can take lock the direction we are facing during attacks, mecanim sometimes moves past the target which would flip the character around wildly
+    public GameObject torchP1;
+    public GameObject torchP2;
+    public GameObject spotlightP1;
+    public GameObject spotlightP2;
+
 
     // System
     private Quaternion targetRotation;
@@ -24,6 +29,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        torchP2.SetActive(false);
+        spotlightP2.SetActive(false);
+
         animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
     }
@@ -87,48 +95,36 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    bool lastPressed = false;
+    
     // When collision occurs between two objects
     void OnTriggerStay(Collider other)
     {
         // Checking if players are next to each other
-        if (other.gameObject.tag == "Player2")
+        if (other.gameObject.tag.Equals("Player2"))
         {
-
             // Checking if users wanted to swap the torch
-            if (Input.GetButtonDown("SwapTorch") && !lastPressed)
+            if (Input.GetButtonDown("SwapTorch"))
             {
-                lastPressed = true;
-                Debug.Log(inPlayer1);
-                GameObject player;
-                GameObject torchPos;
-                GameObject spotlightPos;
-                if (inPlayer1)
+                //GameObject torchP1 = GameObject.FindWithTag("Torch 1");
+                //GameObject torchP2 = GameObject.FindWithTag("Torch 2");
+                //GameObject spotlightP1 = GameObject.FindWithTag("Spotlight 1");
+                //GameObject spotlightP2 = GameObject.FindWithTag("Spotlight 2");
+                if (torchP1.gameObject.activeSelf)
                 {
-                    player = GameObject.FindWithTag("Player2");
-                    torchPos = GameObject.FindWithTag("Torch Position 2");
-                    spotlightPos = GameObject.FindWithTag("Spotlight Position 2");
-                }
-                else
+                    torchP1.SetActive(false);
+                    spotlightP1.SetActive(false);
+
+                    torchP2.SetActive(true);
+                    spotlightP2.SetActive(true);
+                } else
                 {
-                    player = GameObject.FindWithTag("Player");
-                    torchPos = GameObject.FindWithTag("Torch Position 1");
-                    spotlightPos = GameObject.FindWithTag("Spotlight Position 1");
+                    torchP1.SetActive(true);
+                    spotlightP1.SetActive(true);
+
+                    torchP2.SetActive(false);
+                    spotlightP2.SetActive(false);
                 }
 
-                GameObject torch = GameObject.FindWithTag("Torch");
-                GameObject spotlight = GameObject.FindWithTag("Spotlight");
-
-                // Assigning parent of torch to the corresponding player
-                torch.transform.parent = player.transform;
-                spotlight.transform.parent = player.transform;
-
-                torch.transform.localPosition = torchPos.transform.localPosition;
-                spotlight.transform.localPosition = spotlightPos.transform.localPosition;
-                inPlayer1 = !(inPlayer1);
-            }else if (Input.GetButtonUp("SwapTorch"))
-            {
-                lastPressed = false;
             }
         }
     }
