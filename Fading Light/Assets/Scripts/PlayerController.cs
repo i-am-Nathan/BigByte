@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public TextMesh levelText;
     public bool dead = false;
+    bool inPlayer1 = true;
     public bool wasAttacking;// we need this so we can take lock the direction we are facing during attacks, mecanim sometimes moves past the target which would flip the character around wildly
 
     // System
@@ -86,30 +87,19 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
+    bool lastPressed = false;
     // When collision occurs between two objects
     void OnTriggerStay(Collider other)
     {
-
         // Checking if players are next to each other
         if (other.gameObject.tag == "Player2")
         {
 
             // Checking if users wanted to swap the torch
-            if (Input.GetButtonDown("SwapTorch"))
+            if (Input.GetButtonDown("SwapTorch") && !lastPressed)
             {
-
-                // Checking with which player the torch is
-                bool inPlayer1 = false;
-                Transform[] ts = GetComponentsInChildren<Transform>();
-                foreach (Transform t in ts)
-                {
-                    if (t.tag == "Torch")
-                    {
-                        inPlayer1 = true;
-                    }
-                }
-
+                lastPressed = true;
+                Debug.Log(inPlayer1);
                 GameObject player;
                 GameObject torchPos;
                 GameObject spotlightPos;
@@ -135,6 +125,10 @@ public class PlayerController : MonoBehaviour
 
                 torch.transform.localPosition = torchPos.transform.localPosition;
                 spotlight.transform.localPosition = spotlightPos.transform.localPosition;
+                inPlayer1 = !(inPlayer1);
+            }else if (Input.GetButtonUp("SwapTorch"))
+            {
+                lastPressed = false;
             }
         }
     }
