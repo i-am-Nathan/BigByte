@@ -92,7 +92,14 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Idling", true);
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+
+        }
+
+
+
 
     }
 

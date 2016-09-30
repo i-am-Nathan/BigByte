@@ -85,6 +85,10 @@ public class Player2Controller : MonoBehaviour
             animator.Play("Attack");
             //animator.SetTrigger("Attack");//tell mecanim to do the attack animation(trigger)
         }
+        else if (Input.GetKey("e"))
+        {
+            animator.Play("Jump");
+        }
         else
         {
             if (!animator.isPlaying){
@@ -93,6 +97,8 @@ public class Player2Controller : MonoBehaviour
            
             //animator.SetBool("idle", true);
         }
+
+
     }
 
     // Used to push rigid body objects in the scene
