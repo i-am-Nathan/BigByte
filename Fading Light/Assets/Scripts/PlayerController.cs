@@ -5,11 +5,15 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
+    Animator animator;
+
     // Handling
-    public float rotationSpeed = 20000;
-    public float walkSpeed = .0000002f;
+    public float rotationSpeed;
+    public float walkSpeed;
+    public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public TextMesh levelText;
     public bool dead = false;
+    public bool wasAttacking;// we need this so we can take lock the direction we are facing during attacks, mecanim sometimes moves past the target which would flip the character around wildly
 
     // System
     private Quaternion targetRotation;
@@ -19,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
     }
 
@@ -59,6 +64,25 @@ public class PlayerController : MonoBehaviour
 			motion.z = motion.z * walkSpeed;
 		}
         controller.Move(motion * Time.deltaTime);
+
+
+        animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
+
+        if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
+        {
+            animator.SetBool("Idling", false);
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            
+            animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+        }
+        else
+        {
+            animator.SetBool("Idling", true);
+        }
+        
+
     }
 
 
