@@ -95,20 +95,19 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    
+    bool lastPressed = false;
     // When collision occurs between two objects
     void OnTriggerStay(Collider other)
     {
         // Checking if players are next to each other
         if (other.gameObject.tag.Equals("Player2"))
         {
-            // Checking if users wanted to swap the torch
-            if (Input.GetButtonDown("SwapTorch"))
+             // Checking if users wanted to swap the torch
+            if (Input.GetButtonDown("SwapTorch") && !lastPressed)
             {
-                //GameObject torchP1 = GameObject.FindWithTag("Torch 1");
-                //GameObject torchP2 = GameObject.FindWithTag("Torch 2");
-                //GameObject spotlightP1 = GameObject.FindWithTag("Spotlight 1");
-                //GameObject spotlightP2 = GameObject.FindWithTag("Spotlight 2");
+
+                lastPressed = true;
+
                 if (torchP1.gameObject.activeSelf)
                 {
                     torchP1.SetActive(false);
@@ -125,6 +124,9 @@ public class PlayerController : MonoBehaviour
                     spotlightP2.SetActive(false);
                 }
 
+            } else if (Input.GetButtonUp("SwapTorch"))
+            {
+                lastPressed = false;
             }
         }
     }
