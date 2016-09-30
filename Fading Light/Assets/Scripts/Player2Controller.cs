@@ -10,18 +10,19 @@ public class Player2Controller : MonoBehaviour
 	public float walkSpeed = .0000002f;
 	public TextMesh levelText;
 	public bool dead = false;
-
-	// System
-	private Quaternion targetRotation;
+    Animation animator;
+    // System
+    private Quaternion targetRotation;
 
 	// Components
 	private CharacterController controller;
 
 	void Start()
 	{
-		controller = GetComponent<CharacterController>();
-
-	}
+        animator = GetComponentInChildren<Animation>();//need this...
+        controller = GetComponent<CharacterController>();
+       
+    }
 
 	void Update()
 	{
@@ -71,7 +72,27 @@ public class Player2Controller : MonoBehaviour
 		// motion += Vector3.up * -8;
 
 		controller.Move(motion * Time.deltaTime);
-	}
+
+        if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
+        {
+            animator.Play("Walk");
+            //animator.SetTrigger("Walk");//tell mecanim to do the attack animation(trigger)
+        }
+        else if (Input.GetKey("q"))
+        {
+           
+            animator.Play("Attack");
+            //animator.SetTrigger("Attack");//tell mecanim to do the attack animation(trigger)
+        }
+        else
+        {
+            if (!animator.isPlaying){
+                animator.Play("idle");
+            }
+           
+            //animator.SetBool("idle", true);
+        }
+    }
 
 
 }
