@@ -5,37 +5,37 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
-    Animator animator;
+
 
     // Handling
-    public float rotationSpeed;
-    public float walkSpeed;
+    public float RotationSpeed;
+    public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
-    public TextMesh levelText;
     public bool dead = false;
     bool inPlayer1 = true;
-    public bool wasAttacking;// we need this so we can take lock the direction we are facing during attacks, mecanim sometimes moves past the target which would flip the character around wildly
-    public GameObject torchP1;
-    public GameObject torchP2;
-    public GameObject spotlightP1;
-    public GameObject spotlightP2;
-    public int pushPower = 20;
-    bool lastPressed = false;
+    public GameObject TorchP1;
+    public GameObject TorchP2;
+    public GameObject SpotlightP1;
+    public GameObject SpotlightP2;
+    public int PushPower = 20;
 
+
+    private bool _lastPressed = false;
 
     // System
-    private Quaternion targetRotation;
-
+    private Quaternion _targetRotation;
+    Animator _animator;
     // Components
-    private CharacterController controller;
+    private CharacterController _controller;
+
 
     void Start()
     {
-        torchP2.SetActive(false);
-        spotlightP2.SetActive(false);
+        TorchP2.SetActive(false);
+        SpotlightP2.SetActive(false);
 
-        animator = GetComponentInChildren<Animator>();//need this...
-        controller = GetComponent<CharacterController>();
+        _animator = GetComponentInChildren<Animator>();//need this...
+        _controller = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -56,41 +56,41 @@ public class PlayerController : MonoBehaviour
 
         if (input != Vector3.zero)
         {
-            targetRotation = Quaternion.LookRotation(input);
-            transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetRotation.eulerAngles.y, rotationSpeed * Time.deltaTime);
+            _targetRotation = Quaternion.LookRotation(input);
+            transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y, _targetRotation.eulerAngles.y, RotationSpeed * Time.deltaTime);
         }
 
         Vector3 motion = input;
         //motion *= (-Mathf.Abs(input.x) == 1 && -Mathf.Abs(input.z) == 1) ? .7f : 1;
 		Vector3 pos = GameObject.FindGameObjectWithTag("Player2").transform.position;
 		Vector3 difference = pos - transform.position;
-		if ((difference.x > 80f && difference.x+motion.x*walkSpeed < difference.x) ||  (difference.x < -80f && difference.x+motion.x*walkSpeed > difference.x)) {
+		if ((difference.x > 80f && difference.x+motion.x*WalkSpeed < difference.x) ||  (difference.x < -80f && difference.x+motion.x*WalkSpeed > difference.x)) {
 			motion.x = 0;
 		}else{
-			motion.x = motion.x * walkSpeed;
+			motion.x = motion.x * WalkSpeed;
 		}
-		if ((difference.z > 80f && difference.z+motion.z*walkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*walkSpeed > difference.z)) {
+		if ((difference.z > 80f && difference.z+motion.z*WalkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*WalkSpeed > difference.z)) {
 			motion.z = 0;
 		}else{
-			motion.z = motion.z * walkSpeed;
+			motion.z = motion.z * WalkSpeed;
 		}
-        controller.Move(motion * Time.deltaTime);
+        _controller.Move(motion * Time.deltaTime);
 
 
-        animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
+        _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
         if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {
-            animator.SetBool("Idling", false);
+            _animator.SetBool("Idling", false);
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
             
-            animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+            _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
         }
         else
         {
-            animator.SetBool("Idling", true);
+            _animator.SetBool("Idling", true);
         }
 
         
@@ -108,30 +108,30 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag.Equals("Player2"))
         {
              // Checking if users wanted to swap the torch
-            if (Input.GetButtonDown("SwapTorch") && !lastPressed)
+            if (Input.GetButtonDown("SwapTorch") && !_lastPressed)
             {
                 // Disabling current player's torch and activating the other
-                lastPressed = true;
+                _lastPressed = true;
 
-                if (torchP1.gameObject.activeSelf)
+                if (TorchP1.gameObject.activeSelf)
                 {
-                    torchP1.SetActive(false);
-                    spotlightP1.SetActive(false);
+                    TorchP1.SetActive(false);
+                    SpotlightP1.SetActive(false);
 
-                    torchP2.SetActive(true);
-                    spotlightP2.SetActive(true);
+                    TorchP2.SetActive(true);
+                    SpotlightP2.SetActive(true);
                 } else
                 {
-                    torchP1.SetActive(true);
-                    spotlightP1.SetActive(true);
+                    TorchP1.SetActive(true);
+                    SpotlightP1.SetActive(true);
 
-                    torchP2.SetActive(false);
-                    spotlightP2.SetActive(false);
+                    TorchP2.SetActive(false);
+                    SpotlightP2.SetActive(false);
                 }
 
             } else if (Input.GetButtonUp("SwapTorch"))
             {
-                lastPressed = false;
+                _lastPressed = false;
             }
         }
     }
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-        body.velocity = pushDir * pushPower;
+        body.velocity = pushDir * PushPower;
     }
 
 }
