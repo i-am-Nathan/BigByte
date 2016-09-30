@@ -86,4 +86,58 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+    // When collision occurs between two objects
+    void OnTriggerStay(Collider other)
+    {
+
+        // Checking if players are next to each other
+        if (other.gameObject.tag == "Player2")
+        {
+
+            // Checking if users wanted to swap the torch
+            if (Input.GetButtonDown("SwapTorch"))
+            {
+
+                // Checking with which player the torch is
+                bool inPlayer1 = false;
+                Transform[] ts = GetComponentsInChildren<Transform>();
+                foreach (Transform t in ts)
+                {
+                    if (t.tag == "Torch")
+                    {
+                        inPlayer1 = true;
+                    }
+                }
+
+                GameObject player;
+                GameObject torchPos;
+                GameObject spotlightPos;
+                if (inPlayer1)
+                {
+                    player = GameObject.FindWithTag("Player2");
+                    torchPos = GameObject.FindWithTag("Torch Position 2");
+                    spotlightPos = GameObject.FindWithTag("Spotlight Position 2");
+                }
+                else
+                {
+                    player = GameObject.FindWithTag("Player");
+                    torchPos = GameObject.FindWithTag("Torch Position 1");
+                    spotlightPos = GameObject.FindWithTag("Spotlight Position 1");
+                }
+
+                GameObject torch = GameObject.FindWithTag("Torch");
+                GameObject spotlight = GameObject.FindWithTag("Spotlight");
+
+                // Assigning parent of torch to the corresponding player
+                torch.transform.parent = player.transform;
+                spotlight.transform.parent = player.transform;
+
+                torch.transform.localPosition = torchPos.transform.localPosition;
+                spotlight.transform.localPosition = spotlightPos.transform.localPosition;
+            }
+        }
+    }
+
+
 }
