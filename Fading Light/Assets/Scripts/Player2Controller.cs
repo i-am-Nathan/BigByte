@@ -10,6 +10,7 @@ public class Player2Controller : MonoBehaviour
 	public float walkSpeed = .0000002f;
 	public TextMesh levelText;
 	public bool dead = false;
+    public int pushPower = 20;
     Animation animator;
     // System
     private Quaternion targetRotation;
@@ -94,5 +95,18 @@ public class Player2Controller : MonoBehaviour
         }
     }
 
+    // Used to push rigid body objects in the scene
+    // Obtained from Unity Documentation
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body == null || body.isKinematic)
+            return;
 
+        if (hit.moveDirection.y < -0.3F)
+            return;
+
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+        body.velocity = pushDir * pushPower;
+    }
 }

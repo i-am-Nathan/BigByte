@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public GameObject torchP2;
     public GameObject spotlightP1;
     public GameObject spotlightP2;
+    public int pushPower = 20;
+    bool lastPressed = false;
 
 
     // System
@@ -95,7 +97,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    bool lastPressed = false;
     // When collision occurs between two objects
     void OnTriggerStay(Collider other)
     {
@@ -105,7 +106,7 @@ public class PlayerController : MonoBehaviour
              // Checking if users wanted to swap the torch
             if (Input.GetButtonDown("SwapTorch") && !lastPressed)
             {
-
+                // Disabling current player's torch and activating the other
                 lastPressed = true;
 
                 if (torchP1.gameObject.activeSelf)
@@ -131,5 +132,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    // Used to push rigid body objects in the scene
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body == null || body.isKinematic)
+            return;
+
+        if (hit.moveDirection.y < -0.3F)
+            return;
+
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+        body.velocity = pushDir * pushPower;
+    }
 
 }
