@@ -10,7 +10,10 @@ public class TextBoxManager : MonoBehaviour {
 
 	public int currentLine;
 	public int endAtLine;
+	public PlayerController player1;
+	public Player2Controller player2;
 
+	public bool stopMovement;
 	public bool isActive;
 	// Use this for initialization
 	void Start () {
@@ -39,9 +42,13 @@ public class TextBoxManager : MonoBehaviour {
 		}
 		dialogue.text = textLines [currentLine];
 
+
 		if (Input.GetKeyDown (KeyCode.T)) {
-			currentLine += 1;
+			if (currentLine < endAtLine) {
+				currentLine += 1;
+			}
 		}
+
 
 
 
@@ -49,9 +56,16 @@ public class TextBoxManager : MonoBehaviour {
 
 	void EnableDialogue(){
 		textBox.SetActive (true);
+
+		if (stopMovement) {
+			player1.IsDisabled = true;
+			player2.IsDisabled = true;
+		}
 	}
 
 	void DisableDialogue(){
 		textBox.SetActive (false);
+		player1.IsDisabled = false;
+		player2.IsDisabled = false;
 	}
 }
