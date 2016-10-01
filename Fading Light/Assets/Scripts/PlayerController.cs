@@ -147,7 +147,7 @@ public class PlayerController : BaseEntity
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Ow");
-        base.Damage(amount, null);
+        base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
 

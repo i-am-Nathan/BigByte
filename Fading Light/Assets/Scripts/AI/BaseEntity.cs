@@ -12,7 +12,7 @@ public class BaseEntity : MonoBehaviour{
 	}
 
 	public virtual void Attacked(float damage, Transform attacker) {
-		Damage(damage, null);
+		Damage(damage, attacker);
 	}
 
 	public virtual void Damage(float damage, Transform attacker) {
