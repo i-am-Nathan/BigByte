@@ -288,8 +288,8 @@ MonoBehaviour:
   FuelBurnRate: 1
   TorchP1: {fileID: 2041440849}
   TorchP2: {fileID: 1532845386}
-  SpotlightP1: {fileID: 2053071772}
-  SpotlightP2: {fileID: 1621957689}
+  SwordP1: {fileID: 0}
+  SwordP2: {fileID: 0}
   Player1TorchLight: {fileID: 2053071774}
   Player2TorchLight: {fileID: 2053071774}
   TorchInPlayer1: 1
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 4900000, guid: 3fde0298124e938448900f316a5e100c, type: 3}
   startLine: 2
-  endLine: 5
+  endLine: 4
   textBox: {fileID: 1499881562}
   requireButtonPress: 1
   destroyWhenActivated: 0
@@ -608,6 +608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bd3b2973dff224cbd320a332edffc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IntialHealth: 0
+  healthCircle: {fileID: 0}
   RotationSpeed: 1600
   WalkSpeed: 20
   CanMove: 1
@@ -1651,6 +1653,8 @@ MonoBehaviour:
   player2: {fileID: 660672068}
   stopMovement: 0
   isActive: 0
+  firstline: 0
+  typeSpeed: 0
 --- !u!4 &1499881563
 Transform:
   m_ObjectHideFlags: 0
@@ -2034,13 +2038,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0605cd9e17c110940be8d8f845469c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IntialHealth: 0
+  healthCircle: {fileID: 0}
   RotationSpeed: 1600
   WalkSpeed: 20
   WeaponState: 1
   dead: 0
   PushPower: 20
   IsDisabled: 0
-  TorchFuelControllerScript: {fileID: 0}
 --- !u!143 &1679935941
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2640,7 +2645,7 @@ MonoBehaviour:
   startLine: 0
   endLine: 1
   textBox: {fileID: 1499881562}
-  requireButtonPress: 1
+  requireButtonPress: 0
   destroyWhenActivated: 1
   talkOnce: 1
 --- !u!1 &1964826100

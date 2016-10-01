@@ -57,6 +57,7 @@ public class Player2Controller : BaseEntity
 
         if (IsDisabled)
         {
+			_animator.SetBool("Idling", true);
             return;
         }
 

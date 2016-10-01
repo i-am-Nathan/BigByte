@@ -55,6 +55,7 @@ public class PlayerController : BaseEntity
     {
         if (IsDisabled)
         {
+			_animator.SetBool("Idling", true);
             return;
         }
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
