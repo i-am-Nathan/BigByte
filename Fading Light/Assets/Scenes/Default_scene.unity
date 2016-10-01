@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotalFuelPercentage: 100
-  FuelBurnRate: 1
+  FuelBurnRate: 0
   TorchP1: {fileID: 2041440849}
   TorchP2: {fileID: 1532845386}
   SwordP1: {fileID: 1197498129}
@@ -511,6 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bd3b2973dff224cbd320a332edffc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IntialHealth: 0
   healthCircle: {fileID: 1320971652}
   RotationSpeed: 1600
   WalkSpeed: 20
@@ -1887,11 +1888,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0605cd9e17c110940be8d8f845469c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IntialHealth: 0
   healthCircle: {fileID: 1812921536}
   RotationSpeed: 1600
   WalkSpeed: 20
   WeaponState: 1
   dead: 0
+  IsInCircle: 0
   PushPower: 20
   IsDisabled: 0
 --- !u!143 &1679935941

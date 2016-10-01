@@ -48,9 +48,35 @@ public class TorchFuelController : MonoBehaviour {
 
         return TorchP2;
     }
+
+    public bool IsInTorchRange(float x, float z)
+    {
+        var currentTorch = TorchP2;
+        var currentTorchLight = Player2TorchLight;
+        if (TorchInPlayer1)
+        {
+            currentTorch = TorchP1;
+            currentTorchLight = Player1TorchLight;
+        }
+
+        var torchPosition = currentTorch.gameObject.transform.position;
+
+        var distanceToTorch = Math.Sqrt(Math.Abs((torchPosition.x - x) * (torchPosition.x - x)) + Math.Abs((torchPosition.z - z) * (torchPosition.z - z)));
+
+        var torchRadius = torchPosition.y*2.5 * Math.Tan((currentTorchLight.spotAngle/2) * (Math.PI / 180));
+        torchRadius = Math.Abs(torchRadius);
+
+        if (distanceToTorch < torchRadius)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
     // Update is called once per frame
     void Update () {
-
+        return;
         //Flicker the torch
         if(_flickerCount == _flckerAmount)
         {
@@ -100,11 +126,12 @@ public class TorchFuelController : MonoBehaviour {
         return _maxAngle * (TotalFuelPercentage / 100);
     }
 
+
     
     public void SwapPlayers()
     {
         // Disabling current player's torch and activating the other
-        if (TorchP1.gameObject.activeSelf)
+        if (TorchInPlayer1)
         {
             TorchP1.SetActive(false);
             SwordP1.SetActive(true);
@@ -117,12 +144,12 @@ public class TorchFuelController : MonoBehaviour {
         else
         {
             TorchP1.SetActive(true);
-            SwordP2.SetActive(true);
             SwordP1.SetActive(false);
+            SwordP2.SetActive(true);
             Player1TorchLight.gameObject.SetActive(true);
             TorchInPlayer1 = true;
             TorchP2.SetActive(false);
-            Player1TorchLight.gameObject.SetActive(false);
+            Player2TorchLight.gameObject.SetActive(false);
         }
         
     }

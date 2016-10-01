@@ -15,7 +15,7 @@ public class PlayerController : BaseEntity
     public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public bool dead = false;
-
+    public bool IsInCircle = false;
    
     public int PushPower = 20;
     public bool IsDisabled;
@@ -53,6 +53,15 @@ public class PlayerController : BaseEntity
 
     void ControlWASD()
     {
+        if(TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
+        {
+            IsInCircle = true;
+        }else
+        {
+            IsInCircle = false;
+        }
+
+
         if (IsDisabled)
         {
 			_animator.SetBool("Idling", true);

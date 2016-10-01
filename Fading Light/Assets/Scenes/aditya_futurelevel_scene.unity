@@ -1724,7 +1724,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 142732322}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!23 &79368958
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3456,6 +3456,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 142732322}
+  - 114: {fileID: 142732323}
+  - 135: {fileID: 142732324}
   m_Layer: 0
   m_Name: Wall_candle_M
   m_TagString: Untagged
@@ -3474,11 +3476,38 @@ Transform:
   m_LocalScale: {x: 0.0025767107, y: 0.042572606, z: 0.5321577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1826192079}
   - {fileID: 79368957}
   - {fileID: 1300048699}
   - {fileID: 569851470}
   m_Father: {fileID: 1886463927}
   m_RootOrder: 0
+--- !u!114 &142732323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 142732321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14580deaae6f62b43af1ab259d7d129e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _active: 0
+  _flame: {fileID: 569851469}
+  _spotlight: {fileID: 1826192078}
+--- !u!135 &142732324
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 142732321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: -1.5, z: 15.9}
 --- !u!137 &172933042 stripped
 SkinnedMeshRenderer:
   m_PrefabParentObject: {fileID: 13700002, guid: 4a8a9f9c4997e6146927d2ff7ef87db2,
@@ -5242,9 +5271,8 @@ Transform:
   - {fileID: 106904387}
   - {fileID: 28576731}
   - {fileID: 186262852}
-  - {fileID: 1826192079}
   m_Father: {fileID: 142732322}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!199 &569851471
 ParticleSystemRenderer:
   m_ObjectHideFlags: 0
@@ -6787,6 +6815,7 @@ MonoBehaviour:
   CanMove: 1
   PushPower: 20
   WeaponState: 1
+  IsDisabled: 0
 --- !u!95 &660672069
 Animator:
   serializedVersion: 3
@@ -7458,7 +7487,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 142732322}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!23 &1300048700
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7566,6 +7595,55 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!1 &1510313365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1510313367}
+  - 114: {fileID: 1510313366}
+  m_Layer: 0
+  m_Name: TorchFuelController
+  m_TagString: TorchFuelController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1510313366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510313365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5d54bccf98fcd45a9fa2e13f2c18ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TotalFuelPercentage: 100
+  FuelBurnRate: 1
+  TorchP1: {fileID: 1555197254}
+  TorchP2: {fileID: 1532845386}
+  SpotlightP1: {fileID: 2053071772}
+  SpotlightP2: {fileID: 1621957689}
+  Player1TorchLight: {fileID: 2053071774}
+  Player2TorchLight: {fileID: 1621957690}
+  TorchInPlayer1: 1
+--- !u!4 &1510313367
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510313365}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -42.243713, y: -106.152306, z: -229.07593}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
 --- !u!1 &1532845386 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -7574,6 +7652,10 @@ GameObject:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
   m_PrefabInternal: {fileID: 1742290007}
+--- !u!1 &1555197254 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
+  m_PrefabInternal: {fileID: 1580025634}
 --- !u!1001 &1580025634
 Prefab:
   m_ObjectHideFlags: 0
@@ -7894,11 +7976,8 @@ MonoBehaviour:
   WalkSpeed: 20
   WeaponState: 1
   dead: 0
-  TorchP1: {fileID: 266953996}
-  TorchP2: {fileID: 1532845386}
-  SpotlightP1: {fileID: 2053071772}
-  SpotlightP2: {fileID: 1621957689}
   PushPower: 20
+  IsDisabled: 0
 --- !u!143 &1679935941
 CharacterController:
   m_ObjectHideFlags: 0
@@ -8389,13 +8468,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1826192078}
-  m_LocalRotation: {x: -0.801847, y: -0.488498, z: -0.34405112, w: 0.006317068}
-  m_LocalPosition: {x: -0.059, y: -0.03, z: 0.594}
-  m_LocalScale: {x: 0.03431396, y: 0.08745766, z: 0.020222528}
-  m_LocalEulerAnglesHint: {x: -20.2592, y: -215.5602, z: -236.14279}
+  m_LocalRotation: {x: -0.5253733, y: 0.48946947, z: -0.49178803, w: -0.49249062}
+  m_LocalPosition: {x: -7.0203137, y: 24.871847, z: 32.28886}
+  m_LocalScale: {x: 1.3053073, y: 4.617615, z: 1.0174096}
+  m_LocalEulerAnglesHint: {x: 87.3286, y: -227.98419, z: -140.08229}
   m_Children: []
-  m_Father: {fileID: 569851470}
-  m_RootOrder: 3
+  m_Father: {fileID: 142732322}
+  m_RootOrder: 0
 --- !u!108 &1826192080
 Light:
   m_ObjectHideFlags: 0
