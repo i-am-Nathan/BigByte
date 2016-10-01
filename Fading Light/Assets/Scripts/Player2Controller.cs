@@ -10,21 +10,22 @@ public class Player2Controller : MonoBehaviour
 	public float WalkSpeed;
     public bool CanMove;
     public int PushPower = 20;
-    
+    public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
+    public bool IsDisabled;
     // System
     private Quaternion targetRotation;
 
     //Animation
     private bool _isPlayingJump = false;
     private bool _isPlayingAttack = false;
-    private Animation _animator;
+    Animator _animator;
 
     // Components
     private CharacterController controller;
 
 	void Start()
 	{
-        _animator = GetComponentInChildren<Animation>();//need this...
+        _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
        
     }
@@ -48,7 +49,11 @@ public class Player2Controller : MonoBehaviour
 
 	void ControlWASD()
 	{
-       
+
+        if (IsDisabled)
+        {
+            return;
+        }
 
 		Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical1"), 0, Input.GetAxisRaw("Horizontal1"));
 
@@ -58,75 +63,21 @@ public class Player2Controller : MonoBehaviour
 			transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetRotation.eulerAngles.y, RotationSpeed * Time.deltaTime);
 		}
 
-        if (!CanMove)
+        _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
+
+        if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
-            input = Vector3.zero;
+            _animator.SetBool("Idling", false);
         }
-
-        Vector3 motion = input;
-		//motion *= (-Mathf.Abs(input.x) == 1 && -Mathf.Abs(input.z) == 1) ? .7f : 1;
-		Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
-		Vector3 difference = pos - transform.position;
-
-		if ((difference.x > 80f && difference.x+motion.x*WalkSpeed < difference.x) ||  (difference.x < -80f && difference.x+motion.x*WalkSpeed > difference.x)) {
-			motion.x = 0;
-		}else{
-			motion.x = motion.x * WalkSpeed;
-		}
-
-		if ((difference.z > 80f && difference.z+motion.z*WalkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*WalkSpeed > difference.z)) {
-			print ("THE DIFFERENCE OF Z IS " +difference.z);
-			motion.z = 0;
-		}else{
-			motion.z = motion.z * WalkSpeed;
-		}
-		//motion.z = motion.z * walkSpeed;
-		//motion *=  walkSpeed;
-		// motion += Vector3.up * -8;
-
-		controller.Move(motion * Time.deltaTime);
-
-
-        if (!CanMove)
+        else if (Input.GetKey("e"))
         {
-            _animator.Play("idle");
-            return;
-        }
 
-        if (Input.GetKey("e"))
-        {
-            _animator.Play("Jump");
-            _isPlayingJump = true;
-            _isPlayingAttack = false;
-        }
-        else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
-        {
-            if (!_animator.isPlaying || !_isPlayingJump)
-            {
-                _animator.Play("Walk");
-                _isPlayingJump = false;
-                _isPlayingAttack = false;
-            }
-           
-            //animator.SetTrigger("Walk");//tell mecanim to do the attack animation(trigger)
-        }
-        else if (Input.GetKey("q"))
-        {
-            _animator.Play("Attack");
-            _isPlayingJump = false;
-            _isPlayingAttack = true;
-            //animator.SetTrigger("Attack");//tell mecanim to do the attack animation(trigger)
+            _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
         }
         else
         {
-            if ((!_animator.isPlaying || !_isPlayingJump) && !_isPlayingAttack){
-                _animator.Play("idle");
-                _isPlayingJump = false;
-            }
-           
-            //animator.SetBool("idle", true);
+            _animator.SetBool("Idling", true);
         }
-
 
     }
 
