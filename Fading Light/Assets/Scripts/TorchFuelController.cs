@@ -11,6 +11,9 @@ public class TorchFuelController : MonoBehaviour {
     public GameObject TorchP2;
     public GameObject SpotlightP1;
     public GameObject SpotlightP2;
+    public GameObject SwordP1;
+    public GameObject SwordP2;
+
     public Light Player1TorchLight;
     public Light Player2TorchLight;
     public bool TorchInPlayer1 = true;
@@ -97,6 +100,8 @@ public class TorchFuelController : MonoBehaviour {
         if (TorchP1.gameObject.activeSelf)
         {
             TorchP1.SetActive(false);
+            SwordP1.SetActive(true);
+            SwordP2.SetActive(false);
             SpotlightP1.SetActive(false);
             TorchInPlayer1 = false;
             TorchP2.SetActive(true);
@@ -105,6 +110,8 @@ public class TorchFuelController : MonoBehaviour {
         else
         {
             TorchP1.SetActive(true);
+            SwordP2.SetActive(true);
+            SwordP1.SetActive(false);
             SpotlightP1.SetActive(true);
             TorchInPlayer1 = true;
             TorchP2.SetActive(false);
