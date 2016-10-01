@@ -13,10 +13,10 @@ public class PressurePlate : MonoBehaviour {
         {
             this.GetComponent<Animation>().Play("PressurePlateDown");
             GameObject wall = GameObject.FindWithTag("Falling Wall");
+            wall.GetComponent<FallingWall>().pressurePlate1 = true;
+            //wall.GetComponent<FallingWall>().pressurePlate2 = true;
         }
         thingsOnTop++;
-        //wall.GetComponent<FallingWall>().pressurePlate1 = true;
-        //wall.GetComponent<FallingWall>().pressurePlate2 = true;
     }
 
 
@@ -26,15 +26,11 @@ public class PressurePlate : MonoBehaviour {
         thingsOnTop--;
         if (thingsOnTop == 0)
         {
-            //if (!(other.gameObject.tag == "Player") || !(other.gameObject.tag == "Player2"))
             this.GetComponent<Animation>().Play("PressurePlateUp");
-        }
-            
-
-            //GameObject wall = GameObject.FindWithTag("Falling Wall");
-            //wall.GetComponent<FallingWall>().pressurePlate1 = false;
+            GameObject wall = GameObject.FindWithTag("Falling Wall");
+            wall.GetComponent<FallingWall>().pressurePlate1 = false;
             //wall.GetComponent<FallingWall>().pressurePlate2 = true;
-        
-		
-	}
+        }
+
+    }
 }
