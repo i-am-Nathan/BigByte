@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     {
        
         // Checking if players are next to each other
-        if (other.gameObject.tag.Equals("Player2"))
+        if (other.gameObject.tag.Equals("Player2") && !IsDisabled)
         {
             if (Input.GetButtonDown("SwapTorch") && !_lastPressed)
             {

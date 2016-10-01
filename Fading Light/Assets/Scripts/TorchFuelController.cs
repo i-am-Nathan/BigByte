@@ -95,7 +95,6 @@ public class TorchFuelController : MonoBehaviour {
 
     public void SwapPlayers()
     {
-
         // Disabling current player's torch and activating the other
         if (TorchP1.gameObject.activeSelf)
         {
