@@ -16,11 +16,16 @@ public class TorchFuelController : MonoBehaviour {
     public bool TorchInPlayer1 = true;
 
 
-    private float maxAngle = 134;
-   
+    private float _maxAngle = 134;
+    private bool _flickerUp = false;
+    private int _flickerCount = 0;
+    private int _flckerAmount = 50;
+    private float _flickerChange = 0.03f;
+    private System.Random random = new System.Random();
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         TorchP2.SetActive(false);
         SpotlightP2.SetActive(false);
         InvokeRepeating("RemoveFuelAmount", 0, 1);
@@ -32,21 +37,53 @@ public class TorchFuelController : MonoBehaviour {
         TotalFuelPercentage = Math.Min(100, TotalFuelPercentage);
     }
 
+
     // Update is called once per frame
     void Update () {
-	
+
+        //Flicker the torch
+        if(_flickerCount == _flckerAmount)
+        {
+            _flickerCount = 0;
+            
+            if (random.Next(100) < 50)
+            {
+                _flickerUp = true;
+            }
+            else
+            {
+                _flickerUp = false;
+            }
+        }
+
+        if (_flickerUp)
+        {
+            TotalFuelPercentage += _flickerChange;
+        }
+        else
+        {
+            TotalFuelPercentage -= _flickerChange;
+        }
+
+        _flickerCount++;
+        UpdateTorch();
 	}
 
     public void RemoveFuelAmount()
     {
         TotalFuelPercentage -= FuelBurnRate;
+        UpdateTorch();
+    }
+
+    private void UpdateTorch()
+    {
         Player1TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
         Player2TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
     }
 
     private float findSpotAngle(float totalFuelPercentage)
     {
-        return maxAngle * (TotalFuelPercentage / 100);
+        return _maxAngle * (TotalFuelPercentage / 100);
     }
 
     public void SwapPlayers()
