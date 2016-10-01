@@ -55,6 +55,7 @@ public class Player2Controller : MonoBehaviour
 
         if (IsDisabled)
         {
+            _animator.SetBool("Idling", true);
             return;
         }
 

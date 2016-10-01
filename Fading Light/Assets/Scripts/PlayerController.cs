@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public bool dead = false;
-
+    public bool IsInCircle;
    
     public int PushPower = 20;
     public bool IsDisabled;
@@ -39,6 +39,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         ControlWASD();	
+        if(TorchFuelControllerScript.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
+        {
+            IsInCircle = true;
+        }
+        else
+        {
+            IsInCircle = false;
+        }
     }
 
 
@@ -47,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsDisabled)
         {
+            _animator.SetBool("Idling", true);
             return;
         }
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));

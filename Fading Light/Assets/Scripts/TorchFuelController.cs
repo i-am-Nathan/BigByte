@@ -48,9 +48,38 @@ public class TorchFuelController : MonoBehaviour {
 
         return TorchP2;
     }
+
+    public bool IsInTorchRange(float x, float z)
+    {
+        var currentTorch = TorchP2;
+        var currentTorchLight = Player1TorchLight;
+        if (TorchInPlayer1)
+        {
+            currentTorch = TorchP1;
+            currentTorchLight = Player2TorchLight;
+        }
+
+        var torchPosition = currentTorch.gameObject.transform.position;
+
+        var distanceToTorch = Math.Sqrt(Math.Abs((torchPosition.x - x) * (torchPosition.x - x)) + Math.Abs((torchPosition.z - z) * (torchPosition.z - z)));
+
+        var torchRadius = torchPosition.y * Math.Tan((currentTorchLight.spotAngle) * (Math.PI / 180));
+        torchRadius = Math.Abs(torchRadius);
+        Debug.Log("Angle: " + currentTorchLight.spotAngle);
+        Debug.Log("Height: " + torchPosition.y);
+        Debug.Log("RADIUS: " + torchRadius);
+        Debug.Log("Distance: " + distanceToTorch);
+        if (distanceToTorch < torchRadius)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
     // Update is called once per frame
     void Update () {
-
+        return;
         //Flicker the torch
         if(_flickerCount == _flckerAmount)
         {
@@ -99,6 +128,7 @@ public class TorchFuelController : MonoBehaviour {
     {
         return _maxAngle * (TotalFuelPercentage / 100);
     }
+
 
     
     public void SwapPlayers()
