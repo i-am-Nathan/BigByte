@@ -9,8 +9,7 @@ public class TorchFuelController : MonoBehaviour {
 
     public GameObject TorchP1;
     public GameObject TorchP2;
-    public GameObject SpotlightP1;
-    public GameObject SpotlightP2;
+
     public GameObject SwordP1;
     public GameObject SwordP2;
 
@@ -30,7 +29,7 @@ public class TorchFuelController : MonoBehaviour {
     void Start ()
     {
         TorchP2.SetActive(false);
-        SpotlightP2.SetActive(false);
+        Player2TorchLight.gameObject.SetActive(false);
         InvokeRepeating("RemoveFuelAmount", 0, 1);
     }
 
@@ -40,7 +39,15 @@ public class TorchFuelController : MonoBehaviour {
         TotalFuelPercentage = Math.Min(100, TotalFuelPercentage);
     }
 
+    public GameObject GetCurrentTorch()
+    {
+        if (TorchInPlayer1)
+        {
+            return TorchP1;
+        }
 
+        return TorchP2;
+    }
     // Update is called once per frame
     void Update () {
 
@@ -93,6 +100,7 @@ public class TorchFuelController : MonoBehaviour {
         return _maxAngle * (TotalFuelPercentage / 100);
     }
 
+    
     public void SwapPlayers()
     {
         // Disabling current player's torch and activating the other
@@ -101,20 +109,20 @@ public class TorchFuelController : MonoBehaviour {
             TorchP1.SetActive(false);
             SwordP1.SetActive(true);
             SwordP2.SetActive(false);
-            SpotlightP1.SetActive(false);
+            Player1TorchLight.gameObject.SetActive(false);
             TorchInPlayer1 = false;
             TorchP2.SetActive(true);
-            SpotlightP2.SetActive(true);
+            Player2TorchLight.gameObject.SetActive(true);
         }
         else
         {
             TorchP1.SetActive(true);
             SwordP2.SetActive(true);
             SwordP1.SetActive(false);
-            SpotlightP1.SetActive(true);
+            Player1TorchLight.gameObject.SetActive(true);
             TorchInPlayer1 = true;
             TorchP2.SetActive(false);
-            SpotlightP2.SetActive(false);
+            Player1TorchLight.gameObject.SetActive(false);
         }
         
     }
