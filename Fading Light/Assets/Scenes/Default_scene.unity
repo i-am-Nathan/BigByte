@@ -288,8 +288,8 @@ MonoBehaviour:
   FuelBurnRate: 1
   TorchP1: {fileID: 2041440849}
   TorchP2: {fileID: 1532845386}
-  SpotlightP1: {fileID: 2053071772}
-  SpotlightP2: {fileID: 1621957689}
+  SwordP1: {fileID: 1197498129}
+  SwordP2: {fileID: 1515936310}
   Player1TorchLight: {fileID: 2053071774}
   Player2TorchLight: {fileID: 1621957690}
   TorchInPlayer1: 1
@@ -891,7 +891,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100028, guid: 4a8a9f9c4997e6146927d2ff7ef87db2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4a8a9f9c4997e6146927d2ff7ef87db2, type: 3}
       propertyPath: m_Name
@@ -1320,6 +1320,10 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 2300008, guid: 4a8a9f9c4997e6146927d2ff7ef87db2,
     type: 3}
   m_PrefabInternal: {fileID: 1060378177}
+--- !u!1 &1197498129 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100028, guid: 4a8a9f9c4997e6146927d2ff7ef87db2, type: 3}
+  m_PrefabInternal: {fileID: 1060378177}
 --- !u!23 &1201522638 stripped
 MeshRenderer:
   m_PrefabParentObject: {fileID: 2300024, guid: 4a8a9f9c4997e6146927d2ff7ef87db2,
@@ -1455,6 +1459,10 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!1 &1515936310 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100028, guid: 4a8a9f9c4997e6146927d2ff7ef87db2, type: 3}
+  m_PrefabInternal: {fileID: 846487437}
 --- !u!1 &1532845386 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -2228,7 +2236,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
       propertyPath: m_ReceiveShadows
@@ -2578,7 +2586,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2053071772}
   m_LocalRotation: {x: -0.71924174, y: -0.0021364463, z: 0.0237483, w: -0.6943506}
-  m_LocalPosition: {x: -0.053, y: 2.4, z: -0.054}
+  m_LocalPosition: {x: -0.04, y: 3, z: -0.04}
   m_LocalScale: {x: 0.10000001, y: 0.1, z: 0.10000001}
   m_LocalEulerAnglesHint: {x: 87.3286, y: -137.9847, z: -140.0827}
   m_Children: []
