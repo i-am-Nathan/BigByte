@@ -44,7 +44,6 @@ public class Player1Health : MonoBehaviour {
 
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount/100.0f;
-        Debug.Log(healthCircle.fillAmount);
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (currentHealth <= 0 && !isDead)

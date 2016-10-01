@@ -32,6 +32,7 @@ public class SpiderAI : BaseEntity
     Material skinMaterial;
     Color originalColour;
     Animation _animator;
+    Vector3 spawnLocation;
 
     private StateMachine<States> fsm;
 
@@ -39,6 +40,7 @@ public class SpiderAI : BaseEntity
     private float _collisionRange;
     private float _targetCollisionRange;
     private bool _lockedOn;
+    private bool _inAttackRange;
 
     private void Awake()
 	{
@@ -51,6 +53,8 @@ public class SpiderAI : BaseEntity
         //Initlize the pathfinder
         pathfinder = GetComponent<NavMeshAgent>();
 
+        spawnLocation = this.gameObject.transform.position;
+
         //Create the FSM controller
         fsm = StateMachine<States>.Initialize(this, States.Idle);
 	}
@@ -58,6 +62,7 @@ public class SpiderAI : BaseEntity
 	private void Init_Enter()
 	{
         Debug.Log("Spider state intilized");
+        _animator.Play("taunt");
         fsm.ChangeState(States.Idle);
     }
 
@@ -65,6 +70,7 @@ public class SpiderAI : BaseEntity
 	private void Idle_Enter()
 	{
         Debug.Log("Entered state: Idle");
+        pathfinder.SetDestination(spawnLocation);
         //Use coroutine to check when players enter activation range
         StartCoroutine(CheckForPlayers());
     }
@@ -81,7 +87,7 @@ public class SpiderAI : BaseEntity
         Debug.Log("Entered state: Attack");
         
         //Use coroutine to check when players enter activation range
-        //StartCoroutine(AttackPlayer());        
+        StartCoroutine(AttackPlayer());        
     }
 
     /// <summary>
@@ -141,43 +147,39 @@ public class SpiderAI : BaseEntity
             //If they have moved outside the loose activation range, then stop chasing
             if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance)
             {
-                _lockedOn = false;                
+                _lockedOn = false;
+                fsm.ChangeState(States.Idle);
             }
 
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
+            {
+                _lockedOn = false;
+                fsm.ChangeState(States.Attack);
+            }
+
+            pathfinder.speed = RunSpeed;
             pathfinder.SetDestination(target.position);
-            //If the characters are in attack range, switch to the attack state
-            //fsm.ChangeState(States.Attack);
 
             yield return new WaitForSeconds(refreshRate);
         }
+
         fsm.ChangeState(States.Idle);
     }
 
-    IEnumerator Attack()
+    IEnumerator AttackPlayer()
     {
         pathfinder.enabled = false;
-
-        Vector3 originalPosition = transform.position;
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        Vector3 attackPosition = target.position - dirToTarget * (_collisionRange);
-
-        float attackSpeed = 3;
-        float percent = 0;
-
-        skinMaterial.color = Color.red;
-        bool hasAppliedDamage = false;
-
-        while (percent <= 1)
+        _inAttackRange = true;   
+               
+        while (_inAttackRange)
         {
+            target.GetComponent<BaseEntity>().TakeDamage(AttackDamage, this.gameObject.transform);
 
-            if (percent >= .5f && !hasAppliedDamage)
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) > AttackRange)
             {
-                target.GetComponent<BaseEntity>().TakeDamage(AttackDamage, this.gameObject.transform);
+                _inAttackRange = false;
+                fsm.ChangeState(States.Chase);
             }
-
-            percent += Time.deltaTime * attackSpeed;
-            float interpolation = (-Mathf.Pow(percent, 2) + percent) * 4;
-            transform.position = Vector3.Lerp(originalPosition, attackPosition, interpolation);
 
             yield return null;
         }

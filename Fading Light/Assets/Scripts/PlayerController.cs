@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
 
-
+    // Health image on floor
+    public Image healthCircle;                                 // Reference to the UI's health circle.
 
     // Handling
     public float RotationSpeed;
