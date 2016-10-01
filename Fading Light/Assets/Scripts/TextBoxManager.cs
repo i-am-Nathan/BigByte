@@ -15,6 +15,12 @@ public class TextBoxManager : MonoBehaviour {
 
 	public bool stopMovement;
 	public bool isActive;
+	public bool firstline;
+
+	private bool isTyping = false;
+	private bool cancelTyping = false;
+
+	public float typeSpeed;
 	// Use this for initialization
 	void Start () {
 		if (textFile != null) {
@@ -30,6 +36,7 @@ public class TextBoxManager : MonoBehaviour {
 		} else {
 			DisableDialogue ();
 		}
+
 	}
 
 	// Update is called once per frame
@@ -37,35 +44,70 @@ public class TextBoxManager : MonoBehaviour {
 		if (!isActive) {
 			return;
 		}
-		if (currentLine > endAtLine) {
-			DisableDialogue ();
+			
+
+		if (firstline) {
+			StartCoroutine (TextScroll (textLines [currentLine]));
+			firstline = false;
 		}
-		dialogue.text = textLines [currentLine];
 
-
-		if (Input.GetKeyDown (KeyCode.T)) {
-			if (currentLine < endAtLine) {
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			if (!isTyping) {
 				currentLine += 1;
+
+				if (currentLine > endAtLine) {
+					DisableDialogue ();
+				} else {
+					StartCoroutine (TextScroll (textLines [currentLine]));
+					//dialogue.text = textLines [currentLine];
+				}
+
+			} else if (isTyping && !cancelTyping) {
+				cancelTyping = true;
 			}
-		}
+				
+		} 
 
 
 
 
 	}
 
-	void EnableDialogue(){
-		textBox.SetActive (true);
+	private IEnumerator TextScroll (string lineOfText){
+		int letter = 0;
+		dialogue.text = "";
+		isTyping = true;
+		cancelTyping = false;
+		while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1)) {
+			dialogue.text += lineOfText [letter];
+			letter += 1;
+			yield return new WaitForSeconds (typeSpeed);
+		}
+		dialogue.text = lineOfText;
 
-		if (stopMovement) {
+		isTyping = false;
+		cancelTyping = false;
+	}
+
+	public void EnableDialogue(){
+		textBox.SetActive (true);
+		isActive = true;
 			player1.IsDisabled = true;
 			player2.IsDisabled = true;
-		}
 	}
 
-	void DisableDialogue(){
+	public void DisableDialogue(){
 		textBox.SetActive (false);
+		isActive = false;
 		player1.IsDisabled = false;
 		player2.IsDisabled = false;
+	}
+
+	public void ReloadScript(TextAsset thisText){
+		if (thisText != null) {
+			textLines = new string[1];
+			textLines = (thisText.text.Split ('\n'));	
+			firstline = true;
+		}
 	}
 }
