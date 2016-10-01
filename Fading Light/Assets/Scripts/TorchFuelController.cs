@@ -71,7 +71,11 @@ public class TorchFuelController : MonoBehaviour {
 
     public void RemoveFuelAmount()
     {
-        TotalFuelPercentage -= FuelBurnRate;
+        if(TotalFuelPercentage > 0)
+        {
+            TotalFuelPercentage -= FuelBurnRate;
+        }
+        
         UpdateTorch();
     }
 
