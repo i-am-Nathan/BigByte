@@ -83,10 +83,12 @@ public class PlayerController : MonoBehaviour
     // When collision occurs between two objects
     void OnTriggerStay(Collider other)
     {
+       
         // Checking if players are next to each other
         if (other.gameObject.tag.Equals("Player2"))
         {
-             // Checking if users wanted to swap the torch
+            Debug.Log("HERE");
+            // Checking if users wanted to swap the torch
             if (Input.GetButtonDown("SwapTorch") && !_lastPressed)
             {
                 // Disabling current player's torch and activating the other
