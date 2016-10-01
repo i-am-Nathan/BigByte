@@ -3,11 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseEntity
 {
 
     // Health image on floor
     public Image healthCircle;                                 // Reference to the UI's health circle.
+    bool damaged;                                               // True when the player gets damaged.
 
     // Handling
     public float RotationSpeed;
@@ -26,9 +27,9 @@ public class PlayerController : MonoBehaviour
     // Components
     private CharacterController _controller;
 
-
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
 
@@ -38,10 +39,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        ControlWASD();	
+        ControlWASD();
+        //Damage(1f, null);
+        // If the player has just been damaged...
+        if (damaged)
+        {
+            // ... set the colour of the damageImage to the flash colour.
+        }
+
+        // Reset the damaged flag.
+        damaged = false;
     }
-
-
 
     void ControlWASD()
     {
@@ -110,6 +118,32 @@ public class PlayerController : MonoBehaviour
 
         Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
         body.velocity = pushDir * PushPower;
+    }
+
+    public override void Damage(float amount, Transform attacker)
+    {
+        Debug.Log("Ow");
+        base.Damage(amount, null);
+        // Set the damaged flag so the screen will flash.
+        damaged = true;
+
+        // Set the health bar's value to the current health.
+        healthCircle.fillAmount -= amount / 100.0f;
+        Debug.Log(healthCircle.fillAmount);
+
+        // If the player has lost all it's health and the death flag hasn't been set yet...
+        if (CurrentHealth <= 0 && !isDead)
+        {
+            // ... it should die.
+            Killed();
+        }
+    }
+
+    public override void Killed()
+    {
+        // Set the death flag so this function won't be called again.
+        base.Killed();
+        Debug.Log("Dead");
     }
 
 }
