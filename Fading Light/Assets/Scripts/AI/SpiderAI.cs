@@ -46,7 +46,7 @@ public class SpiderAI : BaseEntity
         base.Start();
         _collisionRange = GetComponent<CapsuleCollider>().radius;
 
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponentInChildren<Animation>();
 
         //Initlize the pathfinder
         pathfinder = GetComponent<NavMeshAgent>();
