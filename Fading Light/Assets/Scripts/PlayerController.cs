@@ -12,16 +12,12 @@ public class PlayerController : MonoBehaviour
     public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public bool dead = false;
-    bool inPlayer1 = true;
-    public GameObject TorchP1;
-    public GameObject TorchP2;
-    public GameObject SpotlightP1;
-    public GameObject SpotlightP2;
+
+   
     public int PushPower = 20;
     public bool IsDisabled;
-
     private bool _lastPressed = false;
-
+    public TorchFuelController TorchFuelControllerScript;
     // System
     private Quaternion _targetRotation;
     Animator _animator;
@@ -31,8 +27,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        TorchP2.SetActive(false);
-        SpotlightP2.SetActive(false);
+        GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
+        TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
 
         _animator = GetComponentInChildren<Animator>();//need this...
         _controller = GetComponent<CharacterController>();
@@ -40,12 +36,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //ControlMouse();
-       
-        ControlWASD();
-        //transform.Rotate(Vector3.up * Time.deltaTime * 1000);
-			
-       
+        ControlWASD();	
     }
 
 
@@ -91,30 +82,13 @@ public class PlayerController : MonoBehaviour
         // Checking if players are next to each other
         if (other.gameObject.tag.Equals("Player2"))
         {
-            Debug.Log("HERE");
-            // Checking if users wanted to swap the torch
             if (Input.GetButtonDown("SwapTorch") && !_lastPressed)
             {
                 // Disabling current player's torch and activating the other
                 _lastPressed = true;
-
-                if (TorchP1.gameObject.activeSelf)
-                {
-                    TorchP1.SetActive(false);
-                    SpotlightP1.SetActive(false);
-
-                    TorchP2.SetActive(true);
-                    SpotlightP2.SetActive(true);
-                } else
-                {
-                    TorchP1.SetActive(true);
-                    SpotlightP1.SetActive(true);
-
-                    TorchP2.SetActive(false);
-                    SpotlightP2.SetActive(false);
-                }
-
-            } else if (Input.GetButtonUp("SwapTorch"))
+                TorchFuelControllerScript.SwapPlayers();
+            }
+            else if (Input.GetButtonUp("SwapTorch"))
             {
                 _lastPressed = false;
             }
