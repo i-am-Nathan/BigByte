@@ -11,7 +11,8 @@ public class SpiderAI : BaseEntity
 		Init,
 		Idle,
 		Chase,
-        Attack
+        Attack,
+        Taunt
 	}
 
     //Spider stats
@@ -42,6 +43,8 @@ public class SpiderAI : BaseEntity
     private float _targetCollisionRange;
     private bool _lockedOn;
     private bool _inAttackRange;
+    private bool _isRunning;
+    private bool _isMoving;
 
     private void Awake()
 	{
@@ -80,9 +83,32 @@ public class SpiderAI : BaseEntity
 	{
         Debug.Log("Entered state: Chase");
 
-        //Use coroutine to check when players enter activation range
-        _animator.Play("run");
+        if (!_isMoving)
+        {
+            _animator.Play("run", PlayMode.StopAll);
+            _isMoving = true;
+        }
+
+        //Use coroutine to check when players enter activation range       
         StartCoroutine(UpdatePath());
+    }
+
+    private void Taunt_Enter()
+    {
+        Debug.Log("Entered state: Taunt");
+
+        /*//Use coroutine to check when players enter activation range
+        pathfinder.enabled = false;
+        _animator.Play("taunt");     
+        
+        while (_animator.isPlaying)
+        {
+
+        }
+
+        pathfinder.enabled = enabled;*/
+
+        fsm.ChangeState(States.Idle);
     }
 
     private void Attack_Enter()
@@ -114,7 +140,7 @@ public class SpiderAI : BaseEntity
             if (Vector3.Distance(player1.position, this.gameObject.transform.position) < HardActivationDistance ||
             Vector3.Distance(player2.position, this.gameObject.transform.position) < HardActivationDistance)
             {
-                Debug.Log("Player found.");
+                //Debug.Log("Player found.");
                 //If they are then change to attack state
                 _lockedOn = true;
             }
@@ -141,35 +167,45 @@ public class SpiderAI : BaseEntity
             {
                 target = player2;
                 _lockedOn = true;
-                Debug.Log("Locked onto Player 2");
+                //Debug.Log("Locked onto Player 2");
             }
             else
             {
                 target = player1;
                 _lockedOn = true;
-                Debug.Log("Locked onto Player 1");
+                //Debug.Log("Locked onto Player 1");
             }
 
-            //If they have moved outside the loose activation range, then stop chasing
+            //If they have moved outside the loose activation range, then taunt and stop chasing
             if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance)
             {
+                Debug.Log("Lost player");
                 _lockedOn = false;
-                fsm.ChangeState(States.Idle);
+                _isMoving = false;
+                fsm.ChangeState(States.Taunt);
             }
 
             //Debug.Log("Distance: " + Vector3.Distance(target.position, this.gameObject.transform.position) + " Attack Range: " + AttackRange);
 
             if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
             {
+                Debug.Log("In attack range");
                 _lockedOn = false;
+                _isMoving = false;
                 fsm.ChangeState(States.Attack);
             }
 
-
             //Every so often sprint at the player
-            pathfinder.speed = RunSpeed;
+            if (_isRunning)
+            {
+                pathfinder.speed = SprintSpeed;
+            } else
+            {
+                //Random chance of it starting to run
 
-
+                pathfinder.speed = RunSpeed;
+            }
+            
             pathfinder.SetDestination(target.position);
 
             yield return new WaitForSeconds(refreshRate);
@@ -180,25 +216,36 @@ public class SpiderAI : BaseEntity
 
     IEnumerator AttackPlayer()
     {
-        pathfinder.enabled = false;
-        _inAttackRange = true;   
+        //pathfinder.enabled = false;
+        //pathfinder.Stop();
+        _inAttackRange = true;
+        int attackCount = 0;
                
         while (_inAttackRange)
         {
             //Debug.Log("Attacking player");
+            //_animator["attack2"].speed = AttackSpeed;
             _animator.Play("attack2");
-            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+            BaseEntity targetBase = target.GetComponent<BaseEntity>();
+            targetBase.Damage(AttackDamage, this.gameObject.transform);
+
+            if (attackCount == 1)
+            {
+                _isRunning = false;
+                attackCount = 0;
+            }
 
             if (Vector3.Distance(target.position, this.gameObject.transform.position) > AttackRange)
             {
                 _inAttackRange = false;
-                fsm.ChangeState(States.Chase);
             }
 
+            attackCount++;
             yield return new WaitForSeconds(AttackSpeed);
         }
         
-        pathfinder.enabled = true;
+        //pathfinder.enabled = true;
+        fsm.ChangeState(States.Chase);
     }
 
     public override void Attacked(float damage, Transform attacker)
