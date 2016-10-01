@@ -11,6 +11,7 @@ public class Player2Controller : MonoBehaviour
     public bool CanMove;
     public int PushPower = 20;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
+    public bool IsDisabled;
     // System
     private Quaternion targetRotation;
 
@@ -48,7 +49,11 @@ public class Player2Controller : MonoBehaviour
 
 	void ControlWASD()
 	{
-       
+
+        if (IsDisabled)
+        {
+            return;
+        }
 
 		Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical1"), 0, Input.GetAxisRaw("Horizontal1"));
 

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class CandleLight : MonoBehaviour {
+    private bool _active = false;
+
 
 	// Use this for initialization
 	void Start () {
