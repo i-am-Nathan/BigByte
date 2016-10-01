@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public GameObject SpotlightP1;
     public GameObject SpotlightP2;
     public int PushPower = 20;
-
+    public bool IsDisabled;
 
     private bool _lastPressed = false;
 
@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
 
     void ControlWASD()
     {
+        if (IsDisabled)
+        {
+            return;
+        }
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
 
         if (input != Vector3.zero)
