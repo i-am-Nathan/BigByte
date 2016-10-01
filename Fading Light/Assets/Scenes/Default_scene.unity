@@ -291,7 +291,7 @@ MonoBehaviour:
   SpotlightP1: {fileID: 2053071772}
   SpotlightP2: {fileID: 1621957689}
   Player1TorchLight: {fileID: 2053071774}
-  Player2TorchLight: {fileID: 2053071774}
+  Player2TorchLight: {fileID: 1621957690}
   TorchInPlayer1: 1
 --- !u!4 &154942054
 Transform:
@@ -914,6 +914,7 @@ GameObject:
   - 33: {fileID: 915267615}
   - 136: {fileID: 915267614}
   - 23: {fileID: 915267613}
+  - 114: {fileID: 915267617}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -954,9 +955,9 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 915267612}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 2
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -980,6 +981,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
+--- !u!114 &915267617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 915267612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9255f2d088b162f4f9b19b806593c078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FuelAmount: 100
 --- !u!1001 &1060378177
 Prefab:
   m_ObjectHideFlags: 0
@@ -1703,7 +1716,6 @@ MonoBehaviour:
   dead: 0
   PushPower: 20
   IsDisabled: 0
-  TorchFuelControllerScript: {fileID: 0}
 --- !u!143 &1679935941
 CharacterController:
   m_ObjectHideFlags: 0

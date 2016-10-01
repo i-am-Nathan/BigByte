@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public int PushPower = 20;
     public bool IsDisabled;
     private bool _lastPressed = false;
-    public TorchFuelController TorchFuelControllerScript;
+    private TorchFuelController TorchFuelControllerScript;
     // System
     private Quaternion _targetRotation;
     Animator _animator;

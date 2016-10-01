@@ -25,15 +25,20 @@ public class TorchFuelController : MonoBehaviour {
         SpotlightP2.SetActive(false);
         InvokeRepeating("RemoveFuelAmount", 0, 1);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    internal void AddFuel(float fuelAmount)
+    {
+        TotalFuelPercentage += fuelAmount;
+        TotalFuelPercentage = Math.Min(100, TotalFuelPercentage);
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 
-    void RemoveFuelAmount()
+    public void RemoveFuelAmount()
     {
-        Debug.Log("FUEL BEING REMOVED");
         TotalFuelPercentage -= FuelBurnRate;
         Player1TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
         Player2TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
