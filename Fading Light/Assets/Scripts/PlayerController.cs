@@ -29,7 +29,9 @@ public class PlayerController : BaseEntity
 
     protected override void Start()
     {
+        
         base.Start();
+        
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
 
@@ -39,6 +41,18 @@ public class PlayerController : BaseEntity
 
     void Update()
     {
+        if (IsDisabled || isDead)
+        {
+            _animator.SetBool("Idling", true);
+            if (isDead && _animator)
+            {
+                IsDisabled = true;
+                _animator.Play("2HDeathB");//tell mecanim to do the attack animation(trigger)
+            }
+
+            return;
+        }
+
         ControlWASD();
         //Damage(1f, null);
         // If the player has just been damaged...

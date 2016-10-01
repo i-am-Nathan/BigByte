@@ -5,7 +5,7 @@ public class BaseEntity : MonoBehaviour{
 
 	public float IntialHealth;
 	public float CurrentHealth { get; protected set; }
-	protected bool isDead;
+	public bool isDead;
     
     protected virtual void Start() {
         CurrentHealth = IntialHealth;
