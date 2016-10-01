@@ -63,12 +63,9 @@ public class TorchFuelController : MonoBehaviour {
 
         var distanceToTorch = Math.Sqrt(Math.Abs((torchPosition.x - x) * (torchPosition.x - x)) + Math.Abs((torchPosition.z - z) * (torchPosition.z - z)));
 
-        var torchRadius = torchPosition.y * Math.Tan((currentTorchLight.spotAngle) * (Math.PI / 180));
+        var torchRadius = torchPosition.y*2.5 * Math.Tan((currentTorchLight.spotAngle/2) * (Math.PI / 180));
         torchRadius = Math.Abs(torchRadius);
-        Debug.Log("Angle: " + currentTorchLight.spotAngle);
-        Debug.Log("Height: " + torchPosition.y);
-        Debug.Log("RADIUS: " + torchRadius);
-        Debug.Log("Distance: " + distanceToTorch);
+
         if (distanceToTorch < torchRadius)
         {
             return true;
