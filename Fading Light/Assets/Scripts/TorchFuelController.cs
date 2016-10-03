@@ -130,6 +130,7 @@ public class TorchFuelController : MonoBehaviour {
     
     public void SwapPlayers()
     {
+        Debug.Log("HERE");
         // Disabling current player's torch and activating the other
         if (TorchInPlayer1)
         {
