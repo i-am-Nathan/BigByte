@@ -15,7 +15,7 @@ public class PlayerController : BaseEntity
     public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public bool dead = false;
-
+    public bool IsInCircle = false;
    
     public int PushPower = 20;
     public bool IsDisabled;
@@ -29,7 +29,9 @@ public class PlayerController : BaseEntity
 
     protected override void Start()
     {
+        
         base.Start();
+        
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
 
@@ -39,6 +41,18 @@ public class PlayerController : BaseEntity
 
     void Update()
     {
+        if (IsDisabled || isDead)
+        {
+            _animator.SetBool("Idling", true);
+            if (isDead && _animator)
+            {
+                IsDisabled = true;
+                _animator.Play("2HDeathB");//tell mecanim to do the attack animation(trigger)
+            }
+
+            return;
+        }
+
         ControlWASD();
         //Damage(1f, null);
         // If the player has just been damaged...
@@ -53,8 +67,18 @@ public class PlayerController : BaseEntity
 
     void ControlWASD()
     {
+        if(TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
+        {
+            IsInCircle = true;
+        }else
+        {
+            IsInCircle = false;
+        }
+
+
         if (IsDisabled)
         {
+			_animator.SetBool("Idling", true);
             return;
         }
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
@@ -123,7 +147,7 @@ public class PlayerController : BaseEntity
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Ow");
-        base.Damage(amount, null);
+        base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
 

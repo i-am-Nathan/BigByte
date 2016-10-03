@@ -30,6 +30,7 @@ public class Player2Controller : BaseEntity
 
 	void Start()
 	{
+        base.Start();
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
        
@@ -37,9 +38,21 @@ public class Player2Controller : BaseEntity
 
 	void Update()
 	{
-		//ControlMouse();
+        if (IsDisabled || isDead)
+        {
+            _animator.SetBool("Idling", true);
+            if (isDead && _animator)
+            {
+                IsDisabled = true;
+                _animator.Play("2HDeathB");//tell mecanim to do the attack animation(trigger)
+            }
 
-		ControlWASD();
+            return;
+        }
+
+        //ControlMouse();
+
+        ControlWASD();
 
 		//transform.Rotate(Vector3.up * Time.deltaTime * 1000);
 		/*Vector3 pos = Camera.main.WorldToViewportPoint (transform.position);
@@ -54,11 +67,8 @@ public class Player2Controller : BaseEntity
 
 	void ControlWASD()
 	{
-
-        if (IsDisabled)
-        {
-            return;
-        }
+       
+       
 
 		Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical1"), 0, Input.GetAxisRaw("Horizontal1"));
 
@@ -124,6 +134,9 @@ public class Player2Controller : BaseEntity
     {
         // Set the death flag so this function won't be called again.
         base.Killed();
+        IsDisabled = true;
+
+
         Debug.Log("Dead");
     }
 }

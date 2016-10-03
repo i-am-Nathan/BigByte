@@ -5,14 +5,14 @@ public class BaseEntity : MonoBehaviour{
 
 	public float IntialHealth;
 	public float CurrentHealth { get; protected set; }
-	protected bool isDead;
+	public bool isDead;
     
     protected virtual void Start() {
         CurrentHealth = IntialHealth;
 	}
 
 	public virtual void Attacked(float damage, Transform attacker) {
-		Damage(damage, null);
+		Damage(damage, attacker);
 	}
 
 	public virtual void Damage(float damage, Transform attacker) {
