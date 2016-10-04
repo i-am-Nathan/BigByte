@@ -9,6 +9,17 @@ public class OpenTreasure : MonoBehaviour {
 	public float MaxCoins;
 	public GameObject coin;
 	GameObject CoinPrefab;
+
+	public AudioClip TreasureSound;
+	public AudioClip TreasureOpening;
+	private AudioSource _source;
+
+
+	void Awake(){
+		_source = GetComponent<AudioSource>();
+	}
+
+
 	void Start () {
 		open = false;
 		speed = 60;
@@ -34,8 +45,10 @@ public class OpenTreasure : MonoBehaviour {
 
 
 		float timePassed = 0;
+		_source.PlayOneShot (TreasureOpening);
 		while (timePassed < 2)
 		{
+
 			GameObject lid = GameObject.FindGameObjectWithTag ("Lid");
 			lid.transform.Rotate (new Vector3 (-1, 0, 0) * (speed * Time.deltaTime));
 			timePassed += Time.deltaTime;
@@ -52,9 +65,11 @@ public class OpenTreasure : MonoBehaviour {
 			float randomZ = Random.Range (-5, 5)*5;
 			//CoinPrefab.GetComponent<Rigidbody> ().AddForce (new Vector3 (randomX,60000f, randomZ));
 			CoinPrefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomX, 0.01f, randomZ);
+			_source.PlayOneShot (TreasureSound);
 			//CoinPrefab.GetComponent<Rigidbody> ().AddRelativeForce (new Vector3 (randomX, 0.000000001f, randomZ));
 			//CoinPrefab.GetComponent<Rigidbody> ().AddRelativeForce (new Vector3 (0, -50, 0));
 		}
+		_source.Stop ();
 	}
 
 
