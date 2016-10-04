@@ -87,11 +87,11 @@ public class CandleLight : MonoBehaviour {
             if (Input.GetButtonDown("CandleLight") && !_triggered)
             {
                 _triggered = true;
-                if (!_active && _triggered)
+                if (_active && _triggered)
                 {
-                    _flame.GetComponent<ParticleSystem>().Play();
-                    _spotlight.GetComponent<Light>().spotAngle = 100;
-                    _active = true;
+                    _flame.GetComponent<ParticleSystem>().Stop();
+                    _spotlight.GetComponent<Light>().spotAngle = 0;
+                    _active = false;
                     _triggered = false;
                 }
             }
@@ -102,11 +102,11 @@ public class CandleLight : MonoBehaviour {
             if (Input.GetButtonDown("CandleLight") && !_triggered)
             {
                 _triggered = true;
-                if (!_active && _triggered)
+                if (_active && _triggered)
                 {
-                    _flame.GetComponent<ParticleSystem>().Play();
-                    _spotlight.GetComponent<Light>().spotAngle = 100;
-                    _active = true;
+                    _flame.GetComponent<ParticleSystem>().Stop();
+                    _spotlight.GetComponent<Light>().spotAngle = 0;
+                    _active = false;
                     _triggered = false;
                 }
             }
