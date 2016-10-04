@@ -20,6 +20,9 @@ public class TextBoxManager : MonoBehaviour {
 	private bool isTyping = false;
 	private bool cancelTyping = false;
 
+	public AudioClip typeSound;
+	private AudioSource source;
+
 	public float typeSpeed;
 	// Use this for initialization
 	void Start () {
@@ -39,6 +42,9 @@ public class TextBoxManager : MonoBehaviour {
 
 	}
 
+	void Awake(){
+		source = GetComponent<AudioSource>();
+	}
 	// Update is called once per frame
 	void Update () {
 		if (!isActive) {
@@ -79,7 +85,9 @@ public class TextBoxManager : MonoBehaviour {
 		isTyping = true;
 		cancelTyping = false;
 		while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1)) {
+			
 			dialogue.text += lineOfText [letter];
+			source.PlayOneShot (typeSound);
 			letter += 1;
 			yield return new WaitForSeconds (typeSpeed);
 		}
