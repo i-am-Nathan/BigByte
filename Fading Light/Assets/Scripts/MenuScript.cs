@@ -45,7 +45,7 @@ public class MenuScript : MonoBehaviour {
     public void StartLevel()
     {
         //Loading level
-        //Application.LoadLevel(1);
+        Application.LoadLevel("juno_tutlevel1");
     }
     public void highScorePress()
     {
