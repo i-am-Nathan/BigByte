@@ -4,18 +4,27 @@ using UnityEditor.Animations;
 
 public class PressurePlate : MonoBehaviour {
 
-    private int thingsOnTop = 0;
+    private int _thingsOnTop = 0;
+    private bool _pressed = false;
 
     void OnTriggerEnter(Collider other) {
         
-        thingsOnTop++;
-        if (thingsOnTop == 2)
+        if (other.tag.Equals("Crate"))
+        {
+            _thingsOnTop += 2;
+
+        } else
+        {
+            _thingsOnTop++;
+        }
+        if (_thingsOnTop >= 2 && !_pressed)
 
         {
             this.GetComponent<Animation>().Play("PressurePlateDown");
             GameObject wall = GameObject.FindWithTag("Falling Wall");
-            wall.GetComponent<FallingWall>().pressurePlate1 = true;
-           
+            wall.GetComponent<Animation>().Play("FallingWallFall");
+            _pressed = true;
+
         }
         
     }
@@ -24,14 +33,25 @@ public class PressurePlate : MonoBehaviour {
 
     void OnTriggerExit(Collider other) {
 
-        thingsOnTop--;
-        if (thingsOnTop == 0)
+        if (other.tag.Equals("Crate"))
+        {
+            _thingsOnTop -= 2;
+
+        }
+        else
+        {
+            _thingsOnTop--;
+        }
+        if (_thingsOnTop < 2 && _pressed)
+
         {
             this.GetComponent<Animation>().Play("PressurePlateUp");
             GameObject wall = GameObject.FindWithTag("Falling Wall");
-            wall.GetComponent<FallingWall>().pressurePlate1 = false;
-            
+            wall.GetComponent<Animation>().Play("FallingWallRaise");
+            _pressed = false;
+
         }
+
 
     }
 }
