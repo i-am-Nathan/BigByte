@@ -1367,9 +1367,9 @@ MonoBehaviour:
   DestroyWhenActivated: 0
   MinCoins: 0
   MaxCoins: 0
-  Coin: {fileID: 0}
-  TreasureSound: {fileID: 0}
-  TreasureOpening: {fileID: 0}
+  Coin: {fileID: 100816, guid: de4151dbc2521774db677921a7a163b0, type: 2}
+  TreasureSound: {fileID: 8300000, guid: 54230e59114d347d69f8998a31cd8052, type: 3}
+  TreasureOpening: {fileID: 8300000, guid: 9d37ff7853dd622488f4edbd203efaf3, type: 3}
 --- !u!65 &1392593849
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1599,27 +1599,27 @@ Prefab:
     m_Modifications:
     - target: {fileID: 22405138, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22405138, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22445274, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22445274, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22457432, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22457432, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22466022, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1651,7 +1651,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22466022, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_RootOrder
-      value: 18
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 22466022, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -1700,6 +1700,18 @@ Prefab:
     - target: {fileID: 185450, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_TagString
       value: Total Time
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455018, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455018, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.00000016292068
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455018, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
@@ -2211,9 +2223,9 @@ MonoBehaviour:
   EndLine: 1
   TextBox: {fileID: 1499881562}
   RequireButtonPress: 0
-  DestroyWhenActivated: 0
+  DestroyWhenActivated: 1
   DialogueSpeech: []
-  TalkOnce: 0
+  TalkOnce: 1
 --- !u!1 &2053122986
 GameObject:
   m_ObjectHideFlags: 0

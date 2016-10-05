@@ -17,7 +17,7 @@ public class Coins : MonoBehaviour {
         GameObject go = GameObject.FindGameObjectWithTag("Player");
         _player1Script = (PlayerController)go.GetComponent(typeof(PlayerController));
 
-        GameObject tempGo = GameObject.FindGameObjectWithTag("Player 2");
+        GameObject tempGo = GameObject.FindGameObjectWithTag("Player2");
         _player2Script = (Player2Controller)tempGo.GetComponent(typeof(Player2Controller));
     }
 
