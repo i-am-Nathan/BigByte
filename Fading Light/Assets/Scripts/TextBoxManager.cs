@@ -14,6 +14,9 @@ public class TextBoxManager : MonoBehaviour {
 	public Sprite[] Images;
 	private Dictionary<string,Sprite> SpriteDictionary = new Dictionary<string,Sprite>();
 	private Dictionary<string,string> CharacterNameDictionairy = new Dictionary<string,string>();
+
+	private AudioClip[] sounds;
+
 	public int CurrentLine;
 	public int EndLine;
 	public PlayerController Player1;
