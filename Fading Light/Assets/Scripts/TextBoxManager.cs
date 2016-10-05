@@ -76,7 +76,7 @@ public class TextBoxManager : MonoBehaviour {
 			//StartCoroutine (TextScroll (textLines [currentLine]));
 			if (_splitText [1] == "S") {
 				print ("PLAYING CLIP");
-				_source.PlayOneShot (_dialogueSounds [_currentClip]);
+				_source.PlayOneShot (_dialogueSounds [_currentClip],1f);
 				_currentClip += 1;
 
 			}
@@ -98,7 +98,7 @@ public class TextBoxManager : MonoBehaviour {
 					//StartCoroutine (TextScroll (textLines [currentLine]));
 					if (_splitText [1] == "S") {
 						print ("PLAYING CLIP NOW");
-						_source.PlayOneShot (_dialogueSounds [_currentClip]);
+						_source.PlayOneShot (_dialogueSounds [_currentClip],1f);
 						_currentClip += 1;
 
 					}
@@ -126,7 +126,7 @@ public class TextBoxManager : MonoBehaviour {
 		while (_isTyping && !_cancelTyping && (letter < lineOfText.Length - 1)) {
 			
 			Dialogue.text += lineOfText [letter];
-			_source.PlayOneShot (TypeSound);
+			_source.PlayOneShot (TypeSound, 0.1f);
 			letter += 1;
 			yield return new WaitForSeconds (TypeSpeed);
 		}
