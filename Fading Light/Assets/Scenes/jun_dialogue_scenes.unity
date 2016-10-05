@@ -321,13 +321,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba795bf954865c7429ca4cefdc62a941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 4900000, guid: 3fde0298124e938448900f316a5e100c, type: 3}
-  startLine: 2
-  endLine: 5
-  textBox: {fileID: 1499881562}
-  requireButtonPress: 1
-  destroyWhenActivated: 0
-  talkOnce: 1
+  Dialogue: {fileID: 4900000, guid: 3fde0298124e938448900f316a5e100c, type: 3}
+  StartLine: 2
+  EndLine: 8
+  TextBox: {fileID: 1499881562}
+  RequireButtonPress: 1
+  DestroyWhenActivated: 0
+  TalkOnce: 1
 --- !u!136 &159550794
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2606,10 +2606,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704002ce4fa4802418e3e9c166ad9381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyWhenActivated: 0
+  DestroyWhenActivated: 0
   MinCoins: 0
   MaxCoins: 0
-  coin: {fileID: 100816, guid: de4151dbc2521774db677921a7a163b0, type: 2}
+  Coin: {fileID: 100816, guid: de4151dbc2521774db677921a7a163b0, type: 2}
   TreasureSound: {fileID: 8300000, guid: 54230e59114d347d69f8998a31cd8052, type: 3}
   TreasureOpening: {fileID: 8300000, guid: 9d37ff7853dd622488f4edbd203efaf3, type: 3}
 --- !u!65 &1392593849
@@ -2726,25 +2726,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffd934f4ed361845a9c828092456ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textBox: {fileID: 1052923679}
-  dialogue: {fileID: 1715640928}
-  textFile: {fileID: 4900000, guid: 44d0b223def2da241be9cdb64f9089f3, type: 3}
-  textLines: []
-  characterImage: {fileID: 647055750}
-  characterName: {fileID: 1056449999}
-  images:
-  - {fileID: 21300000, guid: ea616afd23403a7449d7505d4de4be1b, type: 3}
+  TextBox: {fileID: 1052923679}
+  Dialogue: {fileID: 1715640928}
+  TextFile: {fileID: 0}
+  TextLines: []
+  CharacterImage: {fileID: 647055750}
+  CharacterName: {fileID: 1056449999}
+  Images:
+  - {fileID: 21300000, guid: 72f3ddb4e9c4f52438d2e4a7af4f9ee8, type: 3}
   - {fileID: 21300000, guid: 4f6d24a9471be5241a6b2f2287a28e42, type: 3}
-  - {fileID: 21300000, guid: 3e39c388906051f4bb5ae23d32a9eae8, type: 3}
-  currentLine: 0
-  endAtLine: 0
-  player1: {fileID: 1679935940}
-  player2: {fileID: 660672068}
-  stopMovement: 0
-  isActive: 0
-  firstline: 0
-  typeSound: {fileID: 8300000, guid: 284c5d72fed0df24782807decd3e384f, type: 3}
-  typeSpeed: 0.05
+  - {fileID: 21300000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+  CurrentLine: 0
+  EndLine: 0
+  Player1: {fileID: 1679935940}
+  Player2: {fileID: 660672068}
+  StopMovement: 0
+  IsActive: 0
+  FirstLine: 0
+  TypeSound: {fileID: 8300000, guid: 284c5d72fed0df24782807decd3e384f, type: 3}
+  TypeSpeed: 0.03
 --- !u!4 &1499881563
 Transform:
   m_ObjectHideFlags: 0
@@ -3887,7 +3887,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1959827241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 388.2, y: 9.5, z: -419.8}
+  m_LocalPosition: {x: 388.2, y: 6.8, z: -419.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -3904,13 +3904,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba795bf954865c7429ca4cefdc62a941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 4900000, guid: 3fde0298124e938448900f316a5e100c, type: 3}
-  startLine: 0
-  endLine: 1
-  textBox: {fileID: 1499881562}
-  requireButtonPress: 0
-  destroyWhenActivated: 1
-  talkOnce: 1
+  Dialogue: {fileID: 4900000, guid: 3fde0298124e938448900f316a5e100c, type: 3}
+  StartLine: 0
+  EndLine: 1
+  TextBox: {fileID: 1499881562}
+  RequireButtonPress: 0
+  DestroyWhenActivated: 1
+  TalkOnce: 1
 --- !u!1 &1964826100
 GameObject:
   m_ObjectHideFlags: 0

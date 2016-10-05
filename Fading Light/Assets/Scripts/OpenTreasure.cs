@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class OpenTreasure : MonoBehaviour {
-	public bool destroyWhenActivated;
-	private bool open; 
-	private float speed;
+	public bool DestroyWhenActivated;
+	private bool _open; 
+	private float _speed;
 	public float MinCoins;
 	public float MaxCoins;
-	public GameObject coin;
+	public GameObject Coin;
 	GameObject CoinPrefab;
 
 	public AudioClip TreasureSound;
@@ -21,8 +21,8 @@ public class OpenTreasure : MonoBehaviour {
 
 
 	void Start () {
-		open = false;
-		speed = 60;
+		_open = false;
+		_speed = 60;
 	}
 
 	// Update is called once per frame
@@ -30,10 +30,10 @@ public class OpenTreasure : MonoBehaviour {
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.Y)) {
 
-				if (!open) {
+				if (!_open) {
 					print ("STFU");
 					StartCoroutine (Open ());
-					open = true;
+					_open = true;
 				}
 			}
 		}
@@ -43,10 +43,10 @@ public class OpenTreasure : MonoBehaviour {
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.Y)) {
 
-				if (!open) {
+				if (!_open) {
 					print ("STFU");
 					StartCoroutine (Open ());
-					open = true;
+					_open = true;
 				}
 			}
 		}
@@ -65,7 +65,7 @@ public class OpenTreasure : MonoBehaviour {
 		{
 
 			GameObject lid = GameObject.FindGameObjectWithTag ("Lid");
-			lid.transform.Rotate (new Vector3 (-1, 0, 0) * (speed * Time.deltaTime));
+			lid.transform.Rotate (new Vector3 (-1, 0, 0) * (_speed * Time.deltaTime));
 			timePassed += Time.deltaTime;
 			yield return null;
 
@@ -75,7 +75,7 @@ public class OpenTreasure : MonoBehaviour {
 		for (int i = 0; i < randomNumber; i++) {
 			yield return new WaitForSeconds (0.1f);
 
-			CoinPrefab = Instantiate (coin, transform.position + new Vector3(0,4,0), Quaternion.identity)as GameObject;
+			CoinPrefab = Instantiate (Coin, transform.position + new Vector3(0,4,0), Quaternion.identity)as GameObject;
 			float randomX = Random.Range (-5, 5)*5;
 			float randomZ = Random.Range (-5, 5)*5;
 			//CoinPrefab.GetComponent<Rigidbody> ().AddForce (new Vector3 (randomX,60000f, randomZ));

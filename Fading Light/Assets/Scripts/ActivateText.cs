@@ -2,35 +2,35 @@
 using System.Collections;
 
 public class ActivateText : MonoBehaviour {
-	public TextAsset dialogue;
+	public TextAsset Dialogue;
 
-	public int startLine;
-	public int endLine;
+	public int StartLine;
+	public int EndLine;
 
-	public TextBoxManager textBox;
+	public TextBoxManager TextBox;
 	// Use this for initialization
 
-	public bool requireButtonPress;
-	private bool waitForPress;
-	public bool destroyWhenActivated;
+	public bool RequireButtonPress;
+	private bool _waitForPress;
+	public bool DestroyWhenActivated;
 
-	public bool talkOnce;
-	private bool talked;
+	public bool TalkOnce;
+	private bool _talked;
 	void Start () {
-		talked = false;
+		_talked = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (waitForPress && Input.GetKeyDown (KeyCode.T)) {
-			if ((talkOnce == true && talked == false) || (talkOnce == false)) {
+		if (_waitForPress && Input.GetKeyDown (KeyCode.T)) {
+			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
 				print ("IN HERE UPDATE");
-				textBox.ReloadScript (dialogue);
-				textBox.currentLine = startLine;
-				textBox.endAtLine = endLine;
-				textBox.EnableDialogue ();
-				talked = true;
-				if (destroyWhenActivated) {
+				TextBox.ReloadScript (Dialogue);
+				TextBox.CurrentLine = StartLine;
+				TextBox.EndLine = EndLine;
+				TextBox.EnableDialogue ();
+				_talked = true;
+				if (DestroyWhenActivated) {
 					Destroy (gameObject);
 				}
 			}
@@ -39,18 +39,18 @@ public class ActivateText : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (requireButtonPress == true) {
-			waitForPress = true;
+		if (RequireButtonPress == true) {
+			_waitForPress = true;
 			return;
 		}
 		if (other.name == "Player 1" || other.name == "Player2") {
-			if ((talkOnce == true && talked == false) || (talkOnce == false)) {
-				textBox.ReloadScript (dialogue);
-				textBox.currentLine = startLine;
-				textBox.endAtLine = endLine;
-				textBox.EnableDialogue ();
-				talked = true;
-				if (destroyWhenActivated) {
+			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
+				TextBox.ReloadScript (Dialogue);
+				TextBox.CurrentLine = StartLine;
+				TextBox.EndLine = EndLine;
+				TextBox.EnableDialogue ();
+				_talked = true;
+				if (DestroyWhenActivated) {
 					Destroy (gameObject);
 				}
 			}
@@ -59,7 +59,7 @@ public class ActivateText : MonoBehaviour {
 }
 	void onTriggerExit(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
-			waitForPress = false;
+			_waitForPress = false;
 		}
 	}
 }
