@@ -15,7 +15,8 @@ public class TextBoxManager : MonoBehaviour {
 	private Dictionary<string,Sprite> SpriteDictionary = new Dictionary<string,Sprite>();
 	private Dictionary<string,string> CharacterNameDictionairy = new Dictionary<string,string>();
 
-	private AudioClip[] sounds;
+	private AudioClip[] _dialogueSounds;
+	private int _currentClip;
 
 	public int CurrentLine;
 	public int EndLine;
@@ -65,15 +66,20 @@ public class TextBoxManager : MonoBehaviour {
 		if (!IsActive) {
 			return;
 		}
-			
+			//Format of dialogue is going to be CharacterName:AudioClip:Dialogue
 
 		if (FirstLine) {
-			_splitText= new string[2];
+			_splitText= new string[3];
 			_splitText = TextLines [CurrentLine].Split (':');
 			CharacterImage.sprite = SpriteDictionary [_splitText [0]];
 			CharacterName.text = CharacterNameDictionairy [_splitText [0]];
 			//StartCoroutine (TextScroll (textLines [currentLine]));
-			StartCoroutine (TextScroll (_splitText[1]));
+			if (_splitText [1] == "S") {
+				_source.PlayOneShot (_dialogueSounds [_currentClip]);
+				_currentClip += 1;
+			}
+			StartCoroutine (TextScroll (_splitText[2]));
+			_source.Stop;
 			FirstLine = false;
 		}
 
@@ -84,11 +90,16 @@ public class TextBoxManager : MonoBehaviour {
 				if (CurrentLine > EndLine) {
 					DisableDialogue ();
 				} else {
-					_splitText= new string[2];
+					_splitText= new string[3];
 					_splitText = TextLines [CurrentLine].Split (':');
 					CharacterImage.sprite = SpriteDictionary [_splitText [0]];
 					CharacterName.text = CharacterNameDictionairy [_splitText [0]];
-					StartCoroutine (TextScroll (_splitText[1]));
+					if (_splitText [1] == "S") {
+						_source.PlayOneShot (_dialogueSounds [_currentClip]);
+						_currentClip += 1;
+					}
+					StartCoroutine (TextScroll (_splitText[2]));
+					_source.Stop;
 					//StartCoroutine (TextScroll (textLines [currentLine]));
 					//dialogue.text = textLines [currentLine];
 				}
@@ -136,12 +147,13 @@ public class TextBoxManager : MonoBehaviour {
 		Player2.IsDisabled = false;
 	}
 
-	public void ReloadScript(TextAsset thisText){
+	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips){
 		if (thisText != null) {
 			TextLines = new string[1];
 			TextLines = (thisText.text.Split ('\n'));	
 			FirstLine = true;
-
+			_currentClip = 0;
+			_dialogueSounds = audioClips;
 		}
 	}
 }
