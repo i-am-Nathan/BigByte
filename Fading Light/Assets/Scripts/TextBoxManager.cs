@@ -14,7 +14,7 @@ public class TextBoxManager : MonoBehaviour {
 	public Sprite[] Images;
 	private Dictionary<string,Sprite> SpriteDictionary = new Dictionary<string,Sprite>();
 	private Dictionary<string,string> CharacterNameDictionairy = new Dictionary<string,string>();
-
+	GameObject gameUI;
 	private AudioClip[] _dialogueSounds;
 	private int _currentClip;
 
@@ -36,6 +36,7 @@ public class TextBoxManager : MonoBehaviour {
 	public float TypeSpeed;
 	// Use this for initialization
 	void Start () {
+		gameUI = GameObject.FindGameObjectWithTag ("GameUIWrapper");
 		SpriteDictionary.Add ("MM", Images [0]);
 		SpriteDictionary.Add ("BS", Images [1]);
 		SpriteDictionary.Add ("LS", Images [2]);
@@ -98,7 +99,7 @@ public class TextBoxManager : MonoBehaviour {
 					//StartCoroutine (TextScroll (textLines [currentLine]));
 					if (_splitText [1] == "S") {
 						print ("PLAYING CLIP NOW");
-						_source.PlayOneShot (_dialogueSounds [_currentClip],1f);
+						_source.PlayOneShot (_dialogueSounds [_currentClip],1);
 						_currentClip += 1;
 
 					}
@@ -140,6 +141,7 @@ public class TextBoxManager : MonoBehaviour {
 	}
 
 	public void EnableDialogue(){
+		gameUI.SetActive (false);
 		TextBox.SetActive (true);
 		IsActive = true;
 			Player1.IsDisabled = true;
@@ -147,6 +149,7 @@ public class TextBoxManager : MonoBehaviour {
 	}
 
 	public void DisableDialogue(){
+		gameUI.SetActive (true);
 		TextBox.SetActive (false);
 		IsActive = false;
 		Player1.IsDisabled = false;
