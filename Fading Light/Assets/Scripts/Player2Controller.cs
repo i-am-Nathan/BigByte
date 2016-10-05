@@ -1,33 +1,58 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player2Controller : MonoBehaviour
+public class Player2Controller : BaseEntity
 {
+    // Health image on floor
+    public Image healthCircle;                                 // Reference to the UI's health circle.
+    bool damaged;                                               // True when the player gets damaged.
 
-	// Handling
-	public float rotationSpeed = 20000;
-	public float walkSpeed = .0000002f;
-	public TextMesh levelText;
-	public bool dead = false;
 
-	// System
-	private Quaternion targetRotation;
+    // Handling
+    public float RotationSpeed;
+	public float WalkSpeed;
+    public bool CanMove;
+    public int PushPower = 20;
+    public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
+    public bool IsDisabled;
+    // System
+    private Quaternion targetRotation;
 
-	// Components
-	private CharacterController controller;
+    //Animation
+    private bool _isPlayingJump = false;
+    private bool _isPlayingAttack = false;
+    Animator _animator;
+
+    // Components
+    private CharacterController controller;
 
 	void Start()
 	{
-		controller = GetComponent<CharacterController>();
-
-	}
+        base.Start();
+        healthCircle.enabled = false;
+        _animator = GetComponentInChildren<Animator>();//need this...
+        controller = GetComponent<CharacterController>();
+    }
 
 	void Update()
 	{
-		//ControlMouse();
+        if (IsDisabled || isDead)
+        {
+            _animator.SetBool("Idling", true);
+            if (isDead && _animator)
+            {
+                IsDisabled = true;
+                _animator.Play("2HDeathB");//tell mecanim to do the attack animation(trigger)
+            }
 
-		ControlWASD();
+            return;
+        }
+
+        //ControlMouse();
+
+        ControlWASD();
 
 		//transform.Rotate(Vector3.up * Time.deltaTime * 1000);
 		/*Vector3 pos = Camera.main.WorldToViewportPoint (transform.position);
@@ -39,39 +64,86 @@ public class Player2Controller : MonoBehaviour
 
 
 
+
 	void ControlWASD()
 	{
+       
+       
+
 		Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical1"), 0, Input.GetAxisRaw("Horizontal1"));
 
-		if (input != Vector3.zero)
+		if (input != Vector3.zero && CanMove)
 		{
 			targetRotation = Quaternion.LookRotation(input);
-			transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetRotation.eulerAngles.y, rotationSpeed * Time.deltaTime);
+			transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetRotation.eulerAngles.y, RotationSpeed * Time.deltaTime);
 		}
 
-		Vector3 motion = input;
-		//motion *= (-Mathf.Abs(input.x) == 1 && -Mathf.Abs(input.z) == 1) ? .7f : 1;
-		Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
-		Vector3 difference = pos - transform.position;
+        _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
-		if ((difference.x > 80f && difference.x+motion.x*walkSpeed < difference.x) ||  (difference.x < -80f && difference.x+motion.x*walkSpeed > difference.x)) {
-			motion.x = 0;
-		}else{
-			motion.x = motion.x * walkSpeed;
-		}
+        if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
+        {
+            _animator.SetBool("Idling", false);
+        }
+        else if (Input.GetKey("e"))
+        {
 
-		if ((difference.z > 80f && difference.z+motion.z*walkSpeed < difference.z) ||  (difference.z < -80f && difference.z+motion.z*walkSpeed > difference.z)) {
-			print ("THE DIFFERENCE OF Z IS " +difference.z);
-			motion.z = 0;
-		}else{
-			motion.z = motion.z * walkSpeed;
-		}
-		//motion.z = motion.z * walkSpeed;
-		//motion *=  walkSpeed;
-		// motion += Vector3.up * -8;
+            _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+        }
+        else
+        {
+            _animator.SetBool("Idling", true);
+        }
 
-		controller.Move(motion * Time.deltaTime);
-	}
+    }
+
+    // Used to push rigid body objects in the scene
+    // Obtained from Unity Documentation
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body == null || body.isKinematic)
+            return;
+
+        if (hit.moveDirection.y < -0.3F)
+            return;
+
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+        body.velocity = pushDir * PushPower;
+    }
+
+    public override void Damage(float amount, Transform attacker)
+    {
+        healthCircle.enabled = true;
+        Debug.Log("Ow");
+        base.Damage(amount, null);
+        // Set the damaged flag so the screen will flash.
+        damaged = true;
+
+        // Set the health bar's value to the current health.
+        healthCircle.fillAmount -= amount / 100.0f;
+        Debug.Log(healthCircle.fillAmount);
+        Invoke("HideHealth", 3);
+
+        // If the player has lost all it's health and the death flag hasn't been set yet...
+        if (CurrentHealth <= 0 && !isDead)
+        {
+            // ... it should die.
+            Killed();
+        }
+    }
+
+    public override void Killed()
+    {
+        // Set the death flag so this function won't be called again.
+        base.Killed();
+        IsDisabled = true;
 
 
+        Debug.Log("Dead");
+    }
+
+    public void HideHealth()
+    {
+        healthCircle.enabled = false;
+    }
 }
