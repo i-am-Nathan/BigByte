@@ -75,11 +75,12 @@ public class TextBoxManager : MonoBehaviour {
 			CharacterName.text = CharacterNameDictionairy [_splitText [0]];
 			//StartCoroutine (TextScroll (textLines [currentLine]));
 			if (_splitText [1] == "S") {
+				print ("PLAYING CLIP");
 				_source.PlayOneShot (_dialogueSounds [_currentClip]);
 				_currentClip += 1;
+
 			}
 			StartCoroutine (TextScroll (_splitText[2]));
-			_source.Stop;
 			FirstLine = false;
 		}
 
@@ -94,12 +95,14 @@ public class TextBoxManager : MonoBehaviour {
 					_splitText = TextLines [CurrentLine].Split (':');
 					CharacterImage.sprite = SpriteDictionary [_splitText [0]];
 					CharacterName.text = CharacterNameDictionairy [_splitText [0]];
+					//StartCoroutine (TextScroll (textLines [currentLine]));
 					if (_splitText [1] == "S") {
+						print ("PLAYING CLIP NOW");
 						_source.PlayOneShot (_dialogueSounds [_currentClip]);
 						_currentClip += 1;
+
 					}
 					StartCoroutine (TextScroll (_splitText[2]));
-					_source.Stop;
 					//StartCoroutine (TextScroll (textLines [currentLine]));
 					//dialogue.text = textLines [currentLine];
 				}
@@ -128,7 +131,10 @@ public class TextBoxManager : MonoBehaviour {
 			yield return new WaitForSeconds (TypeSpeed);
 		}
 		Dialogue.text = lineOfText;
-
+		if (_splitText [1] == "S") {
+			print ("STOP CLIP");
+			_source.Stop();
+		}
 		_isTyping = false;
 		_cancelTyping = false;
 	}
