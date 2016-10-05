@@ -2,30 +2,53 @@
 using System.Collections;
 using System;
 
+//State for monster being in idle
 public class IdleState : IEnemyState
 {
-    public void OnTriggerENter(Collider other)
+    private readonly StatePatternEnemy enemy;
+
+    //constructor for idle state
+    public IdleState (StatePatternEnemy statePatternEnemy)
     {
-        throw new NotImplementedException();
+        this.enemy = statePatternEnemy;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Player2"))
+        {
+
+        }
     }
 
     public void ToAlertState()
     {
-        throw new NotImplementedException();
+        enemy.currentState = enemy.alertState;
     }
 
     public void ToChaseState()
     {
-        throw new NotImplementedException();
+        enemy.currentState = enemy.chaseState;
     }
 
     public void ToIdleState()
     {
-        throw new NotImplementedException();
+        Debug.Log("CANNOT GO INTO OWN STATE");
     }
 
     public void UpdateState()
     {
-        throw new NotImplementedException();
+        Roam();
+        Idle();
+    }
+
+    private void Roam()
+    {
+
+    }
+
+    private void Idle()
+    {
+
     }
 }

@@ -24,13 +24,24 @@ public class StatePatternEnemy : MonoBehaviour {
 
     private void Awake()
     {
+        chaseState = new ChaseState(this);
+        alertState = new AlertState(this);
+        idleState = new IdleState(this);
+
+        navMeshAgent = GetComponent<NavMeshAgent>();
 
     }
 
     // Use this for initialization
     void Start () {
-	
+        currentState = idleState;
 	}
+
+    //Since this is a monobehaviour can call it
+    private void OnTriggerEnter(Collider other)
+    {
+        currentState.OnTriggerEnter(other);
+    }
 	
 	// Update is called once per frame
 	void Update () {

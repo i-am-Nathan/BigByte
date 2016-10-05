@@ -4,7 +4,7 @@ using System;
 
 public class ChaseState : IEnemyState
 {
-    public void OnTriggerENter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         throw new NotImplementedException();
     }
