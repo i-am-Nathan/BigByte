@@ -14,7 +14,7 @@ public class PlayerController : BaseEntity
     public float RotationSpeed;
     public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
-    public bool dead = false;
+    //public bool dead = false;
     public bool IsInCircle = false;
    
     public int PushPower = 20;
@@ -27,6 +27,11 @@ public class PlayerController : BaseEntity
     // Components
     private CharacterController _controller;
 
+    // UI
+    private Slider _healthSlider;
+    private Text _goldAmount;
+    private LifeManager _lifeManagerScript;
+
     protected override void Start()
     {
         
@@ -37,6 +42,12 @@ public class PlayerController : BaseEntity
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         _controller = GetComponent<CharacterController>();
+
+        _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
+        _goldAmount = GameObject.FindWithTag("Player 1 Gold").GetComponent<Text>();
+
+        GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
+        _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
     }
 
     void Update()
@@ -154,6 +165,7 @@ public class PlayerController : BaseEntity
 
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
+        _healthSlider.value -= amount;
         Debug.Log(healthCircle.fillAmount);
         Invoke("HideHealth", 3);
         // If the player has lost all it's health and the death flag hasn't been set yet...
@@ -168,6 +180,7 @@ public class PlayerController : BaseEntity
     {
         // Set the death flag so this function won't be called again.
         base.Killed();
+        _lifeManagerScript.LoseLife();
         Debug.Log("Dead");
     }
 
@@ -176,4 +189,9 @@ public class PlayerController : BaseEntity
         healthCircle.enabled = false;
     }
 
+    public void UpdateGold(int amount)
+    {
+        _goldAmount.text = "" + amount;
+    }
+    
 }
