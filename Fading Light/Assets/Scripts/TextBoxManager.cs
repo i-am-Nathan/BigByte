@@ -129,7 +129,7 @@ public class TextBoxManager : MonoBehaviour {
 		while (_isTyping && !_cancelTyping && (letter < lineOfText.Length - 1)) {
 			
 			Dialogue.text += lineOfText [letter];
-			_source.PlayOneShot (TypeSound, 0.1f);
+			_source.PlayOneShot (TypeSound, 1f);
 			letter += 1;
 			yield return new WaitForSeconds (TypeSpeed);
 		}
