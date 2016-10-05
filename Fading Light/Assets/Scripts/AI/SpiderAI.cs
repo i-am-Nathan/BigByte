@@ -5,19 +5,20 @@ using MonsterLove.StateMachine;
 [RequireComponent(typeof(NavMeshAgent))]
 public class SpiderAI : BaseEntity
 {
-	//Spider stats
+	//Spider states
 	public enum States
 	{
 		Init,
 		Idle,
 		Chase,
         Attack,
-        Taunt
+        Taunt, 
+        Death
 	}
 
     //Spider stats
-    public float HardActivationDistance = 70;
-    public float LooseActivationDistance = 100;
+    public float HardActivationDistance = 120;
+    public float LooseActivationDistance = 200;
     public float AttackSpeed = 1;
     public float AttackDamage = 10;
     public float Health = 50;
@@ -41,47 +42,81 @@ public class SpiderAI : BaseEntity
     private float _nextAttackTime; 
     private float _collisionRange;
     private float _targetCollisionRange;
-    private bool _lockedOn;
+    private bool _lockedOn = false;
     private bool _inAttackRange;
     private bool _isRunning;
     private bool _isMoving;
 
-    private void Awake()
+    private bool DEBUG = false;
+
+   private void Awake()
 	{
-        //Initlize health stats and collider range
-        base.Start();
-        _collisionRange = GetComponent<CapsuleCollider>().radius;
-
-        _animator = GetComponentInChildren<Animation>();
-
-        //Initlize the pathfinder
-        pathfinder = GetComponent<NavMeshAgent>();
-
+        if (DEBUG) Debug.Log("The spider wakes.");
+        //base.Start();
         spawnLocation = this.gameObject.transform.position;
 
-        //Create the FSM controller
-        fsm = StateMachine<States>.Initialize(this, States.Idle);
-	}
+        //Initlize the pathfinder, collision range and animator 
+        pathfinder = GetComponent<NavMeshAgent>();
+        _collisionRange = GetComponent<CapsuleCollider>().radius;
+        _animator = GetComponentInChildren<Animation>();      
 
-	private void Init_Enter()
-	{
-        Debug.Log("Spider state intilized");
+        //Create the FSM controller
+        fsm = StateMachine<States>.Initialize(this);
+        fsm.ChangeState(States.Init);
+    }
+
+    private void Init_Enter()
+    {
+        if (DEBUG) Debug.Log("Spider state machine initilized.");
         fsm.ChangeState(States.Idle);
     }
 
-	//We can return a coroutine, this is useful animations and the like
-	private void Idle_Enter()
-	{
-        Debug.Log("Entered state: Idle");
-        //bool a = _animator.Play("taunt", PlayMode.StopAll);
-
-        //Use coroutine to check when players enter activation range
-        StartCoroutine(CheckForPlayers());
+    private void Taunt_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Taunt");
+        fsm.ChangeState(States.Idle);
     }
 
-	private void Chase_Enter()
-	{
-        Debug.Log("Entered state: Chase");
+    IEnumerator Attack_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Attack");
+
+        _inAttackRange = true;
+        int attackCount = 0;
+
+        //pathfinder.enabled = false;
+
+        while (_inAttackRange)
+        {
+           if (attackCount == 1)
+            {
+                _isRunning = false;
+                attackCount = 0;
+            }
+
+            //If the target moves out of attack range or dies, then stop attacking and go back to chasing the other player
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) > AttackRange || !target.GetComponent<BaseEntity>().isDead)
+            {
+                _inAttackRange = false;
+            }
+            
+            _animator.Play("attack2");
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+
+            attackCount++;
+            yield return new WaitForSeconds(AttackSpeed);
+        }
+
+        //pathfinder.enabled = true;
+
+        fsm.ChangeState(States.Chase);
+    }
+
+    IEnumerator Chase_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Chase");
+
+        float refreshRate = .25f;
 
         if (!_isMoving)
         {
@@ -89,163 +124,88 @@ public class SpiderAI : BaseEntity
             _isMoving = true;
         }
 
-        //Use coroutine to check when players enter activation range       
-        StartCoroutine(UpdatePath());
-    }
-
-    private void Taunt_Enter()
-    {
-        Debug.Log("Entered state: Taunt");
-
-        /*//Use coroutine to check when players enter activation range
-        pathfinder.enabled = false;
-        _animator.Play("taunt");     
-        
-        while (_animator.isPlaying)
-        {
-
-        }
-
-        pathfinder.enabled = enabled;*/
-
-        fsm.ChangeState(States.Idle);
-    }
-
-    private void Attack_Enter()
-    {
-        Debug.Log("Entered state: Attack");
-        
-        //Use coroutine to check when players enter activation range
-        StartCoroutine(AttackPlayer());        
-    }
-
-    /// <summary>
-	/// Method with updates the pathfinding towards the player
-	/// </summary>
-	/// <returns>The path.</returns>
-	IEnumerator CheckForPlayers()
-    {
-        float refreshRate = 0.8f;        
-
-        Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
-        Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
-
-        //Check to see if either player is within activation range
-        while (!_lockedOn)
-        {
-            //Debug.Log("Checking for players.." + Vector3.Distance(player1.position, this.gameObject.transform.position));
-
-            pathfinder.SetDestination(spawnLocation);
-
-            if (Vector3.Distance(player1.position, this.gameObject.transform.position) < HardActivationDistance ||
-            Vector3.Distance(player2.position, this.gameObject.transform.position) < HardActivationDistance)
-            {
-                //Debug.Log("Player found.");
-                //If they are then change to attack state
-                _lockedOn = true;
-            }
-            yield return new WaitForSeconds(refreshRate);
-        }
-        fsm.ChangeState(States.Chase);
-    }
-
-    /// <summary>
-    /// Method with updates the pathfinding towards the player
-    /// </summary>
-    /// <returns>The path.</returns>
-    IEnumerator UpdatePath() {
-		float refreshRate = .25f;
-
         //Find closet player
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
+        bool isCloser = (Vector3.Distance(player1.position, this.gameObject.transform.position) > Vector3.Distance(player2.position, this.gameObject.transform.position));
 
         while (_lockedOn)
-        {
-            //Find closest player to attack
-            if (Vector3.Distance(player1.position, this.gameObject.transform.position) > Vector3.Distance(player2.position, this.gameObject.transform.position))
+        {                       
+            if (!player2.GetComponent<BaseEntity>().isDead && isCloser)
             {
-                target = player2;
-                _lockedOn = true;
-                //Debug.Log("Locked onto Player 2");
-            }
+                //If player 2 is closer to the spider, and is not dead, then chase them
+                target = player2; 
+            }            
+            else if (!player1.GetComponent<BaseEntity>().isDead)
+            {
+                //Otherwise, player 1 is closer. Chase them if they are not dead.
+                target = player1;
+            }           
             else
             {
-                target = player1;
-                _lockedOn = true;
-                //Debug.Log("Locked onto Player 1");
+                //Otherwise both players are dead. Celebrate!!!
+                fsm.ChangeState(States.Taunt);
             }
+
+            if (DEBUG) Debug.Log("Chasing player:" + target.tag);
 
             //If they have moved outside the loose activation range, then taunt and stop chasing
             if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance)
             {
-                Debug.Log("Lost player");
+                if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
                 fsm.ChangeState(States.Taunt);
             }
 
-            //Debug.Log("Distance: " + Vector3.Distance(target.position, this.gameObject.transform.position) + " Attack Range: " + AttackRange);
-
+            //If the target comes into attack range, stop chasing and enter the attack state
             if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
             {
-                Debug.Log("In attack range");
+                if (DEBUG) Debug.Log("In attack range");
                 _lockedOn = false;
                 _isMoving = false;
                 fsm.ChangeState(States.Attack);
             }
 
             //Every so often sprint at the player
-            if (_isRunning)
-            {
-                pathfinder.speed = SprintSpeed;
-            } else
-            {
-                //Random chance of it starting to run
-
-                pathfinder.speed = RunSpeed;
-            }
-            
+            pathfinder.speed = _isRunning ? SprintSpeed : RunSpeed;
             pathfinder.SetDestination(target.position);
 
             yield return new WaitForSeconds(refreshRate);
         }
-
         fsm.ChangeState(States.Idle);
     }
 
-    IEnumerator AttackPlayer()
+    IEnumerator Idle_Enter()
     {
-        //pathfinder.enabled = false;
-        //pathfinder.Stop();
-        _inAttackRange = true;
-        int attackCount = 0;
-               
-        while (_inAttackRange)
+        if (DEBUG) Debug.Log("Entered state: Idle");
+
+        float refreshRate = 0.8f;        
+
+        //Check to see if either player is within activation range
+        while (!_lockedOn)
         {
-            //Debug.Log("Attacking player");
-            //_animator["attack2"].speed = AttackSpeed;
-            _animator.Play("attack2");
-            BaseEntity targetBase = target.GetComponent<BaseEntity>();
-            targetBase.Damage(AttackDamage, this.gameObject.transform);
+            if (DEBUG) Debug.Log("Waiting for players.");
+            pathfinder.SetDestination(spawnLocation);
 
-            if (attackCount == 1)
+            float player1distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
+            float player2distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player2").transform.position, this.gameObject.transform.position);
+            BaseEntity player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<BaseEntity>();
+            BaseEntity player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<BaseEntity>();
+
+            if (!player1.isDead && (player1distance < HardActivationDistance)|| !player2.isDead &&  (player2distance < HardActivationDistance))
             {
-                _isRunning = false;
-                attackCount = 0;
+                if (DEBUG) Debug.Log("Player found.");
+                _lockedOn = true;
             }
-
-            if (Vector3.Distance(target.position, this.gameObject.transform.position) > AttackRange)
-            {
-                _inAttackRange = false;
-            }
-
-            attackCount++;
-            yield return new WaitForSeconds(AttackSpeed);
+            yield return new WaitForSeconds(refreshRate);
         }
-        
-        //pathfinder.enabled = true;
         fsm.ChangeState(States.Chase);
+    }
+
+    private void Death_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Death");
     }
 
     public override void Attacked(float damage, Transform attacker)
@@ -253,7 +213,8 @@ public class SpiderAI : BaseEntity
         //If damage is to kill the spider - play animations/sounds
         if (damage >= CurrentHealth)
         {
-            
+            base.Killed();
+
         }
         base.Attacked(damage, attacker);
     }

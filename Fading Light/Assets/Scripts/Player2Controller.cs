@@ -86,8 +86,8 @@ public class Player2Controller : BaseEntity
         }
         else if (Input.GetKey("e"))
         {
-
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+
         }
         else
         {
