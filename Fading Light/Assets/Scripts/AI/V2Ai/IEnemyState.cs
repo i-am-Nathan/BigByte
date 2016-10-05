@@ -8,5 +8,6 @@ public interface IEnemyState {
     void ToIdleState();
     void ToChaseState();
     void ToAlertState();
+    void ToAttackState();
 
 }

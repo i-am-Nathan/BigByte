@@ -2,12 +2,12 @@
 using System.Collections;
 using System;
 
-public class AlertState : IEnemyState
+public class AttackState : IEnemyState
 {
     private readonly StatePatternEnemy enemy;
 
     //constructor for idle state
-    public AlertState(StatePatternEnemy statePatternEnemy)
+    public AttackState(StatePatternEnemy statePatternEnemy)
     {
         this.enemy = statePatternEnemy;
     }
@@ -19,12 +19,12 @@ public class AlertState : IEnemyState
 
     public void ToAlertState()
     {
-        Debug.Log("CANNOT GO INTO OWN STATE");
+        throw new NotImplementedException();
     }
 
     public void ToAttackState()
     {
-        throw new NotImplementedException();
+        Debug.Log("CANNOT GO INTO OWN STATE");
     }
 
     public void ToChaseState()
@@ -41,16 +41,4 @@ public class AlertState : IEnemyState
     {
         throw new NotImplementedException();
     }
-
-    private void Observe()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(enemy.eyes.transform.position, enemy.eyes.transform.forward, out hit, enemy.HardActivationDistance) && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Player2")))
-        {
-            enemy.playerTarget = hit.transform;
-            ToChaseState();
-        }
-
-    }
-
 }

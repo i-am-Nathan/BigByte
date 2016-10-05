@@ -43,7 +43,7 @@ public class IdleState : IEnemyState
         Idle();
     }
 
-    //observes the player
+    //observes to find the player
     private void Observe()
     {
         RaycastHit hit;
@@ -55,9 +55,13 @@ public class IdleState : IEnemyState
 
     }
 
-
     private void Idle()
     {
 
+    }
+
+    public void ToAttackState()
+    {
+        throw new NotImplementedException();
     }
 }

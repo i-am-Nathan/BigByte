@@ -22,9 +22,14 @@ public class ChaseState : IEnemyState
         enemy.currentState = enemy.alertState;
     }
 
-    public void ToChaseState()
+    public void ToAttackState()
     {
         throw new NotImplementedException();
+    }
+
+    public void ToChaseState()
+    {
+        Debug.Log("CANNOT GO INTO OWN STATE");
     }
 
     public void ToIdleState()

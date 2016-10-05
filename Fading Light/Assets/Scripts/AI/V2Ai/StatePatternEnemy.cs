@@ -14,12 +14,32 @@ public class StatePatternEnemy : MonoBehaviour {
     public float WalkSpeed = 9;
     public float RunSpeed = 15;
     public float SprintSpeed = 24;
+    public Transform eyes;
+
+    private float _nextAttackTime;
+    private float _collisionRange;
+    private float _targetCollisionRange;
+    private bool _lockedOn;
+    private bool _inAttackRange;
+    private bool _isRunning;
+    private bool _isMoving;
+
+    //Target and navigation variables
+    NavMeshAgent pathfinder;
+    Transform target;
+    BaseEntity targetBaseEntity;
+    Material skinMaterial;
+    Color originalColour;
+    Animation _animator;
+    Vector3 spawnLocation;
+
 
     [HideInInspector] public Transform playerTarget;
     [HideInInspector] public IEnemyState currentState;
     [HideInInspector] public ChaseState chaseState;
     [HideInInspector] public AlertState alertState;
     [HideInInspector] public IdleState idleState;
+    [HideInInspector] public AttackState attackState;
     [HideInInspector] public NavMeshAgent navMeshAgent;
 
     private void Awake()
@@ -27,6 +47,7 @@ public class StatePatternEnemy : MonoBehaviour {
         chaseState = new ChaseState(this);
         alertState = new AlertState(this);
         idleState = new IdleState(this);
+        attackState = new AttackState(this);
 
         navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -45,6 +66,6 @@ public class StatePatternEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        currentState.UpdateState();
 	}
 }
