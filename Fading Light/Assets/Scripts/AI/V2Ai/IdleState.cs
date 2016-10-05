@@ -13,6 +13,7 @@ public class IdleState : IEnemyState
         this.enemy = statePatternEnemy;
     }
 
+    //On trigger collision with another player
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Player2"))
@@ -38,14 +39,22 @@ public class IdleState : IEnemyState
 
     public void UpdateState()
     {
-        Roam();
+        Observe();
         Idle();
     }
 
-    private void Roam()
+    //observes the player
+    private void Observe()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(enemy.eyes.transform.position, enemy.eyes.transform.forward, out hit, enemy.HardActivationDistance) && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Player2")))
+        {
+            enemy.playerTarget = hit.transform;
+            ToChaseState();
+        }
 
     }
+
 
     private void Idle()
     {
