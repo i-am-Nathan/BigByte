@@ -46,18 +46,30 @@ public class LifeTrack : MonoBehaviour {
         // Getting current time since users started playing 
         _totalTime += Time.deltaTime;
 
-      
+        float minutes = Mathf.Floor(_totalTime / 60);
+        float seconds = Mathf.RoundToInt(_totalTime % 60);
+        string min = "";
+        string sec = "";
 
-        
+        if (minutes < 10)
+        {
+            min = "0" + minutes;
+        }
+        else
+        {
+            min = "" + minutes;
+        }
 
+        if (seconds < 10)
+        {
+            sec = "0" + seconds;
+        }
+        else
+        {
+            sec = "" + seconds;
+        }
 
-
-        //float minutes = Mathf.Floor(_totalTime / 60); float seconds = Mathf.RoundToInt(_totalTime % 60);
-
-
-        //if (minutes < 10) { minutes = "0" + minutes.ToString(); }
-        //if (seconds < 10) { seconds = "0" + Mathf.RoundToInt(seconds).ToString(); }
-        //_totalTimeText.text = "Time:  " + minutes + ":" + seconds;
+        _totalTimeText.text = "Time:  " + min + ":" + sec;
 
     }
 }
