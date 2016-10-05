@@ -28,12 +28,23 @@ public class Player2Controller : BaseEntity
     // Components
     private CharacterController controller;
 
-	void Start()
+    // UI
+    private Slider _healthSlider;
+    private Text _goldAmount;
+    private LifeManager _lifeManagerScript;
+
+    void Start()
 	{
         base.Start();
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
+
+        _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
+        _goldAmount = GameObject.FindWithTag("Player 2 Gold").GetComponent<Text>();
+
+        GameObject go = GameObject.FindGameObjectWithTag("Life Manager");
+        _lifeManagerScript = (LifeManager)go.GetComponent(typeof(LifeManager));
     }
 
 	void Update()
@@ -121,6 +132,7 @@ public class Player2Controller : BaseEntity
 
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
+        _healthSlider.value -= amount;
         Debug.Log(healthCircle.fillAmount);
         Invoke("HideHealth", 3);
 
@@ -137,7 +149,7 @@ public class Player2Controller : BaseEntity
         // Set the death flag so this function won't be called again.
         base.Killed();
         IsDisabled = true;
-
+        _lifeManagerScript.LoseLife();
 
         Debug.Log("Dead");
     }
@@ -145,5 +157,10 @@ public class Player2Controller : BaseEntity
     public void HideHealth()
     {
         healthCircle.enabled = false;
+    }
+
+    public void UpdateGold(int amount)
+    {
+        _goldAmount.text = "" + amount;
     }
 }
