@@ -26,18 +26,33 @@ public class OpenTreasure : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.Y) ) {
-			
-			if (!open) {
-				print ("STFU");
-				StartCoroutine (Open());
-				open = true;
+	void OnTriggerEnter(Collider other){
+		if (other.name == "Player 1" || other.name == "Player2") {
+			if (Input.GetKeyDown (KeyCode.Y)) {
+
+				if (!open) {
+					print ("STFU");
+					StartCoroutine (Open ());
+					open = true;
+				}
 			}
 		}
-
-
 	}
+
+	void OnTriggerStay(Collider other){
+		if (other.name == "Player 1" || other.name == "Player2") {
+			if (Input.GetKeyDown (KeyCode.Y)) {
+
+				if (!open) {
+					print ("STFU");
+					StartCoroutine (Open ());
+					open = true;
+				}
+			}
+		}
+	}
+		
+
 		
 
 	IEnumerator Open()

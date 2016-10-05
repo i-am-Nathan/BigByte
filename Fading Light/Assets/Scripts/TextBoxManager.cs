@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 public class TextBoxManager : MonoBehaviour {
 
 	public GameObject textBox;
 	public Text dialogue;
 	public TextAsset textFile;
 	public string[] textLines;
-
+	private string[] splitText;
+	public Image characterImage;
+	public Text characterName;
+	public Sprite[] images;
+	private Dictionary<string,Sprite> myDictionary = new Dictionary<string,Sprite>();
+	private Dictionary<string,string> characterNames = new Dictionary<string,string>();
 	public int currentLine;
 	public int endAtLine;
 	public PlayerController player1;
@@ -26,6 +32,12 @@ public class TextBoxManager : MonoBehaviour {
 	public float typeSpeed;
 	// Use this for initialization
 	void Start () {
+		myDictionary.Add ("MM", images [0]);
+		myDictionary.Add ("BS", images [1]);
+		myDictionary.Add ("LS", images [2]);
+		characterNames.Add ("MM", "Mole Man");
+		characterNames.Add ("BS", "Big Sibling");
+		characterNames.Add ("LS", "Little Sibling");
 		if (textFile != null) {
 			textLines = (textFile.text.Split ('\n'));	
 		}
@@ -53,7 +65,12 @@ public class TextBoxManager : MonoBehaviour {
 			
 
 		if (firstline) {
-			StartCoroutine (TextScroll (textLines [currentLine]));
+			splitText= new string[2];
+			splitText = textLines [currentLine].Split (':');
+			characterImage.sprite = myDictionary [splitText [0]];
+			characterName.text = characterNames [splitText [0]];
+			//StartCoroutine (TextScroll (textLines [currentLine]));
+			StartCoroutine (TextScroll (splitText[1]));
 			firstline = false;
 		}
 
@@ -64,7 +81,12 @@ public class TextBoxManager : MonoBehaviour {
 				if (currentLine > endAtLine) {
 					DisableDialogue ();
 				} else {
-					StartCoroutine (TextScroll (textLines [currentLine]));
+					splitText= new string[2];
+					splitText = textLines [currentLine].Split (':');
+					characterImage.sprite = myDictionary [splitText [0]];
+					characterName.text = characterNames [splitText [0]];
+					StartCoroutine (TextScroll (splitText[1]));
+					//StartCoroutine (TextScroll (textLines [currentLine]));
 					//dialogue.text = textLines [currentLine];
 				}
 
@@ -116,6 +138,7 @@ public class TextBoxManager : MonoBehaviour {
 			textLines = new string[1];
 			textLines = (thisText.text.Split ('\n'));	
 			firstline = true;
+
 		}
 	}
 }
