@@ -15,7 +15,6 @@ public class StartLevel : MonoBehaviour {
 		CanvasGroup cg = GetComponent<CanvasGroup> ();
 		yield return new WaitForSeconds(2f);
 		while (cg.alpha > 0) {
-			print (cg.alpha);
 			cg.alpha -= Time.deltaTime / 2;
 			yield return null;
 		}

@@ -34,7 +34,7 @@ public class PlayerController : BaseEntity
         
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
-
+        healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         _controller = GetComponent<CharacterController>();
     }
@@ -146,6 +146,7 @@ public class PlayerController : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+        healthCircle.enabled = true;
         Debug.Log("Ow");
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
@@ -154,7 +155,7 @@ public class PlayerController : BaseEntity
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
         Debug.Log(healthCircle.fillAmount);
-
+        Invoke("HideHealth", 3);
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (CurrentHealth <= 0 && !isDead)
         {
@@ -168,6 +169,11 @@ public class PlayerController : BaseEntity
         // Set the death flag so this function won't be called again.
         base.Killed();
         Debug.Log("Dead");
+    }
+
+    public void HideHealth()
+    {
+        healthCircle.enabled = false;
     }
 
 }

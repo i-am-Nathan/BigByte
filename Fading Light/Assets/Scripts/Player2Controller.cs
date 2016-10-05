@@ -31,9 +31,9 @@ public class Player2Controller : BaseEntity
 	void Start()
 	{
         base.Start();
+        healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
-       
     }
 
 	void Update()
@@ -113,6 +113,7 @@ public class Player2Controller : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+        healthCircle.enabled = true;
         Debug.Log("Ow");
         base.Damage(amount, null);
         // Set the damaged flag so the screen will flash.
@@ -121,6 +122,7 @@ public class Player2Controller : BaseEntity
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
         Debug.Log(healthCircle.fillAmount);
+        Invoke("HideHealth", 3);
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (CurrentHealth <= 0 && !isDead)
@@ -138,5 +140,10 @@ public class Player2Controller : BaseEntity
 
 
         Debug.Log("Dead");
+    }
+
+    public void HideHealth()
+    {
+        healthCircle.enabled = false;
     }
 }
