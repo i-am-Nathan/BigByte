@@ -32,12 +32,13 @@ public class PlayerController : BaseEntity
     private Text _goldAmountText;
 	private int _goldAmount=0;
     private LifeManager _lifeManagerScript;
+    private float _lastJumpTime;
 
     protected override void Start()
     {
         
         base.Start();
-        
+        _lastJumpTime = Time.time;
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
         healthCircle.enabled = false;
@@ -64,17 +65,10 @@ public class PlayerController : BaseEntity
 
             return;
         }
-
-        ControlWASD();
-        //Damage(1f, null);
-        // If the player has just been damaged...
-        if (damaged)
+        else
         {
-            // ... set the colour of the damageImage to the flash colour.
+            ControlWASD();
         }
-
-        // Reset the damaged flag.
-        damaged = false;
     }
 
     void ControlWASD()
@@ -118,6 +112,12 @@ public class PlayerController : BaseEntity
             _animator.SetBool("Idling", true);
         }
 
+
+        if (Input.GetKeyDown(KeyCode.RightControl) && (Time.time - _lastJumpTime) > .5)
+        {
+            transform.Translate(Vector3.up * 260 * Time.deltaTime, Space.World);
+            _lastJumpTime = Time.time;
+        }
 
     }
 

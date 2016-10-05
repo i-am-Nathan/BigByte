@@ -13,7 +13,6 @@ public class Player2Controller : BaseEntity
     // Handling
     public float RotationSpeed;
 	public float WalkSpeed;
-    public bool CanMove;
     public int PushPower = 20;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     public bool IsDisabled;
@@ -33,6 +32,7 @@ public class Player2Controller : BaseEntity
     private Text _goldAmountText;
 	private int _goldAmount = 0;
     private LifeManager _lifeManagerScript;
+    private float _lastJumpTime;
 
     void Start()
 	{
@@ -40,7 +40,7 @@ public class Player2Controller : BaseEntity
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
-
+        _lastJumpTime = Time.time;
         _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
         _goldAmountText = GameObject.FindWithTag("Player 2 Gold").GetComponent<Text>();
 
@@ -61,16 +61,11 @@ public class Player2Controller : BaseEntity
 
             return;
         }
+        else
+        {
+            ControlWASD();
+        }
 
-        //ControlMouse();
-
-        ControlWASD();
-
-		//transform.Rotate(Vector3.up * Time.deltaTime * 1000);
-		/*Vector3 pos = Camera.main.WorldToViewportPoint (transform.position);
-		pos.x = Mathf.Clamp01 (pos.x);
-		pos.z = Mathf.Clamp01 (pos.z);
-		transform.position = Camera.main.ViewportToWorldPoint (pos); */
 
 	}
 
@@ -84,7 +79,7 @@ public class Player2Controller : BaseEntity
 
 		Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical1"), 0, Input.GetAxisRaw("Horizontal1"));
 
-		if (input != Vector3.zero && CanMove)
+		if (input != Vector3.zero)
 		{
 			targetRotation = Quaternion.LookRotation(input);
 			transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetRotation.eulerAngles.y, RotationSpeed * Time.deltaTime);
@@ -104,6 +99,12 @@ public class Player2Controller : BaseEntity
         else
         {
             _animator.SetBool("Idling", true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && (Time.time - _lastJumpTime) > .5)
+        {
+            transform.Translate(Vector3.up * 260 * Time.deltaTime, Space.World);
+            _lastJumpTime = Time.time;
         }
 
     }

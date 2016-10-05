@@ -30,6 +30,7 @@ public class TorchFuelController : MonoBehaviour {
     private Slider _torchFuelSlider;
     private Image _player1InventoryImage;
     private Image _player2InventoryImage;
+    public bool IsDisabled;
 
     // Use this for initialization
     void Start ()
@@ -117,6 +118,11 @@ public class TorchFuelController : MonoBehaviour {
 
     public void RemoveFuelAmount()
     {
+        if (IsDisabled)
+        {
+            return;
+        }
+
         if(TotalFuelPercentage > 0)
         {
             TotalFuelPercentage -= FuelBurnRate;
