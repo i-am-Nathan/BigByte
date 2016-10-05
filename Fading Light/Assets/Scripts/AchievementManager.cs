@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Linq
+using System.Linq;
 using System.Collections;
 
 [System.Serializable]
@@ -38,7 +38,17 @@ public class Achievement
 
     public bool SetProgress(float progress)
     {
-
+        if (Earned)
+        {
+            return false;
+        }
+        _currentProgress = progress;
+        if (progress >= TargetProgress)
+        {
+            Earned = true;
+            return true;
+        }
+        return false;
     }
 
     //Basic GUI for displaying an achievement.
@@ -82,13 +92,105 @@ public class Achievement
 
 public class AchievementManager : MonoBehaviour {
 
+    public Achievement[] Achievements;
+    public GUIStyle GUIStyleAchievementEarned;
+    public GUIStyle GUIStyleAchievementNotEarned;
+
+    private int _currentRewardPoints = 0;
+    private int _potentialRewardPoints = 0;
+    private Vector2 _achievementScrollViewLocation = Vector2.zero;
 	// Use this for initialization
 	void Start () {
-	
+        ValidateAchievement();
+        UpdateRewardPointTotals();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    //Checkif the achievements are valid
+    private void ValidateAchievements()
+    {
+        ArrayList usedNames = new ArrayList();
+        foreach(Achievement achievement in Achievements)
+        {
+            if(achievement.RewardPoints < 0)
+            {
+                Debug.LogError("Achievement with negative RewardPoints " + achievement.Name);
+            }
+            if (usedNames.Contains(achievement.Name))
+            {
+                Debug.LogError("Duplicate achievement names " + achievement.Name);
+            }
+            usedNames.Add(achievement.Name);
+        }
+    }
+
+    private void UpdateRewardPointTotals()
+    {
+        _currentRewardPoints = 0;
+        _potentialRewardPoints = 0;
+
+        foreach(Achievement achievement in Achievements)
+        {
+            if (achievement.Earned)
+            {
+                _currentRewardPoints += achievment.RewardPoints;
+            }
+            _potentialRewardPoints += achievement.RewardPoints;
+        }
+    }
+    private Achievement GetAchievementByName(string achievementName)
+    {
+        return Achievements.FirstOrDefault(achievement => achievement.Name == achievementName);
+    }
+
+    private void AchievementEarned()
+    {
+        UpdateRewardPointTotals();
+        
+    }
+    //Incrementing progress to an achievement
+    public void AddProgressToAchievement(string achievementName, float progressAmount)
+    {
+        Achievement achievement = GetAchevementByName(achievementName);
+        if(achievement == null)
+        {
+            Debug.LogWarning("Trying to add progress to an achievement that doesn't exist " + achievementName);
+            return;
+        }
+        if (achievement.AddProgress(progressAmount))
+        {
+            AchievementEarned();
+        }
+    }
+
+    public void SetProgressToAchievement(string achievementName, float newProgress)
+    {
+        Achievement achievement = GetAchievementByName(achievementName);
+        if (achievement == null)
+        {
+            Debug.LogWarning("Trying to add progress to an achievement that doesn't exist " + achievementName);
+            return;
+        }
+        if (achievement.SetProgress(newProgress))
+        {
+            AchievementEarned();
+        }
+    }
+
+    void OnGui()
+    {
+        float yValue = 5.0f;
+        float achievementGUIWidth = 500.0f;
+
+        GUI.Label(new Rect(200.0f, 5.0f, 200.0f, 25.0f), "--Achievements--");
+        _achievementScrollViewLocation = GUI.BeginScrollView(new Rect(0.0f, 25.0f, achievementGUIWidth + 25.0f, 400.0f), _achievementScrollViewLocation,
+                                                             new Rect(0.0f, 0.0f, achievementGUIWidth, Achievement.Count() * 80.0f));
+        foreach(Achievement achievement in Achievements)
+        {
+            Rect position = new Rect(5.0f, yValue, achievementGUIWidth, 75.0f);
+            achievement.OnGUI(position, GUIStyleAchievementEarned, GUIStyleAchievementNotEarned);
+            yValue += 80.0f;
+        }
+        GUI.EndScrollView();
+        GUI.Label(new Rect(10.0f, 440.0f, 200.0f, 25.0f), "Reward Points: [" + _currentRewardPoints + " out of " + _potentialRewardPoints + "]");
+    }
 }
