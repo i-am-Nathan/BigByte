@@ -13,7 +13,7 @@ public class ActivateText : MonoBehaviour {
 	public bool RequireButtonPress;
 	private bool _waitForPress;
 	public bool DestroyWhenActivated;
-
+	public AudioClip[] DialogueSpeech;
 	public bool TalkOnce;
 	private bool _talked;
 	void Start () {
@@ -25,7 +25,7 @@ public class ActivateText : MonoBehaviour {
 		if (_waitForPress && Input.GetKeyDown (KeyCode.T)) {
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
 				print ("IN HERE UPDATE");
-				TextBox.ReloadScript (Dialogue);
+				TextBox.ReloadScript (Dialogue,DialogueSpeech);
 				TextBox.CurrentLine = StartLine;
 				TextBox.EndLine = EndLine;
 				TextBox.EnableDialogue ();
@@ -45,7 +45,7 @@ public class ActivateText : MonoBehaviour {
 		}
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
-				TextBox.ReloadScript (Dialogue);
+				TextBox.ReloadScript (Dialogue,DialogueSpeech);
 				TextBox.CurrentLine = StartLine;
 				TextBox.EndLine = EndLine;
 				TextBox.EnableDialogue ();

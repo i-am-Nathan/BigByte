@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 // AchievementManager contains Achievements, which players are able to earn through performing various actions
@@ -60,6 +61,7 @@ public class Achievement
     public void OnGUI(Rect position, GUIStyle GUIStyleAchievementEarned, GUIStyle GUIStyleAchievementNotEarned)
     {
         GUIStyle style = GUIStyleAchievementNotEarned;
+        //When achievement is earned than change the GUI
         if (Earned)
         {
             style = GUIStyleAchievementEarned;
@@ -71,26 +73,31 @@ public class Achievement
         if (Earned)
         {
             GUI.Box(new Rect(0.0f, 0.0f, position.height, position.height), IconComplete);
-        }
-        else
-        {
-            GUI.Box(new Rect(0.0f, 0.0f, position.height, position.height), IconIncomplete);
-        }
-
-        GUI.Label(new Rect(80.0f, 5.0f, position.width - 80.0f - 50.0f, 25.0f), Name, style);
-
-        if (Secret && !Earned)
-        {
-            GUI.Label(new Rect(80.0f, 25.0f, position.width - 80.0f, 25.0f), "Description Hidden!", style);
-            GUI.Label(new Rect(position.width - 50.0f, 5.0f, 25.0f, 25.0f), "???", style);
-            GUI.Label(new Rect(position.width - 250.0f, 50.0f, 250.0f, 25.0f), "Progress Hidden!", style);
-        }
-        else
-        {
+            GUI.Label(new Rect(80.0f, 5.0f, position.width - 80.0f - 50.0f, 25.0f), Name, style);
             GUI.Label(new Rect(80.0f, 25.0f, position.width - 80.0f, 25.0f), Description, style);
             GUI.Label(new Rect(position.width - 50.0f, 5.0f, 25.0f, 25.0f), RewardPoints.ToString(), style);
             GUI.Label(new Rect(position.width - 250.0f, 50.0f, 250.0f, 25.0f), "Progress: [" + currentProgress.ToString("0.#") + " out of " + TargetProgress.ToString("0.#") + "]", style);
         }
+        /*
+        else
+        {
+            GUI.Box(new Rect(0.0f, 0.0f, position.height, position.height), IconIncomplete);
+        }*/
+
+
+
+        /* if (Secret && !Earned)
+         {
+             GUI.Label(new Rect(80.0f, 25.0f, position.width - 80.0f, 25.0f), "Description Hidden!", style);
+             GUI.Label(new Rect(position.width - 50.0f, 5.0f, 25.0f, 25.0f), "???", style);
+             GUI.Label(new Rect(position.width - 250.0f, 50.0f, 250.0f, 25.0f), "Progress Hidden!", style);
+         }
+         else
+         {
+             GUI.Label(new Rect(80.0f, 25.0f, position.width - 80.0f, 25.0f), Description, style);
+             GUI.Label(new Rect(position.width - 50.0f, 5.0f, 25.0f, 25.0f), RewardPoints.ToString(), style);
+             GUI.Label(new Rect(position.width - 250.0f, 50.0f, 250.0f, 25.0f), "Progress: [" + currentProgress.ToString("0.#") + " out of " + TargetProgress.ToString("0.#") + "]", style);
+         }*/
 
         GUI.EndGroup();
     }
@@ -98,17 +105,29 @@ public class Achievement
 
 public class AchievementManager : MonoBehaviour
 {
+    public Canvas AchievementPopup;
     public Achievement[] Achievements;
     public AudioClip EarnedSound;
     public GUIStyle GUIStyleAchievementEarned;
     public GUIStyle GUIStyleAchievementNotEarned;
 
+
     private int currentRewardPoints = 0;
     private int potentialRewardPoints = 0;
     private Vector2 achievementScrollviewLocation = Vector2.zero;
 
+    private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
+
+    private Text achievementText;
+
     void Start()
     {
+        //GOT THE ACHIEVEMENT POPUP
+
+
+        achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
+        AchievementPopup.enabled = false;
+
         ValidateAchievements();
         UpdateRewardPointTotals();
     }
@@ -137,6 +156,7 @@ public class AchievementManager : MonoBehaviour
         return Achievements.FirstOrDefault(achievement => achievement.Name == achievementName);
     }
 
+    //Updating the reward points
     private void UpdateRewardPointTotals()
     {
         currentRewardPoints = 0;
@@ -153,12 +173,14 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
+    //When an achievement is earned
     private void AchievementEarned()
     {
         UpdateRewardPointTotals();
         AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
 
+    //This is the one that will be called by the playerController
     public void AddProgressToAchievement(string achievementName, float progressAmount)
     {
         Achievement achievement = GetAchievementByName(achievementName);
@@ -171,6 +193,10 @@ public class AchievementManager : MonoBehaviour
         if (achievement.AddProgress(progressAmount))
         {
             AchievementEarned();
+            AchievementPopup.enabled = true;
+            executedTime = Time.time;
+            achievementText.text = achievement.Name;
+
         }
     }
 
@@ -193,23 +219,38 @@ public class AchievementManager : MonoBehaviour
     // Also displays the total number of reward points earned.
     void OnGUI()
     {
-        float yValue = 5.0f;
+        float yValue = 780f;
         float achievementGUIWidth = 500.0f;
 
-        GUI.Label(new Rect(200.0f, 5.0f, 200.0f, 25.0f), "-- Achievements --");
+        //  GUI.Label(new Rect(200.0f, 5.0f, 200.0f, 25.0f), "-- Achievements --");
 
-        achievementScrollviewLocation = GUI.BeginScrollView(new Rect(0.0f, 25.0f, achievementGUIWidth + 25.0f, 400.0f), achievementScrollviewLocation,
-                                                            new Rect(0.0f, 0.0f, achievementGUIWidth, Achievements.Count() * 80.0f));
+        //  achievementScrollviewLocation = GUI.BeginScrollView(new Rect(700.0f, 400.0f, achievementGUIWidth + 25.0f, 400.0f), achievementScrollviewLocation,
+        //                                                      new Rect(0.0f, 0.0f, achievementGUIWidth, Achievements.Count() * 80.0f));
 
-        foreach (Achievement achievement in Achievements)
-        {
-            Rect position = new Rect(5.0f, yValue, achievementGUIWidth, 75.0f);
-            achievement.OnGUI(position, GUIStyleAchievementEarned, GUIStyleAchievementNotEarned);
-            yValue += 80.0f;
-        }
+        //Get the achievement that has been completed
+
+
+        // Rect position = new Rect(600.0f, yValue, achievementGUIWidth, 75.0f);
+        // Achievements[1].OnGUI(position, GUIStyleAchievementEarned, GUIStyleAchievementNotEarned);
+        /* foreach (Achievement achievement in Achievements)
+         {
+             Rect position = new Rect(5.0f, yValue, achievementGUIWidth, 75.0f);
+             achievement.OnGUI(position, GUIStyleAchievementEarned, GUIStyleAchievementNotEarned);
+             yValue += 80.0f;
+         }*/
 
         GUI.EndScrollView();
 
         GUI.Label(new Rect(10.0f, 440.0f, 200.0f, 25.0f), "Reward Points: [" + currentRewardPoints + " out of " + potentialRewardPoints + "]");
     }
+    void Update()
+    {
+        currentTime = Time.time;
+        if (currentTime - executedTime > timeToWait)
+        {
+            executedTime = 0.0f;
+            AchievementPopup.enabled = false;
+        }
+    }
+
 }

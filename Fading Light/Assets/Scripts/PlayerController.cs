@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : BaseEntity
 {
-
+    public AchievementManager AchievementManager;
     // Health image on floor
     public Image healthCircle;                                 // Reference to the UI's health circle.
     bool damaged;                                               // True when the player gets damaged.
@@ -14,7 +14,7 @@ public class PlayerController : BaseEntity
     public float RotationSpeed;
     public float WalkSpeed;
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
-    public bool dead = false;
+    //public bool dead = false;
     public bool IsInCircle = false;
    
     public int PushPower = 20;
@@ -27,16 +27,29 @@ public class PlayerController : BaseEntity
     // Components
     private CharacterController _controller;
 
+    // UI
+    private Slider _healthSlider;
+    private Text _goldAmountText;
+	private int _goldAmount=0;
+    private LifeManager _lifeManagerScript;
+    private float _lastJumpTime;
+
     protected override void Start()
     {
         
         base.Start();
-        
+        _lastJumpTime = Time.time;
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         _controller = GetComponent<CharacterController>();
+
+        _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
+		_goldAmountText = GameObject.FindWithTag("Player 1 Gold").GetComponent<Text>();
+
+        GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
+        _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
     }
 
     void Update()
@@ -52,17 +65,10 @@ public class PlayerController : BaseEntity
 
             return;
         }
-
-        ControlWASD();
-        //Damage(1f, null);
-        // If the player has just been damaged...
-        if (damaged)
+        else
         {
-            // ... set the colour of the damageImage to the flash colour.
+            ControlWASD();
         }
-
-        // Reset the damaged flag.
-        damaged = false;
     }
 
     void ControlWASD()
@@ -99,12 +105,19 @@ public class PlayerController : BaseEntity
         {
             
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
         else
         {
             _animator.SetBool("Idling", true);
         }
 
+
+        if (Input.GetKeyDown(KeyCode.RightControl) && (Time.time - _lastJumpTime) > .5)
+        {
+            transform.Translate(Vector3.up * 260 * Time.deltaTime, Space.World);
+            _lastJumpTime = Time.time;
+        }
 
     }
 
@@ -154,6 +167,7 @@ public class PlayerController : BaseEntity
 
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
+        _healthSlider.value -= amount;
         Debug.Log(healthCircle.fillAmount);
         Invoke("HideHealth", 3);
         // If the player has lost all it's health and the death flag hasn't been set yet...
@@ -168,6 +182,7 @@ public class PlayerController : BaseEntity
     {
         // Set the death flag so this function won't be called again.
         base.Killed();
+        _lifeManagerScript.LoseLife();
         Debug.Log("Dead");
     }
 
@@ -176,4 +191,10 @@ public class PlayerController : BaseEntity
         healthCircle.enabled = false;
     }
 
+    public void UpdateGold(int amount)
+    {
+		_goldAmount += amount;
+		_goldAmountText.text = "" + _goldAmount;
+    }
+    
 }
