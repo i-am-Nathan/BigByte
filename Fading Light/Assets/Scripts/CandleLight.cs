@@ -26,27 +26,21 @@ public class CandleLight : MonoBehaviour {
         GameObject torchFuelController = GameObject.FindWithTag("TorchFuelController");
 
         bool torchInPlayer1 = torchFuelController.GetComponent<TorchFuelController>().TorchInPlayer1;
-        Debug.Log(torchInPlayer1);
         //if the person is player 1 and has the torch
-        Debug.Log(other.gameObject.tag.Equals("Player1"));
         if (torchInPlayer1 && other.gameObject.tag.Equals("Player"))
         {
-            Debug.Log("p1");
             //check for key pressed
             if (Input.GetButtonDown("CandleLight") && !_triggered)
             {
                 _triggered = true;
-                Debug.Log(_active + " active");
                 if (_active && _triggered)
                 {
-                    Debug.Log("bbbbbbbbb");
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
                 }
                 else if (!_active && _triggered)
                 {
-                    Debug.Log("eee");
                     _flame.GetComponent<ParticleSystem>().Play();
                     _spotlight.GetComponent<Light>().spotAngle = 100;
                     _active = true;
@@ -66,10 +60,8 @@ public class CandleLight : MonoBehaviour {
             if (Input.GetButtonDown("CandleLight"))
             {
                 _triggered = true;
-                Debug.Log(_active + " active");
                 if (_active && _triggered)
                 {
-                    Debug.Log("bbbbbbbbb");
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
@@ -77,7 +69,6 @@ public class CandleLight : MonoBehaviour {
                 }
                 else if (!_active && _triggered)
                 {
-                    Debug.Log("eee");
                     _flame.GetComponent<ParticleSystem>().Play();
                     _spotlight.GetComponent<Light>().spotAngle = 100;
                     _active = true;
@@ -88,6 +79,36 @@ public class CandleLight : MonoBehaviour {
             else if (Input.GetButtonUp("CandleLight"))
             {
                 _triggered = false;
+            }
+            //torch in player 1 and player 2 selecting
+        }
+        else if (torchInPlayer1 && other.gameObject.tag.Equals("Player2"))
+        {
+            if (Input.GetButtonDown("CandleLight") && !_triggered)
+            {
+                _triggered = true;
+                if (_active && _triggered)
+                {
+                    _flame.GetComponent<ParticleSystem>().Stop();
+                    _spotlight.GetComponent<Light>().spotAngle = 0;
+                    _active = false;
+                    _triggered = false;
+                }
+            }
+            //torch in player 2 and player is player 1
+        }
+        else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player1"))
+        {
+            if (Input.GetButtonDown("CandleLight") && !_triggered)
+            {
+                _triggered = true;
+                if (_active && _triggered)
+                {
+                    _flame.GetComponent<ParticleSystem>().Stop();
+                    _spotlight.GetComponent<Light>().spotAngle = 0;
+                    _active = false;
+                    _triggered = false;
+                }
             }
         }
     }

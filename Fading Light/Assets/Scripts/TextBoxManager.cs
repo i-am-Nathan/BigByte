@@ -1,37 +1,59 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 public class TextBoxManager : MonoBehaviour {
 
-	public GameObject textBox;
-	public Text dialogue;
-	public TextAsset textFile;
-	public string[] textLines;
+	public GameObject TextBox;
+	public Text Dialogue;
+	public TextAsset TextFile;
+	public string[] TextLines;
+	private string[] _splitText;
+	public Image CharacterImage;
+	public Text CharacterName;
+	public Sprite[] Images;
+	private Dictionary<string,Sprite> SpriteDictionary = new Dictionary<string,Sprite>();
+	private Dictionary<string,string> CharacterNameDictionairy = new Dictionary<string,string>();
+	GameObject gameUI;
+	private AudioClip[] _dialogueSounds;
+	private int _currentClip;
 
-	public int currentLine;
-	public int endAtLine;
-	public PlayerController player1;
-	public Player2Controller player2;
+	public int CurrentLine;
+	public int EndLine;
+	public PlayerController Player1;
+	public Player2Controller Player2;
 
-	public bool stopMovement;
-	public bool isActive;
-	public bool firstline;
+	public bool StopMovement;
+	public bool IsActive;
+	public bool FirstLine;
 
-	private bool isTyping = false;
-	private bool cancelTyping = false;
+	private bool _isTyping = false;
+	private bool _cancelTyping = false;
 
-	public float typeSpeed;
+	public AudioClip TypeSound;
+	private AudioSource _source;
+
+	public float TypeSpeed;
 	// Use this for initialization
 	void Start () {
-		if (textFile != null) {
-			textLines = (textFile.text.Split ('\n'));	
+		gameUI = GameObject.FindGameObjectWithTag ("GameUIWrapper");
+		SpriteDictionary.Add ("MM", Images [0]);
+		SpriteDictionary.Add ("BS", Images [1]);
+		SpriteDictionary.Add ("LS", Images [2]);
+		SpriteDictionary.Add ("PB", Images [3]);
+		CharacterNameDictionairy.Add ("MM", "Mole Man");
+		CharacterNameDictionairy.Add ("BS", "Big Sibling");
+		CharacterNameDictionairy.Add ("LS", "Little Sibling");
+		CharacterNameDictionairy.Add ("PB", "Post Board");
+		if (TextFile != null) {
+			TextLines = (TextFile.text.Split ('\n'));	
 		}
 
-		if (endAtLine == 0) {
-			endAtLine = textLines.Length - 1;
+		if (EndLine == 0) {
+			EndLine = TextLines.Length - 1;
 		}
 
-		if (isActive) {
+		if (IsActive) {
 			EnableDialogue ();
 		} else {
 			DisableDialogue ();
@@ -39,31 +61,57 @@ public class TextBoxManager : MonoBehaviour {
 
 	}
 
+	void Awake(){
+		_source = GetComponent<AudioSource>();
+	}
 	// Update is called once per frame
 	void Update () {
-		if (!isActive) {
+		if (!IsActive) {
 			return;
 		}
-			
+			//Format of dialogue is going to be CharacterName:AudioClip:Dialogue
 
-		if (firstline) {
-			StartCoroutine (TextScroll (textLines [currentLine]));
-			firstline = false;
+		if (FirstLine) {
+			_splitText= new string[3];
+			_splitText = TextLines [CurrentLine].Split (':');
+			CharacterImage.sprite = SpriteDictionary [_splitText [0]];
+			CharacterName.text = CharacterNameDictionairy [_splitText [0]];
+			//StartCoroutine (TextScroll (textLines [currentLine]));
+			if (_splitText [1] == "S") {
+				print ("PLAYING CLIP");
+				_source.PlayOneShot (_dialogueSounds [_currentClip],33f);
+				_currentClip += 1;
+
+			}
+			StartCoroutine (TextScroll (_splitText[2]));
+			FirstLine = false;
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			if (!isTyping) {
-				currentLine += 1;
+			if (!_isTyping) {
+				CurrentLine += 1;
 
-				if (currentLine > endAtLine) {
+				if (CurrentLine > EndLine) {
 					DisableDialogue ();
 				} else {
-					StartCoroutine (TextScroll (textLines [currentLine]));
+					_splitText= new string[3];
+					_splitText = TextLines [CurrentLine].Split (':');
+					CharacterImage.sprite = SpriteDictionary [_splitText [0]];
+					CharacterName.text = CharacterNameDictionairy [_splitText [0]];
+					//StartCoroutine (TextScroll (textLines [currentLine]));
+					if (_splitText [1] == "S") {
+						print ("PLAYING CLIP NOW");
+						_source.PlayOneShot (_dialogueSounds [_currentClip],33f);
+						_currentClip += 1;
+
+					}
+					StartCoroutine (TextScroll (_splitText[2]));
+					//StartCoroutine (TextScroll (textLines [currentLine]));
 					//dialogue.text = textLines [currentLine];
 				}
 
-			} else if (isTyping && !cancelTyping) {
-				cancelTyping = true;
+			} else if (_isTyping && !_cancelTyping) {
+				_cancelTyping = true;
 			}
 				
 		} 
@@ -75,39 +123,48 @@ public class TextBoxManager : MonoBehaviour {
 
 	private IEnumerator TextScroll (string lineOfText){
 		int letter = 0;
-		dialogue.text = "";
-		isTyping = true;
-		cancelTyping = false;
-		while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1)) {
-			dialogue.text += lineOfText [letter];
+		Dialogue.text = "";
+		_isTyping = true;
+		_cancelTyping = false;
+		while (_isTyping && !_cancelTyping && (letter < lineOfText.Length - 1)) {
+			
+			Dialogue.text += lineOfText [letter];
+			_source.PlayOneShot (TypeSound, 0.1f);
 			letter += 1;
-			yield return new WaitForSeconds (typeSpeed);
+			yield return new WaitForSeconds (TypeSpeed);
 		}
-		dialogue.text = lineOfText;
-
-		isTyping = false;
-		cancelTyping = false;
+		Dialogue.text = lineOfText;
+		if (_splitText [1] == "S") {
+			print ("STOP CLIP");
+			_source.Stop();
+		}
+		_isTyping = false;
+		_cancelTyping = false;
 	}
 
 	public void EnableDialogue(){
-		textBox.SetActive (true);
-		isActive = true;
-			player1.IsDisabled = true;
-			player2.IsDisabled = true;
+		gameUI.SetActive (false);
+		TextBox.SetActive (true);
+		IsActive = true;
+			Player1.IsDisabled = true;
+			Player2.IsDisabled = true;
 	}
 
 	public void DisableDialogue(){
-		textBox.SetActive (false);
-		isActive = false;
-		player1.IsDisabled = false;
-		player2.IsDisabled = false;
+		gameUI.SetActive (true);
+		TextBox.SetActive (false);
+		IsActive = false;
+		Player1.IsDisabled = false;
+		Player2.IsDisabled = false;
 	}
 
-	public void ReloadScript(TextAsset thisText){
+	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips){
 		if (thisText != null) {
-			textLines = new string[1];
-			textLines = (thisText.text.Split ('\n'));	
-			firstline = true;
+			TextLines = new string[1];
+			TextLines = (thisText.text.Split ('\n'));	
+			FirstLine = true;
+			_currentClip = 0;
+			_dialogueSounds = audioClips;
 		}
 	}
 }
