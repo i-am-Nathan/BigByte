@@ -129,7 +129,7 @@ public class AchievementManager : MonoBehaviour
 	//private AchievementManager achievementManager = AchievementManager.Instance;
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
-		TreeInstance = this;
+		Instance = this;
 	}
     void Start()
     {
