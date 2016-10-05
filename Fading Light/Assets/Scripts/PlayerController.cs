@@ -29,7 +29,8 @@ public class PlayerController : BaseEntity
 
     // UI
     private Slider _healthSlider;
-    private Text _goldAmount;
+    private Text _goldAmountText;
+	private int _goldAmount=0;
     private LifeManager _lifeManagerScript;
 
     protected override void Start()
@@ -44,7 +45,7 @@ public class PlayerController : BaseEntity
         _controller = GetComponent<CharacterController>();
 
         _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
-        _goldAmount = GameObject.FindWithTag("Player 1 Gold").GetComponent<Text>();
+		_goldAmountText = GameObject.FindWithTag("Player 1 Gold").GetComponent<Text>();
 
         GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
         _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
@@ -191,7 +192,8 @@ public class PlayerController : BaseEntity
 
     public void UpdateGold(int amount)
     {
-        _goldAmount.text = "" + amount;
+		_goldAmount += amount;
+		_goldAmountText.text = "" + _goldAmount;
     }
     
 }
