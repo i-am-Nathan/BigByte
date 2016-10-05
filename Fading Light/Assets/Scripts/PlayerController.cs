@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : BaseEntity
 {
-
+    public AchievementManager AchievementManager;
     // Health image on floor
     public Image healthCircle;                                 // Reference to the UI's health circle.
     bool damaged;                                               // True when the player gets damaged.
@@ -111,6 +111,7 @@ public class PlayerController : BaseEntity
         {
             
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
         else
         {
