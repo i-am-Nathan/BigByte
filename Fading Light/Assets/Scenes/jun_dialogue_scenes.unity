@@ -212,7 +212,7 @@ MonoBehaviour:
   RequireButtonPress: 1
   DestroyWhenActivated: 0
   DialogueSpeech:
-  - {fileID: 8300000, guid: adf86a29d182d924aa0eb10a5f031065, type: 3}
+  - {fileID: 8300000, guid: 6cfb4016cc52d044d95b8cfcab899e5c, type: 3}
   TalkOnce: 1
 --- !u!136 &159550794
 CapsuleCollider:
@@ -914,6 +914,7 @@ GameObject:
   - 33: {fileID: 915267615}
   - 136: {fileID: 915267614}
   - 23: {fileID: 915267613}
+  - 114: {fileID: 915267617}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -980,6 +981,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+--- !u!114 &915267617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 915267612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba795bf954865c7429ca4cefdc62a941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue: {fileID: 4900000, guid: 44d0b223def2da241be9cdb64f9089f3, type: 3}
+  StartLine: 0
+  EndLine: 2
+  TextBox: {fileID: 1499881562}
+  RequireButtonPress: 1
+  DestroyWhenActivated: 0
+  DialogueSpeech: []
+  TalkOnce: 0
 --- !u!1 &973399183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,6 +1514,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 72f3ddb4e9c4f52438d2e4a7af4f9ee8, type: 3}
   - {fileID: 21300000, guid: 4f6d24a9471be5241a6b2f2287a28e42, type: 3}
   - {fileID: 21300000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+  - {fileID: 21300000, guid: f3008e3d7cbf1484c931737ee2cef76f, type: 3}
   CurrentLine: 0
   EndLine: 0
   Player1: {fileID: 199644496}
@@ -1599,27 +1620,27 @@ Prefab:
     m_Modifications:
     - target: {fileID: 22405138, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22405138, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22445274, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22445274, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22457432, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22457432, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22466022, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1712,6 +1733,10 @@ Prefab:
     - target: {fileID: 22455018, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 149902, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}
+      propertyPath: m_TagString
+      value: GameUIWrapper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 305f0beec7e7d4644afc0b0410b7ec49, type: 2}

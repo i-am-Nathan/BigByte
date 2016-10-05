@@ -40,9 +40,11 @@ public class TextBoxManager : MonoBehaviour {
 		SpriteDictionary.Add ("MM", Images [0]);
 		SpriteDictionary.Add ("BS", Images [1]);
 		SpriteDictionary.Add ("LS", Images [2]);
+		SpriteDictionary.Add ("PB", Images [3]);
 		CharacterNameDictionairy.Add ("MM", "Mole Man");
 		CharacterNameDictionairy.Add ("BS", "Big Sibling");
 		CharacterNameDictionairy.Add ("LS", "Little Sibling");
+		CharacterNameDictionairy.Add ("PB", "Post Board");
 		if (TextFile != null) {
 			TextLines = (TextFile.text.Split ('\n'));	
 		}
@@ -77,7 +79,7 @@ public class TextBoxManager : MonoBehaviour {
 			//StartCoroutine (TextScroll (textLines [currentLine]));
 			if (_splitText [1] == "S") {
 				print ("PLAYING CLIP");
-				_source.PlayOneShot (_dialogueSounds [_currentClip],1f);
+				_source.PlayOneShot (_dialogueSounds [_currentClip],33f);
 				_currentClip += 1;
 
 			}
@@ -99,7 +101,7 @@ public class TextBoxManager : MonoBehaviour {
 					//StartCoroutine (TextScroll (textLines [currentLine]));
 					if (_splitText [1] == "S") {
 						print ("PLAYING CLIP NOW");
-						_source.PlayOneShot (_dialogueSounds [_currentClip],1);
+						_source.PlayOneShot (_dialogueSounds [_currentClip],33f);
 						_currentClip += 1;
 
 					}
