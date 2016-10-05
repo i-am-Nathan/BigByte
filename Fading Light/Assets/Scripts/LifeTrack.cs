@@ -11,7 +11,6 @@ public class LifeTrack : MonoBehaviour {
 
         if (!(objects.Length > 0))
         {
-            Debug.LogWarning("Making new one");
             _numberOfLivesLeft = 3;
             this.tag = "Life Track";
             DontDestroyOnLoad(this);

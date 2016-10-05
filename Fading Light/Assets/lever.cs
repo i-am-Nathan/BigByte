@@ -8,7 +8,7 @@ public class lever : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T) && !_pulled)
         {
-            this.GetComponent<Animation>().Play("LeverDown");
+            this.GetComponent<Animation>().Play("Armature|LeverDown");
             GameObject rightMovingWall = GameObject.FindGameObjectWithTag("Right Moving Wall");
 
             rightMovingWall.GetComponent<Animation>().Play("RightMovingWallOut");
