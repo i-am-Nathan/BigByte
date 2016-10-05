@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
@@ -17,6 +18,8 @@ public class TorchFuelController : MonoBehaviour {
     public Light Player2TorchLight;
     public bool TorchInPlayer1 = true;
 
+    public Sprite torchSprite;
+    public Sprite swordSprite;
 
     private float _maxAngle = 134;
     private bool _flickerUp = false;
@@ -24,6 +27,9 @@ public class TorchFuelController : MonoBehaviour {
     private int _flckerAmount = 50;
     private float _flickerChange = 0.03f;
     private System.Random random = new System.Random();
+    private Slider _torchFuelSlider;
+    private Image _player1InventoryImage;
+    private Image _player2InventoryImage;
 
     // Use this for initialization
     void Start ()
@@ -31,12 +37,16 @@ public class TorchFuelController : MonoBehaviour {
         TorchP2.SetActive(false);
         Player2TorchLight.gameObject.SetActive(false);
         InvokeRepeating("RemoveFuelAmount", 0, 1);
+        _torchFuelSlider = GameObject.FindWithTag("Torch Fuel Slider").GetComponent<Slider>();
+        _player1InventoryImage = GameObject.FindWithTag("Player 1 Inventory").GetComponent<Image>();
+        _player2InventoryImage = GameObject.FindWithTag("Player 2 Inventory").GetComponent<Image>();
     }
 
     internal void AddFuel(float fuelAmount)
     {
         TotalFuelPercentage += fuelAmount;
         TotalFuelPercentage = Math.Min(100, TotalFuelPercentage);
+        _torchFuelSlider.value = TotalFuelPercentage;
     }
 
     public GameObject GetCurrentTorch()
@@ -110,6 +120,7 @@ public class TorchFuelController : MonoBehaviour {
         if(TotalFuelPercentage > 0)
         {
             TotalFuelPercentage -= FuelBurnRate;
+            _torchFuelSlider.value = TotalFuelPercentage;
         }
         
         UpdateTorch();
@@ -140,6 +151,8 @@ public class TorchFuelController : MonoBehaviour {
             TorchInPlayer1 = false;
             TorchP2.SetActive(true);
             Player2TorchLight.gameObject.SetActive(true);
+            _player1InventoryImage.sprite = swordSprite;
+            _player2InventoryImage.sprite = torchSprite;
         }
         else
         {
@@ -150,6 +163,8 @@ public class TorchFuelController : MonoBehaviour {
             TorchInPlayer1 = true;
             TorchP2.SetActive(false);
             Player2TorchLight.gameObject.SetActive(false);
+            _player1InventoryImage.sprite = torchSprite;
+            _player2InventoryImage.sprite = swordSprite;
         }
         
     }
