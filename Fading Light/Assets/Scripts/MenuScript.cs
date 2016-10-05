@@ -5,10 +5,12 @@ using UnityEngine.UI;
 public class MenuScript : MonoBehaviour {
 
     public Canvas quitMenu;
+	public Canvas achievementMenu;
+	public Canvas highscoreMenu;
     public Button startText;
     public Button exitText;
     public Button highScoreText;
-    public Button optionsText;
+    public Button achievementText;
 
 
 	// Use this for initialization
@@ -17,8 +19,10 @@ public class MenuScript : MonoBehaviour {
         startText = startText.GetComponent<Button>();
         exitText = exitText.GetComponent<Button>();
         highScoreText = highScoreText.GetComponent<Button>();
-        optionsText = optionsText.GetComponent<Button>();
+        achievementText = achievementText.GetComponent<Button>();
         quitMenu.enabled = false;
+		highscoreMenu.enabled = false;
+		achievementMenu.enabled = false;
     }
 	
     public void ExitPress()
@@ -27,7 +31,7 @@ public class MenuScript : MonoBehaviour {
         startText.enabled = false;
         exitText.enabled = false;
         highScoreText.enabled = false;
-        optionsText.enabled = false;
+        achievementText.enabled = false;
     }
     public void NoPress()
     {
@@ -35,7 +39,7 @@ public class MenuScript : MonoBehaviour {
         startText.enabled = true;
         exitText.enabled = true;
         highScoreText.enabled = true;
-        optionsText.enabled = true;
+       	achievementText.enabled = true;
     }
 
     public void ExitGame()
@@ -51,8 +55,22 @@ public class MenuScript : MonoBehaviour {
     {
 
     }
-    public void optionPress()
+    public void achievementPress()
     {
-
+		achievementMenu.enabled = true;
+		startText.enabled = false;
+		exitText.enabled = false;
+		highScoreText.enabled = false;
+		achievementText.enabled = false;
     }
+
+	public void backPress(){
+		achievementMenu.enabled = false;
+		startText.enabled = true;
+		exitText.enabled = true;
+		highScoreText.enabled = true;
+		achievementText.enabled = true;
+	}
+
+
 }
