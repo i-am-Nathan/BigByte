@@ -27,7 +27,7 @@ public class SpiderBoss : BaseEntity
     public float WalkSpeed = 9;
     public float RunSpeed = 15;
     public float SprintSpeed = 24;
-    public float AttackCooldown = 0.25f;
+    public float AttackCooldown = 0.5f;
 
     //Target and navigation variables
     NavMeshAgent pathfinder;
@@ -48,7 +48,7 @@ public class SpiderBoss : BaseEntity
     private bool _isRunning;
     private bool _isMoving;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
    private void Awake()
 	{
@@ -100,8 +100,8 @@ public class SpiderBoss : BaseEntity
             _isRunning = false;
             attackCount = 0;
         }
-             
-        
+
+        yield return new WaitForSeconds(AttackCooldown);
 
         attackCount++;
 

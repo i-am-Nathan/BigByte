@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerWeapon : MonoBehaviour {
 
-    float weaponDamage = 30f;
-    private bool DEBUG = false;
+    public float WeaponDamage = 30f;
+    private bool DEBUG = true;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +29,7 @@ public class PlayerWeapon : MonoBehaviour {
         if ((player1.isAttacking() || player2.isAttacking()) && other.tag == "Enemy")
         {
             if (DEBUG) Debug.Log("Weapon collision: Enemy");
-            other.transform.GetComponent<BaseEntity>().Damage(weaponDamage, this.transform.root);
+            other.transform.GetComponent<BaseEntity>().Damage(WeaponDamage, this.transform.root);
             player1.setAttacking(false);
             player2.setAttacking(false);
         }
