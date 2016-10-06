@@ -14,6 +14,9 @@ public class OpenTreasure : MonoBehaviour {
 	public AudioClip TreasureOpening;
 	private AudioSource _source;
 
+	private AchievementManager _achievementManager;
+
+
 
 	void Awake(){
 		_source = GetComponent<AudioSource>();
@@ -23,6 +26,7 @@ public class OpenTreasure : MonoBehaviour {
 	void Start () {
 		_open = false;
 		_speed = 60;
+		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
 	}
 
 	// Update is called once per frame
@@ -31,6 +35,7 @@ public class OpenTreasure : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.T)) {
 
 				if (!_open) {
+					_achievementManager.AddProgressToAchievement ("Money Money Money~", 1.0f);
 					StartCoroutine (Open ());
 					_open = true;
                     GameObject label = GameObject.FindGameObjectWithTag("tbl");
@@ -45,6 +50,7 @@ public class OpenTreasure : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.T)) {
 
 				if (!_open) {
+					_achievementManager.AddProgressToAchievement ("Money Money Money~", 1.0f);
 					print ("STFU");
 					StartCoroutine (Open ());
 					_open = true;
