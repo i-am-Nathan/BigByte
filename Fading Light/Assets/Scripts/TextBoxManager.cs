@@ -22,8 +22,11 @@ public class TextBoxManager : MonoBehaviour {
 	public int EndLine;
 	public PlayerController Player1;
 	public Player2Controller Player2;
+    public MoleManContoller MoleMan;
+    public Storyline ThisStoryline;
+    public TorchFuelController TorchController;
 
-	public bool StopMovement;
+    public bool StopMovement;
 	public bool IsActive;
 	public bool FirstLine;
 
@@ -93,6 +96,7 @@ public class TextBoxManager : MonoBehaviour {
 
 				if (CurrentLine > EndLine) {
 					DisableDialogue ();
+                    ThisStoryline.DialogueComplete();
 				} else {
 					_splitText= new string[3];
 					_splitText = TextLines [CurrentLine].Split (':');
@@ -146,9 +150,11 @@ public class TextBoxManager : MonoBehaviour {
 		gameUI.SetActive (false);
 		TextBox.SetActive (true);
 		IsActive = true;
-			Player1.IsDisabled = true;
-			Player2.IsDisabled = true;
-	}
+		Player1.IsDisabled = true;
+		Player2.IsDisabled = true;
+        ThisStoryline.DisableMoleMan();
+        TorchController.IsDisabled = true;
+    }
 
 	public void DisableDialogue(){
 		gameUI.SetActive (true);
@@ -156,7 +162,10 @@ public class TextBoxManager : MonoBehaviour {
 		IsActive = false;
 		Player1.IsDisabled = false;
 		Player2.IsDisabled = false;
-	}
+        MoleMan.IsDisabled = false;
+        ThisStoryline.EnableMoleMan();
+        TorchController.IsDisabled = false;
+    }
 
 	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips){
 		if (thisText != null) {
