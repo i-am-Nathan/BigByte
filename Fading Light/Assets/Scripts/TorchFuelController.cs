@@ -26,6 +26,7 @@ public class TorchFuelController : MonoBehaviour {
     public Sprite torchSprite;
     public Sprite swordSprite;
 
+	//The _maxAngle and _maxFOV fields are represented in radians as the only case where they are used is in the Math.Tan function.
 	private double _maxAngle = 67*(Math.PI/180);
 	private double _maxFOV = 64*(Math.PI/180);
     private bool _flickerUp = false;
@@ -196,6 +197,8 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>
     /// Updates the torch.
+	/// This happens by changing the angle of the spotlight and its child projector
+	/// based on the percentage of fuel left in the torch.
     /// </summary>
     private void UpdateTorch()
     {
@@ -206,10 +209,12 @@ public class TorchFuelController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Finds the spot angle.
+    /// Finds the spotlight angle.
+	/// This happens by setting the radius of the circle in proportion to the fuel percentage,
+	/// then converting the radius to an angle using trigonometric functions.
     /// </summary>
     /// <param name="totalFuelPercentage">The total fuel percentage.</param>
-    /// <returns></returns>
+	/// <returns>The angle (in degrees) of the spotlight</returns>
     private float findSpotAngle(float totalFuelPercentage)
     {
 		double radius = Math.Tan (_maxAngle) * (totalFuelPercentage / 100);
@@ -217,8 +222,10 @@ public class TorchFuelController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Finds the proj fov.
-    /// </summary>
+    /// Finds the Field of view of the projector.
+	/// This happens by setting the radius of the circle in proportion to the fuel percentage,
+	/// then converting the radius to an angle using trigonometric functions.
+	/// </summary>
     /// <param name="totalFuelPercentage">The total fuel percentage.</param>
     /// <returns></returns>
     private float findProjFOV(float totalFuelPercentage)
