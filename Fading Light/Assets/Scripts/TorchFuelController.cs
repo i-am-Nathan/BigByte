@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
+/// <summary>
+/// Used to control player torches and torch fuel burn rate
+/// </summary>
 public class TorchFuelController : MonoBehaviour {
 
     public float TotalFuelPercentage = 100;
@@ -35,7 +38,9 @@ public class TorchFuelController : MonoBehaviour {
     private Image _player2InventoryImage;
     public bool IsDisabled;
 
-    // Use this for initialization
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
     void Start ()
     {
         TorchP2.SetActive(false);
@@ -46,6 +51,10 @@ public class TorchFuelController : MonoBehaviour {
         _player2InventoryImage = GameObject.FindWithTag("Player 2 Inventory").GetComponent<Image>();
     }
 
+    /// <summary>
+    /// Adds the fuel.
+    /// </summary>
+    /// <param name="fuelAmount">The fuel amount.</param>
     internal void AddFuel(float fuelAmount)
     {
         TotalFuelPercentage += fuelAmount;
@@ -53,6 +62,10 @@ public class TorchFuelController : MonoBehaviour {
         _torchFuelSlider.value = TotalFuelPercentage;
     }
 
+    /// <summary>
+    /// Gets the current torch.
+    /// </summary>
+    /// <returns></returns>
     public GameObject GetCurrentTorch()
     {
         if (TorchInPlayer1)
@@ -63,6 +76,14 @@ public class TorchFuelController : MonoBehaviour {
         return TorchP2;
     }
 
+    /// <summary>
+    /// Determines whether [is in torch range] [the specified x].
+    /// </summary>
+    /// <param name="x">The x.</param>
+    /// <param name="z">The z.</param>
+    /// <returns>
+    ///   <c>true</c> if [is in torch range] [the specified x]; otherwise, <c>false</c>.
+    /// </returns>
     public bool IsInTorchRange(float x, float z)
     {
         var currentTorch = TorchP2;
@@ -89,6 +110,10 @@ public class TorchFuelController : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Gets the torch position.
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetTorchPosition()
     {
         var currentTorch = TorchP2;
@@ -99,6 +124,10 @@ public class TorchFuelController : MonoBehaviour {
         return torchPosition;
     }
 
+    /// <summary>
+    /// Gets the torch radius.
+    /// </summary>
+    /// <returns></returns>
     public double GetTorchRadius()
     {
         var currentTorch = TorchP2;
@@ -112,7 +141,9 @@ public class TorchFuelController : MonoBehaviour {
         return torchRadius;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
     void Update () {
         return;
         //Flicker the torch
@@ -143,6 +174,9 @@ public class TorchFuelController : MonoBehaviour {
         UpdateTorch();
 	}
 
+    /// <summary>
+    /// Removes the fuel amount.
+    /// </summary>
     public void RemoveFuelAmount()
     {
         if (IsDisabled)
@@ -159,6 +193,9 @@ public class TorchFuelController : MonoBehaviour {
         UpdateTorch();
     }
 
+    /// <summary>
+    /// Updates the torch.
+    /// </summary>
     private void UpdateTorch()
     {
         Player1TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
@@ -167,19 +204,32 @@ public class TorchFuelController : MonoBehaviour {
 		Player2Projector.fieldOfView = findProjFOV(TotalFuelPercentage);
     }
 
+    /// <summary>
+    /// Finds the spot angle.
+    /// </summary>
+    /// <param name="totalFuelPercentage">The total fuel percentage.</param>
+    /// <returns></returns>
     private float findSpotAngle(float totalFuelPercentage)
     {
 		double radius = Math.Tan (_maxAngle) * (totalFuelPercentage / 100);
 		return Convert.ToSingle (Math.Atan (radius) * (360 / Math.PI));
     }
 
-	private float findProjFOV(float totalFuelPercentage)
+    /// <summary>
+    /// Finds the proj fov.
+    /// </summary>
+    /// <param name="totalFuelPercentage">The total fuel percentage.</param>
+    /// <returns></returns>
+    private float findProjFOV(float totalFuelPercentage)
 	{
 		
 		double radius = Math.Tan (_maxFOV) * (totalFuelPercentage / 100);
 		return Convert.ToSingle (Math.Atan (radius) * (360 / Math.PI));
 	}
-    
+
+    /// <summary>
+    /// Swaps the players.
+    /// </summary>
     public void SwapPlayers()
     {
         // Disabling current player's torch and activating the other

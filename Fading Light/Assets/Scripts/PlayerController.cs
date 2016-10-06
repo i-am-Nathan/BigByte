@@ -2,13 +2,16 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Used to control player 1
+/// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : Player
 {
     public AchievementManager AchievementManager;
     // Health image on floor
     public Image healthCircle;                                 // Reference to the UI's health circle.
-    bool damaged;                                               // True when the player gets damaged.
+    private bool damaged;                                               // True when the player gets damaged.
 
     // Handling
     public float RotationSpeed;
@@ -21,11 +24,10 @@ public class PlayerController : Player
     public bool IsDisabled;
     private bool _lastPressed = false;
     private TorchFuelController TorchFuelControllerScript;
-    // System
+
     private Quaternion _targetRotation;
-    Animator _animator;
+    private Animator _animator;
     private GameObject _torch;
-    // Components
     private CharacterController _controller;
 
     // UI
@@ -35,9 +37,11 @@ public class PlayerController : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
 
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
     protected override void Start()
     {
-        
         base.Start();
         _lastJumpTime = Time.time;
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
@@ -53,6 +57,9 @@ public class PlayerController : Player
         _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
     }
 
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
     void Update()
     {
         if (IsDisabled || isDead)
@@ -72,6 +79,9 @@ public class PlayerController : Player
         }
     }
 
+    /// <summary>
+    /// Controls this character with its keys
+    /// </summary>
     void ControlWASD()
     {
         if(TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
@@ -123,7 +133,10 @@ public class PlayerController : Player
     }
 
 
-    // When collision occurs between two objects
+    /// <summary>
+    /// When collision occurs between two objects
+    /// </summary>
+    /// <param name="other">The other.</param>
     void OnTriggerStay(Collider other)
     {
        
@@ -144,7 +157,10 @@ public class PlayerController : Player
     }
 
 
-    // Used to push rigid body objects in the scene
+    /// <summary>
+    /// Used to push rigid body objects in the scene
+    /// </summary>
+    /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (!(hit.gameObject.tag.Equals("Crate")))
@@ -161,6 +177,11 @@ public class PlayerController : Player
         }
     }
 
+    /// <summary>
+    /// Damages the specified amount.
+    /// </summary>
+    /// <param name="amount">The amount.</param>
+    /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Player damaged");
@@ -182,6 +203,9 @@ public class PlayerController : Player
         }
     }
 
+    /// <summary>
+    /// Killeds this instance.
+    /// </summary>
     public override void Killed()
     {
         // Set the death flag so this function won't be called again.
@@ -190,11 +214,18 @@ public class PlayerController : Player
         Debug.Log("Dead");
     }
 
+    /// <summary>
+    /// Hides the health.
+    /// </summary>
     public void HideHealth()
     {
         healthCircle.enabled = false;
     }
 
+    /// <summary>
+    /// Updates the gold.
+    /// </summary>
+    /// <param name="amount">The amount.</param>
     public void UpdateGold(int amount)
     {
 		_goldAmount += amount;
