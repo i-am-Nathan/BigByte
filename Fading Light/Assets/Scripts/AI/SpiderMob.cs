@@ -2,6 +2,9 @@
 using System.Collections;
 using MonsterLove.StateMachine;
 
+/// <summary>
+/// Controls the AI (using a FSM) of the smaller spider mobs
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class SpiderMob : BaseEntity
 {

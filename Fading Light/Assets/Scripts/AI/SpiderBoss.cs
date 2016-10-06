@@ -2,6 +2,9 @@
 using System.Collections;
 using MonsterLove.StateMachine;
 
+/// <summary>
+/// Controls the AI (using FSM) of the large spider bosses (e.i. the one found in the tutorial level)
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class SpiderBoss : BaseEntity
 {
