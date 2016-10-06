@@ -24,6 +24,7 @@ public class PlayerController : BaseEntity
     // System
     private Quaternion _targetRotation;
     Animator _animator;
+    private GameObject _torch;
     // Components
     private CharacterController _controller;
 
@@ -44,7 +45,7 @@ public class PlayerController : BaseEntity
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         _controller = GetComponent<CharacterController>();
-
+        _torch = transform.Find("ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Weapon/Torch Light Holder").gameObject;
         _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
 		_goldAmountText = GameObject.FindWithTag("Player 1 Gold").GetComponent<Text>();
 
@@ -101,11 +102,11 @@ public class PlayerController : BaseEntity
         {
             _animator.SetBool("Idling", false);
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.Return) && !_torch.activeInHierarchy)
         {
             
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
+            //AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
         else
         {

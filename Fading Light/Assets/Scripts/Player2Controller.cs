@@ -24,6 +24,7 @@ public class Player2Controller : BaseEntity
     private bool _isPlayingAttack = false;
     Animator _animator;
 
+    private GameObject _torch;
     // Components
     private CharacterController controller;
 
@@ -43,7 +44,7 @@ public class Player2Controller : BaseEntity
         _lastJumpTime = Time.time;
         _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
         _goldAmountText = GameObject.FindWithTag("Player 2 Gold").GetComponent<Text>();
-
+        _torch = transform.Find("ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Weapon/Torch Light Holder").gameObject;
         GameObject go = GameObject.FindGameObjectWithTag("Life Manager");
         _lifeManagerScript = (LifeManager)go.GetComponent(typeof(LifeManager));
     }
@@ -91,7 +92,7 @@ public class Player2Controller : BaseEntity
         {
             _animator.SetBool("Idling", false);
         }
-        else if (Input.GetKey("e"))
+        else if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy)
         {
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
 
