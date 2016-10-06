@@ -13,6 +13,7 @@ public class SpiderMob : BaseEntity
         Chase,
         Attack,
         Taunt,
+        Run,
         Death
     }
 
@@ -48,9 +49,13 @@ public class SpiderMob : BaseEntity
     private bool _inAttackRange;
     private bool _isRunning;
     private bool _isMoving;
+    private bool _inTorchLight;
 
     private bool DEBUG = true;
 
+    /// <summary>
+    /// Initilized montser location, pathfinding, animation and the AI FSM
+    /// </summary>
     private void Awake()
     {
         if (DEBUG) Debug.Log("The spider wakes.");
@@ -67,27 +72,40 @@ public class SpiderMob : BaseEntity
         fsm.ChangeState(States.Init);
     }
 
+    /// <summary>
+    /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
+    /// </summary>
     private void Init_Enter()
     {
         if (DEBUG) Debug.Log("Spider state machine initilized.");
         fsm.ChangeState(States.Idle);
     }
 
+    /// <summary>
+    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
+    /// </summary>
     private void Taunt_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");
         fsm.ChangeState(States.Idle);
     }
 
+    /// <summary>
+    /// Entry method for the attack state. Plays the attack animation once, and deals damage once, before transitioning back to the chase state.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Attack_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
+
+        //Disable pathfinding to prevent the spider moving during the attack animation
         pathfinder.enabled = false;
 
+        //Play the attack animation and deal damage to the target entitiy
         _animator.Play("attack2", PlayMode.StopAll);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
 
-
+        //Wait for the animation to finish before continuing back to the chase state
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.25f);
@@ -109,6 +127,11 @@ public class SpiderMob : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
+    /// <summary>
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
+    /// spiders alert area, or comes into attack range.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
@@ -131,29 +154,15 @@ public class SpiderMob : BaseEntity
             //If player 2 is closer to the spider, and is not dead, then chase them Otherwise, player 1 is closer.              
             if (Vector3.Distance(player1.position, this.gameObject.transform.position) >= Vector3.Distance(player2.position, this.gameObject.transform.position) && !player2.GetComponent<BaseEntity>().isDead)
             {
-                if (TorchController.IsInTorchRange(player1.transform.position.x, player1.transform.position.z))
-                {
-                    if (DEBUG) Debug.Log("Targetting player 1");
-                    target = player1;
-                } else
-                {
-                    if (DEBUG) Debug.Log("Targetting player 2");
-                    target = player2;
-                }
+                if (DEBUG) Debug.Log("Targetting player 2");
+                target = player2;
                 
             }
             else if (Vector3.Distance(player2.position, this.gameObject.transform.position) >= Vector3.Distance(player1.position, this.gameObject.transform.position) && !player1.GetComponent<BaseEntity>().isDead)
             {
-                if (TorchController.IsInTorchRange(player1.transform.position.x, player1.transform.position.z))
-                {
-                    if (DEBUG) Debug.Log("Targetting player 2");
-                    target = player2;
-                }
-                else
-                {
-                    if (DEBUG) Debug.Log("Targetting player 1");
-                    target = player1;
-                }
+                
+                if (DEBUG) Debug.Log("Targetting player 1");
+                target = player1;
             }
             else
             {
@@ -197,6 +206,52 @@ public class SpiderMob : BaseEntity
         }
     }
 
+    /// <summary>
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
+    /// spiders alert area, or comes into attack range.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Run_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Run");
+
+        float refreshRate = 0.35f;
+        _lockedOn = true;
+
+        if (!_isMoving)
+        {
+            _animator.Play("run", PlayMode.StopAll);
+            _isMoving = true;
+        }
+               
+        while (_inTorchLight)
+        {
+            
+            //If the spider has run out of the torch light, transition back to idle
+            if (!TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
+            {
+                if (DEBUG) Debug.Log("Escaped torchlight");
+                _inTorchLight = false;
+                _isMoving = false;
+                fsm.ChangeState(States.Idle);
+            }
+                       
+            //Determine which way the spider should run
+
+
+            //Set the spider to run away as fast as possible
+            pathfinder.speed = _isRunning ? SprintSpeed : RunSpeed;
+            pathfinder.SetDestination(target.position);
+            
+            yield return new WaitForSeconds(refreshRate);
+        }
+    }
+
+    /// <summary>
+    /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
+    /// if transitions to the chase state to chase them down.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
@@ -214,14 +269,27 @@ public class SpiderMob : BaseEntity
             BaseEntity player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<BaseEntity>();
             BaseEntity player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<BaseEntity>();
 
+            //Check if the torch has moved over the spider. If so then transition to the run state
+            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
+            {
+                if (DEBUG) Debug.Log("Spider inside torch");
+                _lockedOn = true;
+                fsm.ChangeState(States.Run);
+
+                //float percent = (float)TorchController.GetTorchRadius() / Vector3.Distance(target.position, this.gameObject.transform.position);
+                //pathfinder.SetDestination(Vector3.Lerp(target.transform.position, this.gameObject.transform.position, percent));
+            }
+
+            /*
             if (!player1.isDead && (player1distance < HardActivationDistance) || !player2.isDead && (player2distance < HardActivationDistance))
             {
                 if (DEBUG) Debug.Log("Player found.");
                 _lockedOn = true;
-            }
+                fsm.ChangeState(States.Chase);
+            }*/
+
             yield return new WaitForSeconds(refreshRate);
-        }
-        fsm.ChangeState(States.Chase);
+        }        
     }
 
     private void Death_Enter()

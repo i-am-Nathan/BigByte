@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerWeapon : MonoBehaviour {
 
     public float WeaponDamage = 30f;
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
 	// Use this for initialization
 	void Start () {
