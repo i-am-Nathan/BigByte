@@ -51,6 +51,8 @@ public class SpiderBoss : BaseEntity
 
     private bool DEBUG = false;
 
+	private AchievementManager _achievementManager;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
@@ -69,6 +71,11 @@ public class SpiderBoss : BaseEntity
         fsm = StateMachine<States>.Initialize(this);
         fsm.ChangeState(States.Init);
     }
+
+	private void Start(){
+		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
+
+	}
 
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
@@ -261,6 +268,7 @@ public class SpiderBoss : BaseEntity
         pathfinder.Stop();
         _animator.Play("death1", PlayMode.StopAll);
         fsm.ChangeState(States.Death);
+		_achievementManager.AddProgressToAchievement ("First Blood", 1.0f);
     }
 }
 

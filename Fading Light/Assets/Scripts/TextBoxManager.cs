@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+
 /// <summary>
 /// This class will manage the dialogue system and handles the textfiles associated with it. This file handles dialogue through
 /// a specific format : CharacterAbbreviation:Sound(Optional):Dialogue
@@ -27,6 +28,7 @@ public class TextBoxManager : MonoBehaviour {
 	public int EndLine;
 	public PlayerController Player1;
 	public Player2Controller Player2;
+
     public MoleManContoller MoleMan;
     public Storyline ThisStoryline;
     public TorchFuelController TorchController;
@@ -181,6 +183,7 @@ public class TextBoxManager : MonoBehaviour {
         TorchController.IsDisabled = true;
     }
 
+
 	/// <summary>
 	/// This will stop the dialogue and allow the players to move again.
 	/// </summary>
@@ -194,7 +197,7 @@ public class TextBoxManager : MonoBehaviour {
         ThisStoryline.EnableMoleMan();
         TorchController.IsDisabled = false;
     }
-
+		
 	/// <summary>
 	/// This will load a new dialogue script
 	/// </summary>

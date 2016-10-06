@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 /// <summary>
 /// Script which is used when players interact with Treasure chests.
 /// </summary>

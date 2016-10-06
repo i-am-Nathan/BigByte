@@ -5,14 +5,15 @@ using System.Collections;
 /// <summary>
 /// This class will be placed on characters or objects which have dialogue on them. 
 /// </summary>
-public class ActivateText : MonoBehaviour {
-	public TextAsset Dialogue;
+public class ActivateText : MonoBehaviour
+{
+    public TextAsset Dialogue;
 
-	public int StartLine;
-	public int EndLine;
+    public int StartLine;
+    public int EndLine;
 
-	public TextBoxManager TextBox;
-	// Use this for initialization
+    public TextBoxManager TextBox;
+    // Use this for initialization
 
 	public bool RequireButtonPress;
 	private bool _waitForPress;
