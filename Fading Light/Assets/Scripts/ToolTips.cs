@@ -12,7 +12,7 @@ public class ToolTips : MonoBehaviour {
 
 	public void DisableToolTips(){
 		foreach ( GameObject currentTag in tags){
-			currentTag.SetActive (false);
+            currentTag.SetActive (false);
 		}
 	}
 		

@@ -12,15 +12,12 @@ public class InGameUiManager : MonoBehaviour {
     public Button QuitToMenuButton;
     public Button ContinueButton;
 
-    private BoxCollider _levelFinishedTrigger;
-
     void Start () {
         LevelFinishedMenu.enabled = false;
         ExitMenu.enabled = false;
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
         ContinueButton = ContinueButton.GetComponent<Button>();
-        _levelFinishedTrigger = this.GetComponent<BoxCollider>();
     }
 	
 	void Update () {
@@ -32,12 +29,7 @@ public class InGameUiManager : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter ()
-    {
-        // Pauses the game and shows the menu indicating that players have completed the level
-        Time.timeScale = 0;
-        LevelFinishedMenu.enabled = true;
-    }
+ 
 
     // Called when Continue button is called
     public void Continue ()
