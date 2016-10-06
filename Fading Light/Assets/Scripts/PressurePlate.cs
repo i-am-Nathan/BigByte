@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor.Animations;
+
 
 /// <summary>
 /// This script controls the pressure plate and falling wall's trigger animations

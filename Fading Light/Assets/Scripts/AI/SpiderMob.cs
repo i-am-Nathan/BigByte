@@ -72,6 +72,11 @@ public class SpiderMob : BaseEntity
         fsm.ChangeState(States.Init);
     }
 
+    public void MockUp()
+    {
+        base.Start();
+    }
+
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
@@ -309,16 +314,24 @@ public class SpiderMob : BaseEntity
         }
         else
         {
-            _animator.Play("hit1", PlayMode.StopSameLayer);
+            try
+            {
+                _animator.Play("hit1", PlayMode.StopSameLayer);
+            } catch { }            
         }
     }
 
     public override void Killed()
     {
         base.Killed();
-        pathfinder.Stop();
-        _animator.Play("death2", PlayMode.StopAll);
-        fsm.ChangeState(States.Death);
+
+        try
+        {
+            pathfinder.Stop();
+            _animator.Play("death2", PlayMode.StopAll);
+            fsm.ChangeState(States.Death);
+        } catch { }
+       
     }
 }
 

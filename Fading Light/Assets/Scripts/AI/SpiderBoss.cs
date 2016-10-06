@@ -72,9 +72,14 @@ public class SpiderBoss : BaseEntity
         fsm.ChangeState(States.Init);
     }
 
-	private void Start(){
-		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
+    public void MockUp()
+    {
+        base.Start();
+    }
 
+    private void Start(){
+		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
+        CurrentHealth = Health;
 	}
 
     /// <summary>
@@ -256,7 +261,11 @@ public class SpiderBoss : BaseEntity
             Killed();
         } else
         {
-            _animator.Play("hit1", PlayMode.StopSameLayer);
+            try
+            {
+                _animator.Play("hit1", PlayMode.StopSameLayer);
+            } catch { }
+            
         }
     }
 
@@ -265,10 +274,13 @@ public class SpiderBoss : BaseEntity
         base.Killed();
 
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
-        pathfinder.Stop();
-        _animator.Play("death1", PlayMode.StopAll);
-        fsm.ChangeState(States.Death);
-		_achievementManager.AddProgressToAchievement ("First Blood", 1.0f);
+        try
+        {
+            pathfinder.Stop();
+            _animator.Play("death1", PlayMode.StopAll);
+            fsm.ChangeState(States.Death);
+            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+        } catch { }        
     }
 }
 
