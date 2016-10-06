@@ -4,6 +4,7 @@ using System.Collections;
 public class TorchFuel : MonoBehaviour
 {
     public float FuelAmount = 10;
+    
 
     private TorchFuelController TorchFuelControllerScript;
     // Use this for initialization
@@ -11,7 +12,20 @@ public class TorchFuel : MonoBehaviour
     {
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
+
+        var parent = this.transform.parent;
+        var plane = parent.transform.Find("Plane").gameObject;
+        Debug.Log(plane.GetType());
+        var collider = (MeshCollider)plane.GetComponent<MeshCollider>();
+
+        var xOffset = Random.Range(-collider.bounds.size.x / 2, collider.bounds.size.x / 2);
+        var zOffset = Random.Range(-collider.bounds.size.z / 2, collider.bounds.size.z / 2);
+
+        Vector3 newPos = new Vector3(parent.transform.position.x + xOffset, parent.transform.position.y, parent.transform.position.z + zOffset);
+        transform.position = newPos;
     }
+
+
 
     // Update is called once per frame
     void Update()
