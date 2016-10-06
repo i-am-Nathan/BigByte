@@ -31,9 +31,10 @@ public class OpenTreasure : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.T)) {
 
 				if (!_open) {
-					print ("STFU");
 					StartCoroutine (Open ());
 					_open = true;
+                    GameObject label = GameObject.FindGameObjectWithTag("tbl");
+                    label.SetActive(false);
 				}
 			}
 		}
