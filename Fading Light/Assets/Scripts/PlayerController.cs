@@ -56,18 +56,20 @@ public class PlayerController : Player
         GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
         _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
     }
-
-<<<<<<< HEAD
+    
     public void MockUp()
     {
-        base.Start();       
+        base.Start();
     }
 
-=======
+    public int getGold()
+    {
+        return _goldAmount;
+    }
+    
     /// <summary>
     /// Updates this instance.
     /// </summary>
->>>>>>> 7c6164845e25f0db0c4f322c6fc738e4be477292
     void Update()
     {
         if (IsDisabled || isDead)
@@ -242,7 +244,11 @@ public class PlayerController : Player
     public void UpdateGold(int amount)
     {
 		_goldAmount += amount;
-		_goldAmountText.text = "" + _goldAmount;
+        try
+        {
+            _goldAmountText.text = "" + _goldAmount;
+        } catch { }
+		
     }
     
 }

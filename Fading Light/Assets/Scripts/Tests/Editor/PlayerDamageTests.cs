@@ -12,7 +12,6 @@ public class PlayerDamageTests : MonoBehaviour
     public void PlayerTest_Damaged()
     {
         // Arrange
-        //var playerToDamage = gameObject.AddComponent<PlayerController>();
         var playerToDamage = new PlayerController();
         playerToDamage.MockUp();
 
@@ -28,7 +27,6 @@ public class PlayerDamageTests : MonoBehaviour
     public void PlayerTest_Killed()
     {
         // Arrange
-        //var playerToDamage = gameObject.AddComponent<PlayerController>();
         var playerToDamage = new PlayerController();
         playerToDamage.MockUp();
 

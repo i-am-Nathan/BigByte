@@ -9,10 +9,9 @@ using NUnit.Framework;
 public class SpiderDamageTests:MonoBehaviour
 {
     [Test]
-    public void SpiderTest_Damaged()
+    public void SpiderBoss_Damaged()
     {
         // Arrange
-        //var playerToDamage = gameObject.AddComponent<PlayerController>();
         var spiderToDamage = new SpiderBoss();
         spiderToDamage.MockUp();
 
@@ -25,11 +24,39 @@ public class SpiderDamageTests:MonoBehaviour
     }
 
     [Test]
-    public void SpiderTest_Killed()
+    public void SpiderBoss_Killed()
     {
         // Arrange
-        //var playerToDamage = gameObject.AddComponent<PlayerController>();
-        var playerToDamage = new PlayerController();
+        var playerToDamage = new SpiderBoss();
+        playerToDamage.MockUp();
+
+        // Act
+        playerToDamage.Damage(51.0f, null);
+
+        // Assert
+        Assert.That(playerToDamage.isDead, Is.EqualTo(true));
+    }
+
+    [Test]
+    public void SpiderMob_Damaged()
+    {
+        // Arrange
+        var spiderToDamage = new SpiderMob();
+        spiderToDamage.MockUp();
+
+        // Act
+        spiderToDamage.Damage(2.0f, null);
+
+        // Assert
+        Assert.That(spiderToDamage.CurrentHealth, Is.EqualTo(48));
+        Assert.That(spiderToDamage.isDead, Is.EqualTo(false));
+    }
+
+    [Test]
+    public void SpiderMob_Killed()
+    {
+        // Arrange
+        var playerToDamage = new SpiderMob();
         playerToDamage.MockUp();
 
         // Act

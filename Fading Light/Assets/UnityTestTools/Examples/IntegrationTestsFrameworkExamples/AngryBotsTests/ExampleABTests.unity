@@ -4080,25 +4080,6 @@ Transform:
   - {fileID: 265513741}
   m_Father: {fileID: 1437745805}
   m_RootOrder: 0
---- !u!114 &674555202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4928c6c2b973874c8d4e6c9a69bb5b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  go: {fileID: 1335197}
-  thisPropertyPath: Health.health
-  compareToType: 1
-  other: {fileID: 0}
-  otherPropertyPath: 
-  constantValueGeneric: 75
-  compareTypes: 3
-  floatingPointError: 0.00009999999747378752
 --- !u!1 &680922319
 GameObject:
   m_ObjectHideFlags: 0
@@ -4295,7 +4276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3afc1c624179749bcdecf7b0224902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTest: {fileID: 0}
+  testToRun: []
 --- !u!4 &698660006
 Transform:
   m_ObjectHideFlags: 0
@@ -5502,9 +5483,6 @@ MonoBehaviour:
   expectedExceptionList: 
   succeedWhenExceptionIsThrown: 0
   includedPlatforms: -1
-  platformsToIgnore: []
-  dynamic: 0
-  dynamicTypeName: 
 --- !u!1 &908040894
 GameObject:
   m_ObjectHideFlags: 0
@@ -9351,9 +9329,6 @@ MonoBehaviour:
   expectedExceptionList: 
   succeedWhenExceptionIsThrown: 0
   includedPlatforms: -1
-  platformsToIgnore: []
-  dynamic: 0
-  dynamicTypeName: 
 --- !u!1 &1424876363
 GameObject:
   m_ObjectHideFlags: 0
@@ -9664,7 +9639,7 @@ MonoBehaviour:
   repeatEveryFrame: 1
   hasFailed: 0
   checkMethods: 1
-  m_ActionBase: {fileID: 674555202}
+  m_ActionBase: {fileID: 0}
   checksPerformed: 0
 --- !u!1 &1477738577
 GameObject:
@@ -11006,7 +10981,7 @@ MonoBehaviour:
   repeatEveryFrame: 1
   hasFailed: 0
   checkMethods: 1
-  m_ActionBase: {fileID: 2142962902}
+  m_ActionBase: {fileID: 0}
   checksPerformed: 0
 --- !u!1 &1669579696
 GameObject:
@@ -12411,9 +12386,6 @@ MonoBehaviour:
   expectedExceptionList: 
   succeedWhenExceptionIsThrown: 0
   includedPlatforms: -1
-  platformsToIgnore: []
-  dynamic: 0
-  dynamicTypeName: 
 --- !u!1 &1849251954
 GameObject:
   m_ObjectHideFlags: 0
@@ -14765,20 +14737,3 @@ Transform:
   - {fileID: 1407142483}
   m_Father: {fileID: 512468557}
   m_RootOrder: 0
---- !u!114 &2142962902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2586c8e41f35d2f4fadde53020bf4207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  go: {fileID: 169891707}
-  thisPropertyPath: SpiderAttackMoveController.enabled
-  compareToType: 1
-  other: {fileID: 0}
-  otherPropertyPath: 
-  constantValueGeneric: 0

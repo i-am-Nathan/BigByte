@@ -12,14 +12,13 @@ public class PlayerGoldTests:MonoBehaviour
     public void PlayerTest_PickupGold()
     {
         // Arrange
-        //var playerToDamage = gameObject.AddComponent<PlayerController>();
-        var playerToDamage = new PlayerController();
-        playerToDamage.MockUp();
+        var playerToPickup = new PlayerController();
+        playerToPickup.MockUp();
 
         // Act
-        playerToDamage.Damage(2.0f, null);
+        playerToPickup.UpdateGold(2);
 
         // Assert
-        Assert.That(playerToDamage.CurrentHealth, Is.EqualTo(48));
+        Assert.That(playerToPickup.getGold(), Is.EqualTo(2));
     }
 }
