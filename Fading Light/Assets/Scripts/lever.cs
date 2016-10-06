@@ -8,6 +8,10 @@ using System.Collections;
 public class lever : MonoBehaviour
 {
     private bool _pulled = false;
+
+    /// <summary>
+    /// Called when the player is close enough to the lever, and presses T
+    /// </summary>
     void OnTriggerStay(Collider other)
     {
         //if T is pressed to interact with the lever, the walls move

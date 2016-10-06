@@ -10,6 +10,9 @@ public class PressurePlate : MonoBehaviour {
     private int _thingsOnTop = 0;
     private bool _pressed = false;
 
+    /// <summary>
+    /// Called when an object enters on top of the plate
+    /// </summary>
     void OnTriggerEnter(Collider other) {
         
         // the crate has a weight of 2
@@ -37,7 +40,9 @@ public class PressurePlate : MonoBehaviour {
     }
 
 
-    
+    /// <summary>
+    /// Called when an object leaves the plate
+    /// </summary>
     void OnTriggerExit(Collider other) {
         //same as the method above, but for the upward motion.
         if (other.tag.Equals("Crate"))
