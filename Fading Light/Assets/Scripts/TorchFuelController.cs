@@ -15,13 +15,16 @@ public class TorchFuelController : MonoBehaviour {
     public GameObject SwordP2;
 
     public Light Player1TorchLight;
+	public Projector Player1Projector;
     public Light Player2TorchLight;
+	public Projector Player2Projector;
     public bool TorchInPlayer1 = true;
 
     public Sprite torchSprite;
     public Sprite swordSprite;
 
-    private float _maxAngle = 134;
+	private double _maxAngle = 67*(Math.PI/180);
+	private double _maxFOV = 64*(Math.PI/180);
     private bool _flickerUp = false;
     private int _flickerCount = 0;
     private int _flckerAmount = 50;
@@ -37,7 +40,7 @@ public class TorchFuelController : MonoBehaviour {
     {
         TorchP2.SetActive(false);
         Player2TorchLight.gameObject.SetActive(false);
-        InvokeRepeating("RemoveFuelAmount", 0, 1);
+        InvokeRepeating("RemoveFuelAmount", 0, 0.1f);
         _torchFuelSlider = GameObject.FindWithTag("Torch Fuel Slider").GetComponent<Slider>();
         _player1InventoryImage = GameObject.FindWithTag("Player 1 Inventory").GetComponent<Image>();
         _player2InventoryImage = GameObject.FindWithTag("Player 2 Inventory").GetComponent<Image>();
@@ -136,14 +139,22 @@ public class TorchFuelController : MonoBehaviour {
     {
         Player1TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
         Player2TorchLight.spotAngle = findSpotAngle(TotalFuelPercentage);
+		Player1Projector.fieldOfView = findProjFOV(TotalFuelPercentage);
+		Player2Projector.fieldOfView = findProjFOV(TotalFuelPercentage);
     }
 
     private float findSpotAngle(float totalFuelPercentage)
     {
-        return _maxAngle * (TotalFuelPercentage / 100);
+		double radius = Math.Tan (_maxAngle) * (totalFuelPercentage / 100);
+		return Convert.ToSingle (Math.Atan (radius) * (360 / Math.PI));
     }
 
-
+	private float findProjFOV(float totalFuelPercentage)
+	{
+		
+		double radius = Math.Tan (_maxFOV) * (totalFuelPercentage / 100);
+		return Convert.ToSingle (Math.Atan (radius) * (360 / Math.PI));
+	}
     
     public void SwapPlayers()
     {

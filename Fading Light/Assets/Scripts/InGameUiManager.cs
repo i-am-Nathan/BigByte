@@ -6,16 +6,21 @@ using System.Collections;
 // This class is used to handle button and canvas behaviour of the in game UI
 public class InGameUiManager : MonoBehaviour {
 
+    public Canvas LevelFinishedMenu;
     public Canvas ExitMenu;
     public Button RestartLevelButton;
     public Button QuitToMenuButton;
     public Button ContinueButton;
 
+    private BoxCollider _levelFinishedTrigger;
+
     void Start () {
+        LevelFinishedMenu.enabled = false;
         ExitMenu.enabled = false;
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
         ContinueButton = ContinueButton.GetComponent<Button>();
+        _levelFinishedTrigger = this.GetComponent<BoxCollider>();
     }
 	
 	void Update () {
@@ -27,9 +32,17 @@ public class InGameUiManager : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter ()
+    {
+        // Pauses the game and shows the menu indicating that players have completed the level
+        Time.timeScale = 0;
+        LevelFinishedMenu.enabled = true;
+    }
+
     // Called when Continue button is called
     public void Continue ()
     {
+        Time.timeScale = 1;
         ExitMenu.enabled = false;
     }
 
@@ -37,12 +50,14 @@ public class InGameUiManager : MonoBehaviour {
     // Loads the main menu screen
     public void QuitToMenu ()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
 
     // Called when restart level button is clicked
     public void RestartLevel ()
     {
+        Time.timeScale = 1;
         // Gets the active scene and reloads it
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
