@@ -51,6 +51,7 @@ public class TorchFuelController : MonoBehaviour {
         _player2InventoryImage = GameObject.FindWithTag("Player 2 Inventory").GetComponent<Image>();
     }
 
+
     /// <summary>
     /// Adds the fuel.
     /// </summary>
