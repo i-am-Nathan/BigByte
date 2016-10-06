@@ -1,0 +1,53 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class TorchFuel : MonoBehaviour
+{
+    public float FuelAmount = 10;
+    
+
+    private TorchFuelController TorchFuelControllerScript;
+    // Use this for initialization
+    void Start()
+    {
+        GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
+        TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
+
+        var parent = this.transform.parent;
+        var plane = parent.transform.Find("Plane").gameObject;
+        Debug.Log(plane.GetType());
+        var collider = (MeshCollider)plane.GetComponent<MeshCollider>();
+
+        var xOffset = Random.Range(-collider.bounds.size.x / 2, collider.bounds.size.x / 2);
+        var zOffset = Random.Range(-collider.bounds.size.z / 2, collider.bounds.size.z / 2);
+
+        Vector3 newPos = new Vector3(parent.transform.position.x + xOffset, parent.transform.position.y, parent.transform.position.z + zOffset);
+        transform.position = newPos;
+    }
+
+
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    // When collision occurs between two objects
+    void OnTriggerStay(Collider other)
+    {
+        // Checking if players are next to each other
+        if (other.gameObject.tag.Equals("Player2") && !TorchFuelControllerScript.TorchInPlayer1)
+        {
+            TorchFuelControllerScript.AddFuel(FuelAmount);
+            TorchFuelControllerScript.RemoveFuelAmount();
+            Destroy(this.gameObject);
+        }else if(other.gameObject.tag.Equals("Player") && TorchFuelControllerScript.TorchInPlayer1)
+        {
+            TorchFuelControllerScript.AddFuel(FuelAmount);
+            TorchFuelControllerScript.RemoveFuelAmount();
+            Destroy(this.gameObject);
+        }
+    }
+
+}
