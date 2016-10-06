@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Used to control the storyline for the tutorial level
+/// </summary>
 public class Storyline : MonoBehaviour {
 
     public PlayerController Player1;
@@ -15,15 +18,22 @@ public class Storyline : MonoBehaviour {
     private ToolTips _tips;
     private bool _tipsDone = false;
     private float _startDisplay;
-    // Use this for initialization
+
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
     void Start () {
         _tips = new ToolTips();
         _tips.DisableToolTips();
       
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
+    void Update () {
         if(Time.time - _startDisplay > 5 && !_tipsDone)
         {
             _tips.DisableToolTips();
@@ -70,11 +80,17 @@ public class Storyline : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Nexts this instance.
+    /// </summary>
     public void Next()
     {
 
     }
 
+    /// <summary>
+    /// Dialogues the complete.
+    /// </summary>
     public void DialogueComplete()
     {
         if(_currentStep == 0)
@@ -90,6 +106,9 @@ public class Storyline : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Moles the man in position.
+    /// </summary>
     public void MoleManInPosition()
     {
         if(_currentStep == 1)
@@ -99,11 +118,17 @@ public class Storyline : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Disables the mole man.
+    /// </summary>
     public void DisableMoleMan()
     {
         MoleMen[0].IsDisabled = true;
     }
 
+    /// <summary>
+    /// Enables the mole man.
+    /// </summary>
     public void EnableMoleMan()
     {
         MoleMen[0].IsDisabled = false;

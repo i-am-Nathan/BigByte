@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Used to turn an object into torch fuel collectable
+/// </summary>
 public class TorchFuel : MonoBehaviour
 {
     public float FuelAmount = 10;
     
-
     private TorchFuelController TorchFuelControllerScript;
-    // Use this for initialization
+
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
     void Start()
     {
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
@@ -26,14 +32,18 @@ public class TorchFuel : MonoBehaviour
     }
 
 
-
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     void Update()
     {
 
     }
 
-    // When collision occurs between two objects
+    /// <summary>
+    /// When collision occurs between two objects
+    /// </summary>
+    /// <param name="other">The other.</param>
     void OnTriggerStay(Collider other)
     {
         // Checking if players are next to each other
