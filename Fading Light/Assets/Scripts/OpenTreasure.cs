@@ -28,7 +28,7 @@ public class OpenTreasure : MonoBehaviour {
 	// Update is called once per frame
 	void OnTriggerEnter(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.Y)) {
+			if (Input.GetKeyDown (KeyCode.T)) {
 
 				if (!_open) {
 					print ("STFU");
