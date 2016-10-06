@@ -20,7 +20,7 @@ public class InGameUiManager : MonoBehaviour {
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
         ContinueButton = ContinueButton.GetComponent<Button>();
-        _levelFinishedTrigger = this.GetComponent<BoxCollider>();
+        _levelFinishedTrigger = GameObject.FindWithTag("EndOfLevelTrigger").GetComponent<BoxCollider>();
     }
 	
 	void Update () {

@@ -12,13 +12,22 @@ public class Storyline : MonoBehaviour {
 
     private int _currentStep = 0;
     private bool _done = false;
-	// Use this for initialization
-	void Start () {
-	
+    private ToolTips _tips;
+    private bool _tipsDone = false;
+    private float _startDisplay;
+    // Use this for initialization
+    void Start () {
+        _tips = new ToolTips();
+        _tips.DisableToolTips();
+      
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if(Time.time - _startDisplay > 5 && !_tipsDone)
+        {
+            _tips.DisableToolTips();
+        }
         if (_done)
         {
             return;
@@ -45,6 +54,8 @@ public class Storyline : MonoBehaviour {
             MoleMen[0].IsDisabled = false;
 
             //Turn on keys for X seconds
+            _tips.EnableToolTips();
+            _startDisplay = Time.time;
 
         }
         else if (_currentStep == 2)
