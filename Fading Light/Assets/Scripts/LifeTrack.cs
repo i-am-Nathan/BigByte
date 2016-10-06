@@ -2,22 +2,31 @@
 using UnityEngine.UI;
 using System.Collections;
 
-// Used to enable persistent data throughout scenes
+/// <summary>
+/// Used to enable persistent data throughout scenes
+/// </summary>
 public class LifeTrack : MonoBehaviour
 {
-
+	// Shared attributes between scenes
     private int _numberOfLivesLeft;
     private float _totalTime;
     private Text _totalTimeText;
 
+	/// <summary>
+	/// Called before any Start methods called and is used for initialisation
+	/// </summary>
     void Awake()
     {
+		// Finding existing instances of this game object
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Life Track");
+
+		// Finding the total time
         _totalTimeText = GameObject.FindWithTag("Total Time").GetComponent<Text>();
 
-        // Checking if this object already exists
+        // Checking if this life track objects already exists
         if (!(objects.Length > 0))
         {
+			// Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
             _numberOfLivesLeft = 3;
             this.gameObject.tag = "Life Track";
@@ -26,22 +35,33 @@ public class LifeTrack : MonoBehaviour
         }
     }
 
+	/// <summary>
+	/// Called every frame to set the total time
+	/// </summary>
     void Update()
     {
         SetTime();
     }
 
-    // Getters and setters for the number of total lives
+	/// <summary>
+	/// Used to get the number of shared lives
+	/// </summary>
     public int GetNumberOfLives()
     {
         return _numberOfLivesLeft;
     }
 
+	/// <summary>
+	/// Used to set the number of shared lives
+	/// </summary>
     public void SetNumberOfLives(int lives)
     {
         _numberOfLivesLeft = lives;
     }
 
+	/// <summary>
+	/// Used to set the total time taken for the players
+	/// </summary>
     private void SetTime()
     {
         // Getting current time since users started playing 
@@ -71,6 +91,7 @@ public class LifeTrack : MonoBehaviour
             sec = "" + seconds;
         }
 
+		// Setting the UI component
         _totalTimeText.text = "Time:  " + min + ":" + sec;
 
     }

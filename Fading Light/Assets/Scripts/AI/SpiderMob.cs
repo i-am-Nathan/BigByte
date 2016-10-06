@@ -2,6 +2,9 @@
 using System.Collections;
 using MonsterLove.StateMachine;
 
+/// <summary>
+/// Controls the AI (using a FSM) of the smaller spider mobs
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class SpiderMob : BaseEntity
 {
@@ -70,6 +73,11 @@ public class SpiderMob : BaseEntity
         //Create the FSM controller
         fsm = StateMachine<States>.Initialize(this);
         fsm.ChangeState(States.Init);
+    }
+
+    public void MockUp()
+    {
+        base.Start();
     }
 
     /// <summary>
@@ -309,16 +317,24 @@ public class SpiderMob : BaseEntity
         }
         else
         {
-            _animator.Play("hit1", PlayMode.StopSameLayer);
+            try
+            {
+                _animator.Play("hit1", PlayMode.StopSameLayer);
+            } catch { }            
         }
     }
 
     public override void Killed()
     {
         base.Killed();
-        pathfinder.Stop();
-        _animator.Play("death2", PlayMode.StopAll);
-        fsm.ChangeState(States.Death);
+
+        try
+        {
+            pathfinder.Stop();
+            _animator.Play("death2", PlayMode.StopAll);
+            fsm.ChangeState(States.Death);
+        } catch { }
+       
     }
 }
 
