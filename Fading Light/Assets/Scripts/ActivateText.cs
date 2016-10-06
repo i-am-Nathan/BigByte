@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// This class will be placed on characters or objects which have dialogue on them. 
+/// 
 /// </summary>
 public class ActivateText : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class ActivateText : MonoBehaviour
     public int EndLine;
 
     public TextBoxManager TextBox;
+    // Use this for initialization
 
     public bool RequireButtonPress;
     private bool _waitForPress;
@@ -24,16 +25,17 @@ public class ActivateText : MonoBehaviour
         _talked = false;
     }
 
-
+    // Update is called once per frame
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
     void Update()
     {
-        //This will detect whether a keypress is required and execute when the condition is fulfilled. 
         if (_waitForPress && Input.GetKeyDown(KeyCode.T))
         {
-            //This will check if the character can only talk once or not and check if it has talked.
             if ((TalkOnce == true && _talked == false) || (TalkOnce == false))
             {
-                //This will execute the functions in TextBoxManager class and load the new dialogue.
+                print("IN HERE UPDATE");
                 TextBox.ReloadScript(Dialogue, DialogueSpeech);
                 TextBox.CurrentLine = StartLine;
                 TextBox.EndLine = EndLine;
@@ -48,23 +50,20 @@ public class ActivateText : MonoBehaviour
     }
 
     /// <summary>
-    /// This method will execute when the players come close to the character with the dialogue.
+    /// Called when [trigger enter].
     /// </summary>
-    /// <param name="other">Other.</param>
+    /// <param name="other">The other.</param>
     void OnTriggerEnter(Collider other)
     {
-        //Checks if a key press is required to converse with the chracter
         if (RequireButtonPress == true)
         {
             _waitForPress = true;
             return;
         }
-        //Makes sure that the characters that collide with the object are players.
         if (other.name == "Player 1" || other.name == "Player2")
         {
             if ((TalkOnce == true && _talked == false) || (TalkOnce == false))
             {
-                //This will execute the functions in TextBoxManager class and load the new dialogue.
                 TextBox.ReloadScript(Dialogue, DialogueSpeech);
                 TextBox.CurrentLine = StartLine;
                 TextBox.EndLine = EndLine;
@@ -79,9 +78,9 @@ public class ActivateText : MonoBehaviour
 
     }
     /// <summary>
-    /// Ensures that if a player leaves the radius of a NPC, pressing the talk key (T) won't enable dialogue.
+    /// Called when [trigger exit].
     /// </summary>
-    /// <param name="other">Other.</param>
+    /// <param name="other">The other.</param>
     void OnTriggerExit(Collider other)
     {
         if (other.name == "Player 1" || other.name == "Player2")

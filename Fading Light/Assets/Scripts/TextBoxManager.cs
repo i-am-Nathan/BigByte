@@ -2,11 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
-/// <summary>
-/// This class will manage the dialogue system and handles the textfiles associated with it. This file handles dialogue through
-/// a specific format : CharacterAbbreviation:Sound(Optional):Dialogue
-/// </summary>
 public class TextBoxManager : MonoBehaviour
 {
 
@@ -28,6 +23,9 @@ public class TextBoxManager : MonoBehaviour
     public int EndLine;
     public PlayerController Player1;
     public Player2Controller Player2;
+    public MoleManContoller MoleMan;
+    public Storyline ThisStoryline;
+    public TorchFuelController TorchController;
 
     public bool StopMovement;
     public bool IsActive;
@@ -40,16 +38,10 @@ public class TextBoxManager : MonoBehaviour
     private AudioSource _source;
 
     public float TypeSpeed;
-
-    /// <summary>
-    /// Start this instance.
-    /// </summary>
+    // Use this for initialization
     void Start()
     {
-        //Grabs the Game UI
         gameUI = GameObject.FindGameObjectWithTag("GameUIWrapper");
-
-        //Dictionairy which will be used to store the character names and images based on the dialogue.
         SpriteDictionary.Add("MM", Images[0]);
         SpriteDictionary.Add("BS", Images[1]);
         SpriteDictionary.Add("LS", Images[2]);
@@ -58,8 +50,6 @@ public class TextBoxManager : MonoBehaviour
         CharacterNameDictionairy.Add("BS", "Big Sibling");
         CharacterNameDictionairy.Add("LS", "Little Sibling");
         CharacterNameDictionairy.Add("PB", "Post Board");
-
-
         if (TextFile != null)
         {
             TextLines = (TextFile.text.Split('\n'));
@@ -81,9 +71,6 @@ public class TextBoxManager : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Awake this instance.
-    /// </summary>
     void Awake()
     {
         _source = GetComponent<AudioSource>();
@@ -124,6 +111,7 @@ public class TextBoxManager : MonoBehaviour
                 if (CurrentLine > EndLine)
                 {
                     DisableDialogue();
+                    ThisStoryline.DialogueComplete();
                 }
                 else
                 {
@@ -157,11 +145,6 @@ public class TextBoxManager : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// This will make the letters appear one by one. If will also instantly display the whole text while its typing, if space bar is pressed. 
-    /// </summary>
-    /// <returns>The scroll.</returns>
-    /// <param name="lineOfText">Line of text.</param>
     private IEnumerator TextScroll(string lineOfText)
     {
         int letter = 0;
@@ -179,15 +162,13 @@ public class TextBoxManager : MonoBehaviour
         Dialogue.text = lineOfText;
         if (_splitText[1] == "S")
         {
+            print("STOP CLIP");
             _source.Stop();
         }
         _isTyping = false;
         _cancelTyping = false;
     }
 
-    /// <summary>
-    /// This will enable the dialogue box and disable movement from the players. This will also hide the Game UI elements again on the screen.
-    /// </summary>
     public void EnableDialogue()
     {
         gameUI.SetActive(false);
@@ -195,11 +176,10 @@ public class TextBoxManager : MonoBehaviour
         IsActive = true;
         Player1.IsDisabled = true;
         Player2.IsDisabled = true;
+        ThisStoryline.DisableMoleMan();
+        TorchController.IsDisabled = true;
     }
 
-    /// <summary>
-    /// This will disable the dialogue and enable movement from player again. This will also show the Game UI elements again on the screen.
-    /// </summary>
     public void DisableDialogue()
     {
         gameUI.SetActive(true);
@@ -207,13 +187,11 @@ public class TextBoxManager : MonoBehaviour
         IsActive = false;
         Player1.IsDisabled = false;
         Player2.IsDisabled = false;
+        MoleMan.IsDisabled = false;
+        ThisStoryline.EnableMoleMan();
+        TorchController.IsDisabled = false;
     }
 
-    /// <summary>
-    /// This will load a new script for the dialogue.
-    /// </summary>
-    /// <param name="thisText">This text.</param>
-    /// <param name="audioClips">Audio clips.</param>
     public void ReloadScript(TextAsset thisText, AudioClip[] audioClips)
     {
         if (thisText != null)
