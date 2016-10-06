@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Fading light script is used for the light effects on the main menu.
+/// </summary>
 public class fadingLightScript : MonoBehaviour {
     public Light lt;
     private bool isFade= false;
@@ -11,6 +14,7 @@ public class fadingLightScript : MonoBehaviour {
         lt = GetComponent<Light>();
     }
     // Update is called once per frame
+	//Updating the light
     void Update () {
         if(lt.intensity < 0.3f)
         {

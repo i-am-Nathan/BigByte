@@ -2,6 +2,10 @@
 using System.Collections;
 using System;
 
+/// <summary>
+/// The class which all damageable entities inherit from. It tracks values such as health and whether or not an entity is dead. It also 
+/// handles all generic functions relating to these functions.
+/// </summary>
 public class BaseEntity : MonoBehaviour{
 
     public float IntialHealth = 50;

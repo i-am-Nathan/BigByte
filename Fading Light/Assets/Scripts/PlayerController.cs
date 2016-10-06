@@ -56,7 +56,17 @@ public class PlayerController : Player
         GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
         _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
     }
+    
+    public void MockUp()
+    {
+        base.Start();
+    }
 
+    public int getGold()
+    {
+        return _goldAmount;
+    }
+    
     /// <summary>
     /// Updates this instance.
     /// </summary>
@@ -185,16 +195,21 @@ public class PlayerController : Player
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Player damaged");
-        healthCircle.enabled = true;
+        
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
 
         // Set the health bar's value to the current health.
-        healthCircle.fillAmount -= amount / 100.0f;
-        _healthSlider.value -= amount;
-        Debug.Log(healthCircle.fillAmount);
-        Invoke("HideHealth", 3);
+        try
+        {
+            healthCircle.enabled = true;
+            healthCircle.fillAmount -= amount / 100.0f;
+            _healthSlider.value -= amount;
+            Debug.Log(healthCircle.fillAmount);
+            Invoke("HideHealth", 3);
+        } catch {}      
+
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (CurrentHealth <= 0 && !isDead)
         {
@@ -229,7 +244,11 @@ public class PlayerController : Player
     public void UpdateGold(int amount)
     {
 		_goldAmount += amount;
-		_goldAmountText.text = "" + _goldAmount;
+        try
+        {
+            _goldAmountText.text = "" + _goldAmount;
+        } catch { }
+		
     }
     
 }
