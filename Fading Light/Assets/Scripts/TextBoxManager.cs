@@ -2,6 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+
+/// <summary>
+/// This class will manage the dialogue system and handles the textfiles associated with it. This file handles dialogue through
+/// a specific format : CharacterAbbreviation:Sound(Optional):Dialogue
+/// </summary>
 public class TextBoxManager : MonoBehaviour {
 
 	public GameObject TextBox;
@@ -14,7 +19,7 @@ public class TextBoxManager : MonoBehaviour {
 	public Sprite[] Images;
 	private Dictionary<string,Sprite> SpriteDictionary = new Dictionary<string,Sprite>();
 	private Dictionary<string,string> CharacterNameDictionairy = new Dictionary<string,string>();
-	GameObject gameUI;
+	private GameObject _gameUI;
 	private AudioClip[] _dialogueSounds;
 	private int _currentClip;
 
@@ -37,9 +42,12 @@ public class TextBoxManager : MonoBehaviour {
 	private AudioSource _source;
 
 	public float TypeSpeed;
-	// Use this for initialization
+
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
 	void Start () {
-		gameUI = GameObject.FindGameObjectWithTag ("GameUIWrapper");
+		_gameUI = GameObject.FindGameObjectWithTag ("GameUIWrapper");
 		SpriteDictionary.Add ("MM", Images [0]);
 		SpriteDictionary.Add ("BS", Images [1]);
 		SpriteDictionary.Add ("LS", Images [2]);
@@ -64,16 +72,23 @@ public class TextBoxManager : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Gets the audio source component.
+	/// </summary>
 	void Awake(){
 		_source = GetComponent<AudioSource>();
 	}
-	// Update is called once per frame
+
+	/// <summary>
+	/// This will detect whether there is more dialogue to go and also print the dialogue to the screen. Space is used to navigate through the dialogue.
+	/// </summary>
 	void Update () {
 		if (!IsActive) {
 			return;
 		}
 			//Format of dialogue is going to be CharacterName:AudioClip:Dialogue
 
+		//Ensures that the first line will also have the letter by letter feature.
 		if (FirstLine) {
 			_splitText= new string[3];
 			_splitText = TextLines [CurrentLine].Split (':');
@@ -81,30 +96,31 @@ public class TextBoxManager : MonoBehaviour {
 			CharacterName.text = CharacterNameDictionairy [_splitText [0]];
 			//StartCoroutine (TextScroll (textLines [currentLine]));
 			if (_splitText [1] == "S") {
-				print ("PLAYING CLIP");
 				_source.PlayOneShot (_dialogueSounds [_currentClip],33f);
 				_currentClip += 1;
-
 			}
 			StartCoroutine (TextScroll (_splitText[2]));
 			FirstLine = false;
 		}
 
+		//This will detect when the space button is pressed execute the following command.
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			if (!_isTyping) {
 				CurrentLine += 1;
 
+				//Checks whether it has reached the end of the required dialogue.
 				if (CurrentLine > EndLine) {
 					DisableDialogue ();
                     ThisStoryline.DialogueComplete();
 				} else {
+					//Splits the string and assigns the appropriate character image and name on the dialogue.
 					_splitText= new string[3];
 					_splitText = TextLines [CurrentLine].Split (':');
 					CharacterImage.sprite = SpriteDictionary [_splitText [0]];
 					CharacterName.text = CharacterNameDictionairy [_splitText [0]];
 					//StartCoroutine (TextScroll (textLines [currentLine]));
+					//Detects if sound is required during this part of the dialogue.
 					if (_splitText [1] == "S") {
-						print ("PLAYING CLIP NOW");
 						_source.PlayOneShot (_dialogueSounds [_currentClip],33f);
 						_currentClip += 1;
 
@@ -114,6 +130,7 @@ public class TextBoxManager : MonoBehaviour {
 					//dialogue.text = textLines [currentLine];
 				}
 
+			//This will display the whole line of dialogue if spaced is pressed and it is still typing.
 			} else if (_isTyping && !_cancelTyping) {
 				_cancelTyping = true;
 			}
@@ -125,6 +142,11 @@ public class TextBoxManager : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// This will make the characters in each dialogue line appear one by one.
+	/// </summary>
+	/// <returns>The scroll.</returns>
+	/// <param name="lineOfText">Line of text.</param>
 	private IEnumerator TextScroll (string lineOfText){
 		int letter = 0;
 		Dialogue.text = "";
@@ -146,8 +168,11 @@ public class TextBoxManager : MonoBehaviour {
 		_cancelTyping = false;
 	}
 
+	/// <summary>
+	/// This will bring up the chat dialogue and freeze the movements of the characters and moleman.
+	/// </summary>
 	public void EnableDialogue(){
-		gameUI.SetActive (false);
+		_gameUI.SetActive (false);
 		TextBox.SetActive (true);
 		IsActive = true;
 		Player1.IsDisabled = true;
@@ -156,8 +181,11 @@ public class TextBoxManager : MonoBehaviour {
         TorchController.IsDisabled = true;
     }
 
+	/// <summary>
+	/// This will stop the dialogue and allow the players to move again.
+	/// </summary>
 	public void DisableDialogue(){
-		gameUI.SetActive (true);
+		_gameUI.SetActive (true);
 		TextBox.SetActive (false);
 		IsActive = false;
 		Player1.IsDisabled = false;
@@ -167,6 +195,11 @@ public class TextBoxManager : MonoBehaviour {
         TorchController.IsDisabled = false;
     }
 
+	/// <summary>
+	/// This will load a new dialogue script
+	/// </summary>
+	/// <param name="thisText">This text.</param>
+	/// <param name="audioClips">Audio clips.</param>
 	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips){
 		if (thisText != null) {
 			TextLines = new string[1];
