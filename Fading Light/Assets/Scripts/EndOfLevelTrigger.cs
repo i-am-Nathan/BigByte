@@ -4,7 +4,6 @@ using System.Collections;
 public class EndOfLevelTrigger : MonoBehaviour {
 
     public Canvas LevelFinishedMenu;
-
     void Start()
     {
         LevelFinishedMenu.enabled = false;
@@ -14,8 +13,10 @@ public class EndOfLevelTrigger : MonoBehaviour {
     {
         if (c.gameObject.tag == "Player" || c.gameObject.tag == "Player2")
         {
-            // Pauses the game and shows the menu indicating that players have completed the level
-            Time.timeScale = 0;
+            // Pauses the game and shows the menu indicating that players have completed the level and makes sure that the achievement disappears afterwards.
+	
+
+			Time.timeScale = 0;
             LevelFinishedMenu.enabled = true;
         }
         

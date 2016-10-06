@@ -58,7 +58,7 @@ public class Achievement
     }
 
     // Basic GUI for displaying an achievement. Has a different style when earned and not earned.
-    public void OnGUI(Rect position, GUIStyle GUIStyleAchievementEarned, GUIStyle GUIStyleAchievementNotEarned)
+  /*  public void OnGUI(Rect position, GUIStyle GUIStyleAchievementEarned, GUIStyle GUIStyleAchievementNotEarned)
     {
         GUIStyle style = GUIStyleAchievementNotEarned;
         //When achievement is earned than change the GUI
@@ -99,8 +99,8 @@ public class Achievement
              GUI.Label(new Rect(position.width - 250.0f, 50.0f, 250.0f, 25.0f), "Progress: [" + currentProgress.ToString("0.#") + " out of " + TargetProgress.ToString("0.#") + "]", style);
          }*/
 
-        GUI.EndGroup();
-    }
+       // GUI.EndGroup();
+  //  }
 }
 
 public class AchievementManager : MonoBehaviour
