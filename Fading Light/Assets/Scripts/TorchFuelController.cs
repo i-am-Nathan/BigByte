@@ -85,6 +85,30 @@ public class TorchFuelController : MonoBehaviour {
         return false;
 
     }
+
+    public Vector3 GetTorchPosition()
+    {
+        var currentTorch = TorchP2;
+        var currentTorchLight = Player2TorchLight;
+
+        var torchPosition = currentTorch.gameObject.transform.position;
+
+        return torchPosition;
+    }
+
+    public double GetTorchRadius()
+    {
+        var currentTorch = TorchP2;
+        var currentTorchLight = Player2TorchLight;
+
+        var torchPosition = currentTorch.gameObject.transform.position;
+        
+        var torchRadius = torchPosition.y * 2.5 * Math.Tan((currentTorchLight.spotAngle / 2) * (Math.PI / 180));
+        torchRadius = Math.Abs(torchRadius);
+        
+        return torchRadius;
+    }
+
     // Update is called once per frame
     void Update () {
         return;

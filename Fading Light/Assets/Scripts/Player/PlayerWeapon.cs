@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerWeapon : MonoBehaviour {
 
     float weaponDamage = 30f;
+    private bool DEBUG = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,10 +17,21 @@ public class PlayerWeapon : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<BaseEntity>() != null)
+    {        
+        Player weaponHolder = this.transform.root.GetComponent<Player>();
+        Player player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<Player>();
+        Player player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player>();
+
+        if (DEBUG) Debug.Log("Weapon collision. Player1 is attacking: " + player1.isAttacking());
+        if (DEBUG) Debug.Log("Weapon collision. Player2 is attacking: " + player2.isAttacking());        
+        if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
+
+        if ((player1.isAttacking() || player2.isAttacking()) && other.tag == "Enemy")
         {
-            other.gameObject.GetComponent<BaseEntity>().Damage(weaponDamage, this.transform.root);
+            if (DEBUG) Debug.Log("Weapon collision: Enemy");
+            other.transform.GetComponent<BaseEntity>().Damage(weaponDamage, this.transform.root);
+            player1.setAttacking(false);
+            player2.setAttacking(false);
         }
     }
 }

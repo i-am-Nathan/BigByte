@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player2Controller : BaseEntity
+public class Player2Controller : Player
 {
     // Health image on floor
     public Image healthCircle;                                 // Reference to the UI's health circle.
@@ -94,6 +94,7 @@ public class Player2Controller : BaseEntity
         }
         else if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy)
         {
+            this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
 
         }
@@ -127,6 +128,7 @@ public class Player2Controller : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+        Debug.Log("Player damaged");
         healthCircle.enabled = true;
         Debug.Log("Ow");
         base.Damage(amount, null);

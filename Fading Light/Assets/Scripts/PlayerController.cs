@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : BaseEntity
+public class PlayerController : Player
 {
     public AchievementManager AchievementManager;
     // Health image on floor
@@ -104,7 +104,7 @@ public class PlayerController : BaseEntity
         }
         else if (Input.GetKeyDown(KeyCode.Return) && !_torch.activeInHierarchy)
         {
-            
+            this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             //AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
@@ -160,8 +160,8 @@ public class PlayerController : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+        Debug.Log("Player damaged");
         healthCircle.enabled = true;
-        Debug.Log("Ow");
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
