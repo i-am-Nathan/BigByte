@@ -106,7 +106,7 @@ public class PlayerController : BaseEntity
         {
             
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            //AchievementManager.AddProgressToAchievement("First Hits",1.0f);
+            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
         else
         {
