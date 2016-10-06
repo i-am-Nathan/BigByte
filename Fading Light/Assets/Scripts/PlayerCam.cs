@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 
+/// Used to control the movement of the main camera
 /// </summary>
 public class PlayerCam : MonoBehaviour
 {
@@ -22,13 +22,19 @@ public class PlayerCam : MonoBehaviour
 	private Vector3 m_DesiredPosition;              // The position the camera is moving towards.
 
 
-	private void Awake ()
+    /// <summary>
+    /// Awakes this instance.
+    /// </summary>
+    private void Awake ()
 	{
 		m_Camera = GetComponentInChildren<Camera> ();
 	}
 
 
-	private void FixedUpdate ()
+    /// <summary>
+    /// Fixeds the update.
+    /// </summary>
+    private void FixedUpdate ()
 	{
 		// Move the camera towards a desired position.
 		Move ();
@@ -38,7 +44,10 @@ public class PlayerCam : MonoBehaviour
 	}
 
 
-	private void Move ()
+    /// <summary>
+    /// Moves this instance.
+    /// </summary>
+    private void Move ()
 	{
 		// Find the average position of the targets.
 		FindAveragePosition();
@@ -48,7 +57,10 @@ public class PlayerCam : MonoBehaviour
 	}
 
 
-	private void FindAveragePosition ()
+    /// <summary>
+    /// Finds the average position.
+    /// </summary>
+    private void FindAveragePosition ()
 	{
 		Vector3 averagePos = new Vector3 ();
 		int numTargets = 0;
@@ -81,7 +93,10 @@ public class PlayerCam : MonoBehaviour
 	}
 
 
-	private void Zoom ()
+    /// <summary>
+    /// Zooms this instance.
+    /// </summary>
+    private void Zoom ()
 	{
 		// Find the required size based on the desired position and smoothly transition to that size.
 		float requiredSize = FindRequiredSize();
@@ -90,7 +105,11 @@ public class PlayerCam : MonoBehaviour
     }
 
 
-	private float FindRequiredSize ()
+    /// <summary>
+    /// Finds the size of the required.
+    /// </summary>
+    /// <returns></returns>
+    private float FindRequiredSize ()
 	{
 		// Find the position the camera rig is moving towards in its local space.
 		Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition);
@@ -130,7 +149,10 @@ public class PlayerCam : MonoBehaviour
 	}
 
 
-	public void SetStartPositionAndSize ()
+    /// <summary>
+    /// Sets the start size of the position and.
+    /// </summary>
+    public void SetStartPositionAndSize ()
 	{
 		// Find the desired position.
 		FindAveragePosition ();
