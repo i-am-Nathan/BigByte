@@ -569,7 +569,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 411.5
+      value: 76.7
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -577,7 +577,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -297.7
+      value: -305.5
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -914,12 +914,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IntialHealth: 150
   isDead: 0
-  HardActivationDistance: 120
-  LooseActivationDistance: 200
+  HardActivationDistance: 50
+  LooseActivationDistance: 120
   AttackSpeed: 1
-  AttackDamage: 5
+  AttackDamage: 500
   Health: 50
-  AttackRange: 24
+  AttackRange: 22
   Range: 0.1
   WalkSpeed: 9
   RunSpeed: 15
@@ -2460,6 +2460,10 @@ Prefab:
     - target: {fileID: 11455872, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: IntialHealth
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11488212, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: _dampTime
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1673822d2508371498ef1be030ada982, type: 2}
