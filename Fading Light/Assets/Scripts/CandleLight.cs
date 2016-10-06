@@ -30,7 +30,7 @@ public class CandleLight : MonoBehaviour {
         if (torchInPlayer1 && other.gameObject.tag.Equals("Player"))
         {
             //check for key pressed
-            if (Input.GetButtonDown("CandleLight") && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)

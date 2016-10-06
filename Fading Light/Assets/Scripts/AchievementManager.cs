@@ -226,10 +226,10 @@ public class AchievementManager : MonoBehaviour
 
     // Sets up a scrollview and fills it out with each Achievement.
     // Also displays the total number of reward points earned.
-    void OnGUI()
-    {
-        float yValue = 780f;
-        float achievementGUIWidth = 500.0f;
+    //void OnGUI()
+    //{
+       // float yValue = 780f;
+        //float achievementGUIWidth = 500.0f;
 
         //  GUI.Label(new Rect(200.0f, 5.0f, 200.0f, 25.0f), "-- Achievements --");
 
@@ -248,10 +248,10 @@ public class AchievementManager : MonoBehaviour
              yValue += 80.0f;
          }*/
 
-        GUI.EndScrollView();
+        //GUI.EndScrollView();
 
-        GUI.Label(new Rect(10.0f, 440.0f, 200.0f, 25.0f), "Reward Points: [" + currentRewardPoints + " out of " + potentialRewardPoints + "]");
-    }
+        //GUI.Label(new Rect(10.0f, 440.0f, 200.0f, 25.0f), "Reward Points: [" + currentRewardPoints + " out of " + potentialRewardPoints + "]");
+    //}
     void Update()
     {
         currentTime = Time.time;

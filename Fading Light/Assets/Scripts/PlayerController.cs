@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : BaseEntity
+public class PlayerController : Player
 {
     public AchievementManager AchievementManager;
     // Health image on floor
@@ -104,9 +104,9 @@ public class PlayerController : BaseEntity
         }
         else if (Input.GetKeyDown(KeyCode.Return) && !_torch.activeInHierarchy)
         {
-            
+            this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            //AchievementManager.AddProgressToAchievement("First Hits",1.0f);
+            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
         else
         {
@@ -147,21 +147,24 @@ public class PlayerController : BaseEntity
     // Used to push rigid body objects in the scene
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Rigidbody body = hit.collider.attachedRigidbody;
-        if (body == null || body.isKinematic)
-            return;
+        if (!(hit.gameObject.tag.Equals("Crate")))
+        {
+            Rigidbody body = hit.collider.attachedRigidbody;
+            if (body == null || body.isKinematic)
+                return;
 
-        if (hit.moveDirection.y < -0.3F)
-            return;
+            if (hit.moveDirection.y < -0.3F)
+                return;
 
-        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-        body.velocity = pushDir * PushPower;
+            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            body.velocity = pushDir * PushPower;
+        }
     }
 
     public override void Damage(float amount, Transform attacker)
     {
+        Debug.Log("Player damaged");
         healthCircle.enabled = true;
-        Debug.Log("Ow");
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;

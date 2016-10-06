@@ -3,12 +3,13 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player2Controller : BaseEntity
+public class Player2Controller : Player
 {
     // Health image on floor
     public Image healthCircle;                                 // Reference to the UI's health circle.
     bool damaged;                                               // True when the player gets damaged.
 
+    public AchievementManager AchievementManager;
 
     // Handling
     public float RotationSpeed;
@@ -94,8 +95,10 @@ public class Player2Controller : BaseEntity
         }
         else if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy)
         {
-
+            this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
+            AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+
         }
         else
         {
@@ -127,8 +130,8 @@ public class Player2Controller : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+        Debug.Log("Player damaged");
         healthCircle.enabled = true;
-        Debug.Log("Ow");
         base.Damage(amount, null);
         // Set the damaged flag so the screen will flash.
         damaged = true;
@@ -136,7 +139,6 @@ public class Player2Controller : BaseEntity
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
         _healthSlider.value -= amount;
-        Debug.Log(healthCircle.fillAmount);
         Invoke("HideHealth", 3);
 
         // If the player has lost all it's health and the death flag hasn't been set yet...

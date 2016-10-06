@@ -1,26 +1,23 @@
 ﻿using UnityEngine;
 
-
+/// <summary>
+/// This script will keep the rotation of objects static.
+/// </summary>
 public class UIDirectionControl : MonoBehaviour
 {
-	// This class is used to make sure world space UI
-	// elements such as the health bar face the correct direction.
-
-	public bool m_UseRelativeRotation = true;       // Use relative rotation should be used for this gameobject?
-
-
-	private Quaternion m_RelativeRotation;          // The local rotatation at the start of the scene.
-
-
-	private void Start ()
-	{
-		m_RelativeRotation = transform.parent.localRotation;
-	}
-
-
-	private void Update ()
-	{
-		if (m_UseRelativeRotation)
-			transform.rotation = m_RelativeRotation;
-	}
+	private Quaternion _rotation;
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
+    void Awake()
+    {
+        _rotation = transform.rotation;
+    }
+	/// <summary>
+	/// This will ensure that the rotation remains constant.
+	/// </summary>
+    void LateUpdate()
+    {
+        transform.rotation = _rotation;
+    }
 }
