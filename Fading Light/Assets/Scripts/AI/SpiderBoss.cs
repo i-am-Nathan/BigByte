@@ -74,7 +74,7 @@ public class SpiderBoss : BaseEntity
 
 	private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-
+        CurrentHealth = Health;
 	}
 
     /// <summary>
