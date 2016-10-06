@@ -17,6 +17,11 @@ public class lever : MonoBehaviour
 
             leftMovingWall.GetComponent<Animation>().Play("LeftMovingWallOut");
             _pulled = true;
+
+            //hides the popup
+            GameObject leverPopup = GameObject.FindGameObjectWithTag("Lever Key Popup");
+            leverPopup.SetActive(false);
+
         }
     }
 }
