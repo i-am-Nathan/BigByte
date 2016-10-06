@@ -2,6 +2,7 @@
 
 /// <summary>
 /// Used to control the movement of the main camera
+/// REFERENCE:  https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control
 /// </summary>
 public class PlayerCam : MonoBehaviour
 {
