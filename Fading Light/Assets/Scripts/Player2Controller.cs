@@ -130,7 +130,6 @@ public class Player2Controller : Player
     {
         Debug.Log("Player damaged");
         healthCircle.enabled = true;
-        Debug.Log("Ow");
         base.Damage(amount, null);
         // Set the damaged flag so the screen will flash.
         damaged = true;
@@ -138,7 +137,6 @@ public class Player2Controller : Player
         // Set the health bar's value to the current health.
         healthCircle.fillAmount -= amount / 100.0f;
         _healthSlider.value -= amount;
-        Debug.Log(healthCircle.fillAmount);
         Invoke("HideHealth", 3);
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
