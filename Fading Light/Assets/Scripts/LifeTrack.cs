@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 // Used to enable persistent data throughout scenes
-public class LifeTrack : MonoBehaviour {
+public class LifeTrack : MonoBehaviour
+{
 
     private int _numberOfLivesLeft;
     private float _totalTime;
@@ -19,9 +20,9 @@ public class LifeTrack : MonoBehaviour {
         {
             // Assigning a tag and instantiating number of lives
             _numberOfLivesLeft = 3;
-            this.tag = "Life Track";
+            this.gameObject.tag = "Life Track";
             _totalTime = 0f;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(GameObject.FindWithTag("Life Track").gameObject);
         }
     }
 
@@ -51,6 +52,7 @@ public class LifeTrack : MonoBehaviour {
         string min = "";
         string sec = "";
 
+        // Formatting the time
         if (minutes < 10)
         {
             min = "0" + minutes;
@@ -73,3 +75,4 @@ public class LifeTrack : MonoBehaviour {
 
     }
 }
+

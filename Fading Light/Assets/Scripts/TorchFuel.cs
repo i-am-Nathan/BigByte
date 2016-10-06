@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Used to turn an object into torch fuel collectable
+/// </summary>
 public class TorchFuel : MonoBehaviour
 {
     public float FuelAmount = 10;
     
-
     private TorchFuelController TorchFuelControllerScript;
-    // Use this for initialization
+	private AchievementManager _achievementManager;
+
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
     void Start()
     {
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
@@ -23,17 +30,23 @@ public class TorchFuel : MonoBehaviour
 
         Vector3 newPos = new Vector3(parent.transform.position.x + xOffset, parent.transform.position.y, parent.transform.position.z + zOffset);
         transform.position = newPos;
+
+		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
     }
 
 
-
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     void Update()
     {
 
     }
 
-    // When collision occurs between two objects
+    /// <summary>
+    /// When collision occurs between two objects
+    /// </summary>
+    /// <param name="other">The other.</param>
     void OnTriggerStay(Collider other)
     {
         // Checking if players are next to each other
@@ -41,11 +54,13 @@ public class TorchFuel : MonoBehaviour
         {
             TorchFuelControllerScript.AddFuel(FuelAmount);
             TorchFuelControllerScript.RemoveFuelAmount();
+			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
             Destroy(this.gameObject);
         }else if(other.gameObject.tag.Equals("Player") && TorchFuelControllerScript.TorchInPlayer1)
         {
             TorchFuelControllerScript.AddFuel(FuelAmount);
             TorchFuelControllerScript.RemoveFuelAmount();
+			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
             Destroy(this.gameObject);
         }
     }
