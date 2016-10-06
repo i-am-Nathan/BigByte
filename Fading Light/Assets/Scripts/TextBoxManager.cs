@@ -24,6 +24,7 @@ public class TextBoxManager : MonoBehaviour {
 	public Player2Controller Player2;
     public MoleManContoller MoleMan;
     public Storyline ThisStoryline;
+    public TorchFuelController TorchController;
 
     public bool StopMovement;
 	public bool IsActive;
@@ -151,7 +152,8 @@ public class TextBoxManager : MonoBehaviour {
 		IsActive = true;
 		Player1.IsDisabled = true;
 		Player2.IsDisabled = true;
-        MoleMan.IsDisabled = true;
+        ThisStoryline.DisableMoleMan();
+        TorchController.IsDisabled = true;
     }
 
 	public void DisableDialogue(){
@@ -161,6 +163,8 @@ public class TextBoxManager : MonoBehaviour {
 		Player1.IsDisabled = false;
 		Player2.IsDisabled = false;
         MoleMan.IsDisabled = false;
+        ThisStoryline.EnableMoleMan();
+        TorchController.IsDisabled = false;
     }
 
 	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips){

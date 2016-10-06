@@ -7,7 +7,7 @@ public class MoleManContoller : MonoBehaviour {
     Animator _animator;
 
     public List<GameObject> targets;
-    private float Speed = 8;
+    public float Speed = 8;
     public bool IsDisabled = true;
     public Storyline ThisStoryline;
     private bool _storylineNotified = false;

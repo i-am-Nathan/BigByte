@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 
+/// </summary>
 public class ActivateText : MonoBehaviour {
 	public TextAsset Dialogue;
 
@@ -19,9 +22,12 @@ public class ActivateText : MonoBehaviour {
 	void Start () {
 		_talked = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
+    void Update () {
 		if (_waitForPress && Input.GetKeyDown (KeyCode.T)) {
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
 				print ("IN HERE UPDATE");
@@ -37,7 +43,11 @@ public class ActivateText : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// Called when [trigger enter].
+    /// </summary>
+    /// <param name="other">The other.</param>
+    void OnTriggerEnter(Collider other)
 	{
 		if (RequireButtonPress == true) {
 			_waitForPress = true;
@@ -57,7 +67,11 @@ public class ActivateText : MonoBehaviour {
 		}
 
 }
-	void OnTriggerExit(Collider other){
+    /// <summary>
+    /// Called when [trigger exit].
+    /// </summary>
+    /// <param name="other">The other.</param>
+    void OnTriggerExit(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			print ("EXITING");
 			_waitForPress = false;
