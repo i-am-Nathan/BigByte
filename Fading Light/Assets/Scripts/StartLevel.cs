@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class StartLevel : MonoBehaviour {
-
+	public float WaitTime;
 	public void Start(){
 		
 		Fade ();
@@ -13,7 +13,7 @@ public class StartLevel : MonoBehaviour {
 
 	IEnumerator FadeText(){
 		CanvasGroup cg = GetComponent<CanvasGroup> ();
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(WaitTime);
 		while (cg.alpha > 0) {
 			cg.alpha -= Time.deltaTime / 2;
 			yield return null;
