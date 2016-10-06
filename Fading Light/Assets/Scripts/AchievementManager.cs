@@ -120,11 +120,20 @@ public class AchievementManager : MonoBehaviour
 
     private Text achievementText;
 
+	//Making this class into global
+	public static AchievementManager Instance {
+		get;
+		set;
+	}
+	//Call it by using
+	//private AchievementManager achievementManager = AchievementManager.Instance;
+	void Awake(){
+		DontDestroyOnLoad (transform.gameObject);
+		Instance = this;
+	}
     void Start()
     {
         //GOT THE ACHIEVEMENT POPUP
-
-
         achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
         AchievementPopup.enabled = false;
 
