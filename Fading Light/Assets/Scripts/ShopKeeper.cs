@@ -30,6 +30,8 @@ public class ShopKeeper : MonoBehaviour {
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
 				_shopping = false;
+				Player1.IsDisabled = false;
+				Player2.IsDisabled = false;
 			}
 		}
 	}
@@ -53,6 +55,8 @@ public class ShopKeeper : MonoBehaviour {
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
 				_shopping = false;
+				Player1.IsDisabled = false;
+				Player2.IsDisabled = false;
 			}
 		}
 	}
