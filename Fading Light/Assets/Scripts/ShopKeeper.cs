@@ -33,9 +33,9 @@ public class ShopKeeper : MonoBehaviour {
 				_hasPlayed = true;
 
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
+				_shopping = false;
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
-				_shopping = false;
 				Player1.IsDisabled = false;
 				Player2.IsDisabled = false;
 				TextBox.SetActive(false);
@@ -44,7 +44,7 @@ public class ShopKeeper : MonoBehaviour {
 	}
 
 	void Update(){
-		if (!_transition.isPlaying && _hasPlayed) {
+		if (!_transition.isPlaying && _hasPlayed && _shopping) {
 			TextBox.SetActive(true);
 		}
 
