@@ -6,17 +6,26 @@ public class ShopKeeper : MonoBehaviour {
 	public Camera MainCamera;
 	public Camera ShopKeeperCamera;
 	private bool _shopping;
+	private Animation _transition;
+	public PlayerController Player1;
+	public Player2Controller Player2;
 	void Awake(){
 		ShopKeeperCamera.enabled = false;
+		_transition = ShopKeeperCamera.GetComponent<Animation> ();
+
 	}
 		
 	void OnTriggerEnter(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.T) && !_shopping) {
+				Player1.IsDisabled = true;
+				Player2.IsDisabled = true;
 				MainCamera.enabled = false;
 				ShopKeeperCamera.enabled = true;
-				ShopKeeperCamera.GetComponent<Animation> ().Play ();
+				_transition.Play ();
 				_shopping = true;
+
+
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
@@ -32,16 +41,19 @@ public class ShopKeeper : MonoBehaviour {
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.T) && !_shopping) {
+				Player1.IsDisabled = true;
+				Player2.IsDisabled = true;
 				MainCamera.enabled = false;
 				ShopKeeperCamera.enabled = true;
-				ShopKeeperCamera.GetComponent<Animation> ().Play ();
+				_transition.Play ();
 				_shopping = true;
+
+
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
 				_shopping = false;
 			}
 		}
-
-}
+	}
 }
