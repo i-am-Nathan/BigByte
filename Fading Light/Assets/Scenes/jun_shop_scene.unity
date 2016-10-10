@@ -3188,6 +3188,7 @@ MonoBehaviour:
   ShopKeeperCamera: {fileID: 1481233687}
   Player1: {fileID: 1842113497}
   Player2: {fileID: 465268860}
+  ItemStand: {fileID: 1455528338}
 --- !u!136 &539050577
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5592,8 +5593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2040b21bbdeeee049b1150d28492b845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemList: []
   Items: []
-  index: 0
+  Index: 0
 --- !u!1 &742784814 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100002, guid: ea6da4a0ebadb704691a6fa2d03f817b, type: 3}
@@ -6817,6 +6819,68 @@ Transform:
   - {fileID: 1810301088}
   m_Father: {fileID: 624266507}
   m_RootOrder: 11
+--- !u!1 &967000565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 967000566}
+  - 108: {fileID: 967000567}
+  m_Layer: 0
+  m_Name: Directional light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &967000566
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967000565}
+  m_LocalRotation: {x: 0.78406775, y: 0, z: 0, w: 0.6206753}
+  m_LocalPosition: {x: 0, y: 29.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 76.730995, y: -3780, z: -3780}
+  m_Children: []
+  m_Father: {fileID: 1455528339}
+  m_RootOrder: 1
+--- !u!108 &967000567
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967000565}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_Type: 1
+  m_Color: {r: 0.5441177, g: 0.5441177, b: 0.5441177, a: 1}
+  m_Intensity: 1.8
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Lightmapping: 1
+  m_BounceIntensity: 1.2
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1001 &989669672
 Prefab:
   m_ObjectHideFlags: 0
@@ -11673,11 +11737,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1455528338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 382.68, y: 4.09, z: -314.87}
+  m_LocalPosition: {x: 383.85, y: 4.09, z: -314.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1771224383}
+  - {fileID: 967000566}
   m_Father: {fileID: 0}
   m_RootOrder: 30
 --- !u!114 &1455528340
@@ -11691,8 +11756,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2040b21bbdeeee049b1150d28492b845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items: []
-  index: 0
+  ItemList: []
+  Items:
+  - {fileID: 177500, guid: 96195fd4d94746744ab6748b01844f3f, type: 2}
+  - {fileID: 181912, guid: 5ae4441714df19747b0a3bd7ba170406, type: 2}
+  Index: 0
 --- !u!1 &1465067646 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 173824, guid: 1673822d2508371498ef1be030ada982, type: 2}
