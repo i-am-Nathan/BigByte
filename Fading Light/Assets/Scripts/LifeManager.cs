@@ -10,7 +10,7 @@ public class LifeManager : MonoBehaviour
 	// Handling
     private GameObject[] _lives;
     private int _numberOfLivesLeft;
-    private LifeTrack _lifeTrackScript;
+    private GameData _gameDataScript;
 
 	// UI element
     public Canvas DeathScreen;
@@ -21,12 +21,12 @@ public class LifeManager : MonoBehaviour
     void Start()
     {
         // Getting the life track object which shows the total lives left
-        GameObject go = GameObject.FindGameObjectWithTag("Life Track");
-        _lifeTrackScript = (LifeTrack)go.GetComponent(typeof(LifeTrack));
+        GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+        _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
         // Getting the hearts on the UI
         _lives = GameObject.FindGameObjectsWithTag("Lives");
-        _numberOfLivesLeft = _lifeTrackScript.GetNumberOfLives();
+        _numberOfLivesLeft = _gameDataScript.GetNumberOfLives();
 
         // Setting the appropriate hearts to show
         for (int i = 0; i < _numberOfLivesLeft; i++)
@@ -54,7 +54,7 @@ public class LifeManager : MonoBehaviour
     {
 		// Decrementing the number of shared lives left
         _numberOfLivesLeft = _numberOfLivesLeft - 1;
-        _lifeTrackScript.SetNumberOfLives(_numberOfLivesLeft);
+        _gameDataScript.SetNumberOfLives(_numberOfLivesLeft);
 
 		// Checking if all 3 lives are over
         if (_numberOfLivesLeft <= 0)
@@ -92,8 +92,8 @@ public class LifeManager : MonoBehaviour
     {
 		// Unpausing the game and loading the main menu
         Time.timeScale = 1;
-		// Setting the number of shared lives back to 3
-        _lifeTrackScript.SetNumberOfLives(3);
+        // Setting the number of shared lives back to 3
+        _gameDataScript.SetNumberOfLives(3);
         SceneManager.LoadScene("MainMenu");
     }
 		
@@ -106,7 +106,7 @@ public class LifeManager : MonoBehaviour
         Time.timeScale = 1;
         // Gets the active scene and reloads it
         Scene scene = SceneManager.GetActiveScene();
-        _lifeTrackScript.SetNumberOfLives(3);
+        _gameDataScript.SetNumberOfLives(3);
         SceneManager.LoadScene(scene.name);
     }
 
