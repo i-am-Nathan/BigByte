@@ -1,18 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Scroll dialogue text
+/// </summary>
 public class TextScroll : MonoBehaviour {
+
     int scrollspeed = 100;
     // Use this for initialization
     private float xAxis;
     private float xAxisCanvas;
     public float time;
-	void Start () {
+
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
+    void Start () {
         time = 20;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
+    void Update () {
         Debug.Log(time);
         Vector3 pos = transform.position;
 

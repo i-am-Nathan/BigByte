@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-// AchievementManager contains Achievements, which players are able to earn through performing various actions
-// in the game. Each Achievement specifies 
 
+/// <summary>
+/// AchievementManager contains Achievements, which players are able to earn through performing various actions
+/// in the game. Each Achievement specifies 
+/// </summary>
 [System.Serializable]
 public class Achievement
 {
@@ -21,7 +23,11 @@ public class Achievement
     public bool Earned = false;
     private float currentProgress = 0.0f;
 
-    // Returns true if this progress added results in the Achievement being earned.
+    /// <summary>
+    /// Returns true if this progress added results in the Achievement being earned.
+    /// </summary>
+    /// <param name="progress">The progress.</param>
+    /// <returns></returns>
     public bool AddProgress(float progress)
     {
         if (Earned)
@@ -39,7 +45,12 @@ public class Achievement
         return false;
     }
 
-    // Returns true if this progress set results in the Achievement being earned.
+
+    /// <summary>
+    ///  Returns true if this progress set results in the Achievement being earned.
+    /// </summary>
+    /// <param name="progress">The progress.</param>
+    /// <returns></returns>
     public bool SetProgress(float progress)
     {
         if (Earned)
@@ -59,6 +70,9 @@ public class Achievement
 		
 }
 
+/// <summary>
+/// 
+/// </summary>
 public class AchievementManager : MonoBehaviour
 {
     public Canvas AchievementPopup;
@@ -76,17 +90,30 @@ public class AchievementManager : MonoBehaviour
 
     private Text achievementText;
 
-	//Making this class into global
-	public static AchievementManager Instance {
+
+    /// <summary>
+    ///Making this class into global
+    /// </summary>
+    /// <value>
+    /// The instance.
+    /// </value>
+    public static AchievementManager Instance {
 		get;
 		set;
 	}
-	//Call it by using
-	//private AchievementManager achievementManager = AchievementManager.Instance;
-	void Awake(){
+
+    /// <summary>
+    ///Call it by using
+    ///private AchievementManager achievementManager = AchievementManager.Instance;
+    /// </summary>
+    void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
 		Instance = this;
 	}
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
     void Start()
     {
         //GOT THE ACHIEVEMENT POPUP
@@ -97,7 +124,10 @@ public class AchievementManager : MonoBehaviour
         UpdateRewardPointTotals();
     }
 
-    // Make sure some assumptions about achievement data setup are followed.
+
+    /// <summary>
+    /// Make sure some assumptions about achievement data setup are followed.
+    /// </summary>
     private void ValidateAchievements()
     {
         ArrayList usedNames = new ArrayList();
@@ -121,7 +151,10 @@ public class AchievementManager : MonoBehaviour
         return Achievements.FirstOrDefault(achievement => achievement.Name == achievementName);
     }
 
-    //Updating the reward points
+   
+    /// <summary>
+    /// Updating the reward points
+    /// </summary>
     private void UpdateRewardPointTotals()
     {
         currentRewardPoints = 0;
@@ -138,14 +171,22 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-    //When an achievement is earned
+
+    /// <summary>
+    ///When an achievement is earned
+    /// </summary>
     private void AchievementEarned()
     {
         UpdateRewardPointTotals();
         AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
 
-    //This is the one that will be called by the playerController
+
+    /// <summary>
+    ///This is the one that will be called by the playerController
+    /// </summary>
+    /// <param name="achievementName">Name of the achievement.</param>
+    /// <param name="progressAmount">The progress amount.</param>
     public void AddProgressToAchievement(string achievementName, float progressAmount)
     {
         Achievement achievement = GetAchievementByName(achievementName);
@@ -166,7 +207,12 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-	//Set the achievement if the progress needs to be reset, e.g. must finish before this time limit
+
+    /// <summary>
+    ///Set the achievement if the progress needs to be reset, e.g. must finish before this time limit
+    /// </summary>
+    /// <param name="achievementName">Name of the achievement.</param>
+    /// <param name="newProgress">The new progress.</param>
     public void SetProgressToAchievement(string achievementName, float newProgress)
     {
         Achievement achievement = GetAchievementByName(achievementName);
@@ -182,7 +228,10 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
- 	//Used to make the pop up stay for only 3 seconds
+   
+    /// <summary>
+    ///Used to make the pop up stay for only 3 seconds
+    /// </summary>
     void Update()
     {
         currentTime = Time.time;
