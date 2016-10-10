@@ -14,12 +14,12 @@ public class TrapPlate : MonoBehaviour {
 	/// Called when an object enters on top of the plate
 	/// </summary>
 	void OnTriggerEnter(Collider other) {
-		print ("GGGGG");
+		Debug.Log ("GGGGG");
 		// the crate has a weight of 2
 		if (other.name == "Player 1" || other.name == "Player2")
 		{
 			_thingsOnTop += 1;
-			print ("GG");
+			Debug.Log ("GG");
 		} 
 
 		//if the weight is heavy enough, then the plate is triggered
@@ -28,7 +28,7 @@ public class TrapPlate : MonoBehaviour {
 		{
 			this.GetComponent<Animation>().Play("PressurePlateDown");
 			GameObject wall = GameObject.FindWithTag("SpearTrap");
-			wall.GetComponent<Animation>().Play("SpearTrapRaise");
+			wall.GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
 			_pressed = true;
 
 		}
@@ -43,19 +43,16 @@ public class TrapPlate : MonoBehaviour {
 		//same as the method above, but for the upward motion.
 		if (other.name == "Player 1" || other.name == "Player2")
 		{
-			_thingsOnTop += 1;
+			_thingsOnTop--;
 
 		} 
-		else
-		{
-			_thingsOnTop--;
-		}
+
 		if (_thingsOnTop < 1 && _pressed)
 
 		{
 			this.GetComponent<Animation>().Play("PressurePlateUp");
 			GameObject wall = GameObject.FindWithTag("SpearTrap");
-			wall.GetComponent<Animation>().Play("SpearTrapDrop");
+			wall.GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
 			_pressed = false;
 
 		}
