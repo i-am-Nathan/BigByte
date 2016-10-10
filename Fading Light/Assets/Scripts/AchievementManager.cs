@@ -97,18 +97,25 @@ public class AchievementManager : MonoBehaviour
     /// <value>
     /// The instance.
     /// </value>
-    public static AchievementManager Instance {
+   /* public static AchievementManager Instance {
 		get;
 		set;
-	}
+	}*/
 
     /// <summary>
     ///Call it by using
     ///private AchievementManager achievementManager = AchievementManager.Instance;
     /// </summary>
     void Awake(){
-		DontDestroyOnLoad (transform.gameObject);
-		Instance = this;
+		GameObject[] objects = GameObject.FindGameObjectsWithTag ("AchievementManager");
+		achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
+
+		if(!(objects.Length>0)) {
+			
+			DontDestroyOnLoad (GameObject.FindWithTag("AchievementManager").gameObject);
+
+			//Instance = this;
+		}
 	}
 
     /// <summary>
@@ -117,9 +124,7 @@ public class AchievementManager : MonoBehaviour
     void Start()
     {
         //GOT THE ACHIEVEMENT POPUP
-        achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
-        AchievementPopup.enabled = false;
-
+		AchievementPopup.enabled = false;
         ValidateAchievements();
         UpdateRewardPointTotals();
     }
