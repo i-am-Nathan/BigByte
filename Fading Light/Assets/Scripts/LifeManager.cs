@@ -37,7 +37,7 @@ public class LifeManager : MonoBehaviour
         // Setting the appropriate hearts to hide
         if (_numberOfLivesLeft != 3)
         {
-            for (int i = _numberOfLivesLeft; i < 3; i++)
+            for (int i = 0; i < 3-_numberOfLivesLeft; i++)
             {
                 _lives[i].SetActive(false);
             }
