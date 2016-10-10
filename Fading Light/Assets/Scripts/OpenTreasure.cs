@@ -87,16 +87,18 @@ public class OpenTreasure : MonoBehaviour {
 
 		}
 		//This will get a randon number from 5 - 30 which is the amount of coins the treasure will spew out coins.
-		float randomNumber = Random.Range (5, 30);
+		float randomNumber = Random.Range (30, 60);
 		//for (int i = MinCoins; i < MaxCoins; i++) {  	//Add this later when you want to control the amount of coins in a treasure;
 		//This will instantiate a coin which will fly out in random directins from the chest. 
 		for (int i = 0; i < randomNumber; i++) {
 			yield return new WaitForSeconds (0.1f);
 
 			_coinPrefab = Instantiate (Coin, transform.position + new Vector3(0,4,0), Quaternion.identity)as GameObject;
-			float randomX = Random.Range (-5, 5)*5;
-			float randomZ = Random.Range (-5, 5)*5;
-			_coinPrefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomX, 0.01f, randomZ);
+			float[] randomValues = new float[10] {-40,-30,-50, -10, -20, 10,20,30,40,50};
+
+			float randomX = Random.Range (0,10);
+			float randomZ = Random.Range (0,10);
+			_coinPrefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 10f, randomValues[(int)randomZ]);
 			//Plays the sound of treasure coming out.
 			_source.PlayOneShot (TreasureSound);
 		}
