@@ -33,6 +33,9 @@ public class ShopKeeper : MonoBehaviour {
 				_hasPlayed = true;
 
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
+				_hasPlayed = false;
+				TextBox.SetActive(false);
+				_transition.Stop ();
 				_shopping = false;
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
@@ -44,9 +47,9 @@ public class ShopKeeper : MonoBehaviour {
 	}
 
 	void Update(){
-		if (!_transition.isPlaying && _hasPlayed && _shopping) {
-			TextBox.SetActive(true);
-		}
+		if (!_transition.isPlaying && _hasPlayed) {
+			TextBox.SetActive (true);
+		} 
 
 	}
 	/// <summary>
@@ -67,9 +70,12 @@ public class ShopKeeper : MonoBehaviour {
 
 
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
+				_hasPlayed = false;
+				TextBox.SetActive(false);
+				_transition.Stop ();
+				_shopping = false;
 				MainCamera.enabled = true;
 				ShopKeeperCamera.enabled = false;
-				_shopping = false;
 				Player1.IsDisabled = false;
 				Player2.IsDisabled = false;
 				TextBox.SetActive(false);
