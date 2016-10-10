@@ -10,16 +10,19 @@ public class ShopKeeper : MonoBehaviour {
 	private Animation _transition;
 	public PlayerController Player1;
 	public Player2Controller Player2;
+	public GameObject ItemStand;
+
 	private bool _hasPlayed;
 	void Awake(){
 		ShopKeeperCamera.enabled = false;
 		_transition = ShopKeeperCamera.GetComponent<Animation> ();
+
 	}
 		
 	void Start(){
 		_hasPlayed = false;
 		TextBox.SetActive (false);
-
+		ItemStand.SetActive (false);
 	}
 	void OnTriggerEnter(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
@@ -31,7 +34,7 @@ public class ShopKeeper : MonoBehaviour {
 				_transition.Play ();
 				_shopping = true;
 				_hasPlayed = true;
-
+				ItemStand.SetActive (true);
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
 				_hasPlayed = false;
 				TextBox.SetActive(false);
@@ -42,6 +45,7 @@ public class ShopKeeper : MonoBehaviour {
 				Player1.IsDisabled = false;
 				Player2.IsDisabled = false;
 				TextBox.SetActive(false);
+				ItemStand.SetActive (false);
 			}
 		}
 	}
@@ -66,7 +70,7 @@ public class ShopKeeper : MonoBehaviour {
 				_transition.Play ();
 				_shopping = true;
 				_hasPlayed = true;
-
+				ItemStand.SetActive (true);
 
 
 			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
@@ -79,6 +83,7 @@ public class ShopKeeper : MonoBehaviour {
 				Player1.IsDisabled = false;
 				Player2.IsDisabled = false;
 				TextBox.SetActive(false);
+				ItemStand.SetActive (false);
 			}
 		}
 	}
