@@ -32,8 +32,6 @@ public class PlayerController : Player
 
     // UI
     private Slider _healthSlider;
-    private Text _goldAmountText;
-	private int _goldAmount=0;
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
 
@@ -51,7 +49,6 @@ public class PlayerController : Player
         _controller = GetComponent<CharacterController>();
         _torch = transform.Find("ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Weapon/Torch Light Holder").gameObject;
         _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
-		_goldAmountText = GameObject.FindWithTag("Player 1 Gold").GetComponent<Text>();
 
         GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
         _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
@@ -62,11 +59,6 @@ public class PlayerController : Player
         base.Start();
     }
 
-    public int getGold()
-    {
-        return _goldAmount;
-    }
-    
     /// <summary>
     /// Updates this instance.
     /// </summary>
@@ -235,20 +227,5 @@ public class PlayerController : Player
     public void HideHealth()
     {
         healthCircle.enabled = false;
-    }
-
-    /// <summary>
-    /// Updates the gold.
-    /// </summary>
-    /// <param name="amount">The amount.</param>
-    public void UpdateGold(int amount)
-    {
-		_goldAmount += amount;
-        try
-        {
-            _goldAmountText.text = "" + _goldAmount;
-        } catch { }
-		
-    }
-    
+    }    
 }
