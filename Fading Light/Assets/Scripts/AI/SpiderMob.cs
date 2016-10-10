@@ -276,7 +276,7 @@ public class SpiderMob : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
 
-        float refreshRate = 0.8f;
+        float refreshRate = 0.25f;
 
         //Check to see if either player is within activation range
         while (!_lockedOn)
@@ -289,12 +289,15 @@ public class SpiderMob : BaseEntity
             BaseEntity player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<BaseEntity>();
             BaseEntity player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<BaseEntity>();
 
+            //if (DEBUG) Debug.Log(this.gameObject.transform.position);
+            //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
+
             //Check if the torch has moved over the spider. If so then transition to the run state
             if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
             {
                 if (DEBUG) Debug.Log("Spider inside torch");
-                if (DEBUG) Debug.Log(this.gameObject.transform.position);
-                if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
+                //if (DEBUG) Debug.Log(this.gameObject.transform.position);
+                //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
                 _lockedOn = true;
                 fsm.ChangeState(States.Run);
             }
