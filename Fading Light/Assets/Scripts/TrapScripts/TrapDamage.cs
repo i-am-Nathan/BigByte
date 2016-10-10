@@ -43,7 +43,7 @@ public class TrapDamage : MonoBehaviour {
 
     void Update()
     {
-        if (_p1HitTime == 0)
+        if (_p1HitTime < 0)
         {
             Debug.Log("p1 true");
             _hitp1 = true;
@@ -52,7 +52,7 @@ public class TrapDamage : MonoBehaviour {
             _p1HitTime -= Time.deltaTime;
             Debug.Log(_p1HitTime);
         }
-        if (_p2HitTime == 0)
+        if (_p2HitTime < 0)
         {
             Debug.Log("p2 true");
             _hitp2 = true;
