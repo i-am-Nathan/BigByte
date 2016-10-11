@@ -13,7 +13,10 @@ public class LeverTraps : MonoBehaviour {
             {
                 obj.GetComponent<Animation>().Stop();
             }
-            if
+            if (true)
+            {
+
+            }
         }
     }
 	
