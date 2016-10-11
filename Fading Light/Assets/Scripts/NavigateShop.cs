@@ -15,6 +15,8 @@ public class NavigateShop : MonoBehaviour {
 	private Text _itemName;
 	public int[] ItemQuantity;
 	public int[] Price;
+	public AudioClip BuySound;
+	private AudioSource _source;
 
 	void Awake(){
 		_price = GameObject.FindGameObjectWithTag ("Price").GetComponent<Text> ();
@@ -22,6 +24,8 @@ public class NavigateShop : MonoBehaviour {
 		_lore = GameObject.FindGameObjectWithTag("Lore").GetComponent<Text>();
 		_effect = GameObject.FindGameObjectWithTag("Effect").GetComponent<Text>();
 		_itemName = GameObject.FindGameObjectWithTag("ShopItemName").GetComponent<Text>();
+		_source = GetComponent<AudioSource>();
+
 
 	}
 	// Use this for initialization
@@ -45,6 +49,7 @@ public class NavigateShop : MonoBehaviour {
 			if (ItemQuantity [Index] != 0) {
 				ItemQuantity [Index]--;
 				_quantity.text= ItemQuantity [Index] +"";
+				_source.PlayOneShot (BuySound);
 			}
 		}
 
