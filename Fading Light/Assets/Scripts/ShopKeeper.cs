@@ -15,18 +15,19 @@ public class ShopKeeper : MonoBehaviour {
 	public Player2Controller Player2;
 	public GameObject ItemStand;
 	private bool _hasPlayed;
+    Animator _animator;
 
-
-	void Awake(){
+    void Awake(){
 		ShopKeeperCamera.enabled = false;
 		_transition = ShopKeeperCamera.GetComponent<Animation> ();
-
-	}
+        _animator = GetComponentInChildren<Animator>();//need this...
+    }
 		
 	void Start(){
 		_hasPlayed = false;
 		ItemStand.SetActive (false);
-	}
+        _animator.SetFloat("speed", -1f);
+    }
 	void OnTriggerEnter(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.T) && !_shopping) {
