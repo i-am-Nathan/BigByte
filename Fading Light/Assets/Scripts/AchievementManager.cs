@@ -14,8 +14,8 @@ public class Achievement
     public string Name;
     public string Description;
     public Texture2D IconIncomplete;
-    public Texture2D IconComplete;
-    public int RewardPoints;
+    public Sprite IconComplete;
+    public string Reward;
     public float TargetProgress;
     public bool Secret;
 
@@ -45,6 +45,8 @@ public class Achievement
         return false;
     }
 
+
+	
 
     /// <summary>
     ///  Returns true if this progress set results in the Achievement being earned.
@@ -97,18 +99,25 @@ public class AchievementManager : MonoBehaviour
     /// <value>
     /// The instance.
     /// </value>
-    public static AchievementManager Instance {
+   /* public static AchievementManager Instance {
 		get;
 		set;
-	}
+	}*/
 
     /// <summary>
     ///Call it by using
     ///private AchievementManager achievementManager = AchievementManager.Instance;
     /// </summary>
     void Awake(){
-		DontDestroyOnLoad (transform.gameObject);
-		Instance = this;
+		GameObject[] objects = GameObject.FindGameObjectsWithTag ("AchievementManager");
+		achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
+
+		if(!(objects.Length>0)) {
+			
+			DontDestroyOnLoad (GameObject.FindWithTag("AchievementManager").gameObject);
+
+			//Instance = this;
+		}
 	}
 
     /// <summary>
@@ -117,18 +126,16 @@ public class AchievementManager : MonoBehaviour
     void Start()
     {
         //GOT THE ACHIEVEMENT POPUP
-        achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
-        AchievementPopup.enabled = false;
-
-        ValidateAchievements();
-        UpdateRewardPointTotals();
+		AchievementPopup.enabled = false;
+   //     ValidateAchievements();
+      //  UpdateRewardPointTotals();
     }
 
 
     /// <summary>
     /// Make sure some assumptions about achievement data setup are followed.
     /// </summary>
-    private void ValidateAchievements()
+ /*   private void ValidateAchievements()
     {
         ArrayList usedNames = new ArrayList();
         foreach (Achievement achievement in Achievements)
@@ -144,7 +151,7 @@ public class AchievementManager : MonoBehaviour
             }
             usedNames.Add(achievement.Name);
         }
-    }
+    }*/
 
     private Achievement GetAchievementByName(string achievementName)
     {
@@ -155,7 +162,7 @@ public class AchievementManager : MonoBehaviour
     /// <summary>
     /// Updating the reward points
     /// </summary>
-    private void UpdateRewardPointTotals()
+   /* private void UpdateRewardPointTotals()
     {
         currentRewardPoints = 0;
         potentialRewardPoints = 0;
@@ -169,7 +176,7 @@ public class AchievementManager : MonoBehaviour
 
             potentialRewardPoints += achievement.RewardPoints;
         }
-    }
+    }*/
 
 
     /// <summary>
@@ -177,7 +184,7 @@ public class AchievementManager : MonoBehaviour
     /// </summary>
     private void AchievementEarned()
     {
-        UpdateRewardPointTotals();
+      //  UpdateRewardPointTotals();
         AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
 
@@ -196,10 +203,12 @@ public class AchievementManager : MonoBehaviour
             return;
         }
 
-		//If the achievement has been earned than create a pop up for the achievement for 3 seconds
+	
+	//If the achievement has been earned than create a pop up for the achievement for 3 seconds
         if (achievement.AddProgress(progressAmount))
         {
             AchievementEarned();
+	    Debug.Log("POPUP ACHIEVEMENT");	
             AchievementPopup.enabled = true;
             executedTime = Time.time;
             achievementText.text = achievement.Name;
