@@ -37,13 +37,13 @@ public class LifeManager : MonoBehaviour
         // Setting the appropriate hearts to hide
         if (_numberOfLivesLeft != 3)
         {
-            for (int i = 0; i < 3-_numberOfLivesLeft; i++)
-            {
-                _lives[i].SetActive(false);
+            for (int i = 2; i > _numberOfLivesLeft - 1; i--)
+            { 
+            _lives[i].SetActive(false);
             }
         }
 
-		// Hiding the game over screen
+        // Hiding the game over screen
         DeathScreen.enabled = false;
     }
 
@@ -60,14 +60,15 @@ public class LifeManager : MonoBehaviour
         if (_numberOfLivesLeft <= 0)
         {
             // Game over
-			// Pausing the game and showing the end of game screen
+            // Pausing the game and showing the end of game screen
+            _lives[2 - _numberOfLivesLeft].SetActive(false);
             Time.timeScale = 0;
             DeathScreen.enabled = true;
         }
         else
         {
             // Removing a heart from the UI
-            _lives[_numberOfLivesLeft - 1].SetActive(false);
+            _lives[2-_numberOfLivesLeft].SetActive(false);
             StartCoroutine("Wait");
         }
     }
@@ -78,7 +79,7 @@ public class LifeManager : MonoBehaviour
     private IEnumerator Wait()
     {
 		// Waiting for 3 seconds
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         // Restart level
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
@@ -106,6 +107,10 @@ public class LifeManager : MonoBehaviour
         Time.timeScale = 1;
         // Gets the active scene and reloads it
         Scene scene = SceneManager.GetActiveScene();
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////// Need to make start of level script that records stuff
         _gameDataScript.SetNumberOfLives(3);
         SceneManager.LoadScene(scene.name);
     }
