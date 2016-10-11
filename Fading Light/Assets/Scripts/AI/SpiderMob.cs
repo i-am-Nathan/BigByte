@@ -30,7 +30,7 @@ public class SpiderMob : BaseEntity
     public float Range = .1f;
     public float WalkSpeed = 9;
     public float RunSpeed = 15;
-    public float SprintSpeed = 24;
+    public float SprintSpeed = 10;
     public float AttackCooldown = 0.25f;
 
     //Target and navigation variables
@@ -53,6 +53,7 @@ public class SpiderMob : BaseEntity
     private bool _isRunning;
     private bool _isMoving;
     private bool _inTorchLight;
+    private bool _runningAway = false;
 
     private bool DEBUG = true;
 
@@ -177,37 +178,49 @@ public class SpiderMob : BaseEntity
                 fsm.ChangeState(States.Taunt);
             }
 
+            //Check if the torch has moved over the spider. If so then transition to the run state
+            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z) && _lockedOn)
+            {
+                if (DEBUG) Debug.Log("Spider inside torch");
+                //if (DEBUG) Debug.Log(this.gameObject.transform.position);
+                //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
+                _lockedOn = true;
+                fsm.ChangeState(States.Run);
+                break;
+            }
+
             //If they have moved outside the loose activation range, then taunt and stop chasing
-            if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance)
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance && _lockedOn)
             {
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
                 fsm.ChangeState(States.Taunt);
+                break;
             }
 
             //If the target comes into attack range, stop chasing and enter the attack state
-            if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange && _lockedOn)
             {
-                if (DEBUG) Debug.Log("In attack range");
+                if (DEBUG) Debug.Log("Player in attack range");
                 _isMoving = false;
                 _lockedOn = false;
                 fsm.ChangeState(States.Attack);
+                break;
+            }                      
+            
+            //Check if the player is inside the torch, if so move along outside of radius
+            if (TorchController.IsInTorchRange(target.transform.position.x, target.transform.position.z) && _lockedOn)
+            {
+                if (DEBUG) Debug.Log("Player In torch range");
+                _isMoving = false;
+                _lockedOn = false;
+                fsm.ChangeState(States.Idle);
+                break;
             }
 
             pathfinder.speed = _isRunning ? SprintSpeed : RunSpeed;
-
-            //Check if the player is inside the torch, if so move along outside of radius
-            if (TorchController.IsInTorchRange(target.transform.position.x, target.transform.position.z))
-            {
-                if (DEBUG) Debug.Log("Inside torch");
-                float percent = (float)TorchController.GetTorchRadius() / Vector3.Distance(target.position, this.gameObject.transform.position);
-                pathfinder.SetDestination(Vector3.Lerp(target.transform.position, this.gameObject.transform.position, percent));
-            } else
-            {
-                if (DEBUG) Debug.Log("Outside torch");
-                pathfinder.SetDestination(target.position);
-            }
+            pathfinder.SetDestination(target.position);
 
             if (DEBUG) Debug.Log("Chasing player:" + target.tag);
             yield return new WaitForSeconds(refreshRate);
@@ -223,8 +236,9 @@ public class SpiderMob : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Run");
 
-        float refreshRate = 0.35f;
-        _lockedOn = true;
+        float refreshRate = 0.25f;
+        float fleeDistance = 10f;
+        _inTorchLight = true;
 
         if (!_isMoving)
         {
@@ -233,24 +247,50 @@ public class SpiderMob : BaseEntity
         }
                
         while (_inTorchLight)
-        {
-            
+        {            
+
             //If the spider has run out of the torch light, transition back to idle
-            if (!TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
+            if (!TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z) && _inTorchLight)
             {
                 if (DEBUG) Debug.Log("Escaped torchlight");
                 _inTorchLight = false;
                 _isMoving = false;
                 fsm.ChangeState(States.Idle);
-            }
-                       
-            //Determine which way the spider should run
+            } else
+            {
+                if (DEBUG) Debug.Log("Spider running");
+                //if (DEBUG) Debug.Log(this.gameObject.transform.position);
+                //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
 
+                //Determine which way the spider should run
+                Vector3 torchDirection = this.gameObject.transform.position - TorchController.GetTorchPosition();
+                Vector3 dest = this.gameObject.transform.position + torchDirection;
 
-            //Set the spider to run away as fast as possible
-            pathfinder.speed = _isRunning ? SprintSpeed : RunSpeed;
-            pathfinder.SetDestination(target.position);
-            
+                //TODO: CHECK FOR IF DEST POSITION IS IN THE NAVMESH
+                                
+                
+                //if (!_runningAway)
+                //{
+                    //Set the spider to run away as fast as possible
+                    pathfinder.speed = SprintSpeed;
+                    pathfinder.acceleration = 15;
+                    pathfinder.SetDestination(dest);
+                    _runningAway = true;
+                /*} else
+                {
+                    //Check to see if we have reached the destination if we were running
+                    if (!pathfinder.pathPending)
+                    {
+                        if (pathfinder.remainingDistance <= pathfinder.stoppingDistance)
+                        {
+                            if (!pathfinder.hasPath || pathfinder.velocity.sqrMagnitude == 0f)
+                            {
+                                _runningAway = false;
+                            }
+                        }
+                    }
+                }*/
+            }          
             yield return new WaitForSeconds(refreshRate);
         }
     }
@@ -264,37 +304,43 @@ public class SpiderMob : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
 
-        float refreshRate = 0.8f;
+        float refreshRate = 0.25f;
+        _lockedOn = false;
 
         //Check to see if either player is within activation range
         while (!_lockedOn)
         {
             if (DEBUG) Debug.Log("Waiting for players.");
-            pathfinder.SetDestination(spawnLocation);
+            //pathfinder.SetDestination(spawnLocation);
 
             float player1distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
             float player2distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player2").transform.position, this.gameObject.transform.position);
             BaseEntity player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<BaseEntity>();
             BaseEntity player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<BaseEntity>();
 
+            //if (DEBUG) Debug.Log(this.gameObject.transform.position);
+            //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
+
+            //Debug.Log(Vector3.Distance(this.gameObject.transform.position, TorchController.GetTorchPosition()));
+
             //Check if the torch has moved over the spider. If so then transition to the run state
-            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
+            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z) && !_lockedOn)
             {
                 if (DEBUG) Debug.Log("Spider inside torch");
+                //if (DEBUG) Debug.Log(this.gameObject.transform.position);
+                //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
                 _lockedOn = true;
                 fsm.ChangeState(States.Run);
-
-                //float percent = (float)TorchController.GetTorchRadius() / Vector3.Distance(target.position, this.gameObject.transform.position);
-                //pathfinder.SetDestination(Vector3.Lerp(target.transform.position, this.gameObject.transform.position, percent));
+                break;
             }
-
-            /*
-            if (!player1.isDead && (player1distance < HardActivationDistance) || !player2.isDead && (player2distance < HardActivationDistance))
+                        
+            if (!player1.isDead && (player1distance < HardActivationDistance) || !player2.isDead && (player2distance < HardActivationDistance) && !_lockedOn)
             {
                 if (DEBUG) Debug.Log("Player found.");
                 _lockedOn = true;
                 fsm.ChangeState(States.Chase);
-            }*/
+                break;
+            }
 
             yield return new WaitForSeconds(refreshRate);
         }        
