@@ -44,9 +44,4 @@ public class SawBladePlate : MonoBehaviour {
             }
         }
     }
-
-    void animationDelay(GameObject obj)
-    {
-
-    }
 }

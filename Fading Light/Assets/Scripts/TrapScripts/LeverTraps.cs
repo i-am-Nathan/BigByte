@@ -13,15 +13,31 @@ public class LeverTraps : MonoBehaviour {
             {
                 obj.GetComponent<Animation>().Stop();
             }
-            if (true)
+            if (obj.tag.Equals("AxeTrap"))
             {
-
+                obj.GetComponent<Animation>().Stop();
             }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    /// <summary>
+    /// Called when the player is close enough to the lever, and presses T
+    /// </summary>
+    void OnTriggerStay(Collider other)
+    {
+        //if T is pressed to interact with the lever, the walls move
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            foreach (GameObject obj in gameObjects)
+            {
+                if (obj.tag.Equals("SawTrap"))
+                {
+                    obj.GetComponent<Animation>().Play("Anim_SawTrap02_Play");
+                } else if (obj.tag.Equals("AxeTrap"))
+                {
+                    obj.GetComponent<Animation>().Play("Anim_AxeTrap_Play");
+                }
+            }
+        }
+    }
 }
