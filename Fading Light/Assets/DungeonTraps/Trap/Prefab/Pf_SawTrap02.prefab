@@ -11,7 +11,7 @@ GameObject:
   - 111: {fileID: 11139774}
   m_Layer: 0
   m_Name: Pf_SawTrap02
-  m_TagString: Untagged
+  m_TagString: SawTrap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,6 +77,8 @@ GameObject:
   - 4: {fileID: 448308}
   - 33: {fileID: 3348308}
   - 23: {fileID: 2348308}
+  - 65: {fileID: 6544032}
+  - 114: {fileID: 11479976}
   m_Layer: 0
   m_Name: SawBlade
   m_TagString: Untagged
@@ -107,14 +109,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148300}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalPosition: {x: -29.9, y: 1.6085815, z: -341.6}
+  m_LocalScale: {x: 10, y: 10, z: 30}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
   - {fileID: 448304}
-  - {fileID: 448306}
   - {fileID: 448308}
+  - {fileID: 448306}
   - {fileID: 448302}
   - {fileID: 448310}
   m_Father: {fileID: 0}
@@ -157,7 +159,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 448300}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &448308
 Transform:
   m_ObjectHideFlags: 1
@@ -166,11 +168,11 @@ Transform:
   m_GameObject: {fileID: 148308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalEulerAnglesHint: {x: 720, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 448300}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &448310
 Transform:
   m_ObjectHideFlags: 1
@@ -349,6 +351,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148310}
   m_Mesh: {fileID: 4300000, guid: 45cdd7be55c783844add8ed6d9828f62, type: 3}
+--- !u!65 &6544032
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4468539, y: 3.2171524, z: 3.059694}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!111 &11139774
 Animation:
   m_ObjectHideFlags: 1
@@ -364,6 +378,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &11479976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 612bfe6b7ff612549ab2952994b75b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeTillNextHit: 1.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
