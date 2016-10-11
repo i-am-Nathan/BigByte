@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using MonsterLove.StateMachine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Controls the AI (using FSM) of the large spider bosses (e.i. the one found in the tutorial level)
@@ -24,13 +25,16 @@ public class SpiderBoss : BaseEntity
     public float LooseActivationDistance = 120;
     public float AttackSpeed = 1;
     public float AttackDamage = 5;
-    public float Health = 50;
+    public float Health = 5000;
     public float AttackRange = 24;
     public float Range = .1f;
     public float WalkSpeed = 9f;
     public float RunSpeed = 15f;
     public float SprintSpeed = 35f;
     public float AttackCooldown = 0.5f;
+
+
+    public Image healthCircle;                                 // Reference to the UI's health circle.
 
     //Target and navigation variables
     NavMeshAgent pathfinder;
@@ -63,7 +67,7 @@ public class SpiderBoss : BaseEntity
 	{
         if (DEBUG) Debug.Log("The spider wakes.");
         //base.Start();
-        spawnLocation = this.gameObject.transform.position;
+        spawnLocation = this.gameObject.transform.position;       
 
         //Initlize the pathfinder, collision range and animator 
         pathfinder = GetComponent<NavMeshAgent>();
@@ -82,6 +86,7 @@ public class SpiderBoss : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
+        healthCircle.enabled = false;
         CurrentHealth = Health;
 	}
 
@@ -256,6 +261,18 @@ public class SpiderBoss : BaseEntity
     public override void Damage(float amount, Transform attacker)
     {        
         base.Damage(amount, attacker);
+
+        // Set the health bar's value to the current health.
+        try
+        {
+            healthCircle.enabled = true;
+            healthCircle.fillAmount -= amount / 100.0f;
+            Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
+            Invoke("HideHealth", 3);
+        }
+        catch { }
+
+
         if (true) Debug.Log("Spider damaged");
 
         if (amount >= CurrentHealth)
@@ -284,6 +301,15 @@ public class SpiderBoss : BaseEntity
             fsm.ChangeState(States.Death);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
+    }
+
+    /// <summary>
+    /// Hides the health.
+    /// </summary>
+    public void HideHealth()
+    {
+        Debug.Log("aaa");
+        healthCircle.enabled = false;
     }
 }
 
