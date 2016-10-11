@@ -196,7 +196,7 @@ public class PlayerController : Player
         try
         {
             healthCircle.enabled = true;
-            healthCircle.fillAmount -= amount / 100.0f;
+            healthCircle.fillAmount -= amount / base.IntialHealth;
             _healthSlider.value -= amount;
             Debug.Log(healthCircle.fillAmount);
             Invoke("HideHealth", 3);
