@@ -9,8 +9,7 @@ public class Coins : MonoBehaviour
     public AudioClip PickUpSound;
     private AudioSource _source;
     private bool _notPickedUp;
-    private PlayerController _player1Script;
-    private Player2Controller _player2Script;
+    private GameData _gameDataScript;
 
     void Awake()
     {
@@ -24,11 +23,8 @@ public class Coins : MonoBehaviour
     /// </summary>
     void Start()
     {
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        _player1Script = (PlayerController)go.GetComponent(typeof(PlayerController));
-
-        GameObject tempGo = GameObject.FindGameObjectWithTag("Player2");
-        _player2Script = (Player2Controller)tempGo.GetComponent(typeof(Player2Controller));
+        GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+        _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
     }
 
     /// <summary>
@@ -37,25 +33,14 @@ public class Coins : MonoBehaviour
     /// <param name="other">Other.</param>
     void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player 1" && _notPickedUp)
+        if (_notPickedUp)
         {
             _notPickedUp = false;
             _source.PlayOneShot(PickUpSound);
             GetComponent<Renderer>().enabled = false;
             Destroy(gameObject, PickUpSound.length + 0.1f);
 
-            _player1Script.UpdateGold(1);
-
+            _gameDataScript.UpdateGold(1);
         }
-        else if (other.name == "Player2" && _notPickedUp)
-        {
-            _notPickedUp = false;
-            _source.PlayOneShot(PickUpSound);
-            GetComponent<Renderer>().enabled = false;
-            Destroy(gameObject, PickUpSound.length + 0.1f);
-
-            _player2Script.UpdateGold(1);
-        }
-
     }
 }
