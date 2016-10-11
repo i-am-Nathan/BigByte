@@ -6,7 +6,7 @@ public class TrapDamage : MonoBehaviour {
     Transform player2;
     private bool _hitp1 = true;
     private bool _hitp2 = true;
-    public float timeTillNextHit = 3f;
+    public float timeTillNextHit = 1f;
     private float _p1HitTime = 0f;
     private float _p2HitTime = 0f;
 
