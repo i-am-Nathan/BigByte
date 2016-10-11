@@ -165,17 +165,15 @@ public class PlayerController : Player
     /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (!(hit.gameObject.tag.Equals("Crate")))
+        if (hit.gameObject.tag.Equals("Clockwise Door"))
         {
-            Rigidbody body = hit.collider.attachedRigidbody;
-            if (body == null || body.isKinematic)
-                return;
 
-            if (hit.moveDirection.y < -0.3F)
-                return;
+            Debug.Log(hit.gameObject.transform.parent);
+            hit.gameObject.transform.parent.gameObject.GetComponent<RotatingDoor>().rotateClockwise();
 
-            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-            body.velocity = pushDir * PushPower;
+        } else if (hit.gameObject.tag.Equals("Anticlockwise Door"))
+        {
+            
         }
     }
 
