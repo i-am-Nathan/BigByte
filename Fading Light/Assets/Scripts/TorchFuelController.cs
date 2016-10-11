@@ -142,7 +142,6 @@ public class TorchFuelController : MonoBehaviour {
         
         var torchRadius = torchPosition.y * Math.Tan((currentTorchLight.spotAngle / 2) * (Math.PI / 180));
         torchRadius = Math.Abs(torchRadius);
-        return 40.0;
         return torchRadius;
     }
 
