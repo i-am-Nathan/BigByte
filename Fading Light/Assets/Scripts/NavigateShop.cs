@@ -33,7 +33,7 @@ public class NavigateShop : MonoBehaviour {
 			ItemList.Add (item);
 			item.SetActive (false);
 		}
-		ItemList [Index].SetActive (true);
+		UpdateInfo ();
 	}
 	void Update(){
 			ItemList [Index].transform.Rotate (0, 0, 0.5f);
@@ -56,12 +56,7 @@ public class NavigateShop : MonoBehaviour {
 		} else {
 			Index++;
 		}
-		ItemList [Index].SetActive (true);
-		_price.text= Price [Index] + " Coins";
-		_quantity.text = ItemQuantity [Index] + "";
-		_lore.text = ItemList [Index].GetComponent<Item> ().Lore;
-		_effect.text = ItemList [Index].GetComponent<Item> ().Effect;
-		_itemName.text = ItemList [Index].GetComponent<Item> ().Name;
+		UpdateInfo ();
 
 	}
 	public void Previous(){
@@ -71,6 +66,10 @@ public class NavigateShop : MonoBehaviour {
 		} else {
 			Index--;
 		}
+		UpdateInfo ();
+	}
+
+	public void UpdateInfo(){
 		ItemList [Index].SetActive (true);
 		_price.text= Price [Index] + " Coins";
 		_quantity.text = ItemQuantity [Index] + "";
