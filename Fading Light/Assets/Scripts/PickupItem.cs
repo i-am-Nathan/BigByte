@@ -23,16 +23,16 @@ public class PickupItem : MonoBehaviour {
 		_player2Script = (Player2Controller)tempGo.GetComponent(typeof(Player2Controller));
 	}
 
-	void OnTriggerStay(Collider other)
+	void OnTriggerEnter(Collider other)
 	{
-		if (other.name == "Player 1" && Input.GetKeyDown(KeyCode.L) && _notPickedUp)
+		if (other.name == "Player 1" && _notPickedUp)
 		{
 			_notPickedUp = false;
 			_source.PlayOneShot(PickUpSound);
 			GetComponent<Renderer>().enabled = false;
 			Destroy(gameObject, PickUpSound.length + 0.1f);
 		}		
-		if (other.name == "Player2" && Input.GetKeyDown(KeyCode.R) && _notPickedUp)
+		if (other.name == "Player2" && _notPickedUp)
 		{
 			_notPickedUp = false;
 			_source.PlayOneShot (PickUpSound);
