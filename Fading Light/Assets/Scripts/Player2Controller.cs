@@ -157,7 +157,7 @@ public class Player2Controller : Player
         damaged = true;
 
         // Set the health bar's value to the current health.
-        healthCircle.fillAmount -= amount / 100.0f;
+        healthCircle.fillAmount -= amount / base.IntialHealth;
         _healthSlider.value -= amount;
         Invoke("HideHealth", 3);
 
