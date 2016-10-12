@@ -226,21 +226,12 @@ public class PlayerController : Player
     /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-<<<<<<< HEAD:Fading Light/Assets/Scripts/PlayerController.cs
+        if (hit.gameObject.tag.Equals("Clockwise Door")) {
+            Debug.Log("pushed");
+            Debug.Log(transform.forward * 10);
+            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 10);
+        }
         
-=======
-        if (hit.gameObject.tag.Equals("Clockwise Door"))
-        {
-
-            Debug.Log(hit.gameObject.transform.parent);
-            hit.gameObject.transform.parent.gameObject.GetComponent<RotatingDoor>().rotateClockwise();
-
-        }
-        else if (hit.gameObject.tag.Equals("Anticlockwise Door"))
-        {
-
-        }
->>>>>>> 7b29ed81f8a26a09812677e798d21244319e9712:Fading Light/Assets/Scripts/Player/PlayerController.cs
     }
 
     /// <summary>
