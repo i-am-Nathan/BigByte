@@ -3126,6 +3126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b3c1201fbbe004d9d919de39f5a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfLivesLeft: 0
+  _totalTime: 0
+  _totalTimeText: {fileID: 0}
 --- !u!4 &314782159
 Transform:
   m_ObjectHideFlags: 0
@@ -9712,6 +9715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b3c1201fbbe004d9d919de39f5a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfLivesLeft: 0
+  _totalTime: 0
+  _totalTimeText: {fileID: 0}
 --- !u!4 &885842071 stripped
 Transform:
   m_PrefabParentObject: {fileID: 491794, guid: a2d90428d4402a64ca9aa7ae580033f8, type: 2}
@@ -10524,7 +10530,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_Name
@@ -16937,7 +16943,7 @@ GameObject:
   - 114: {fileID: 1453144839}
   m_Layer: 0
   m_Name: Gold
-  m_TagString: Untagged
+  m_TagString: Current Gold
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26264,7 +26270,7 @@ Transform:
   m_Children:
   - {fileID: 1070259558}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 8
 --- !u!1 &2115122944
 GameObject:
   m_ObjectHideFlags: 0

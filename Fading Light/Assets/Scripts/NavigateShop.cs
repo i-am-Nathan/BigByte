@@ -13,6 +13,7 @@ public class NavigateShop : MonoBehaviour {
 	private Text _lore;
 	private Text _effect;
 	private Text _itemName;
+	private Text _currentGold;
 	public int[] ItemQuantity;
 	public int[] Price;
 	public AudioClip BuySound;
