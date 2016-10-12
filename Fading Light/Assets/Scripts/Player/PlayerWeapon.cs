@@ -26,7 +26,7 @@ public class PlayerWeapon : MonoBehaviour {
         if (DEBUG) Debug.Log("Weapon collision. Player2 is attacking: " + player2.isAttacking());        
         if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
 
-        if ((player1.isAttacking() || player2.isAttacking()) && other.tag == "Enemy")
+        if ((weaponHolder.isAttacking() || player2.isAttacking()) && other.tag == "Enemy")
         {
             if (DEBUG) Debug.Log("Weapon collision: Enemy");
             other.transform.GetComponent<BaseEntity>().Damage(WeaponDamage, this.transform.root);
