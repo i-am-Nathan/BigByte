@@ -230,15 +230,22 @@ public class SpiderMob : BaseEntity
     }
 
 
-    void isMobInLight()
+    bool isInLight(Transform transform)
     {
-
-    }
-
-    void isPlayerInLight()
-    {
-
-    }
+        var torchSources = GameObject.FindGameObjectsWithTag("LightSource");
+        foreach (var torchSource in torchSources)
+        {
+            var CandleLight = torchSource.transform.GetComponent<CandleLight>();
+            if (CandleLight.isTriggered())
+            {
+                if (Vector3.Distance(transform.position, CandleLight.transform.position) < CandleLight.Radius)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }    
 
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 

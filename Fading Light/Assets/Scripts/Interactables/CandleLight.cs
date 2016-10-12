@@ -4,6 +4,8 @@ using System.Collections;
 public class CandleLight : MonoBehaviour {
     public bool _active = false;
     private bool _triggered = false;
+
+    public float Radius = 20f;
     public GameObject _flame;
     public GameObject _spotlight;
 
@@ -13,6 +15,11 @@ public class CandleLight : MonoBehaviour {
         _spotlight.GetComponent<Light>().spotAngle = 0;
     }
 	
+    public bool isTriggered()
+    {
+        return _triggered;
+    }
+
 	// Update is called once per frame
 	void Update () {
 
