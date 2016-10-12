@@ -154,18 +154,23 @@ public class PlayerController : Player
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    void HealthPotActivated()
+    public bool isAttackPotActive()
     {
-        
+        return _attackPotActive;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    void AttackPotActivated()
+    public void HealthPotActivated()
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void AttackPotActivated()
     {
         if (_attackPotActive)
         {
@@ -182,7 +187,7 @@ public class PlayerController : Player
     /// <summary>
     /// 
     /// </summary>
-    void DefensePotActivated()
+    public void DefensePotActivated()
     {
         if (_defensePotActive)
         {

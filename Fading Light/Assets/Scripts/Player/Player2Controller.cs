@@ -79,6 +79,64 @@ public class Player2Controller : Player
         }
 	}
 
+    private bool _attackPotActive = false;
+    private bool _defensePotActive = false;
+
+    /// <summary>
+    /// Update the timers on certain effects the character is under
+    /// </summary>
+    void UpdateEffects()
+    {
+
+    }
+
+    public bool isAttackPotActive()
+    {
+        return _attackPotActive;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void HealthPotActivated()
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void AttackPotActivated()
+    {
+        if (_attackPotActive)
+        {
+            //Reset the timer if attack potion already active
+
+        }
+        else
+        {
+            //Otherwise set the boolean and begin the timer
+            _attackPotActive = true;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void DefensePotActivated()
+    {
+        if (_defensePotActive)
+        {
+            //Reset the timer if attack potion already active
+
+        }
+        else
+        {
+            //Otherwise set the boolean and begin the timer
+            _defensePotActive = true;
+        }
+    }
+
     /// <summary>
     /// Controls the character using the keys
     /// </summary>

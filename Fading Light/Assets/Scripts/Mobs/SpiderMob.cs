@@ -220,6 +220,8 @@ public class SpiderMob : BaseEntity
             }
 
             pathfinder.speed = _isRunning ? SprintSpeed : RunSpeed;
+            pathfinder.acceleration = 16f;
+            pathfinder.angularSpeed = 900f;
             pathfinder.SetDestination(target.position);
 
             if (DEBUG) Debug.Log("Chasing player:" + target.tag);
@@ -274,6 +276,7 @@ public class SpiderMob : BaseEntity
                     //Set the spider to run away as fast as possible
                     pathfinder.speed = SprintSpeed;
                     pathfinder.acceleration = 15;
+                    pathfinder.angularSpeed = 900f;
                     pathfinder.SetDestination(dest);
                     _runningAway = true;
                 /*} else
