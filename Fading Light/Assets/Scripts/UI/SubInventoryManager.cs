@@ -33,11 +33,11 @@ public class SubInventoryManager : MonoBehaviour {
 	private Dictionary<int,string> _itemIndexNameDictionary = new Dictionary<int,string>();
 
 	void Start() {
-		GameObject go = GameObject.FindGameObjectWithTag("Player");
-		_player1ControllerScript = (PlayerController)go.GetComponent(typeof(PlayerController));
+		GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+		_player1ControllerScript = (PlayerController)player1.GetComponent(typeof(PlayerController));
 
-		GameObject go1 = GameObject.FindGameObjectWithTag("Player2");
-		_player2ControllerScript = (Player2Controller)go1.GetComponent(typeof(Player2Controller));
+		GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+		_player2ControllerScript = (Player2Controller)player2.GetComponent(typeof(Player2Controller));
 
 		_player1ItemName = GameObject.Find ("Player1ItemName").GetComponent<Text> ();
 		_player2ItemName = GameObject.Find ("Player2ItemName").GetComponent<Text> ();
@@ -81,14 +81,18 @@ public class SubInventoryManager : MonoBehaviour {
 			CycleItems (false);
 		}
 
-		if (Input.GetKeyDown(KeyCode.K))
+		if (Input.GetKeyDown(KeyCode.Q))
 		{
+            Debug.Log("CONSUME THAT POTION MOTHERFUCKING PLAYER 1");
 			UseItem (true);
-		}
+
+        }
 
 		if (Input.GetKeyDown(KeyCode.L))
 		{
-			UseItem (false);
+            Debug.Log("CONSUME THAT POTION MOTHERFUCKING PLAYER 2");
+
+            UseItem (false);
 		}
 	}
 		
@@ -119,23 +123,41 @@ public class SubInventoryManager : MonoBehaviour {
 				SetItemOnScreen (_player1ItemName.text, true);
 			}
 			//HealthPotActivated
-			//_player1ControllerScript.HealthPotActivated();
-			//AttackPotActivated
-			//_player1ControllerScript.AttackPotActivated();
-			//DefensePotActivated
-			//_player1ControllerScript.DefensePotActivated();
-		} else {
+            if (_player1ItemName.text == "Health Pot")
+            {
+                _player1ControllerScript.HealthPotActivated();
+            }
+            //AttackPotActivated
+            if (_player1ItemName.text == "Attack Pot")
+            {
+                _player1ControllerScript.AttackPotActivated();
+            }
+            //DefensePotActivated
+            if (_player1ItemName.text == "Defense Pot")
+            {
+                _player1ControllerScript.DefensePotActivated();
+            }
+        } else {
 			if (_player2ItemQuantityDictionary [_player2ItemName.text] != 0) {
 				_player2ItemQuantityDictionary[_player2ItemName.text] -= 1;
 				SetItemOnScreen (_player2ItemName.text, false);
 			}
-			//HealthPotActivated
-			//_player2ControllerScript.HealthPotActivated();
-			//AttackPotActivated
-			//_player2ControllerScript.AttackPotActivated();
-			//DefensePotActivated
-			//_player2ControllerScript.DefensePotActivated();
-		}
+            //HealthPotActivated
+            if (_player2ItemName.text == "Health Pot")
+            {
+                _player2ControllerScript.HealthPotActivated();
+            }
+            //AttackPotActivated
+            if (_player2ItemName.text == "Attack Pot")
+            {
+                _player2ControllerScript.AttackPotActivated();
+            }
+            //DefensePotActivated
+            if (_player2ItemName.text == "Defense Pot")
+            {
+                _player2ControllerScript.DefensePotActivated();
+            }
+        }
 	}
 
 	public void AddItemQuantity (string itemName, bool player1) {
