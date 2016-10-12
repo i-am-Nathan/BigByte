@@ -120,24 +120,41 @@ public class SubInventoryManager : MonoBehaviour {
 				SetItemOnScreen (_player1ItemName.text, true);
 			}
 			//HealthPotActivated
-            //if (_player1ItemName.text = "Health Pot")
-			//_player1ControllerScript.HealthPotActivated();
-			//AttackPotActivated
-			//_player1ControllerScript.AttackPotActivated();
-			//DefensePotActivated
-			//_player1ControllerScript.DefensePotActivated();
-		} else {
+            if (_player1ItemName.text == "Health Pot")
+            {
+                _player1ControllerScript.HealthPotActivated();
+            }
+            //AttackPotActivated
+            if (_player1ItemName.text == "Attack Pot")
+            {
+                _player1ControllerScript.AttackPotActivated();
+            }
+            //DefensePotActivated
+            if (_player1ItemName.text == "Defense Pot")
+            {
+                _player1ControllerScript.DefensePotActivated();
+            }
+        } else {
 			if (_player2ItemQuantityDictionary [_player2ItemName.text] != 0) {
 				_player2ItemQuantityDictionary[_player2ItemName.text] -= 1;
 				SetItemOnScreen (_player2ItemName.text, false);
 			}
-			//HealthPotActivated
-			//_player2ControllerScript.HealthPotActivated();
-			//AttackPotActivated
-			//_player2ControllerScript.AttackPotActivated();
-			//DefensePotActivated
-			//_player2ControllerScript.DefensePotActivated();
-		}
+            //HealthPotActivated
+            if (_player2ItemName.text == "Health Pot")
+            {
+                _player2ControllerScript.HealthPotActivated();
+            }
+            //AttackPotActivated
+            if (_player2ItemName.text == "Attack Pot")
+            {
+                _player2ControllerScript.AttackPotActivated();
+            }
+            //DefensePotActivated
+            if (_player2ItemName.text == "Defense Pot")
+            {
+                _player2ControllerScript.DefensePotActivated();
+            }
+        }
 	}
 
 	public void AddItemQuantity (string itemName, bool player1) {

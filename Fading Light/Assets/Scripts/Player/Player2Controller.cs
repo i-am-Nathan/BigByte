@@ -82,12 +82,33 @@ public class Player2Controller : Player
     private bool _attackPotActive = false;
     private bool _defensePotActive = false;
 
+    private float _attackPotTimeLeft;
+    private float _defensePotTimeLeft;
+    private float _attackPotDuration = 30f;
+    private float _defensePotDuration = 30f;
+
     /// <summary>
     /// Update the timers on certain effects the character is under
     /// </summary>
     void UpdateEffects()
     {
-
+        if (_attackPotActive) {
+            _attackPotTimeLeft -= Time.deltaTime;
+            //text.text = "Time Left:" + Mathf.Round(timeLeft);
+            if (_attackPotTimeLeft < 0)
+            {
+                _attackPotActive = false;
+            }
+        }
+        if (_defensePotActive)
+        {
+            _defensePotTimeLeft -= Time.deltaTime;
+            //text.text = "Time Left:" + Mathf.Round(timeLeft);
+            if (_defensePotTimeLeft < 0)
+            {
+                _defensePotActive = false;
+            }
+        }
     }
 
     public bool isAttackPotActive()
@@ -100,7 +121,14 @@ public class Player2Controller : Player
     /// </summary>
     public void HealthPotActivated()
     {
-
+        if ((CurrentHealth + 30) > IntialHealth)
+        {
+            CurrentHealth = IntialHealth;
+        }
+        else
+        {
+            this.CurrentHealth = CurrentHealth + 30;
+        }
     }
 
     /// <summary>
@@ -111,7 +139,7 @@ public class Player2Controller : Player
         if (_attackPotActive)
         {
             //Reset the timer if attack potion already active
-
+            _attackPotTimeLeft = _attackPotDuration;
         }
         else
         {
@@ -128,7 +156,7 @@ public class Player2Controller : Player
         if (_defensePotActive)
         {
             //Reset the timer if attack potion already active
-
+            _defensePotTimeLeft = _defensePotDuration;
         }
         else
         {
