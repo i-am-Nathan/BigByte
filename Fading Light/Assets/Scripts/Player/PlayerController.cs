@@ -138,8 +138,7 @@ public class PlayerController : Player
         }
 
     }
-
-<<<<<<< HEAD
+    
     private bool _attackPotActive = false;
     private bool _defensePotActive = false;
 
@@ -197,8 +196,6 @@ public class PlayerController : Player
             _defensePotActive = true;
         }
     }
-=======
->>>>>>> 61ed7bf66dbd4f5190f01cd1beabbcd89bc95975
 
     /// <summary>
     /// When collision occurs between two objects
