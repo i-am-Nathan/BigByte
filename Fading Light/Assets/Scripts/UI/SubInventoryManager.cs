@@ -99,7 +99,7 @@ public class SubInventoryManager : MonoBehaviour {
 		}
 	}
 
-	void UseItem (bool player1) {
+	public void UseItem (bool player1) {
 		if (player1) {
 			if (_player1CurrentItemIndex == 0) {
 				//HealthPotActivated
@@ -121,6 +121,18 @@ public class SubInventoryManager : MonoBehaviour {
 			} else if (_player2CurrentItemIndex == 2) {
 				//DefensePotActivated
 				//_player2ControllerScript.DefensePotActivated();
+			}
+		}
+	}
+
+	public void AddItemQuantity (string itemName) {
+		foreach (KeyValuePair<string,int> keyValue in _itemQuantityDictionary) {
+			if (keyValue.Key == "Health Potion") {
+				keyValue.Value += 1;
+			} else if (keyValue.Key == "Defense Potion") {
+				keyValue.Value += 1;
+			} else if (keyValue.Key == "Beserk Potion") {
+				keyValue.Value += 1;
 			}
 		}
 	}

@@ -18,6 +18,8 @@ public class NavigateShop : MonoBehaviour {
 	public int[] Price;
 	public AudioClip BuySound;
 	private AudioSource _source;
+	private GameData _gameData;
+	private SubInventoryManager _subInventoryManager;
 
 	void Awake(){
 		_price = GameObject.FindGameObjectWithTag ("Price").GetComponent<Text> ();
@@ -26,8 +28,9 @@ public class NavigateShop : MonoBehaviour {
 		_effect = GameObject.FindGameObjectWithTag("Effect").GetComponent<Text>();
 		_itemName = GameObject.FindGameObjectWithTag("ShopItemName").GetComponent<Text>();
 		_source = GetComponent<AudioSource>();
-
-
+		_gameData = GameObject.FindGameObjectWithTag ("Game Data").GetComponent<GameData> ();
+		_subInventoryManager = GameObject.FindGameObjectWithTag ("SubInventory Manager").GetComponent<SubInventoryManager> ();
+		_currentGold = GameObject.FindGameObjectWithTag ("Current Gold").GetComponent<Text> ();
 	}
 	// Use this for initialization
 	void Start () {
@@ -47,10 +50,14 @@ public class NavigateShop : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
 			Next ();
 		} else if (Input.GetKeyDown (KeyCode.KeypadEnter)) {
-			if (ItemQuantity [Index] != 0) {
+			// Player 1
+			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
 				ItemQuantity [Index]--;
+				_gameData.UpdateGold (0 - Price [Index]);
+				_currentGold.text = _gameData.GetAmountOfGold() + "";
 				_quantity.text= ItemQuantity [Index] +"";
 				_source.PlayOneShot (BuySound);
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name);
 			}
 		}
 
@@ -82,6 +89,7 @@ public class NavigateShop : MonoBehaviour {
 		_lore.text = ItemList [Index].GetComponent<Item> ().Lore;
 		_effect.text = ItemList [Index].GetComponent<Item> ().Effect;
 		_itemName.text = ItemList [Index].GetComponent<Item> ().Name;
+		_currentGold.text = _gameData.GetAmountOfGold() + "";
 	}
 		
 }
