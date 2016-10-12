@@ -7,19 +7,25 @@ using System.Collections;
 /// </summary>
 public class TrapPlate : MonoBehaviour {
 
+	public GameObject[] traps;
 	private int _thingsOnTop = 0;
-	private bool _pressed = false;
+	public bool _pressed = false;
+	public GameObject[] otherPlates;
 
 	/// <summary>
 	/// Called when an object enters on top of the plate
 	/// </summary>
+
+	void Awake(){
+		otherPlates = GameObject.FindGameObjectsWithTag ("SpearTrap");
+	}
+
+
 	void OnTriggerEnter(Collider other) {
-		Debug.Log ("GGGGG");
 		// the crate has a weight of 2
 		if (other.name == "Player 1" || other.name == "Player2")
 		{
 			_thingsOnTop += 1;
-			Debug.Log ("GG");
 		} 
 
 		//if the weight is heavy enough, then the plate is triggered
@@ -27,8 +33,11 @@ public class TrapPlate : MonoBehaviour {
 
 		{
 			this.GetComponent<Animation>().Play("PressurePlateDown");
-			GameObject wall = GameObject.FindWithTag("SpearTrap");
-			wall.GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
+
+			for (int j = 0; j < otherPlates.Length; j++) {
+				otherPlates [j].GetComponent<TrapPlate> ().UnsetPlate ();
+			}
+			UnsetTraps ();
 			_pressed = true;
 
 		}
@@ -39,24 +48,27 @@ public class TrapPlate : MonoBehaviour {
 	/// <summary>
 	/// Called when an object leaves the plate
 	/// </summary>
-	void OnTriggerExit(Collider other) {
-		//same as the method above, but for the upward motion.
-		if (other.name == "Player 1" || other.name == "Player2")
-		{
-			_thingsOnTop--;
+	public void UnsetPlate() {
 
-		} 
-
-		if (_thingsOnTop < 1 && _pressed)
-
-		{
+		if (_pressed) {
 			this.GetComponent<Animation>().Play("PressurePlateUp");
-			GameObject wall = GameObject.FindWithTag("SpearTrap");
-			wall.GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
+			this.GetComponent<TrapPlate> ().SetTraps ();;
 			_pressed = false;
+		}
+			
+	}
+
+	public void UnsetTraps(){
+		for (int i = 0; i < traps.Length; i++) {
+			traps[i].GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
+		}
+	}
+
+	public void SetTraps(){
+		for (int i = 0; i < traps.Length; i++) {
+			traps[i].GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
 
 		}
-
 
 	}
 }

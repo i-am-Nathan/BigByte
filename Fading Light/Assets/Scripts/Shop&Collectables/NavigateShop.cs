@@ -19,7 +19,6 @@ public class NavigateShop : MonoBehaviour {
 	public AudioClip BuySound;
 	private AudioSource _source;
 	private GameData _gameData;
-
 	void Awake(){
 		_price = GameObject.FindGameObjectWithTag ("Price").GetComponent<Text> ();
 		_quantity = GameObject.FindGameObjectWithTag ("Quantity").GetComponent<Text>();
