@@ -56,7 +56,7 @@ public class SpiderBoss : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
 
@@ -129,7 +129,7 @@ public class SpiderBoss : BaseEntity
         
         if (_isSprinting) _isSprinting = false;
 
-        yield return new WaitForSeconds(AttackCooldown);
+        //yield return new WaitForSeconds(AttackCooldown);
         
 
         pathfinder.enabled = true;
