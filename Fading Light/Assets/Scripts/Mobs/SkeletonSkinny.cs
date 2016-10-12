@@ -4,38 +4,39 @@ using MonsterLove.StateMachine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls the AI (using FSM) of the large spider bosses (e.i. the one found in the tutorial level)
+/// Controls the AI (using FSM) of the large skeleton bosses (e.i. the one found in the tutorial level)
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
-public class SpiderBoss : BaseEntity
+public class SkeletonSkinny : BaseEntity
 {
-	//Spider states
+	//skeleton states
 	public enum States
 	{
 		Init,
 		Idle,
 		Chase,
         Attack,
-        Taunt, 
+        Wake,
+        Sleep, 
         Death
 	}
 
-    //Spider stats
+    //skeleton stats
     public float HardActivationDistance = 50;
     public float LooseActivationDistance = 120;
     public float AttackSpeed = 1;
     public float AttackDamage = 5;
-    public float Health = 5000;
-    public float AttackRange = 24;
+    public float Health = 100;
+    public float AttackRange = 10;
     public float Range = .1f;
     public float WalkSpeed = 9f;
-    public float RunSpeed = 15f;
+    public float RunSpeed = 5f;
     public float SprintSpeed = 35f;
     public float AttackCooldown = 0.5f;
-    public float RotationSpeed = 10f;
+    public float AngularSpeed = 10f;
 
-
-    public Image healthCircle;                                 // Reference to the UI's health circle.
+    //Reference to the UI's health circle.
+    public Image healthCircle;                                 
 
     //Target and navigation variables
     NavMeshAgent pathfinder;
@@ -52,12 +53,13 @@ public class SpiderBoss : BaseEntity
     private float _collisionRange;
     private float _targetCollisionRange;
     private bool _lockedOn = false;
+    private bool _sleeping;
     private bool _inAttackRange;
     private bool _isSprinting;
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
 
@@ -66,7 +68,7 @@ public class SpiderBoss : BaseEntity
     /// </summary>
     private void Awake()
 	{
-        if (DEBUG) Debug.Log("The spider wakes.");
+        if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
 
@@ -87,7 +89,7 @@ public class SpiderBoss : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        healthCircle.enabled = false;
+        //healthCircle.enabled = false;
         CurrentHealth = Health;
 	}
 
@@ -96,16 +98,57 @@ public class SpiderBoss : BaseEntity
     /// </summary>
     private void Init_Enter()
     {
-        if (DEBUG) Debug.Log("Spider state machine initilized.");
-        fsm.ChangeState(States.Idle);
+        if (DEBUG) Debug.Log("skeleton state machine initilized.");
+        fsm.ChangeState(States.Sleep);
     }
 
     /// <summary>
     /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
     /// </summary>
-    private void Taunt_Enter()
+    private IEnumerator Sleep_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Taunt");
+        if (DEBUG) Debug.Log("Entered state: Sleep");
+        float refreshRate = 0.8f;
+        _sleeping = true;
+        _animator["NewStandUp01"].speed = 0;
+        _animator.Play("NewStandUp01", PlayMode.StopAll);
+
+        //Check to see if either player is within activation range
+        while (_sleeping)
+        {
+            if (DEBUG) Debug.Log("Waiting for players to wake me up.");
+            
+            //Retrieve the distance to the two playesr and their entity objects
+            float player1distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
+            float player2distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player2").transform.position, this.gameObject.transform.position);
+            BaseEntity player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<BaseEntity>();
+            BaseEntity player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<BaseEntity>();
+
+            //If there is a non-dead player inside the hard activiation distance, break the loop and wake up them
+            if (!player1.isDead && (player1distance < HardActivationDistance) || !player2.isDead && (player2distance < HardActivationDistance))
+            {
+                if (DEBUG) Debug.Log("Skele woken up by player.");
+                _sleeping = false;
+            }
+            yield return new WaitForSeconds(refreshRate);
+        }
+        fsm.ChangeState(States.Wake);
+    }
+
+    /// <summary>
+    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
+    /// </summary>
+    private IEnumerator Wake_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Wake");
+        _animator["NewStandUp01"].speed = 1;
+        _animator.Play("NewStandUp01", PlayMode.StopAll);
+
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.25f);
+            if (DEBUG) Debug.Log("Waiting for waking animation to finish");
+        }
         fsm.ChangeState(States.Idle);
     }
 
@@ -116,12 +159,10 @@ public class SpiderBoss : BaseEntity
     IEnumerator Attack_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
-
-        RotateTowards(target);
-
         pathfinder.enabled = false;
 
-        _animator.Play("attack2", PlayMode.StopAll);
+        _animator["SwingNormal"].speed = 1.5f;
+        _animator.Play("SwingNormal", PlayMode.StopAll);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
         
 
@@ -143,14 +184,14 @@ public class SpiderBoss : BaseEntity
 
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// spiders alert area, or comes into attack range.
+    /// skeletons alert area, or comes into attack range.
     /// </summary>
     /// <returns></returns>
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
 
-        float refreshRate = !_isSprinting ? 0.3f : 0.05f;
+        float refreshRate = 0.05f;
         _lockedOn = true;
 
         //Find closet player
@@ -162,12 +203,12 @@ public class SpiderBoss : BaseEntity
 
             if (!_isMoving)
             {
-                _animator["run"].speed = _isSprinting ? 1.5f : 1.0f;
-                _animator.Play("run", PlayMode.StopAll);
+                //_animator["Run"].speed = _isSprinting ? 1.5f : 1.0f;
+                _animator.Play("Walk02", PlayMode.StopAll);
                 _isMoving = true;
             }
 
-            //If player 2 is closer to the spider, and is not dead, then chase them Otherwise, player 1 is closer.              
+            //If player 2 is closer to the skeleton, and is not dead, then chase them Otherwise, player 1 is closer.              
             if (Vector3.Distance(player1.position, this.gameObject.transform.position) >= Vector3.Distance(player2.position, this.gameObject.transform.position) && !player2.GetComponent<BaseEntity>().isDead)
             {
                 if (DEBUG) Debug.Log("Targetting player 2");
@@ -180,7 +221,7 @@ public class SpiderBoss : BaseEntity
             }           
             else
             {
-                fsm.ChangeState(States.Taunt);
+                fsm.ChangeState(States.Idle);
             }
 
             if (DEBUG) Debug.Log("Chasing player:" + target.tag);
@@ -191,7 +232,7 @@ public class SpiderBoss : BaseEntity
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
-                fsm.ChangeState(States.Taunt);
+                fsm.ChangeState(States.Idle);
             }
 
             //If the target comes into attack range, stop chasing and enter the attack state
@@ -204,14 +245,15 @@ public class SpiderBoss : BaseEntity
             }
 
             //Set the speed of the pathfinder (either running or sprinting) and the target positions
-            pathfinder.speed = _isSprinting ? SprintSpeed : RunSpeed;
+            pathfinder.speed = 10f;
+            pathfinder.acceleration = 13f;
+            pathfinder.angularSpeed = 900f;
             pathfinder.SetDestination(target.position);
-            Debug.Log(pathfinder.speed);
 
             //Every so often sprint at the player
             if (_walkCount > 12)
             {
-                if (true) Debug.Log("Spider has started sprinting!");
+                if (true) Debug.Log("skeleton has started sprinting!");
                 _isSprinting = true;
                 _isMoving = false;
                 _walkCount = -5;
@@ -237,7 +279,7 @@ public class SpiderBoss : BaseEntity
         {
             if (DEBUG) Debug.Log("Waiting for players.");
 
-            //Move the spider back to its "lair" if there are no targets to chase/attack
+            //Move the skeleton back to its "lair" if there are no targets to chase/attack
             pathfinder.SetDestination(spawnLocation);
 
             //Retrieve the distance to the two playesr and their entity objects
@@ -257,13 +299,6 @@ public class SpiderBoss : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
-    private void RotateTowards(Transform target)
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * RotationSpeed);
-    }
-
     private void Death_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Death");
@@ -276,25 +311,24 @@ public class SpiderBoss : BaseEntity
         // Set the health bar's value to the current health.
         try
         {
-            healthCircle.enabled = true;
-            healthCircle.fillAmount -= amount / 100.0f;
-            Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
-            Invoke("HideHealth", 3);
+            //healthCircle.enabled = true;
+            //healthCircle.fillAmount -= amount / 100.0f;
+            //Invoke("HideHealth", 3);
         }
         catch { }
 
 
-        if (true) Debug.Log("Spider damaged");
+        if (true) Debug.Log("skeleton damaged");
 
         if (amount >= CurrentHealth)
         {
-            if (true) Debug.Log("Spider killed");
+            if (true) Debug.Log("skeleton killed");
             Killed();
         } else
         {
             try
             {
-                _animator.Play("hit1", PlayMode.StopSameLayer);
+                _animator.Play("Hit2", PlayMode.StopSameLayer);
             } catch { }
             
         }
@@ -308,7 +342,7 @@ public class SpiderBoss : BaseEntity
         try
         {
             pathfinder.Stop();
-            _animator.Play("death1", PlayMode.StopAll);
+            _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        

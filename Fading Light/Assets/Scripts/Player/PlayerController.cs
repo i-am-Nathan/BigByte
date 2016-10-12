@@ -30,6 +30,8 @@ public class PlayerController : Player
     private GameObject _torch;
     private CharacterController _controller;
 
+    //Potion effects 
+
     // UI
     private Slider _healthSlider;
     private LifeManager _lifeManagerScript;
@@ -84,6 +86,7 @@ public class PlayerController : Player
         {
             ControlWASD();
         }
+        UpdateEffects();
     }
 
     /// <summary>
@@ -138,7 +141,6 @@ public class PlayerController : Player
         }
 
     }
-
 
     /// <summary>
     /// When collision occurs between two objects
