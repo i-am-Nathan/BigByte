@@ -16,6 +16,15 @@ public class GameData : MonoBehaviour {
     private int _torchFuel;
     private Slider _torchFuelSlider;
 
+    private float _playerOneTotalDamageGiven;
+    private float _playerTwoTotalDamageGiven;
+
+    private float _playerOneTotalDamageTaken;
+    private float _playerTwoTotalDamageTaken;
+
+    private float _playerOneAccuracy;
+    private float _playerTwoAccuracy;
+
     // Inventory
     //private Item[] _p1Items;
     //private Item[] _p2Items;
