@@ -30,8 +30,6 @@ public class PlayerController : Player
     private GameObject _torch;
     private CharacterController _controller;
 
-    //Potion effects 
-
     // UI
     private Slider _healthSlider;
     private LifeManager _lifeManagerScript;
@@ -86,7 +84,6 @@ public class PlayerController : Player
         {
             ControlWASD();
         }
-        UpdateEffects();
     }
 
     /// <summary>
@@ -94,11 +91,10 @@ public class PlayerController : Player
     /// </summary>
     void ControlWASD()
     {
-        if (TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
+        if(TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
         {
             IsInCircle = true;
-        }
-        else
+        }else
         {
             IsInCircle = false;
         }
@@ -106,7 +102,7 @@ public class PlayerController : Player
 
         if (IsDisabled)
         {
-            _animator.SetBool("Idling", true);
+			_animator.SetBool("Idling", true);
             return;
         }
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
@@ -127,7 +123,7 @@ public class PlayerController : Player
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
         }
         else
         {
@@ -154,18 +150,23 @@ public class PlayerController : Player
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    void HealthPotActivated()
+    public bool isAttackPotActive()
     {
-        
+        return _attackPotActive;
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    void AttackPotActivated()
+    public void HealthPotActivated()
+    {
+
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void AttackPotActivated()
     {
         if (_attackPotActive)
         {
@@ -180,9 +181,9 @@ public class PlayerController : Player
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    void DefensePotActivated()
+    public void DefensePotActivated()
     {
         if (_defensePotActive)
         {
@@ -226,12 +227,14 @@ public class PlayerController : Player
     /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
+
         if (hit.gameObject.tag.Equals("Clockwise Door")) {
             Debug.Log("pushed");
             Debug.Log(transform.forward * 10);
             hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 10);
+
         }
-        
+
     }
 
     /// <summary>
@@ -242,11 +245,6 @@ public class PlayerController : Player
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Player damaged");
-
-        if (_defensePotActive)
-        {
-            amount = amount / 2;
-        }
 
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
@@ -260,8 +258,7 @@ public class PlayerController : Player
             _healthSlider.value -= amount;
             Debug.Log(healthCircle.fillAmount);
             Invoke("HideHealth", 3);
-        }
-        catch { }
+        } catch {}
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (CurrentHealth <= 0 && !isDead)
