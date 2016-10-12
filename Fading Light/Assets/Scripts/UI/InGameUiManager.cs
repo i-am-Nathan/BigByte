@@ -15,6 +15,7 @@ public class InGameUiManager : MonoBehaviour {
     public Button QuitToMenuButton;
     public Button ContinueButton;
 
+
 	/// <summary>
 	/// Used for initialisation 
 	/// </summary>

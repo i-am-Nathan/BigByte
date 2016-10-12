@@ -20,7 +20,7 @@ public class LifeManager : MonoBehaviour
 	/// </summary>
     void Start()
     {
-        // Getting the life track object which shows the total lives left
+        // Getting the game data object which shows the total lives left
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
         _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
