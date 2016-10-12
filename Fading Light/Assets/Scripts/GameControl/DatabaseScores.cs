@@ -11,7 +11,6 @@ public class DatabaseScores : MonoBehaviour
     private string AddScoreURL = "http://jackbarker.co/306/API/AddScores.php?"; //be sure to add a ? to your url
     private string HighscoreURL = "http://localhost/unity_test/display.php";
 
-
     /// <summary>
     /// Posts the scores to the webserver.
     /// </summary>
@@ -35,7 +34,16 @@ public class DatabaseScores : MonoBehaviour
         string stringHash = System.BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 
         //Update the url with the scores
-        string post_url = AddScoreURL + "name=" + name + "&gold=" + gold + "&p1damagegiven=" + Player1DamageGiven + "&p2damagegiven=" + Player2DamageGiven + "&p1damagetaken=" + Player1DamageTaken + "&p2damagetaken=" + Player2DamageTaken + "&p1accuracy=" + Player1Accuracy + "&p2accuracy=" + Player2Accuracy + "&hash=" + stringHash;
+        string post_url = AddScoreURL + 
+            "name=" + name + 
+            "&gold=" + gold + 
+            "&p1damagegiven=" + Player1DamageGiven + 
+            "&p2damagegiven=" + Player2DamageGiven + 
+            "&p1damagetaken=" + Player1DamageTaken +
+            "&p2damagetaken=" + Player2DamageTaken + 
+            "&p1accuracy=" + Player1Accuracy + 
+            "&p2accuracy=" + Player2Accuracy +
+            "&hash=" + stringHash;
 
         //Post scores to php page
         WWW post = new WWW(post_url);
