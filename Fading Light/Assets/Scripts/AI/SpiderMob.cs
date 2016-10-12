@@ -55,7 +55,7 @@ public class SpiderMob : BaseEntity
     private bool _inTorchLight;
     private bool _runningAway = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
@@ -179,7 +179,7 @@ public class SpiderMob : BaseEntity
             }
 
             //Check if the torch has moved over the spider. If so then transition to the run state
-            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z) && _lockedOn)
+            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
             {
                 if (DEBUG) Debug.Log("Spider inside torch");
                 //if (DEBUG) Debug.Log(this.gameObject.transform.position);
@@ -190,7 +190,7 @@ public class SpiderMob : BaseEntity
             }
 
             //If they have moved outside the loose activation range, then taunt and stop chasing
-            if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance && _lockedOn)
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) > LooseActivationDistance)
             {
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
@@ -200,7 +200,7 @@ public class SpiderMob : BaseEntity
             }
 
             //If the target comes into attack range, stop chasing and enter the attack state
-            if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange && _lockedOn)
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
             {
                 if (DEBUG) Debug.Log("Player in attack range");
                 _isMoving = false;
@@ -210,12 +210,12 @@ public class SpiderMob : BaseEntity
             }                      
             
             //Check if the player is inside the torch, if so move along outside of radius
-            if (TorchController.IsInTorchRange(target.transform.position.x, target.transform.position.z) && _lockedOn)
+            if (TorchController.IsInTorchRange(target.transform.position.x, target.transform.position.z))
             {
                 if (DEBUG) Debug.Log("Player In torch range");
                 _isMoving = false;
                 _lockedOn = false;
-                fsm.ChangeState(States.Idle);
+                fsm.ChangeState(States.Taunt);
                 break;
             }
 
