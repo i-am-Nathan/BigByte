@@ -34,7 +34,7 @@ public class PlayerController : Player
     private Slider _healthSlider;
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
-
+    
     public bool IsMainMenu = false;
     /// <summary>
     /// Starts this instance.
@@ -138,8 +138,7 @@ public class PlayerController : Player
         }
 
     }
-
-
+        
     /// <summary>
     /// When collision occurs between two objects
     /// </summary>
