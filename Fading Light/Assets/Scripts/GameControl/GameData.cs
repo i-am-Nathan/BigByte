@@ -8,10 +8,7 @@ public class GameData : MonoBehaviour {
     private int _numberOfLivesLeft;
 
     private float _totalTime;
-    private Text _totalTimeText;
-
     private int _sharedGold;
-    private Text _sharedGoldText;
 
     private int _torchFuel;
     private Slider _torchFuelSlider;
@@ -24,6 +21,8 @@ public class GameData : MonoBehaviour {
 
     private float _playerOneAccuracy;
     private float _playerTwoAccuracy;
+
+	private InGameUiManager _inGameUiManager;
 
     // Inventory
     //private Item[] _p1Items;
@@ -40,7 +39,7 @@ public class GameData : MonoBehaviour {
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Game Data");     
 
         // Checking if this game data object already exists
-        if (objects.Length == 0)
+		if (!(objects.Length > 0))
         {
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
@@ -51,22 +50,20 @@ public class GameData : MonoBehaviour {
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }
-
-    void Start()
-    {
-        // Finding the total time
-        _totalTimeText = GameObject.FindWithTag("Total Time").GetComponent<Text>();
-        _sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
-        Debug.LogError("gold " + _sharedGold);
-        _sharedGoldText.text = "" + _sharedGold;
-    }
+		
+	void Start() {
+		// Getting the game data object which shows the total lives left
+		GameObject go = GameObject.Find("InGameUiManager");
+		_inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));	
+	}
 
     /// <summary>
     /// Called every frame to set the total time
     /// </summary>
     void Update()
     {
-        SetTime();
+		// Getting current time since users started playing 
+		_totalTime += Time.deltaTime;
     }
 
     /// <summary>
@@ -93,6 +90,14 @@ public class GameData : MonoBehaviour {
         return _sharedGold;
     }
 
+	/// <summary>
+	/// Used to get the total time
+	/// </summary>
+	public float GetTotalTime()
+	{
+		return _totalTime;
+	}
+
     /// <summary>
     /// Used to set the amount of shared gold
     /// </summary>
@@ -102,57 +107,14 @@ public class GameData : MonoBehaviour {
     }
 
 
-    /// <summary>
-    /// Used to set the total time taken for the players
-    /// </summary>
-    private void SetTime()
-    {
-        // Getting current time since users started playing 
-        _totalTime += Time.deltaTime;
-
-        float minutes = Mathf.Floor(_totalTime / 60);
-        float seconds = Mathf.RoundToInt(_totalTime % 60);
-        string min = "";
-        string sec = "";
-
-        // Formatting the time
-        if (minutes < 10)
-        {
-            min = "0" + minutes;
-        }
-        else
-        {
-            min = "" + minutes;
-        }
-
-        if (seconds < 10)
-        {
-            sec = "0" + seconds;
-        }
-        else
-        {
-            sec = "" + seconds;
-        }
-
-        // Setting the UI component
-        _totalTimeText.text = "Time:  " + min + ":" + sec;
-        
-    }
-
-    /// <summary>
+     /// <summary>
     /// Updates the gold.
     /// </summary>
     /// <param name="amount">The amount.</param>
     public void UpdateGold(int amount)
     {
         _sharedGold += amount;
-        try
-        {
-            _sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
-            _sharedGoldText.text = "" + _sharedGold;
-        }
-        catch { }
-
+		_inGameUiManager.UpdateGold (_sharedGold);
     }
 
 }
