@@ -33,11 +33,11 @@ public class SubInventoryManager : MonoBehaviour {
 	private Dictionary<int,string> _itemIndexNameDictionary = new Dictionary<int,string>();
 
 	void Start() {
-		GameObject go = GameObject.FindGameObjectWithTag("Player");
-		_player1ControllerScript = (PlayerController)go.GetComponent(typeof(PlayerController));
+		GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+		_player1ControllerScript = (PlayerController)player1.GetComponent(typeof(PlayerController));
 
-		GameObject go1 = GameObject.FindGameObjectWithTag("Player2");
-		_player2ControllerScript = (Player2Controller)go1.GetComponent(typeof(Player2Controller));
+		GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+		_player2ControllerScript = (Player2Controller)player2.GetComponent(typeof(Player2Controller));
 
 		_player1ItemName = GameObject.Find ("Player1ItemName").GetComponent<Text> ();
 		_player2ItemName = GameObject.Find ("Player2ItemName").GetComponent<Text> ();
@@ -81,10 +81,11 @@ public class SubInventoryManager : MonoBehaviour {
 			CycleItems (false);
 		}
 
-		if (Input.GetKeyDown(KeyCode.K))
+		if (Input.GetKeyDown(KeyCode.Q))
 		{
 			UseItem (true);
-		}
+
+        }
 
 		if (Input.GetKeyDown(KeyCode.L))
 		{
@@ -119,6 +120,7 @@ public class SubInventoryManager : MonoBehaviour {
 				SetItemOnScreen (_player1ItemName.text, true);
 			}
 			//HealthPotActivated
+            //if (_player1ItemName.text = "Health Pot")
 			//_player1ControllerScript.HealthPotActivated();
 			//AttackPotActivated
 			//_player1ControllerScript.AttackPotActivated();

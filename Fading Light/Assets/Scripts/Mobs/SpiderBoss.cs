@@ -205,6 +205,8 @@ public class SpiderBoss : BaseEntity
 
             //Set the speed of the pathfinder (either running or sprinting) and the target positions
             pathfinder.speed = _isSprinting ? SprintSpeed : RunSpeed;
+            pathfinder.acceleration = 13f;
+            pathfinder.angularSpeed = 900f;
             pathfinder.SetDestination(target.position);
             Debug.Log(pathfinder.speed);
 
