@@ -15,7 +15,7 @@ public class ShopKeeper : MonoBehaviour {
 	public Player2Controller Player2;
 	public GameObject ItemStand;
 	private bool _hasPlayed;
-    Animator _animator;
+    private Animator _animator;
 
     void Awake(){
 		ShopKeeperCamera.enabled = false;
@@ -26,7 +26,6 @@ public class ShopKeeper : MonoBehaviour {
 	void Start(){
 		_hasPlayed = false;
 		ItemStand.SetActive (false);
-        _animator.SetFloat("speed", -1f);
     }
 	void OnTriggerEnter(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
@@ -55,9 +54,28 @@ public class ShopKeeper : MonoBehaviour {
 	void Update(){
 		if (!_transition.isPlaying && _hasPlayed) {
 			ItemStand.SetActive (true);
+			StartCoroutine(DelayAnimation());
+
 		} 
 
 	}
+
+	private IEnumerator DelayAnimation()
+	{
+		int rand = Random.Range (1, 3);
+		if (rand == 1) {
+			_animator.SetTrigger("Scratch");
+			yield return new WaitForSeconds(4f);
+			_animator.ResetTrigger ("Scratch");
+		} else {
+			_animator.SetTrigger("Taunt");
+			yield return new WaitForSeconds(4f);
+			_animator.ResetTrigger ("Taunt");
+		}
+
+	
+	}
+
 	/// <summary>
 	/// When players press T when they are collding with the chest, it will open it.
 	/// </summary>

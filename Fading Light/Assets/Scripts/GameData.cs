@@ -28,14 +28,10 @@ public class GameData : MonoBehaviour {
     void Awake()
     {
         // Finding existing instances of this game object
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Game Data");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Game Data");     
 
-        // Finding the total time
-        _totalTimeText = GameObject.FindWithTag("Total Time").GetComponent<Text>();
-        _sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
-
-        // Checking if this life track objects already exists
-        if (!(objects.Length > 0))
+        // Checking if this game data object already exists
+        if (objects.Length == 0)
         {
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
@@ -45,6 +41,15 @@ public class GameData : MonoBehaviour {
             _sharedGold = 0;
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
+    }
+
+    void Start()
+    {
+        // Finding the total time
+        _totalTimeText = GameObject.FindWithTag("Total Time").GetComponent<Text>();
+        _sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
+        Debug.LogError("gold " + _sharedGold);
+        _sharedGoldText.text = "" + _sharedGold;
     }
 
     /// <summary>
@@ -122,7 +127,7 @@ public class GameData : MonoBehaviour {
 
         // Setting the UI component
         _totalTimeText.text = "Time:  " + min + ":" + sec;
-
+        
     }
 
     /// <summary>
@@ -134,6 +139,7 @@ public class GameData : MonoBehaviour {
         _sharedGold += amount;
         try
         {
+            _sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
             _sharedGoldText.text = "" + _sharedGold;
         }
         catch { }
