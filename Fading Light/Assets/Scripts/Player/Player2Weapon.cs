@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerWeapon : MonoBehaviour {
+public class Player2Weapon : MonoBehaviour {
 
     public float WeaponDamage = 30f;
     private bool DEBUG = false;
@@ -19,18 +19,14 @@ public class PlayerWeapon : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {        
         Player weaponHolder = this.transform.root.GetComponent<Player>();
-        Player player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<Player>();
-        Player player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player>();
-
-        if (DEBUG) Debug.Log("Weapon collision. Player1 is attacking: " + player1.isAttacking());
-        if (DEBUG) Debug.Log("Weapon collision. Player2 is attacking: " + player2.isAttacking());        
+        Player2Controller player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player2Controller>();        
         if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
 
-        if ((weaponHolder.isAttacking() || player2.isAttacking()) && other.tag == "Enemy")
+        if (player2.isAttacking() && other.tag == "Enemy")
         {
             if (DEBUG) Debug.Log("Weapon collision: Enemy");
+            if (player2.isAttackPotActive()) WeaponDamage = WeaponDamage * 2;
             other.transform.GetComponent<BaseEntity>().Damage(WeaponDamage, this.transform.root);
-            player1.setAttacking(false);
             player2.setAttacking(false);
         }
     }
