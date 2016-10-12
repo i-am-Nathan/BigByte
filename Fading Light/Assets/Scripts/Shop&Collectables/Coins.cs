@@ -33,7 +33,7 @@ public class Coins : MonoBehaviour
     /// <param name="other">Other.</param>
     void OnTriggerEnter(Collider other)
     {
-        if (_notPickedUp)
+		if (_notPickedUp && (other.tag == "Player" || other.tag == "Player2"))
         {
             _notPickedUp = false;
             _source.PlayOneShot(PickUpSound);
