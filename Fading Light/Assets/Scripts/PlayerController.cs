@@ -165,16 +165,7 @@ public class PlayerController : Player
     /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag.Equals("Clockwise Door"))
-        {
-
-            Debug.Log(hit.gameObject.transform.parent);
-            hit.gameObject.transform.parent.gameObject.GetComponent<RotatingDoor>().rotateClockwise();
-
-        } else if (hit.gameObject.tag.Equals("Anticlockwise Door"))
-        {
-            
-        }
+        
     }
 
     /// <summary>
