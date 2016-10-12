@@ -62,6 +62,21 @@ public class Player2Controller : Player
     /// </summary>
     void Update()
 	{
+        if (IsDisabled || isDead)
+        {
+            _animator.SetBool("Idling", true);
+            if (isDead && _animator)
+            {
+                IsDisabled = true;
+                _animator.Play("2HDeathB");//tell mecanim to do the attack animation(trigger)
+            }
+
+            return;
+        }
+        else
+        {
+            ControlWASD();
+        }
    
 	}
 
