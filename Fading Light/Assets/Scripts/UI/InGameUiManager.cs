@@ -45,6 +45,7 @@ public class InGameUiManager : MonoBehaviour {
 		_totalTimeText = GameObject.FindWithTag("Total Time").GetComponent<Text>();
 		_sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
 		_sharedGoldText.text = "" + _sharedGold;
+		SetTime ();
     }
 
 	/// <summary>

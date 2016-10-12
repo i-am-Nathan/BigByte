@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameData : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class GameData : MonoBehaviour {
     private float _playerTwoAccuracy;
 
 	private InGameUiManager _inGameUiManager;
+	private bool _firstLevel = true;
 
     // Inventory
     //private Item[] _p1Items;
@@ -95,6 +97,10 @@ public class GameData : MonoBehaviour {
 	/// </summary>
 	public float GetTotalTime()
 	{
+		if (_firstLevel) {
+			_totalTime = 0f;
+			_firstLevel = false;
+		}
 		return _totalTime;
 	}
 
