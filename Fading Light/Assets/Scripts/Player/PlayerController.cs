@@ -19,7 +19,7 @@ public class PlayerController : Player
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     //public bool dead = false;
     public bool IsInCircle = false;
-   
+
     public int PushPower = 20;
     public bool IsDisabled;
     private bool _lastPressed = false;
@@ -58,9 +58,9 @@ public class PlayerController : Player
             GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
             _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
         }
-        
+
     }
-    
+
     public void MockUp()
     {
         base.Start();
@@ -94,10 +94,11 @@ public class PlayerController : Player
     /// </summary>
     void ControlWASD()
     {
-        if(TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
+        if (TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
         {
             IsInCircle = true;
-        }else
+        }
+        else
         {
             IsInCircle = false;
         }
@@ -105,7 +106,7 @@ public class PlayerController : Player
 
         if (IsDisabled)
         {
-			_animator.SetBool("Idling", true);
+            _animator.SetBool("Idling", true);
             return;
         }
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
@@ -126,7 +127,7 @@ public class PlayerController : Player
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
+            AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
         }
         else
         {
@@ -142,13 +143,66 @@ public class PlayerController : Player
 
     }
 
+    private bool _attackPotActive = false;
+    private bool _defensePotActive = false;
+
+    /// <summary>
+    /// Update the timers on certain effects the character is under
+    /// </summary>
+    void UpdateEffects()
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void HealthPotActivated()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void AttackPotActivated()
+    {
+        if (_attackPotActive)
+        {
+            //Reset the timer if attack potion already active
+
+        }
+        else
+        {
+            //Otherwise set the boolean and begin the timer
+            _attackPotActive = true;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void DefensePotActivated()
+    {
+        if (_defensePotActive)
+        {
+            //Reset the timer if attack potion already active
+
+        }
+        else
+        {
+            //Otherwise set the boolean and begin the timer
+            _defensePotActive = true;
+        }
+    }
+
     /// <summary>
     /// When collision occurs between two objects
     /// </summary>
     /// <param name="other">The other.</param>
     void OnTriggerStay(Collider other)
     {
-       
+
         // Checking if players are next to each other
         if (other.gameObject.tag.Equals("Player2") && !IsDisabled)
         {
@@ -178,9 +232,10 @@ public class PlayerController : Player
             Debug.Log(hit.gameObject.transform.parent);
             hit.gameObject.transform.parent.gameObject.GetComponent<RotatingDoor>().rotateClockwise();
 
-        } else if (hit.gameObject.tag.Equals("Anticlockwise Door"))
+        }
+        else if (hit.gameObject.tag.Equals("Anticlockwise Door"))
         {
-            
+
         }
     }
 
@@ -192,7 +247,12 @@ public class PlayerController : Player
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Player damaged");
-        
+
+        if (_defensePotActive)
+        {
+            amount = amount / 2;
+        }
+
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
@@ -205,7 +265,8 @@ public class PlayerController : Player
             _healthSlider.value -= amount;
             Debug.Log(healthCircle.fillAmount);
             Invoke("HideHealth", 3);
-        } catch {}      
+        }
+        catch { }
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (CurrentHealth <= 0 && !isDead)
@@ -232,5 +293,5 @@ public class PlayerController : Player
     public void HideHealth()
     {
         healthCircle.enabled = false;
-    }    
+    }
 }

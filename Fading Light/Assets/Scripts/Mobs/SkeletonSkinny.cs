@@ -59,7 +59,7 @@ public class SkeletonSkinny : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
 
