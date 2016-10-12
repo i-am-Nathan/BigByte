@@ -57,7 +57,17 @@ public class NavigateShop : MonoBehaviour {
 				_currentGold.text = _gameData.GetAmountOfGold() + "";
 				_quantity.text= ItemQuantity [Index] +"";
 				_source.PlayOneShot (BuySound);
-				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name);
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name, true);
+			}
+		} else if (Input.GetKeyDown (KeyCode.J)) {
+			// Player 2
+			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
+				ItemQuantity [Index]--;
+				_gameData.UpdateGold (0 - Price [Index]);
+				_currentGold.text = _gameData.GetAmountOfGold() + "";
+				_quantity.text= ItemQuantity [Index] +"";
+				_source.PlayOneShot (BuySound);
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name, false);
 			}
 		}
 
