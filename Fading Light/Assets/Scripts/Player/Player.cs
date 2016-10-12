@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 /// <summary>
 /// Superclass for players
@@ -9,6 +10,18 @@ using System.Text;
 public class Player: BaseEntity
 {
     private bool _isAttacking;
+
+    private bool DEBUG = true;
+
+
+    public AudioClip DrinkPotion;
+    private AudioSource _source;
+    
+    protected override void Start()
+    {
+        base.Start();
+        _source = GetComponent<AudioSource>();
+    }
 
     /// <summary>
     /// Determines whether this instance is attacking.
@@ -28,5 +41,98 @@ public class Player: BaseEntity
     public void setAttacking(bool a)
     {
         _isAttacking = a;
+    }
+
+    private bool _attackPotActive = false;
+    private bool _defensePotActive = false;
+
+    private float _attackPotTimeLeft;
+    private float _defensePotTimeLeft;
+    private float _attackPotDuration = 30f;
+    private float _defensePotDuration = 30f;
+    
+    /// <summary>
+    /// Update the timers on certain effects the character is under
+    /// </summary>
+    void UpdateEffects()
+    {
+        if (_attackPotActive)
+        {
+            _attackPotTimeLeft -= Time.deltaTime;
+            //text.text = "Time Left:" + Mathf.Round(timeLeft);
+            if (_attackPotTimeLeft < 0)
+            {
+                _attackPotActive = false;
+            }
+        }
+        if (_defensePotActive)
+        {
+            _defensePotTimeLeft -= Time.deltaTime;
+            //text.text = "Time Left:" + Mathf.Round(timeLeft);
+            if (_defensePotTimeLeft < 0)
+            {
+                _defensePotActive = false;
+            }
+        }
+    }
+
+    public bool isAttackPotActive()
+    {
+        return _attackPotActive;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void HealthPotActivated()
+    {
+        if (DEBUG) Debug.Log("Health pot activated");
+        _source.PlayOneShot(DrinkPotion);
+        if ((CurrentHealth + 30) > IntialHealth)
+        {
+            CurrentHealth = IntialHealth;
+        }
+        else
+        {
+            this.CurrentHealth = CurrentHealth + 30;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void AttackPotActivated()
+    {
+        if (DEBUG) Debug.Log("Attack pot activated");
+        _source.PlayOneShot(DrinkPotion);
+        if (_attackPotActive)
+        {
+            //Reset the timer if attack potion already active
+            _attackPotTimeLeft = _attackPotDuration;
+        }
+        else
+        {
+            //Otherwise set the boolean and begin the timer
+            _attackPotActive = true;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void DefensePotActivated()
+    {
+        if (DEBUG) Debug.Log("Defense pot activated");
+        _source.PlayOneShot(DrinkPotion);
+        if (_defensePotActive)
+        {
+            //Reset the timer if attack potion already active
+            _defensePotTimeLeft = _defensePotDuration;
+        }
+        else
+        {
+            //Otherwise set the boolean and begin the timer
+            _defensePotActive = true;
+        }
     }
 }
