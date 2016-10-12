@@ -229,6 +229,17 @@ public class SpiderMob : BaseEntity
         }
     }
 
+
+    void isMobInLight()
+    {
+
+    }
+
+    void isPlayerInLight()
+    {
+
+    }
+
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
     /// spiders alert area, or comes into attack range.

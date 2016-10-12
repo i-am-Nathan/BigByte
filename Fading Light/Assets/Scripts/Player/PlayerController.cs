@@ -142,6 +142,11 @@ public class PlayerController : Player
     private bool _attackPotActive = false;
     private bool _defensePotActive = false;
 
+    private float _attackPotTimeLeft;
+    private float _defensePotTimeLeft;
+    private float _attackPotDuration = 30f;
+    private float _defensePotDuration = 30f;
+
     /// <summary>
     /// Update the timers on certain effects the character is under
     /// </summary>
@@ -160,7 +165,13 @@ public class PlayerController : Player
     /// </summary>
     public void HealthPotActivated()
     {
-
+        if ((CurrentHealth + 30) > IntialHealth)
+        {
+            CurrentHealth = IntialHealth;
+        } else
+        {
+            this.CurrentHealth = CurrentHealth + 30;
+        }        
     }
 
     /// <summary>
@@ -171,7 +182,7 @@ public class PlayerController : Player
         if (_attackPotActive)
         {
             //Reset the timer if attack potion already active
-
+            _attackPotTimeLeft = _attackPotDuration;
         }
         else
         {
@@ -188,7 +199,7 @@ public class PlayerController : Player
         if (_defensePotActive)
         {
             //Reset the timer if attack potion already active
-
+            _defensePotTimeLeft = _defensePotDuration;
         }
         else
         {
