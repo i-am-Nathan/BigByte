@@ -103,8 +103,11 @@ public class CandleLight : MonoBehaviour {
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
-                    _triggered = false;
                 }
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                _triggered = false;
             }
             //torch in player 2 and player is player 1
         }
@@ -118,8 +121,11 @@ public class CandleLight : MonoBehaviour {
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
-                    _triggered = false;
                 }
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                _triggered = false;
             }
         }
     }
