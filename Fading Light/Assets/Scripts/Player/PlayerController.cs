@@ -176,7 +176,7 @@ public class PlayerController : Player
         if (hit.gameObject.tag.Equals("Clockwise Door")) {
             Debug.Log("pushed");
             Debug.Log(transform.forward * 10);
-            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 10);
+            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 10000000);
 
         }
 

@@ -3132,7 +3132,6 @@ GameObject:
   - 65: {fileID: 632138274}
   - 23: {fileID: 632138273}
   - 54: {fileID: 632138276}
-  - 59: {fileID: 632138277}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Clockwise Door
@@ -3205,46 +3204,14 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 632138271}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.5
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
---- !u!59 &632138277
-HingeJoint:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 632138271}
-  m_ConnectedBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 1, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 361.4, y: 19.6, z: -182.1}
-  m_UseSpring: 0
-  m_Spring:
-    spring: 0
-    damper: 0
-    targetPosition: 0
-  m_UseMotor: 0
-  m_Motor:
-    targetVelocity: 0
-    force: 0
-    freeSpin: 0
-  m_UseLimits: 0
-  m_Limits:
-    min: 0
-    max: 0
-    bounciness: 0
-    bounceMinVelocity: 0.2
-    contactDistance: 0
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
 --- !u!1 &638160161
 GameObject:
   m_ObjectHideFlags: 0
@@ -8283,7 +8250,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1429815564}
-  - 114: {fileID: 1429815566}
   m_Layer: 0
   m_Name: rotating door
   m_TagString: Untagged
@@ -8306,17 +8272,6 @@ Transform:
   - {fileID: 1153890740}
   m_Father: {fileID: 0}
   m_RootOrder: 40
---- !u!114 &1429815566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1429815563}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14c91abb6f7d0854584db70dff48b2ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1453081861
 GameObject:
   m_ObjectHideFlags: 0
