@@ -4,12 +4,12 @@ using MonsterLove.StateMachine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls the AI (using FSM) of the large spider bosses (e.i. the one found in the tutorial level)
+/// Controls the AI (using FSM) of the large crawler bosses (e.i. the one found in the tutorial level)
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class Crawler : BaseEntity
 {
-	//Spider states
+	//crawler states
 	public enum States
 	{
 		Init,
@@ -20,7 +20,7 @@ public class Crawler : BaseEntity
         Death
 	}
 
-    //Spider stats
+    //crawler stats
     public float HardActivationDistance = 50;
     public float LooseActivationDistance = 120;
     public float AttackSpeed = 1;
@@ -65,7 +65,7 @@ public class Crawler : BaseEntity
     /// </summary>
     private void Awake()
 	{
-        if (DEBUG) Debug.Log("The spider wakes.");
+        if (DEBUG) Debug.Log("The crawler wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
 
@@ -95,7 +95,7 @@ public class Crawler : BaseEntity
     /// </summary>
     private void Init_Enter()
     {
-        if (DEBUG) Debug.Log("Spider state machine initilized.");
+        if (DEBUG) Debug.Log("crawler state machine initilized.");
         fsm.ChangeState(States.Idle);
     }
 
@@ -117,7 +117,7 @@ public class Crawler : BaseEntity
         if (DEBUG) Debug.Log("Entered state: Attack");
         pathfinder.enabled = false;
 
-        _animator.Play("attack2", PlayMode.StopAll);
+        _animator.Play("attack", PlayMode.StopAll);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
         
 
@@ -139,7 +139,7 @@ public class Crawler : BaseEntity
 
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// spiders alert area, or comes into attack range.
+    /// crawlers alert area, or comes into attack range.
     /// </summary>
     /// <returns></returns>
     IEnumerator Chase_Enter()
@@ -159,11 +159,11 @@ public class Crawler : BaseEntity
             if (!_isMoving)
             {
                 _animator["run"].speed = _isSprinting ? 1.5f : 1.0f;
-                _animator.Play("run", PlayMode.StopAll);
+                _animator.Play("crawl", PlayMode.StopAll);
                 _isMoving = true;
             }
 
-            //If player 2 is closer to the spider, and is not dead, then chase them Otherwise, player 1 is closer.              
+            //If player 2 is closer to the crawler, and is not dead, then chase them Otherwise, player 1 is closer.              
             if (Vector3.Distance(player1.position, this.gameObject.transform.position) >= Vector3.Distance(player2.position, this.gameObject.transform.position) && !player2.GetComponent<BaseEntity>().isDead)
             {
                 if (DEBUG) Debug.Log("Targetting player 2");
@@ -207,7 +207,7 @@ public class Crawler : BaseEntity
             //Every so often sprint at the player
             if (_walkCount > 12)
             {
-                if (true) Debug.Log("Spider has started sprinting!");
+                if (true) Debug.Log("crawler has started sprinting!");
                 _isSprinting = true;
                 _isMoving = false;
                 _walkCount = -5;
@@ -233,7 +233,7 @@ public class Crawler : BaseEntity
         {
             if (DEBUG) Debug.Log("Waiting for players.");
 
-            //Move the spider back to its "lair" if there are no targets to chase/attack
+            //Move the crawler back to its "lair" if there are no targets to chase/attack
             pathfinder.SetDestination(spawnLocation);
 
             //Retrieve the distance to the two playesr and their entity objects
@@ -273,11 +273,11 @@ public class Crawler : BaseEntity
         catch { }
 
 
-        if (true) Debug.Log("Spider damaged");
+        if (true) Debug.Log("crawler damaged");
 
         if (amount >= CurrentHealth)
         {
-            if (true) Debug.Log("Spider killed");
+            if (true) Debug.Log("crawler killed");
             Killed();
         } else
         {
