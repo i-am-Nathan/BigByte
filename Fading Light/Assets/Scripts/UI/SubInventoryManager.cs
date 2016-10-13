@@ -122,6 +122,7 @@ public class SubInventoryManager : MonoBehaviour {
 				_player1ItemQuantityDictionary[_player1ItemName.text] -= 1;
 				SetItemOnScreen (_player1ItemName.text, true);
 			}
+		} else {
 			//HealthPotActivated
             if (_player1ItemName.text == "Health Pot")
             {
@@ -141,7 +142,7 @@ public class SubInventoryManager : MonoBehaviour {
 			if (_player2ItemQuantityDictionary [_player2ItemName.text] != 0) {
 				_player2ItemQuantityDictionary[_player2ItemName.text] -= 1;
 				SetItemOnScreen (_player2ItemName.text, false);
-			}
+		}
             //HealthPotActivated
             if (_player2ItemName.text == "Health Pot")
             {

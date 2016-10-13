@@ -77,8 +77,7 @@ public class Player2Controller : Player
         {
             ControlWASD();
         }
-   
-	}
+    }
 
     /// <summary>
     /// Controls the character using the keys
