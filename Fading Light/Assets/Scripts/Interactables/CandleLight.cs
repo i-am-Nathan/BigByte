@@ -11,7 +11,9 @@ public class CandleLight : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        _flame.GetComponent<ParticleSystem>().Stop();
+		if (!_active) {
+			_flame.GetComponent<ParticleSystem> ().Stop ();
+		}
         _spotlight.GetComponent<Light>().spotAngle = 0;
     }
 	

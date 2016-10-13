@@ -70,6 +70,7 @@ public class SpiderMob : BaseEntity
         pathfinder = GetComponent<NavMeshAgent>();
         _collisionRange = GetComponent<CapsuleCollider>().radius;
         _animator = GetComponentInChildren<Animation>();
+        TorchController = GameObject.FindGameObjectWithTag("TorchFuelController").transform.GetComponent<TorchFuelController>();
 
         //Create the FSM controller
         fsm = StateMachine<States>.Initialize(this);

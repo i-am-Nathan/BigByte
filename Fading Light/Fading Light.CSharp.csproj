@@ -67,6 +67,12 @@
     <Reference Include="Mono.Cecil.Mdb">
       <HintPath>Assets\UnityTestTools\IntegrationTestsFramework\Libs\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
+    <Reference Include="GUIAnimatorFREE">
+      <HintPath>Assets\GUI Animator\GUI Animator FREE\Plugins\GUIAnimatorFREE.dll</HintPath>
+    </Reference>
+    <Reference Include="GETween">
+      <HintPath>Assets\GUI Animator\Common\Plugins\GETween.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\CamTarget.cs" />
@@ -77,14 +83,14 @@
     <Compile Include="Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\SkinnedMeshCombiner.cs" />
     <Compile Include="Assets\DownloadedContent\Elementals\Demo\Scripts\GE_Elementals_Demo.cs" />
     <Compile Include="Assets\DownloadedContent\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
+    <Compile Include="Assets\DownloadedContent\GE Common Assets\GE Orbit Camera\Scripts\GE_OrbitCamera.cs" />
+    <Compile Include="Assets\DownloadedContent\GE Common Assets\GE Orbit Camera\Scripts\GE_OrbitCameraUI.cs" />
+    <Compile Include="Assets\DownloadedContent\GE Common Assets\GE Toggle Full Screen\Scripts\GE_ToggleFullScreenUI.cs" />
+    <Compile Include="Assets\DownloadedContent\GE Common Assets\Scripts\GE_UIResponder.cs" />
     <Compile Include="Assets\DownloadedContent\Minotaur\Script\RotateObject.cs" />
     <Compile Include="Assets\DownloadedContent\torch\scene\script\TorchSlider.cs" />
     <Compile Include="Assets\DownloadedContent\torch\scene\script\Torchslider2.cs" />
     <Compile Include="Assets\DownloadedContent\torch\scripts\Torchelight.cs" />
-    <Compile Include="Assets\GE Common Assets\GE Orbit Camera\Scripts\GE_OrbitCamera.cs" />
-    <Compile Include="Assets\GE Common Assets\GE Orbit Camera\Scripts\GE_OrbitCameraUI.cs" />
-    <Compile Include="Assets\GE Common Assets\GE Toggle Full Screen\Scripts\GE_ToggleFullScreenUI.cs" />
-    <Compile Include="Assets\GE Common Assets\Scripts\GE_UIResponder.cs" />
     <Compile Include="Assets\GUI Animator\GUI Animator FREE\Demo (CSharp)\Scripts\GA_FREE_Demo00.cs" />
     <Compile Include="Assets\GUI Animator\GUI Animator FREE\Demo (CSharp)\Scripts\GA_FREE_Demo01.cs" />
     <Compile Include="Assets\GUI Animator\GUI Animator FREE\Demo (CSharp)\Scripts\GA_FREE_Demo02.cs" />
@@ -119,6 +125,7 @@
     <Compile Include="Assets\Scripts\MainMenu\Achievements\AchievementSetUp.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuFadingLightScript.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuScript.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\PopulateHighScores.cs" />
     <Compile Include="Assets\Scripts\Mob Spawners\MobSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\Mob Spawners\SpiderSpawnArea.cs" />
     <Compile Include="Assets\Scripts\Mobs\BaseEntity.cs" />
@@ -200,6 +207,7 @@
   <ItemGroup>
     <None Include="Assets\DownloadedContent\Elementals\Readme.txt" />
     <None Include="Assets\DownloadedContent\Free_Rocks\Standard Assets\Skyboxes\_skybox info.txt" />
+    <None Include="Assets\DownloadedContent\GE Common Assets\Readme.txt" />
     <None Include="Assets\DownloadedContent\Monster\shaders\bumpSpecmap.shader" />
     <None Include="Assets\DownloadedContent\Monster\shaders\caveShader.shader" />
     <None Include="Assets\DownloadedContent\Monster\shaders\metalA.shader" />
@@ -210,7 +218,6 @@
     <None Include="Assets\DownloadedContent\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
     <None Include="Assets\DownloadedContent\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
     <None Include="Assets\DownloadedContent\torch\readme.txt" />
-    <None Include="Assets\GE Common Assets\Readme.txt" />
     <None Include="Assets\GUI Animator\GUI Animator FREE\!How to.txt" />
     <None Include="Assets\GUI Animator\GUI Animator FREE\Readme.txt" />
     <None Include="Assets\Text\Lvl2_TreasurePost.txt" />
