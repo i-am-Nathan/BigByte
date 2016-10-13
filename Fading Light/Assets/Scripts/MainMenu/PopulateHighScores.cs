@@ -12,9 +12,9 @@ public class PopulateHighScores : MonoBehaviour
     void Start()
     {
 
-        GameObject newAchievement = Instantiate(HighScore) as GameObject;
-        newAchievement.transform.parent = Grid.transform;
-        newAchievement.transform.localScale = Vector3.one;
+//        GameObject newAchievement = Instantiate(HighScore) as GameObject;
+//        newAchievement.transform.parent = Grid.transform;
+//        newAchievement.transform.localScale = Vector3.one;
     }
 
 }

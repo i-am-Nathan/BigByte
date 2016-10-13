@@ -56,44 +56,55 @@ public class SubInventoryManager : MonoBehaviour {
 		_itemImageDictionary.Add ("Attack Pot", DefenseImage);
 		_itemImageDictionary.Add ("Defense Pot", BerserkImage);
 
-		_player1ItemQuantityDictionary.Add ("Health Pot", 0);
-		_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
-		_player1ItemQuantityDictionary.Add ("Defense Pot", 0);
-		_player2ItemQuantityDictionary.Add ("Health Pot", 0);
-		_player2ItemQuantityDictionary.Add ("Attack Pot", 0);
-		_player2ItemQuantityDictionary.Add ("Defense Pot", 0);
+		_player1ItemQuantityDictionary.Add ("Health Pot", 10);
+		_player1ItemQuantityDictionary.Add ("Attack Pot", 10);
+		_player1ItemQuantityDictionary.Add ("Defense Pot", 10);
+		_player2ItemQuantityDictionary.Add ("Health Pot", 10);
+		_player2ItemQuantityDictionary.Add ("Attack Pot", 10);
+		_player2ItemQuantityDictionary.Add ("Defense Pot", 10);
 
 		SetItemOnScreen ("Health Pot", true);
 		SetItemOnScreen ("Health Pot", false);
+
+//		GameObject.Find ("Player1AttackParticles").SetActive(false);
+//		GameObject.Find ("Player2AttackParticles").SetActive(false);
+//		GameObject.Find ("Player1DefenseParticles").SetActive(false);
+//		GameObject.Find ("Player2DefenseParticles").SetActive(false);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		// Player 1 cycling through
-		if (Input.GetKeyDown(KeyCode.O))
-		{
+		if (Input.GetKeyDown (KeyCode.O)) {
 			CycleItems (true);
 		}
 
 		// Player 2 cycling through
-		if (Input.GetKeyDown(KeyCode.P))
-		{
+		if (Input.GetKeyDown (KeyCode.P)) {
 			CycleItems (false);
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q))
-		{
-            Debug.Log("CONSUME THAT POTION MOTHERFUCKING PLAYER 1");
+		if (Input.GetKeyDown (KeyCode.L)) {
 			UseItem (true);
 
-        }
-
-		if (Input.GetKeyDown(KeyCode.L))
-		{
-            Debug.Log("CONSUME THAT POTION MOTHERFUCKING PLAYER 2");
-
-            UseItem (false);
 		}
+
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			UseItem (false);
+		}
+
+//		if (!_player2ControllerScript.isAttackPotActive ()) {
+//			GameObject.Find ("Player2AttackParticles").SetActive(false);
+//		}
+//		if (!_player1ControllerScript.isAttackPotActive ()) {
+//			GameObject.Find ("Player1AttackParticles").SetActive(false);
+//		}
+//		if (!_player2ControllerScript.isDefensePotActive ()) {
+//			GameObject.Find ("Player2DefenseParticles").SetActive(false);
+//		}
+//		if (!_player1ControllerScript.isDefensePotActive ()) {
+//			GameObject.Find ("Player1DefenseParticles").SetActive(false);
+//		}
 	}
 		
 	void CycleItems (bool cyclePlayer1) {
@@ -131,11 +142,13 @@ public class SubInventoryManager : MonoBehaviour {
         	    if (_player1ItemName.text == "Attack Pot")
         	    {
         	        _player1ControllerScript.AttackPotActivated();
+//					GameObject.Find ("Player1AttackParticles").SetActive(true);
         	    }
         	    //DefensePotActivated
         	    if (_player1ItemName.text == "Defense Pot")
         	    {
         	        _player1ControllerScript.DefensePotActivated();
+//					GameObject.Find ("Player1DefenseParticles").SetActive(true);
         		}
 			}
         } else {
@@ -152,11 +165,14 @@ public class SubInventoryManager : MonoBehaviour {
 	            if (_player2ItemName.text == "Attack Pot")
 	            {
 	                _player2ControllerScript.AttackPotActivated();
+//					GameObject.Find ("Player2AttackParticles").SetActive(true);
 	            }
 	            //DefensePotActivated
 	            if (_player2ItemName.text == "Defense Pot")
 	            {
 	                _player2ControllerScript.DefensePotActivated();
+//					GameObject.Find ("Player2DefenseParticles").SetActive(true);
+
 	            }
 			}
         }

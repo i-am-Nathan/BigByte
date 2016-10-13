@@ -1235,7 +1235,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1613,7 +1613,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_LocalScale.x
@@ -3459,7 +3459,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_Name
-      value: Player1AttackParticles
+      value: AttackParticles
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_IsActive
@@ -3488,6 +3488,26 @@ Prefab:
     - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: InitialModule.startColor.minColor.rgba
       value: 426704797
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: prewarm
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
@@ -4510,7 +4530,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_Name
-      value: Player2DefenseParticles
+      value: DefenseParticles
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_IsActive
@@ -4539,6 +4559,30 @@ Prefab:
     - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: InitialModule.startColor.minColor.rgba
       value: 427163821
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: prewarm
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
@@ -7837,7 +7881,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f17310149bfc34a12ab6541dcf7f0e07, type: 2}
       propertyPath: m_RootOrder
-      value: 22
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f17310149bfc34a12ab6541dcf7f0e07, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8652,7 +8696,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_Name
@@ -8700,11 +8744,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_Controller
@@ -10396,7 +10440,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 492574, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: AchievementPopup
@@ -11082,7 +11126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_Name
@@ -14800,7 +14844,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_Name
-      value: Player1DefenseParticles
+      value: DefenseParticles
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_IsActive
@@ -14829,6 +14873,26 @@ Prefab:
     - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: InitialModule.startColor.minColor.rgba
       value: 427163821
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: prewarm
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
@@ -15086,7 +15150,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_Name
-      value: Player2AttackParticles
+      value: AttackParticles
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: m_IsActive
@@ -15115,6 +15179,30 @@ Prefab:
     - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
       propertyPath: InitialModule.startColor.minColor.rgba
       value: 426704797
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
+      propertyPath: SizeModule.curve.maxCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01603b7302bd34f379cc7d1ef6b55a15, type: 2}
@@ -15640,7 +15728,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437762, guid: 1354f96a0aef3034e8b4f5a654ae4e13, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 481924, guid: 1354f96a0aef3034e8b4f5a654ae4e13, type: 2}
       propertyPath: m_LocalScale.z
@@ -16932,7 +17020,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e4346959fc02f4657947aec94532eaba, type: 2}
       propertyPath: m_RootOrder
-      value: 21
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e4346959fc02f4657947aec94532eaba, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
