@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Security.Cryptography;
+using System.Collections.Generic;
 
 /// <summary>
 /// Used to manage database scores.
@@ -9,8 +10,7 @@ public class DatabaseScores : MonoBehaviour
 {
     private string SecretKey = "2W_0Yc:p_~oU}(P1?]P98)1]0894J0"; // Edit this value and make sure it's the same as the one stored on the server
     private string AddScoreURL = "http://jackbarker.co/306/API/AddScores.php?"; //be sure to add a ? to your url
-    private string HighscoreURL = "http://localhost/unity_test/display.php";
-
+    private string HighscoreURL = "http://jackbarker.co/306/API/GetScores.php";
 
     /// <summary>
     /// Posts the scores to the webserver.
@@ -44,5 +44,33 @@ public class DatabaseScores : MonoBehaviour
             Debug.Log("ERROR");
             Debug.Log("There was an error posting the high score: " + post.error);
         }
+    }
+
+
+    /// <summary>
+    /// Gets the scores.
+    /// </summary>
+    /// <returns></returns>
+    /// Example: Example: StartCoroutine(GetScores());
+    IEnumerator GetScores(List<HighScore> results)
+    {
+        WWW hs_get = new WWW(HighscoreURL);
+
+        yield return hs_get;
+
+        if (hs_get.error != null)
+        {
+            Debug.Log("There was an error getting the high score: " + hs_get.error);
+        }
+
+        var splitText = System.Text.RegularExpressions.Regex.Split(hs_get.text, "\r\n|\r|\n");
+
+        results = new List<HighScore>();
+
+        foreach(var s in splitText)
+        {
+            results.Add(JsonUtility.FromJson<HighScore>(s));
+        }
+
     }
 }
