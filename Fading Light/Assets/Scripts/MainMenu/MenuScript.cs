@@ -65,11 +65,7 @@ public class MenuScript : MonoBehaviour {
 	//Highscore should pop up when it is pressed, to be implemented.
     public void highScorePress()
     {
-        highscoreMenu.enabled = true;
-        startText.enabled = false;
-        exitText.enabled = false;
-        highScoreText.enabled = false;
-        achievementText.enabled = false;
+
     }
 
 	//When the achievements are pressed a pop up of achievements should pop up.
@@ -85,8 +81,7 @@ public class MenuScript : MonoBehaviour {
 	//Go back to the main menu when the back button is pressed on the achievement menu.
 	public void backPress(){
 		achievementMenu.enabled = false;
-        highscoreMenu.enabled = false;
-        startText.enabled = true;
+		startText.enabled = true;
 		exitText.enabled = true;
 		highScoreText.enabled = true;
 		achievementText.enabled = true;
