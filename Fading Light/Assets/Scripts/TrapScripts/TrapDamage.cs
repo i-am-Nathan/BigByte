@@ -9,6 +9,7 @@ public class TrapDamage : MonoBehaviour {
     public float timeTillNextHit = 1f;
     private float _p1HitTime = 0f;
     private float _p2HitTime = 0f;
+    public float damage = 30f;
 
     void Start()
     {
@@ -25,8 +26,7 @@ public class TrapDamage : MonoBehaviour {
             {
                 _hitp1 = false;
                 _p1HitTime = timeTillNextHit;
-                Debug.Log("DAMAGE P1");
-                player1.GetComponent<BaseEntity>().Damage(30, this.gameObject.transform);
+                player1.GetComponent<BaseEntity>().Damage(damage, this.gameObject.transform);
             }
         } else if (other.name == "Player2")
         {
@@ -34,8 +34,7 @@ public class TrapDamage : MonoBehaviour {
             {
                 _hitp2 = false;
                 _p2HitTime = timeTillNextHit;
-                Debug.Log("DAMAGE P2");
-                player2.GetComponent<BaseEntity>().Damage(30, this.gameObject.transform);
+                player2.GetComponent<BaseEntity>().Damage(damage, this.gameObject.transform);
             }
 
         }
@@ -45,21 +44,17 @@ public class TrapDamage : MonoBehaviour {
     {
         if (_p1HitTime < 0)
         {
-            Debug.Log("p1 true");
             _hitp1 = true;
         } else
         {
             _p1HitTime -= Time.deltaTime;
-            Debug.Log(_p1HitTime);
         }
         if (_p2HitTime < 0)
         {
-            Debug.Log("p2 true");
             _hitp2 = true;
         } else
         {
             _p2HitTime -= Time.deltaTime;
-            Debug.Log(_p2HitTime);
         }
     }
 }
