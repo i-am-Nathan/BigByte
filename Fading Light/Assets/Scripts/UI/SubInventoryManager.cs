@@ -83,13 +83,16 @@ public class SubInventoryManager : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
+            Debug.Log("CONSUME THAT POTION MOTHERFUCKING PLAYER 1");
 			UseItem (true);
 
         }
 
 		if (Input.GetKeyDown(KeyCode.L))
 		{
-			UseItem (false);
+            Debug.Log("CONSUME THAT POTION MOTHERFUCKING PLAYER 2");
+
+            UseItem (false);
 		}
 	}
 		

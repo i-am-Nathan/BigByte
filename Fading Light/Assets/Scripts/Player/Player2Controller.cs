@@ -77,93 +77,8 @@ public class Player2Controller : Player
         {
             ControlWASD();
         }
+   
 	}
-
-    private bool _attackPotActive = false;
-    private bool _defensePotActive = false;
-
-    private float _attackPotTimeLeft;
-    private float _defensePotTimeLeft;
-    private float _attackPotDuration = 30f;
-    private float _defensePotDuration = 30f;
-
-    /// <summary>
-    /// Update the timers on certain effects the character is under
-    /// </summary>
-    void UpdateEffects()
-    {
-        if (_attackPotActive) {
-            _attackPotTimeLeft -= Time.deltaTime;
-            //text.text = "Time Left:" + Mathf.Round(timeLeft);
-            if (_attackPotTimeLeft < 0)
-            {
-                _attackPotActive = false;
-            }
-        }
-        if (_defensePotActive)
-        {
-            _defensePotTimeLeft -= Time.deltaTime;
-            //text.text = "Time Left:" + Mathf.Round(timeLeft);
-            if (_defensePotTimeLeft < 0)
-            {
-                _defensePotActive = false;
-            }
-        }
-    }
-
-    public bool isAttackPotActive()
-    {
-        return _attackPotActive;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void HealthPotActivated()
-    {
-        if ((CurrentHealth + 30) > IntialHealth)
-        {
-            CurrentHealth = IntialHealth;
-        }
-        else
-        {
-            this.CurrentHealth = CurrentHealth + 30;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void AttackPotActivated()
-    {
-        if (_attackPotActive)
-        {
-            //Reset the timer if attack potion already active
-            _attackPotTimeLeft = _attackPotDuration;
-        }
-        else
-        {
-            //Otherwise set the boolean and begin the timer
-            _attackPotActive = true;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void DefensePotActivated()
-    {
-        if (_defensePotActive)
-        {
-            //Reset the timer if attack potion already active
-            _defensePotTimeLeft = _defensePotDuration;
-        }
-        else
-        {
-            //Otherwise set the boolean and begin the timer
-            _defensePotActive = true;
-        }
-    }
 
     /// <summary>
     /// Controls the character using the keys
@@ -207,7 +122,6 @@ public class Player2Controller : Player
         }
 
     }
-
 
     /// <summary>
     // Used to push rigid body objects in the scene
