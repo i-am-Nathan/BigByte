@@ -63,6 +63,7 @@ public class Player: BaseEntity
             if (_attackPotTimeLeft < 0)
             {
                 _attackPotActive = false;
+                //END ANIMATION
             }
         }
         if (_defensePotActive)
@@ -72,6 +73,7 @@ public class Player: BaseEntity
             if (_defensePotTimeLeft < 0)
             {
                 _defensePotActive = false;
+                //END ANIMATION
             }
         }
     }
@@ -86,6 +88,7 @@ public class Player: BaseEntity
     /// </summary>
     public void HealthPotActivated()
     {
+        //BEGIN THE BLOODY ANIM
         if (DEBUG) Debug.Log("Health pot activated");
         _source.PlayOneShot(DrinkPotion);
         if ((CurrentHealth + 30) > IntialHealth)
@@ -103,6 +106,7 @@ public class Player: BaseEntity
     /// </summary>
     public void AttackPotActivated()
     {
+        //BEGIN THE BLOODY ANIM
         if (DEBUG) Debug.Log("Attack pot activated");
         _source.PlayOneShot(DrinkPotion);
         if (_attackPotActive)
