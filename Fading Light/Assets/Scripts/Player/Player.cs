@@ -21,6 +21,8 @@ public class Player: BaseEntity
     {
         base.Start();
         _source = GetComponent<AudioSource>();
+		this.transform.FindChild ("AttackParticles").gameObject.SetActive(false);
+		this.transform.FindChild ("DefenseParticles").gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -60,20 +62,20 @@ public class Player: BaseEntity
         {
             _attackPotTimeLeft -= Time.deltaTime;
             //text.text = "Time Left:" + Mathf.Round(timeLeft);
-            if (_attackPotTimeLeft < 0)
+            if (_attackPotTimeLeft <= 0)
             {
                 _attackPotActive = false;
-                //END ANIMATION
+				this.transform.FindChild ("AttackParticles").gameObject.SetActive(false);
             }
         }
         if (_defensePotActive)
         {
             _defensePotTimeLeft -= Time.deltaTime;
             //text.text = "Time Left:" + Mathf.Round(timeLeft);
-            if (_defensePotTimeLeft < 0)
+            if (_defensePotTimeLeft <= 0)
             {
                 _defensePotActive = false;
-                //END ANIMATION
+				this.transform.FindChild ("DefenseParticles").gameObject.SetActive(false);
             }
         }
     }
@@ -82,6 +84,11 @@ public class Player: BaseEntity
     {
         return _attackPotActive;
     }
+
+	public bool isDefensePotActive()
+	{
+		return _defensePotActive;
+	}
 
     /// <summary>
     /// 
@@ -109,6 +116,7 @@ public class Player: BaseEntity
         //BEGIN THE BLOODY ANIM
         if (DEBUG) Debug.Log("Attack pot activated");
         _source.PlayOneShot(DrinkPotion);
+		this.transform.Find ("AttackParticles").gameObject.SetActive(true);
         if (_attackPotActive)
         {
             //Reset the timer if attack potion already active
@@ -128,6 +136,7 @@ public class Player: BaseEntity
     {
         if (DEBUG) Debug.Log("Defense pot activated");
         _source.PlayOneShot(DrinkPotion);
+		this.transform.Find ("DefenseParticles").gameObject.SetActive(true);
         if (_defensePotActive)
         {
             //Reset the timer if attack potion already active

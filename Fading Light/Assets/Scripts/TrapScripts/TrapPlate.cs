@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 /// <summary>
@@ -8,8 +9,9 @@ using System.Collections;
 public class TrapPlate : MonoBehaviour {
 
 	public GameObject[] traps;
+	public List<GameObject> _trapList;
 	private int _thingsOnTop = 0;
-	public bool _pressed = false;
+	public bool Pressed = false;
 	public GameObject[] otherPlates;
 
 	/// <summary>
@@ -18,6 +20,9 @@ public class TrapPlate : MonoBehaviour {
 
 	void Awake(){
 		otherPlates = GameObject.FindGameObjectsWithTag ("SpearTrap");
+		for (int i = 0; i < traps.Length; i++) {
+			_trapList.Add(traps[i]);
+		}
 	}
 
 
@@ -29,16 +34,21 @@ public class TrapPlate : MonoBehaviour {
 		} 
 
 		//if the weight is heavy enough, then the plate is triggered
-		if (_thingsOnTop >= 1 && !_pressed)
+		if (_thingsOnTop >= 1 && !Pressed)
 
 		{
 			this.GetComponent<Animation>().Play("PressurePlateDown");
-
+			_trapList.Clear ();
+			for (int i = 0; i < traps.Length; i++) {
+				_trapList.Add(traps[i]);
+			}
 			for (int j = 0; j < otherPlates.Length; j++) {
-				otherPlates [j].GetComponent<TrapPlate> ().UnsetPlate ();
+				if (gameObject.name != otherPlates [j].name) {
+					UnsetPlate (otherPlates [j]);
+				}
 			}
 			UnsetTraps ();
-			_pressed = true;
+			Pressed = true;
 
 		}
 
@@ -48,27 +58,37 @@ public class TrapPlate : MonoBehaviour {
 	/// <summary>
 	/// Called when an object leaves the plate
 	/// </summary>
-	public void UnsetPlate() {
+	public void UnsetPlate(GameObject plate) {
+		GameObject[] otherTraps = plate.GetComponent<TrapPlate> ().traps;
+		bool duplicate = false;
+		if (plate.GetComponent<TrapPlate>().Pressed) {
+			this.GetComponent<Animation> ().Play ("PressurePlateUp");
+			for (int i = 0; i < otherTraps.Length; i++) {
+				duplicate = false;
+				for (int j = 0; j < traps.Length; j++) {
+				if (otherTraps[i].name.Equals (traps [j].name)) {
+						_trapList.Remove (traps[j]);
+					duplicate = true;
+					break;
+				}
+				}
+				if (duplicate == false) {
+					plate.GetComponent<TrapPlate> ().SetTraps (otherTraps [i]);
+				}
 
-		if (_pressed) {
-			this.GetComponent<Animation>().Play("PressurePlateUp");
-			this.GetComponent<TrapPlate> ().SetTraps ();;
-			_pressed = false;
+			}
+			plate.GetComponent<TrapPlate>().Pressed = false;
 		}
-			
 	}
 
 	public void UnsetTraps(){
-		for (int i = 0; i < traps.Length; i++) {
-			traps[i].GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
+		foreach (GameObject o in _trapList) {
+			o.GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
 		}
 	}
 
-	public void SetTraps(){
-		for (int i = 0; i < traps.Length; i++) {
-			traps[i].GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
-
-		}
+	public void SetTraps(GameObject trap){
+			trap.GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
 
 	}
 }
