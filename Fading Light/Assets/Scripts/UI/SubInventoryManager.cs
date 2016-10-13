@@ -119,24 +119,11 @@ public class SubInventoryManager : MonoBehaviour {
 				_player1ItemQuantityDictionary[_player1ItemName.text] -= 1;
 				SetItemOnScreen (_player1ItemName.text, true);
 			}
-			//HealthPotActivated
-            //if (_player1ItemName.text = "Health Pot")
-			//_player1ControllerScript.HealthPotActivated();
-			//AttackPotActivated
-			//_player1ControllerScript.AttackPotActivated();
-			//DefensePotActivated
-			//_player1ControllerScript.DefensePotActivated();
 		} else {
 			if (_player2ItemQuantityDictionary [_player2ItemName.text] != 0) {
 				_player2ItemQuantityDictionary[_player2ItemName.text] -= 1;
 				SetItemOnScreen (_player2ItemName.text, false);
 			}
-			//HealthPotActivated
-			//_player2ControllerScript.HealthPotActivated();
-			//AttackPotActivated
-			//_player2ControllerScript.AttackPotActivated();
-			//DefensePotActivated
-			//_player2ControllerScript.DefensePotActivated();
 		}
 	}
 
