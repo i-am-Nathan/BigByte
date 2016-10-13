@@ -7,8 +7,8 @@ public class OpenTreasure : MonoBehaviour {
 	public bool DestroyWhenActivated;
 	private bool _open; 
 	private float _speed;
-	public float MinCoins;
-	public float MaxCoins;
+	public float Minimum;
+	public float Maximum;
 	public GameObject[] DropList;
 	public int[] DropChance;
 	private GameObject _prefab;
@@ -88,7 +88,7 @@ public class OpenTreasure : MonoBehaviour {
 
 		}
 
-		float randomNumber = Random.Range (20, 60);
+		float randomNumber = Random.Range (Minimum, Maximum);
 		//for (int i = MinCoins; i < MaxCoins; i++) {  	//Add this later when you want to control the amount of coins in a treasure;
 		//This will instantiate a coin which will fly out in random directins from the chest. 
 	
@@ -109,7 +109,7 @@ public class OpenTreasure : MonoBehaviour {
 
 			float randomX = Random.Range (0,10);
 			float randomZ = Random.Range (0,10);
-			_prefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 10f, randomValues[(int)randomZ]);
+			_prefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 4f, randomValues[(int)randomZ]);
 			//Plays the sound of treasure coming out.
 			_source.PlayOneShot (TreasureSound);
 		}
