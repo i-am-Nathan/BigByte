@@ -176,6 +176,7 @@ public class SkeleBoss : BaseEntity
     IEnumerator Summoning_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Summoning");
+        _animator["Skill 1"].speed = 0.3f;
         _animator.Play("Skill 1", PlayMode.StopAll);
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
