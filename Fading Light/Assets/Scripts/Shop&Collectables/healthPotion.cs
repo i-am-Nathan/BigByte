@@ -45,7 +45,7 @@ public class HealthPotion : MonoBehaviour
                 //var SubInventoryManager = GameObject.Find("SubInventoryManager");
             } else
             {
-                //SubInventoryManager.AddInventoryQuanity("Health Pot", false);
+                //dsdfsfSubInventoryManager.AddInventoryQuanity("Health Pot", false);
             }
         }
     }
