@@ -104,7 +104,7 @@ public class CandleLight : MonoBehaviour {
             }
             //torch in player 2 and player is player 1
         }
-        else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player1"))
+        else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player"))
         {
             if (Input.GetButtonDown("CandleLight") && !_triggered)
             {
