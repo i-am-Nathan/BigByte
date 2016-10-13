@@ -24,7 +24,7 @@ public class LifeManager : MonoBehaviour
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
         _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
-        // Getting the hearts on the UI
+		// Getting the hearts on the UI
         _lives = GameObject.FindGameObjectsWithTag("Lives");
         _numberOfLivesLeft = _gameDataScript.GetNumberOfLives();
 

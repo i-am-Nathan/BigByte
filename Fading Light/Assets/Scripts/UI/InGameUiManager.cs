@@ -15,6 +15,12 @@ public class InGameUiManager : MonoBehaviour {
     public Button QuitToMenuButton;
     public Button ContinueButton;
 
+	private float _totalTime;
+	private Text _totalTimeText;
+	private int _sharedGold;
+	private Text _sharedGoldText;
+
+	private GameData _gameDataScript;
 
 	/// <summary>
 	/// Used for initialisation 
@@ -27,6 +33,19 @@ public class InGameUiManager : MonoBehaviour {
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
         ContinueButton = ContinueButton.GetComponent<Button>();
+
+		// Getting the game data object which shows the total lives left
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		_gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+
+		_totalTime = _gameDataScript.GetTotalTime ();
+		_sharedGold = _gameDataScript.GetAmountOfGold ();
+
+		// Finding the total time
+		_totalTimeText = GameObject.FindWithTag("Total Time").GetComponent<Text>();
+		_sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
+		_sharedGoldText.text = "" + _sharedGold;
+		SetTime ();
     }
 
 	/// <summary>
@@ -39,6 +58,7 @@ public class InGameUiManager : MonoBehaviour {
         {
             ExitMenu.enabled = !ExitMenu.enabled;
         }
+		SetTime();
     }
 
 	/// <summary>
@@ -72,4 +92,45 @@ public class InGameUiManager : MonoBehaviour {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
+
+	/// <summary>
+	/// Used to set the total time taken for the players
+	/// </summary>
+	private void SetTime()
+	{
+		_totalTime = _gameDataScript.GetTotalTime ();
+		float minutes = Mathf.Floor(_totalTime / 60);
+		float seconds = Mathf.RoundToInt(_totalTime % 60);
+		string min = "";
+		string sec = "";
+
+		// Formatting the time
+		if (minutes < 10)
+		{
+			min = "0" + minutes;
+		}
+		else
+		{
+			min = "" + minutes;
+		}
+
+		if (seconds < 10)
+		{
+			sec = "0" + seconds;
+		}
+		else
+		{
+			sec = "" + seconds;
+		}
+
+		// Setting the UI component
+		_totalTimeText.text = "Time:  " + min + ":" + sec;
+
+	}
+
+	public void UpdateGold(int gold) {
+		_sharedGold = gold;
+		_sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
+		_sharedGoldText.text = "" + _sharedGold;
+	}
 }
