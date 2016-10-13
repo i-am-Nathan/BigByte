@@ -11,7 +11,8 @@ public class DatabaseScores : MonoBehaviour
     private string SecretKey = "2W_0Yc:p_~oU}(P1?]P98)1]0894J0"; // Edit this value and make sure it's the same as the one stored on the server
     private string AddScoreURL = "http://jackbarker.co/306/API/AddScores.php?"; //be sure to add a ? to your url
     private string HighscoreURL = "http://jackbarker.co/306/API/GetScores.php";
-
+    List<HighScore> _results = new List<HighScore>();
+    public bool IsDone = false;
     /// <summary>
     /// Posts the scores to the webserver.
     /// </summary>
@@ -25,7 +26,7 @@ public class DatabaseScores : MonoBehaviour
     /// <param name="Player2Accuracy">The player2 accuracy.</param>
     /// <returns></returns>
     /// Example: StartCoroutine(PostScores("jack", 100, 99, 99, 99, 99, 99, 99));
-    IEnumerator PostScores(string name, int gold, float Player1DamageGiven, float Player2DamageGiven, float Player1DamageTaken, float Player2DamageTaken, float Player1Accuracy, float Player2Accuracy)
+    public IEnumerator PostScores(string name, int gold, float Player1DamageGiven, float Player2DamageGiven, float Player1DamageTaken, float Player2DamageTaken, float Player1Accuracy, float Player2Accuracy)
     {
         //Create hash to ensure things that arent this game arent posting scores
         var md5 = MD5.Create();
@@ -52,7 +53,7 @@ public class DatabaseScores : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     /// Example: Example: StartCoroutine(GetScores());
-    IEnumerator GetScores(List<HighScore> results)
+    public IEnumerator GetScores()
     {
         WWW hs_get = new WWW(HighscoreURL);
 
@@ -65,12 +66,20 @@ public class DatabaseScores : MonoBehaviour
 
         var splitText = System.Text.RegularExpressions.Regex.Split(hs_get.text, "\r\n|\r|\n");
 
-        results = new List<HighScore>();
+        _results = new List<HighScore>();
 
         foreach(var s in splitText)
         {
-            results.Add(JsonUtility.FromJson<HighScore>(s));
+            var tmp = HighScore.CreateFromJSON(s);
+            _results.Add(tmp);
         }
 
+        IsDone = true;
+
+    }
+
+    public List<HighScore> GetResults()
+    {
+        return _results;
     }
 }
