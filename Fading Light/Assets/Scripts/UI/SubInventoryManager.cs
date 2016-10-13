@@ -129,7 +129,6 @@ public class SubInventoryManager : MonoBehaviour {
 
 	public void UseItem (bool player1) {
 		if (player1) {
-			
 			if (_player1ItemQuantityDictionary [_player1ItemName.text] != 0) {
 				_player1ItemQuantityDictionary[_player1ItemName.text] -= 1;
 				SetItemOnScreen (_player1ItemName.text, true);
@@ -142,20 +141,18 @@ public class SubInventoryManager : MonoBehaviour {
         	    if (_player1ItemName.text == "Attack Pot")
         	    {
         	        _player1ControllerScript.AttackPotActivated();
-//					GameObject.Find ("Player1AttackParticles").SetActive(true);
         	    }
         	    //DefensePotActivated
         	    if (_player1ItemName.text == "Defense Pot")
         	    {
         	        _player1ControllerScript.DefensePotActivated();
-//					GameObject.Find ("Player1DefenseParticles").SetActive(true);
         		}
 			}
         } else {
 			if (_player2ItemQuantityDictionary [_player2ItemName.text] != 0) {
 				_player2ItemQuantityDictionary[_player2ItemName.text] -= 1;
 				SetItemOnScreen (_player2ItemName.text, false);
-				
+
 	            //HealthPotActivated
 	            if (_player2ItemName.text == "Health Pot")
 	            {
@@ -165,17 +162,14 @@ public class SubInventoryManager : MonoBehaviour {
 	            if (_player2ItemName.text == "Attack Pot")
 	            {
 	                _player2ControllerScript.AttackPotActivated();
-//					GameObject.Find ("Player2AttackParticles").SetActive(true);
 	            }
 	            //DefensePotActivated
 	            if (_player2ItemName.text == "Defense Pot")
 	            {
 	                _player2ControllerScript.DefensePotActivated();
-//					GameObject.Find ("Player2DefenseParticles").SetActive(true);
-
 	            }
 			}
-        }
+		}	
 	}
 
 	public void AddItemQuantity (string itemName, bool player1) {
