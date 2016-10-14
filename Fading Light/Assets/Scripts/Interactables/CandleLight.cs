@@ -13,8 +13,12 @@ public class CandleLight : MonoBehaviour {
     void Start () {
 		if (!_active) {
 			_flame.GetComponent<ParticleSystem> ().Stop ();
-		}
-        _spotlight.GetComponent<Light>().spotAngle = 0;
+            _spotlight.GetComponent<Light>().spotAngle = 0;
+        } else
+        {
+            _flame.GetComponent<ParticleSystem>().Play();
+            _spotlight.GetComponent<Light>().spotAngle = 100;
+        }
     }
 	
     public bool isTriggered()
@@ -42,13 +46,13 @@ public class CandleLight : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
-                if (_active && _triggered)
+                if (_active)
                 {
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
                 }
-                else if (!_active && _triggered)
+                else
                 {
                     _flame.GetComponent<ParticleSystem>().Play();
                     _spotlight.GetComponent<Light>().spotAngle = 100;
@@ -56,7 +60,7 @@ public class CandleLight : MonoBehaviour {
 
                 }
             }
-            else if (Input.GetButtonUp("CandleLight"))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
                 _triggered = false;
             }
@@ -66,7 +70,7 @@ public class CandleLight : MonoBehaviour {
         else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player2"))
         {
             //check for key pressed
-            if (Input.GetButtonDown("CandleLight"))
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)
@@ -74,18 +78,16 @@ public class CandleLight : MonoBehaviour {
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
-                    _triggered = false;
                 }
                 else if (!_active && _triggered)
                 {
                     _flame.GetComponent<ParticleSystem>().Play();
                     _spotlight.GetComponent<Light>().spotAngle = 100;
                     _active = true;
-                    _triggered = false;
                 }
 
             }
-            else if (Input.GetButtonUp("CandleLight"))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
                 _triggered = false;
             }
@@ -93,7 +95,7 @@ public class CandleLight : MonoBehaviour {
         }
         else if (torchInPlayer1 && other.gameObject.tag.Equals("Player2"))
         {
-            if (Input.GetButtonDown("CandleLight") && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)
@@ -101,14 +103,17 @@ public class CandleLight : MonoBehaviour {
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
-                    _triggered = false;
                 }
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                _triggered = false;
             }
             //torch in player 2 and player is player 1
         }
         else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player"))
         {
-            if (Input.GetButtonDown("CandleLight") && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)
@@ -116,8 +121,11 @@ public class CandleLight : MonoBehaviour {
                     _flame.GetComponent<ParticleSystem>().Stop();
                     _spotlight.GetComponent<Light>().spotAngle = 0;
                     _active = false;
-                    _triggered = false;
                 }
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                _triggered = false;
             }
         }
     }

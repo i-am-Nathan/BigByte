@@ -55,6 +55,7 @@ public class PlayerController : Player
             _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
             GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
             _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
+
         }
 
     }
@@ -231,4 +232,12 @@ public class PlayerController : Player
     {
         healthCircle.enabled = false;
     }
+    void OnParticleCollision(GameObject other)
+    {
+        if (TorchFuelControllerScript.TorchInPlayer1)
+        {
+            Debug.Log("OH BABY THE WIND");
+        }
+    }
+
 }
