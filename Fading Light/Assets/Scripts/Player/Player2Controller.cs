@@ -35,6 +35,7 @@ public class Player2Controller : Player
     private Slider _healthSlider;
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
+    private TorchFuelController _torchFuelScript;
 
     public bool IsMainMenu = false;
     /// <summary>
@@ -53,8 +54,11 @@ public class Player2Controller : Player
             _torch = transform.Find("ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Weapon/Torch Light Holder").gameObject;
             var go = GameObject.FindGameObjectWithTag("Life Manager");
             _lifeManagerScript = (LifeManager)go.GetComponent(typeof(LifeManager));
+            var go1 = GameObject.FindGameObjectWithTag("TorchFuelController");
+            _torchFuelScript = (TorchFuelController)go1.GetComponent(typeof(TorchFuelController));
+
         }
-        
+
     }
 
     /// <summary>
@@ -193,4 +197,12 @@ public class Player2Controller : Player
     {
         healthCircle.enabled = false;
     }
+    void OnParticleCollision(GameObject other)
+    {
+        if (_torchFuelScript.TorchInPlayer1 == false)
+        {
+            Debug.Log("OH BABY THE WIND");
+        }
+    }
+
 }

@@ -12,7 +12,7 @@
             echo '<h1>An error has occurred.</h1><pre>', $e->getMessage() ,'</pre>';
         }
          
-        $sth = $dbh->query('SELECT * FROM highscores ORDER BY gold DESC');
+        $sth = $dbh->query('SELECT * FROM highscores ORDER BY minutes ASC, seconds ASC');
         $sth->setFetchMode(PDO::FETCH_ASSOC);
      
         $result = $sth->fetchAll();

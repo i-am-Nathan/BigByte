@@ -19,7 +19,7 @@ public class PlayerController : Player
     public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
     //public bool dead = false;
     public bool IsInCircle = false;
-   
+
     public int PushPower = 20;
     public bool IsDisabled;
     private bool _lastPressed = false;
@@ -55,10 +55,11 @@ public class PlayerController : Player
             _healthSlider = GameObject.FindWithTag("Player 1 Health Slider").GetComponent<Slider>();
             GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
             _lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
+
         }
-        
+
     }
-    
+
     public void MockUp()
     {
         base.Start();
@@ -138,14 +139,17 @@ public class PlayerController : Player
         }
 
     }
+
+
         
+
     /// <summary>
     /// When collision occurs between two objects
     /// </summary>
     /// <param name="other">The other.</param>
     void OnTriggerStay(Collider other)
     {
-       
+
         // Checking if players are next to each other
         if (other.gameObject.tag.Equals("Player2") && !IsDisabled)
         {
@@ -169,16 +173,14 @@ public class PlayerController : Player
     /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag.Equals("Clockwise Door"))
-        {
 
-            Debug.Log(hit.gameObject.transform.parent);
-            hit.gameObject.transform.parent.gameObject.GetComponent<RotatingDoor>().rotateClockwise();
+        if (hit.gameObject.tag.Equals("Clockwise Door")) {
+            Debug.Log("pushed");
+            Debug.Log(transform.forward * 10);
+            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 10000000);
 
-        } else if (hit.gameObject.tag.Equals("Anticlockwise Door"))
-        {
-            
         }
+
     }
 
     /// <summary>
@@ -189,7 +191,7 @@ public class PlayerController : Player
     public override void Damage(float amount, Transform attacker)
     {
         Debug.Log("Player damaged");
-        
+
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
@@ -202,7 +204,7 @@ public class PlayerController : Player
             _healthSlider.value -= amount;
             Debug.Log(healthCircle.fillAmount);
             Invoke("HideHealth", 3);
-        } catch {}      
+        } catch {}
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
         if (CurrentHealth <= 0 && !isDead)
@@ -229,5 +231,13 @@ public class PlayerController : Player
     public void HideHealth()
     {
         healthCircle.enabled = false;
-    }    
+    }
+    void OnParticleCollision(GameObject other)
+    {
+        if (TorchFuelControllerScript.TorchInPlayer1)
+        {
+            Debug.Log("OH BABY THE WIND");
+        }
+    }
+
 }

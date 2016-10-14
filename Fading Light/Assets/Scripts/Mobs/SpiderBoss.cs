@@ -213,7 +213,7 @@ public class SpiderBoss : BaseEntity
             //Every so often sprint at the player
             if (_walkCount > 12)
             {
-                if (true) Debug.Log("Spider has started sprinting!");
+                if (DEBUG) Debug.Log("Spider has started sprinting!");
                 _isSprinting = true;
                 _isMoving = false;
                 _walkCount = -5;
@@ -286,11 +286,11 @@ public class SpiderBoss : BaseEntity
         catch { }
 
 
-        if (true) Debug.Log("Spider damaged");
+        if (DEBUG) Debug.Log("Spider damaged");
 
         if (amount >= CurrentHealth)
         {
-            if (true) Debug.Log("Spider killed");
+            if (DEBUG) Debug.Log("Spider killed");
             Killed();
         } else
         {
