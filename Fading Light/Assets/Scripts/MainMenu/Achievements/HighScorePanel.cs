@@ -9,5 +9,14 @@ public class HighScorePanel : MonoBehaviour
 {
 
     public Text Name, Description;
+    public HighScore Score;
+
+    public void Populate()
+    {
+        Name.text = Score.name;
+        Description.text = Score.ContractedString();
+    }
+
+    
 
 }

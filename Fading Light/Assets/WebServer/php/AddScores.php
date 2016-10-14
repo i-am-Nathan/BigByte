@@ -13,12 +13,12 @@
             
             //Check to make sure the passed hash is the same as the generated one
             if($realHash == $_GET['hash']) { 
-                $sth = $dbh->prepare('INSERT INTO highscores  (name, gold, p1damagegiven, p2damagegiven, p1damagetaken, p2damagetaken, p1accuracy, p2accuracy)  
-                VALUES (:name, :gold, :p1damagegiven, :p2damagegiven, :p1damagetaken, :p2damagetaken, :p1accuracy, :p2accuracy)');
+                $sth = $dbh->prepare('INSERT INTO highscores  (name, gold, p1accuracy, p2accuracy, minutes, seconds, monsterskilled, timeskilled, chestsmissed)  
+                VALUES (:name, :gold, :p1accuracy, :p2accuracy, :minutes, :seconds, :monsterskilled, :timeskilled, :chestsmissed)');
 
                 try {
                     //Remove the hash from the get arary
-                    array_splice($_GET, 8, 1);
+                    array_splice($_GET, 9, 1);
                     $sth->execute($_GET);
                 } catch(Exception $e) {
                     echo '<h1>An error has ocurred.</h1><pre>', $e->getMessage() ,'</pre>';
