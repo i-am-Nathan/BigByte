@@ -61,20 +61,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="GETween">
-      <HintPath>Assets\GUI Animator\Common\Plugins\GETween.dll</HintPath>
-    </Reference>
-    <Reference Include="GUIAnimatorFREE">
-      <HintPath>Assets\GUI Animator\GUI Animator FREE\Plugins\GUIAnimatorFREE.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="GETween">
       <HintPath>Assets\GUI Animator\Common\Plugins\GETween.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-=======
     <Reference Include="GUIAnimatorFREE">
       <HintPath>Assets\GUI Animator\GUI Animator FREE\Plugins\GUIAnimatorFREE.dll</HintPath>
     </Reference>
@@ -84,7 +76,6 @@
     <Reference Include="Mono.Cecil.Mdb">
       <HintPath>Assets\UnityTestTools\IntegrationTestsFramework\Libs\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
->>>>>>> 14143906713b3958a8cd7830a5648af71e987fba
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\CamTarget.cs" />
@@ -147,21 +138,27 @@
     <Compile Include="Assets\Scripts\Mobs\BaseEntity.cs" />
     <Compile Include="Assets\Scripts\Mobs\Crawler.cs" />
     <Compile Include="Assets\Scripts\Mobs\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Mobs\SkeleBoss.cs" />
+    <Compile Include="Assets\Scripts\Mobs\SkeleMob.cs" />
     <Compile Include="Assets\Scripts\Mobs\SkeletonSkinny.cs" />
     <Compile Include="Assets\Scripts\Mobs\SpiderBehaviour.cs" />
     <Compile Include="Assets\Scripts\Mobs\SpiderBoss.cs" />
     <Compile Include="Assets\Scripts\Mobs\SpiderMob.cs" />
     <Compile Include="Assets\Scripts\Mobs\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Mobs\StateMachineRunner.cs" />
+    <Compile Include="Assets\Scripts\Mobs\TrollBoss.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\Player1Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\Player2Controller.cs" />
     <Compile Include="Assets\Scripts\Player\Player2Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player\SkeleWeapon.cs" />
     <Compile Include="Assets\Scripts\Puzzles\RotatableWall.cs" />
     <Compile Include="Assets\Scripts\Puzzles\RotatingDoor1.cs" />
     <Compile Include="Assets\Scripts\Puzzles\RotatingWall.cs" />
+    <Compile Include="Assets\Scripts\Shop&amp;Collectables\AttackPotion.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\Coins.cs" />
+    <Compile Include="Assets\Scripts\Shop&amp;Collectables\DefensePotion.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\Item.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\NavigateShop.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\PickupItem.cs" />
@@ -173,6 +170,7 @@
     <Compile Include="Assets\Scripts\TrapScripts\SawBladePlate.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\TrapDamage.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\TrapPlate.cs" />
+    <Compile Include="Assets\Scripts\TrapScripts\TutorialSpikeTrap.cs" />
     <Compile Include="Assets\Scripts\UI\InGameUiManager.cs" />
     <Compile Include="Assets\Scripts\UI\LifeManager.cs" />
     <Compile Include="Assets\Scripts\UI\StartLevel.cs" />
@@ -223,6 +221,8 @@
     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\DownloadedContent\Earthborn Troll\Shader\Alpha_Texture.shader" />
+    <None Include="Assets\DownloadedContent\Earthborn Troll\Shader\DoubleSided-Light-Spec.shader" />
     <None Include="Assets\DownloadedContent\Elementals\Readme.txt" />
     <None Include="Assets\DownloadedContent\Free_Rocks\Standard Assets\Skyboxes\_skybox info.txt" />
     <None Include="Assets\DownloadedContent\GE Common Assets\Readme.txt" />
