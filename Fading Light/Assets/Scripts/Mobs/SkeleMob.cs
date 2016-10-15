@@ -17,7 +17,8 @@ public class SkeleMob : BaseEntity
 		Chase,
         Attack,
         Wake,
-        Sleep, 
+        Sleep,
+        Revival,
         Death
 	}
 
@@ -299,30 +300,43 @@ public class SkeleMob : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
-    private void Death_Enter()
+    private IEnumerator Death_Enter()
     {
+        float refreshRate = 0.5f;
         if (DEBUG) Debug.Log("Entered state: Death");
+        //Check to see if either player is within activation range
+        while (isDead)
+        {
+            if (DEBUG) Debug.Log("Waiting for revival");
+            yield return new WaitForSeconds(refreshRate);
+        }
+        this.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+        fsm.ChangeState(States.Revival);
+    }
+
+    private IEnumerator Revival_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Revival");
+        
+        _animator.Play("Resurrection", PlayMode.StopAll);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.25f);
+            if (DEBUG) Debug.Log("Waiting for revive animation to finish");
+        }
+        fsm.ChangeState(States.Chase);
     }
 
     public override void Damage(float amount, Transform attacker)
-    {        
+    {
+        if (isDead) return;
+        
+        if (DEBUG) Debug.Log("skeleton damaged");
         base.Damage(amount, attacker);
-
-        // Set the health bar's value to the current health.
-        try
-        {
-            //healthCircle.enabled = true;
-            //healthCircle.fillAmount -= amount / 100.0f;
-            //Invoke("HideHealth", 3);
-        }
-        catch { }
-
-
-        if (true) Debug.Log("skeleton damaged");
 
         if (amount >= CurrentHealth)
         {
-            if (true) Debug.Log("skeleton killed");
+            if (DEBUG) Debug.Log("skeleton killed");
             Killed();
         } else
         {
@@ -342,8 +356,9 @@ public class SkeleMob : BaseEntity
         try
         {
             pathfinder.Stop();
+            this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             _animator.Play("Death", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
     }
