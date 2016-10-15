@@ -8,6 +8,16 @@ public class EndOfLevelTrigger : MonoBehaviour {
 
 	// Canvas indicating to players they have finished the level
     public Canvas LevelFinishedMenu;
+	private bool _player1Entered = false;
+	private bool _player2Entered = false;
+
+	void Update () {
+		if (_player1Entered && _player2Entered) {
+			// Pauses the game and shows the menu indicating that players have completed the level
+			Time.timeScale = 0;
+			LevelFinishedMenu.enabled = true;
+		}
+	}
 
 	/// <summary>
 	/// Used for initialisation
@@ -23,12 +33,25 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	/// </summary>
     void OnTriggerEnter(Collider c)
     {
-        if (c.gameObject.tag == "Player" || c.gameObject.tag == "Player2")
+        if (c.gameObject.tag == "Player")
         {
-            // Pauses the game and shows the menu indicating that players have completed the level
-			Time.timeScale = 0;
-            LevelFinishedMenu.enabled = true;
+			_player1Entered = true;
         }
-        
+
+		if (c.gameObject.tag == "Player2") {
+			_player2Entered = true;
+		}
     }
+
+	void OnTriggerExit(Collider c)
+	{
+		if (c.gameObject.tag == "Player")
+		{
+			_player1Entered = false;
+		}
+
+		if (c.gameObject.tag == "Player2") {
+			_player2Entered = false;
+		}
+	}
 }
