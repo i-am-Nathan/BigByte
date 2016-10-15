@@ -16,18 +16,28 @@ public class PlayerCam : MonoBehaviour
     public Transform[] m_Targets; // All the targets the camera needs to encompass.
 
 
-	private Camera m_Camera;                        // Used for referencing the camera.
+    public GameObject SwoopPositionTarget;
+    public GameObject SwoopAngleTarget;
+
+    private Camera m_Camera;                        // Used for referencing the camera.
 	private float m_ZoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
 	private Vector3 m_MoveVelocity;                 // Reference velocity for the smooth damping of the position.
 	private Vector3 m_DesiredPosition;              // The position the camera is moving towards.
 
+    public int CameraState = 0;
 
+    private Vector3 _startAngle;
+    private Vector3 _startPosition;
+
+    public int tmpFOV = 20;
     /// <summary>
     /// Awakes this instance.
     /// </summary>
     private void Awake ()
 	{
 		m_Camera = GetComponentInChildren<Camera> ();
+        _startAngle = gameObject.transform.eulerAngles;
+        _startPosition = gameObject.transform.position;
 	}
 
 
@@ -36,11 +46,25 @@ public class PlayerCam : MonoBehaviour
     /// </summary>
     private void FixedUpdate ()
 	{
-		// Move the camera towards a desired position.
-		Move ();
+        if (CameraState == 0)
+        {
+            // Move the camera towards a desired position.
+            Move();
 
-		// Change the size of the camera based.
-		Zoom ();
+            // Change the size of the camera based.
+            Zoom();
+
+        }else if(CameraState == 1)
+        {
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, new Vector3(SwoopPositionTarget.transform.position.x, SwoopPositionTarget.transform.position.y, SwoopPositionTarget.transform.position.z), 1f);
+
+            var lookPos = SwoopAngleTarget.transform.position - transform.position;
+            var rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2);
+            m_Camera.fieldOfView = Mathf.SmoothDamp(m_Camera.fieldOfView, tmpFOV, ref m_ZoomSpeed, _dampTime);
+            //swinging down
+        }
+		
 	}
 
 
@@ -54,7 +78,12 @@ public class PlayerCam : MonoBehaviour
 
 		// Smoothly transition to that position.
 		transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, _dampTime);
-	}
+
+        float anglex = Mathf.MoveTowardsAngle(transform.eulerAngles.x, _startAngle.x, 30f * Time.deltaTime);
+        float angley = Mathf.MoveTowardsAngle(transform.eulerAngles.y, _startAngle.y, 30f * Time.deltaTime);
+        float anglez = Mathf.MoveTowardsAngle(transform.eulerAngles.z, _startAngle.z, 30f * Time.deltaTime);
+        transform.eulerAngles = new Vector3(anglex, angley, anglez);
+    }
 
 
     /// <summary>
@@ -85,12 +114,16 @@ public class PlayerCam : MonoBehaviour
 		averagePos.y = transform.position.y;
 
         //Offset the camera to account for it being on an angle
-        averagePos.x += _xOffset; 
+        averagePos.x += _xOffset;
 
+        averagePos.y = _startPosition.y;
 
-		// The desired position is the average position;
-		m_DesiredPosition = averagePos;
-	}
+        // The desired position is the average position;
+        m_DesiredPosition = averagePos;
+
+       
+
+    }
 
 
     /// <summary>
@@ -165,4 +198,9 @@ public class PlayerCam : MonoBehaviour
 		// Find and set the required size of the camera.
 		m_Camera.orthographicSize = FindRequiredSize ();
 	}
+
+    public void SwingDown()
+    {
+
+    }
 }
