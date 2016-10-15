@@ -10,15 +10,13 @@ public class PlayerController : Player
 {
     public AchievementManager AchievementManager;
     // Health image on floor
-    public Image healthCircle;                                 // Reference to the UI's health circle.
+    public Image healthCircle;                                          // Reference to the UI's health circle.
     private bool damaged;                                               // True when the player gets damaged.
 
     // Handling
     public float RotationSpeed;
     public float WalkSpeed;
-    public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
-    //public bool dead = false;
-    public bool IsInCircle = false;
+    public int WeaponState;
 
     public int PushPower = 20;
     public bool IsDisabled;
@@ -36,6 +34,7 @@ public class PlayerController : Player
     private float _lastJumpTime;
     
     public bool IsMainMenu = false;
+
     /// <summary>
     /// Starts this instance.
     /// </summary>
@@ -92,20 +91,12 @@ public class PlayerController : Player
     /// </summary>
     void ControlWASD()
     {
-        if(TorchFuelControllerScript.IsInTorchRange(gameObject.transform.position.x, gameObject.transform.position.z))
-        {
-            IsInCircle = true;
-        }else
-        {
-            IsInCircle = false;
-        }
-
-
         if (IsDisabled)
         {
 			_animator.SetBool("Idling", true);
             return;
         }
+
         Vector3 input = new Vector3(-Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
 
         if (input != Vector3.zero)
@@ -116,27 +107,23 @@ public class PlayerController : Player
 
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
-        if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
-        {
-            _animator.SetBool("Idling", false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Return) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.RightControl) && !_torch.activeInHierarchy)
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AddProgressToAchievement("First Hits",1.0f);
+            AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
         }
+        else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
+        {
+            _animator.SetBool("Idling", false);
+        }
+      
         else
         {
             _animator.SetBool("Idling", true);
         }
 
-
-        if (Input.GetKeyDown(KeyCode.RightControl) && (Time.time - _lastJumpTime) > .5)
-        {
-            transform.Translate(Vector3.up * 260 * Time.deltaTime, Space.World);
-            _lastJumpTime = Time.time;
-        }
+        //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
     }
 
