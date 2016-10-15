@@ -38,24 +38,23 @@ public class RotatingWall : MonoBehaviour
     {
         if (collider.tag.Equals("Player"))
         {
-
-
+            Debug.Log("P1Left");
             _people--;
         }
         if (collider.tag.Equals("Player2"))
         {
-
+            Debug.Log("P2Left");
             _people--;
         }
         transform.Rotate(0, 0, 0, 0);
-
     }
 
     void OnTriggerStay(Collider collider)
     {
+        Debug.Log(_people);
         if (_people == 2)
         {
-
+            Debug.Log("Pushing");
             if (transform.rotation.y < 0)
             {
                 Debug.Log("Sound to indicate rotation complete and open door sound");
