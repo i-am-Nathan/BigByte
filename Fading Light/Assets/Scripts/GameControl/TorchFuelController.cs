@@ -184,7 +184,7 @@ public class TorchFuelController : MonoBehaviour {
         UpdateTorch();
 	}
 
-    public void RemoveFuelWithAmount(int amount)
+    public void RemoveFuelWithAmount(float amount)
     {
         if (IsDisabled)
         {
