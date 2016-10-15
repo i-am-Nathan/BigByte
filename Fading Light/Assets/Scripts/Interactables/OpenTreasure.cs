@@ -81,8 +81,8 @@ public class OpenTreasure : MonoBehaviour {
 		while (timePassed < 2)
 		{
 			//Rotates the treasure lid and opens it over a period of time.
-			GameObject lid = GameObject.FindGameObjectWithTag ("Lid");
-			lid.transform.Rotate (new Vector3 (-1, 0, 0) * (_speed * Time.deltaTime));
+			
+			transform.Find("box_top").transform.Rotate (new Vector3 (-1, 0, 0) * (_speed * Time.deltaTime));
 			timePassed += Time.deltaTime;
 			yield return null;
 
