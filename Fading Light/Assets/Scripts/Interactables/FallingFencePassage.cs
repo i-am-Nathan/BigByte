@@ -5,6 +5,7 @@ public class FallingFencePassage : MonoBehaviour {
 
 	private bool _leftWall = false;
 	private bool _rightWall = false;
+	private bool _wallsDown = false;
 
 	public void SetLeftWall() {
 		_leftWall = true;
@@ -15,13 +16,15 @@ public class FallingFencePassage : MonoBehaviour {
 	}
 
 	void Update () {
-		if (_leftWall && _rightWall) {
+		if (_leftWall && _rightWall && !_wallsDown) {
 			Debug.Log ("Playing final animation");
 			GameObject rightFence = GameObject.Find("Falling Fence Right");
 			rightFence.GetComponent<Animation>().Play("FallingWallFall");
 
 			GameObject leftFence = GameObject.Find("Falling Fence Left");
 			leftFence.GetComponent<Animation>().Play("FallingWallFall");
+
+			_wallsDown = true;
 		}
 	}
 }
