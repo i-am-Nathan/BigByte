@@ -93,7 +93,7 @@ public class OpenTreasure : MonoBehaviour {
 		//This will instantiate a coin which will fly out in random directins from the chest. 
 	
 		for (int i = 0; i < randomNumber; i++) {
-			yield return new WaitForSeconds (0.1f);
+			yield return new WaitForSeconds (0.01f);
 			int itemIndex = 0;
 			float drop = Random.Range (1, 100);
 			for (int j = 0; j < DropChance.Length; j++) {
