@@ -75,6 +75,7 @@ public class SpiderMob : BaseEntity
         //Create the FSM controller
         fsm = StateMachine<States>.Initialize(this);
         fsm.ChangeState(States.Init);
+        pathfinder.enabled = true;
     }
 
     public void MockUp()
