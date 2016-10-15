@@ -3859,7 +3859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &460771352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4420,7 +4420,7 @@ MonoBehaviour:
   - {fileID: 1044716765}
   Speed: 20
   IsDisabled: 1
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!136 &502107819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5000,7 +5000,7 @@ MonoBehaviour:
   - {fileID: 1004940611}
   Speed: 8
   IsDisabled: 0
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!4 &539050580 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
@@ -5672,7 +5672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!223 &637651247
 Canvas:
   m_ObjectHideFlags: 0
@@ -6187,6 +6187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f121841e9f6a7546844bbe1395b1c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pulled: 0
+  _rightWall: 0
 --- !u!65 &677271552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10950,7 +10952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1068480028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12665,7 +12667,7 @@ MonoBehaviour:
   Player1: {fileID: 1842113497}
   Player2: {fileID: 465268860}
   MoleMan: {fileID: 539050578}
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
   TorchController: {fileID: 1329372291}
   StopMovement: 0
   IsActive: 0
@@ -13349,7 +13351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1363836151
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13582,6 +13584,10 @@ MonoBehaviour:
   - {fileID: 804729167}
   - {fileID: 1907493373}
   _currentStep: 0
+  _done: 0
+  _tips: {fileID: 0}
+  _tipsDone: 0
+  _startDisplay: 0
 --- !u!4 &1389205620
 Transform:
   m_ObjectHideFlags: 0
@@ -21883,6 +21889,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6304012e9bbc643b4e4bf0bd03d94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pulled: 0
+  _leftWall: 0
 --- !u!65 &1912234652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22576,6 +22584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70d372e717014c043868fbfc4667da84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftWall: 0
+  _rightWall: 0
+  _wallsDown: 0
 --- !u!1 &1973599107
 GameObject:
   m_ObjectHideFlags: 0
