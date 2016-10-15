@@ -11,6 +11,7 @@ public class InGameUiManager : MonoBehaviour {
 	// UI items used to present information to the players
     public Canvas LevelFinishedMenu;
     public Canvas ExitMenu;
+	public Canvas ControlsMenu;
     public Button RestartLevelButton;
     public Button QuitToMenuButton;
     public Button ContinueButton;
@@ -29,6 +30,7 @@ public class InGameUiManager : MonoBehaviour {
 		// Hiding menus which are not meant to be shown yet
         LevelFinishedMenu.enabled = false;
         ExitMenu.enabled = false;
+		ControlsMenu.enabled = false;
 
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
@@ -58,6 +60,10 @@ public class InGameUiManager : MonoBehaviour {
         {
             ExitMenu.enabled = !ExitMenu.enabled;
         }
+
+		if (Input.GetKeyDown (KeyCode.Tab)) {
+			ControlsMenu.enabled = !ControlsMenu.enabled;
+		}
 		SetTime();
     }
 
