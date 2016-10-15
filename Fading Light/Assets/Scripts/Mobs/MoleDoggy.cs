@@ -4,12 +4,12 @@ using MonsterLove.StateMachine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls the AI (using FSM) of the large spider bosses (e.i. the one found in the tutorial level)
+/// Controls the AI (using FSM) of the large molemans dog bosses (e.i. the one found in the tutorial level)
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class MoleDoggy : BaseEntity
 {
-	//Spider states
+	//molemans dog states
 	public enum States
 	{
 		Init,
@@ -20,7 +20,7 @@ public class MoleDoggy : BaseEntity
         Death
 	}
 
-    //Spider stats
+    //molemans dog stats
     public float HardActivationDistance = 50;
     public float LooseActivationDistance = 120;
     public float AttackSpeed = 1;
@@ -66,7 +66,7 @@ public class MoleDoggy : BaseEntity
     /// </summary>
     private void Awake()
 	{
-        if (DEBUG) Debug.Log("The spider wakes.");
+        if (DEBUG) Debug.Log("The molemans dog wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
 
@@ -96,7 +96,7 @@ public class MoleDoggy : BaseEntity
     /// </summary>
     private void Init_Enter()
     {
-        if (DEBUG) Debug.Log("Spider state machine initilized.");
+        if (DEBUG) Debug.Log("molemans dog state machine initilized.");
         fsm.ChangeState(States.Idle);
     }
 
@@ -121,7 +121,7 @@ public class MoleDoggy : BaseEntity
 
         pathfinder.enabled = false;
 
-        _animator.Play("attack2", PlayMode.StopAll);
+        _animator.Play("Attack", PlayMode.StopAll);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
         
 
@@ -143,7 +143,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// spiders alert area, or comes into attack range.
+    /// molemans dogs alert area, or comes into attack range.
     /// </summary>
     /// <returns></returns>
     IEnumerator Chase_Enter()
@@ -162,11 +162,11 @@ public class MoleDoggy : BaseEntity
 
             if (!_isMoving)
             {
-                _animator.Play("WalkDog", PlayMode.StopAll);
+                _animator.Play("WalkDog 1", PlayMode.StopAll);
                 _isMoving = true;
             }
 
-            //If player 2 is closer to the spider, and is not dead, then chase them Otherwise, player 1 is closer.              
+            //If player 2 is closer to the molemans dog, and is not dead, then chase them Otherwise, player 1 is closer.              
             if (Vector3.Distance(player1.position, this.gameObject.transform.position) >= Vector3.Distance(player2.position, this.gameObject.transform.position) && !player2.GetComponent<BaseEntity>().isDead)
             {
                 if (DEBUG) Debug.Log("Targetting player 2");
@@ -212,7 +212,7 @@ public class MoleDoggy : BaseEntity
             //Every so often sprint at the player
             if (_walkCount > 12)
             {
-                if (DEBUG) Debug.Log("Spider has started sprinting!");
+                if (DEBUG) Debug.Log("molemans dog has started sprinting!");
                 _isSprinting = true;
                 _isMoving = false;
                 _walkCount = -5;
@@ -238,7 +238,7 @@ public class MoleDoggy : BaseEntity
         {
             if (DEBUG) Debug.Log("Waiting for players.");
 
-            //Move the spider back to its "lair" if there are no targets to chase/attack
+            //Move the molemans dog back to its "lair" if there are no targets to chase/attack
             pathfinder.SetDestination(spawnLocation);
 
             //Retrieve the distance to the two playesr and their entity objects
@@ -285,11 +285,11 @@ public class MoleDoggy : BaseEntity
         catch { }
 
 
-        if (DEBUG) Debug.Log("Spider damaged");
+        if (DEBUG) Debug.Log("molemans dog damaged");
 
         if (amount >= CurrentHealth)
         {
-            if (DEBUG) Debug.Log("Spider killed");
+            if (DEBUG) Debug.Log("molemans dog killed");
             Killed();
         } else
         {
@@ -309,7 +309,7 @@ public class MoleDoggy : BaseEntity
         try
         {
             pathfinder.Stop();
-            _animator.Play("death1", PlayMode.StopAll);
+            _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
