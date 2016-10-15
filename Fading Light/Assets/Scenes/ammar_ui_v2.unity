@@ -1976,7 +1976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &185292097
 Transform:
   m_ObjectHideFlags: 0
@@ -2052,7 +2052,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100140, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc600cce01eb57a409f4e69025868a2c, type: 3}
@@ -2589,7 +2589,10 @@ MonoBehaviour:
   SprintSpeed: 24
   AttackCooldown: 0.25
   RotationSpeed: 10
-  healthCircle: {fileID: 0}
+  HealthCircle: {fileID: 0}
+  HealthSlider: {fileID: 1101668476}
+  BossName: {fileID: 327794871}
+  BossPanel: {fileID: 587636118}
 --- !u!143 &265806829
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2644,10 +2647,6 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &285909206 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 137386, guid: 1673822d2508371498ef1be030ada982, type: 2}
-  m_PrefabInternal: {fileID: 766405322}
 --- !u!1 &291882672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,7 +3039,7 @@ GameObject:
   - 222: {fileID: 327794872}
   - 114: {fileID: 327794871}
   m_Layer: 5
-  m_Name: ScoreText (1)
+  m_Name: Boss Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6187,8 +6186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f121841e9f6a7546844bbe1395b1c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pulled: 0
-  _rightWall: 0
 --- !u!65 &677271552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11325,8 +11322,8 @@ GameObject:
   - 224: {fileID: 1101668475}
   - 114: {fileID: 1101668476}
   m_Layer: 5
-  m_Name: Health Slider
-  m_TagString: Player 2 Health Slider
+  m_Name: Boss Health Slider
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13569,25 +13566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b588649d7cb50a84f8d2f175f917b317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1: {fileID: 1842113497}
-  Player2: {fileID: 465268860}
-  MoleMen:
-  - {fileID: 539050578}
-  - {fileID: 502107818}
-  TorchController: {fileID: 1329372291}
-  ReferencePoints: []
-  CameraRig: {fileID: 285909206}
-  CutScenePositions:
-  - {fileID: 936281421}
-  - {fileID: 1575558184}
-  CustSceneTargets:
-  - {fileID: 804729167}
-  - {fileID: 1907493373}
-  _currentStep: 0
-  _done: 0
-  _tips: {fileID: 0}
-  _tipsDone: 0
-  _startDisplay: 0
 --- !u!4 &1389205620
 Transform:
   m_ObjectHideFlags: 0
@@ -21889,8 +21867,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6304012e9bbc643b4e4bf0bd03d94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pulled: 0
-  _leftWall: 0
 --- !u!65 &1912234652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22584,9 +22560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70d372e717014c043868fbfc4667da84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftWall: 0
-  _rightWall: 0
-  _wallsDown: 0
 --- !u!1 &1973599107
 GameObject:
   m_ObjectHideFlags: 0

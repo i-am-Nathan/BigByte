@@ -35,7 +35,10 @@ public class SpiderBoss : BaseEntity
     public float RotationSpeed = 10f;
 
 
-    public Image healthCircle;                                 // Reference to the UI's health circle.
+    public Image HealthCircle;                                 // Reference to the UI's health circle.
+	public Slider HealthSlider;
+	public Text BossName;
+	public GameObject BossPanel;
 
     //Target and navigation variables
     NavMeshAgent pathfinder;
@@ -87,7 +90,12 @@ public class SpiderBoss : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        healthCircle.enabled = false;
+        HealthCircle.enabled = false;
+		HealthSlider = HealthSlider.GetComponent<Slider> ();
+		BossName = BossName.GetComponent<Text>();
+		BossName.text = "Spider Boss";
+		Debug.Log ("name " + BossName.text);
+		BossPanel.SetActive(false);
         CurrentHealth = Health;
 	}
 
@@ -116,7 +124,7 @@ public class SpiderBoss : BaseEntity
     IEnumerator Attack_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
-
+		BossPanel.SetActive(true);
         RotateTowards(target);
 
         pathfinder.enabled = false;
@@ -149,7 +157,7 @@ public class SpiderBoss : BaseEntity
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
-
+		BossPanel.SetActive(true);
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _lockedOn = true;
 
@@ -233,7 +241,7 @@ public class SpiderBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
         float refreshRate = 0.8f;        
-
+		BossPanel.SetActive(false);
         //Check to see if either player is within activation range
         while (!_lockedOn)
         {
@@ -269,6 +277,7 @@ public class SpiderBoss : BaseEntity
     private void Death_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Death");
+		BossPanel.SetActive(false);
     }
 
     public override void Damage(float amount, Transform attacker)
@@ -278,9 +287,9 @@ public class SpiderBoss : BaseEntity
         // Set the health bar's value to the current health.
         try
         {
-            healthCircle.enabled = true;
-            healthCircle.fillAmount -= amount / 100.0f;
-            Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
+            HealthCircle.enabled = true;
+			HealthCircle.fillAmount -= amount / 100.0f;
+			HealthSlider.value -= amount / 100.0f;
             Invoke("HideHealth", 3);
         }
         catch { }
@@ -321,8 +330,7 @@ public class SpiderBoss : BaseEntity
     /// </summary>
     public void HideHealth()
     {
-        Debug.Log("aaa");
-        healthCircle.enabled = false;
+		HealthCircle.enabled = false;
     }
 }
 
