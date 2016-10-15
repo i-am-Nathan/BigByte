@@ -29,8 +29,8 @@ public class ActivateText : MonoBehaviour
 	/// Detects Keypress and activates dialogue when detected.
 	/// </summary>
 	void Update () {
-		//This will detect whether a keypress is required and execute when the condition is fulfilled. 
-		if (_waitForPress && Input.GetKeyDown (KeyCode.T)) {
+        //This will detect whether a keypress is required and execute when the condition is fulfilled. 
+        if (_waitForPress && Input.GetKeyDown(KeyCode.T) && TextBox.Talking == false) {
 			//This will check if the character can only talk once or not and check if it has talked.
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
 				//This will execute the functions in TextBoxManager class and load the new dialogue.
@@ -61,13 +61,17 @@ public class ActivateText : MonoBehaviour
 		//Makes sure that the characters that collide with the object are players.
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
-				//This will execute the functions in TextBoxManager class and load the new dialogue.
-				TextBox.ReloadScript (Dialogue,DialogueSpeech);
+                _talked = true;
+                Debug.Log("called");
+                //This will execute the functions in TextBoxManager class and load the new dialogue.
+                TextBox.ReloadScript (Dialogue,DialogueSpeech);
 				TextBox.CurrentLine = StartLine;
 				TextBox.EndLine = EndLine;
 				TextBox.EnableDialogue ();
-				_talked = true;
+
 				if (DestroyWhenActivated) {
+                    Debug.Log("Death");
+                    
 					Destroy (gameObject);
 				}
 			}

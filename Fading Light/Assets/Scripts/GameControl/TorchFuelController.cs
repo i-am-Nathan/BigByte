@@ -184,6 +184,22 @@ public class TorchFuelController : MonoBehaviour {
         UpdateTorch();
 	}
 
+    public void RemoveFuelWithAmount(int amount)
+    {
+        if (IsDisabled)
+        {
+            return;
+        }
+        if (TotalFuelPercentage > 0 && !IsMainMenu)
+        {
+            TotalFuelPercentage -= amount;
+            _torchFuelSlider.value = TotalFuelPercentage;
+        }
+
+        UpdateTorch();
+    }
+
+
     /// <summary>
     /// Removes the fuel amount.
     /// </summary>

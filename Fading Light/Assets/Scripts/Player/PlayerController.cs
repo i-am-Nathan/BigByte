@@ -224,6 +224,7 @@ public class PlayerController : Player
         if (TorchFuelControllerScript.TorchInPlayer1)
         {
             Debug.Log("OH BABY THE WIND");
+            TorchFuelControllerScript.RemoveFuelWithAmount(1);
         }
     }
 

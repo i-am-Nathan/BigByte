@@ -8,7 +8,7 @@ using System.Collections;
 public class LifeManager : MonoBehaviour
 {
 	// Handling
-    private GameObject[] _lives;
+	public GameObject[] Lives;
     private int _numberOfLivesLeft;
     private GameData _gameDataScript;
 
@@ -24,14 +24,12 @@ public class LifeManager : MonoBehaviour
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
         _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
-		// Getting the hearts on the UI
-        _lives = GameObject.FindGameObjectsWithTag("Lives");
         _numberOfLivesLeft = _gameDataScript.GetNumberOfLives();
 
         // Setting the appropriate hearts to show
         for (int i = 0; i < _numberOfLivesLeft; i++)
         {
-            _lives[i].SetActive(true);
+			Lives[i].SetActive(true);
         }
 
         // Setting the appropriate hearts to hide
@@ -39,7 +37,7 @@ public class LifeManager : MonoBehaviour
         {
             for (int i = 2; i > _numberOfLivesLeft - 1; i--)
             { 
-            _lives[i].SetActive(false);
+				Lives[i].SetActive(false);
             }
         }
 
@@ -56,19 +54,19 @@ public class LifeManager : MonoBehaviour
         _numberOfLivesLeft = _numberOfLivesLeft - 1;
         _gameDataScript.SetNumberOfLives(_numberOfLivesLeft);
 
+		// Removing a heart from the UI
+		Lives[_numberOfLivesLeft].SetActive(false);
+
 		// Checking if all 3 lives are over
         if (_numberOfLivesLeft <= 0)
         {
             // Game over
             // Pausing the game and showing the end of game screen
-            _lives[2 - _numberOfLivesLeft].SetActive(false);
             Time.timeScale = 0;
             DeathScreen.enabled = true;
         }
         else
         {
-            // Removing a heart from the UI
-            _lives[2-_numberOfLivesLeft].SetActive(false);
             StartCoroutine("Wait");
         }
     }

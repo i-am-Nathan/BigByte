@@ -113,7 +113,11 @@ public class Storyline : MonoBehaviour {
     {
         if(_currentStep == 1)
         {
-            MoleMen.RemoveAt(0);
+            if(MoleMen.Count > 1)
+            {
+                MoleMen.RemoveAt(0);
+            }
+            
             _currentStep++;
         }
     }
