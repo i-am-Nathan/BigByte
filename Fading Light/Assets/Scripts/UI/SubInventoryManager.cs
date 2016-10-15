@@ -56,12 +56,12 @@ public class SubInventoryManager : MonoBehaviour {
 		_itemImageDictionary.Add ("Attack Pot", DefenseImage);
 		_itemImageDictionary.Add ("Defense Pot", BerserkImage);
 
-		_player1ItemQuantityDictionary.Add ("Health Pot", 10);
-		_player1ItemQuantityDictionary.Add ("Attack Pot", 10);
-		_player1ItemQuantityDictionary.Add ("Defense Pot", 10);
-		_player2ItemQuantityDictionary.Add ("Health Pot", 10);
-		_player2ItemQuantityDictionary.Add ("Attack Pot", 10);
-		_player2ItemQuantityDictionary.Add ("Defense Pot", 10);
+		_player1ItemQuantityDictionary.Add ("Health Pot", 0);
+		_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
+		_player1ItemQuantityDictionary.Add ("Defense Pot",0);
+		_player2ItemQuantityDictionary.Add ("Health Pot", 0);
+		_player2ItemQuantityDictionary.Add ("Attack Pot", 0);
+		_player2ItemQuantityDictionary.Add ("Defense Pot", 0);
 
 		SetItemOnScreen ("Health Pot", true);
 		SetItemOnScreen ("Health Pot", false);
