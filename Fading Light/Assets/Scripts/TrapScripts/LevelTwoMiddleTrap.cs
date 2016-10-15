@@ -17,7 +17,6 @@ public class LevelTwoMiddleTrap : MonoBehaviour {
         {
             obj.GetComponent<Animation>().Stop();
         }
-        door.GetComponent<Animation>().Stop();
     }
 	
 	// Update is called once per frame
