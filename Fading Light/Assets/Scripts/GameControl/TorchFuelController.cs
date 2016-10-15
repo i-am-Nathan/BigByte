@@ -186,10 +186,12 @@ public class TorchFuelController : MonoBehaviour {
 
     public void RemoveFuelWithAmount(float amount)
     {
+
         if (IsDisabled)
         {
             return;
         }
+        Debug.Log("trug");
         if (TotalFuelPercentage > 0 && !IsMainMenu)
         {
             TotalFuelPercentage -= amount;
