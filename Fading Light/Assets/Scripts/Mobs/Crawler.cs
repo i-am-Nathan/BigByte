@@ -86,7 +86,7 @@ public class Crawler : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        healthCircle.enabled = false;
+        //healthCircle.enabled = false;
         CurrentHealth = Health;
 	}
 
@@ -158,7 +158,7 @@ public class Crawler : BaseEntity
 
             if (!_isMoving)
             {
-                _animator["run"].speed = _isSprinting ? 1.5f : 1.0f;
+                //_animator["run"].speed = _isSprinting ? 1.5f : 1.0f;
                 _animator.Play("crawl", PlayMode.StopAll);
                 _isMoving = true;
             }
@@ -265,8 +265,8 @@ public class Crawler : BaseEntity
         // Set the health bar's value to the current health.
         try
         {
-            healthCircle.enabled = true;
-            healthCircle.fillAmount -= amount / 100.0f;
+            //healthCircle.enabled = true;
+            //healthCircle.fillAmount -= amount / 100.0f;
             Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
             Invoke("HideHealth", 3);
         }
@@ -309,7 +309,7 @@ public class Crawler : BaseEntity
     public void HideHealth()
     {
         Debug.Log("aaa");
-        healthCircle.enabled = false;
+        //healthCircle.enabled = false;
     }
 }
 
