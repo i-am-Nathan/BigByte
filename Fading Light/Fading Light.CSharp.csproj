@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Web v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebPlayer:6</UnityBuildTarget>
     <UnityVersion>5.3.5f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -116,9 +114,13 @@
     <Compile Include="Assets\Scripts\GameControl\Storyline.cs" />
     <Compile Include="Assets\Scripts\GameControl\TorchFuelController.cs" />
     <Compile Include="Assets\Scripts\Interactables\CandleLight.cs" />
+    <Compile Include="Assets\Scripts\Interactables\FallingFenceLeverLeft.cs" />
+    <Compile Include="Assets\Scripts\Interactables\FallingFenceLeverRight.cs" />
+    <Compile Include="Assets\Scripts\Interactables\FallingFencePassage.cs" />
     <Compile Include="Assets\Scripts\Interactables\FloatingPlate.cs" />
     <Compile Include="Assets\Scripts\Interactables\FloatingPressurePlate.cs" />
     <Compile Include="Assets\Scripts\Interactables\Lever.cs" />
+    <Compile Include="Assets\Scripts\Interactables\LeverGate.cs" />
     <Compile Include="Assets\Scripts\Interactables\OpenTreasure.cs" />
     <Compile Include="Assets\Scripts\Interactables\PressurePlate.cs" />
     <Compile Include="Assets\Scripts\Interactables\RotatingDoor.cs" />
@@ -135,11 +137,11 @@
     <Compile Include="Assets\Scripts\Mobs\BaseEntity.cs" />
     <Compile Include="Assets\Scripts\Mobs\Crawler.cs" />
     <Compile Include="Assets\Scripts\Mobs\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Mobs\MoleDoggy.cs" />
     <Compile Include="Assets\Scripts\Mobs\SkeleBoss.cs" />
     <Compile Include="Assets\Scripts\Mobs\SkeleMob.cs" />
     <Compile Include="Assets\Scripts\Mobs\SkeletonSkinny.cs" />
     <Compile Include="Assets\Scripts\Mobs\SpiderBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Mobs\MoleDoggy.cs" />
     <Compile Include="Assets\Scripts\Mobs\SpiderBoss.cs" />
     <Compile Include="Assets\Scripts\Mobs\SpiderMob.cs" />
     <Compile Include="Assets\Scripts\Mobs\StateMachine.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="Assets\Scripts\Player\Player2Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\SkeleWeapon.cs" />
+    <Compile Include="Assets\Scripts\Puzzles\RaisePath.cs" />
     <Compile Include="Assets\Scripts\Puzzles\RotatableWall.cs" />
     <Compile Include="Assets\Scripts\Puzzles\RotatingDoor1.cs" />
     <Compile Include="Assets\Scripts\Puzzles\RotatingWall.cs" />
