@@ -18,6 +18,7 @@ public class SkeleBoss : BaseEntity
         Attack,
         Taunt,
         Summoning,
+        Sheilding,
         Death
 	}
 
@@ -57,6 +58,9 @@ public class SkeleBoss : BaseEntity
     private bool _isSprinting;
     private bool _isMoving;
     private int _walkCount;
+
+    private bool _summonedOnce = false;
+    private bool _summonedTwice = false;
 
     private bool DEBUG = true;
 
@@ -120,7 +124,7 @@ public class SkeleBoss : BaseEntity
     private void Init_Enter()
     {
         if (DEBUG) Debug.Log("skeleton state machine initilized.");
-        fsm.ChangeState(States.Summoning);
+        fsm.ChangeState(States.Idle);
     }
 
     /// <summary>
@@ -173,35 +177,70 @@ public class SkeleBoss : BaseEntity
     /// skeletons alert area, or comes into attack range.
     /// </summary>
     /// <returns></returns>
-    IEnumerator Summoning_Enter()
+    private void Summoning_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Summoning");
+        if (DEBUG) Debug.Log("Entered state: Summoning begins");
         _animator["Skill 1"].speed = 0.3f;
         _animator.Play("Skill 1", PlayMode.StopAll);
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _summoning = true;
-        
+       
+        //Check too see if all minion mobs have been killed
+        GameObject[] mobs = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject mob in mobs)
+        {
+            //if (DEBUG) Debug.Log("Checking enemy tagged object");
+            SkeleMob a = mob.transform.GetComponent<SkeleMob>();
+            if (a != null)
+            {
+                if (DEBUG) Debug.Log("Checking skele mob...");
+                if (a.isDead)
+                {
+                    if (DEBUG) Debug.Log("Reviving.");
+                    a.isDead = false;
+                }
+            }
+        }
+        fsm.ChangeState(States.Sheilding);
+    }
+
+    IEnumerator Sheilding_Enter()
+    {
+        if (DEBUG) Debug.Log("Entered state: Summoning exit");
+
+        float refreshRate = !_isSprinting ? 0.3f : 0.05f;
+        _summoning = true;
 
         while (_summoning)
         {
             //Check too see if all minion mobs have been killed
-
             GameObject[] mobs = GameObject.FindGameObjectsWithTag("Enemy");
-            for (int i=0; i<mobs.Length; i++)
+
+            bool _oneAlive = false;
+            foreach (GameObject mob in mobs)
             {
-                SkeleMob a = mobs[i].GetComponent<SkeleMob>();
+                //if (DEBUG) Debug.Log("Checking enemy tagged object");
+                SkeleMob a = mob.transform.GetComponent<SkeleMob>();
                 if (a != null)
                 {
-                    if (a.isDead)
+                    if (DEBUG) Debug.Log("Checking skele mob...");
+                    if (!a.isDead)
                     {
-                        _summoning = false;
-                        break;
+                        if (DEBUG) Debug.Log("Found one alive.");
+                        _oneAlive = true;
                     }
                 }
             }
+
+            if (!_oneAlive)
+            {
+                break;
+            }
+
             yield return new WaitForSeconds(refreshRate);
         }
+        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>
@@ -339,9 +378,26 @@ public class SkeleBoss : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+
         if (fsm.State != States.Summoning)
         {
             base.Damage(amount, attacker);
+
+            if (CurrentHealth < 150 && !_summonedOnce)
+            {
+                _summonedOnce = true;
+                Debug.Log("Health reduced to first summoning level");
+                fsm.ChangeState(States.Summoning, StateTransition.Overwrite);
+                return;
+            }
+
+            if (CurrentHealth < 40 && !_summonedTwice)
+            {
+                _summonedTwice = false;
+                Debug.Log("Health reduced to first summoning level");
+                fsm.ChangeState(States.Summoning, StateTransition.Overwrite);
+                return;
+            }
 
             // Set the health bar's value to the current health.
             try
@@ -367,8 +423,11 @@ public class SkeleBoss : BaseEntity
                 {
                     _animator.Play("Damage", PlayMode.StopSameLayer);
                 }
-                catch { }
+                catch { }                
             }
+        } else
+        {
+            if (DEBUG) Debug.Log("CANNOT DAMAGE SKELETON WHEN SUMMONING");
         }
     }
 
@@ -379,9 +438,8 @@ public class SkeleBoss : BaseEntity
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
         {
-            pathfinder.Stop();
-            _animator.Play("death1", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            _animator.Play("Death", PlayMode.StopAll);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
     }
