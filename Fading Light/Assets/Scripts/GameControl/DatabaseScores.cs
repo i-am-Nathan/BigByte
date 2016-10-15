@@ -14,11 +14,6 @@ public class DatabaseScores : MonoBehaviour
     List<HighScore> _results = new List<HighScore>();
     public bool IsDone = false;
 
-    void Start()
-    {
-        StartCoroutine(PostScores("blahblahblah", 100, 0.1f, 0.2f, 5, 45, 10, 2, 1));
-    }
-
     /// <summary>
     /// Posts the scores to the webserver.
     /// </summary>
