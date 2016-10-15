@@ -88,7 +88,6 @@ public class Player2Controller : Player
     /// </summary>
     void ControlWASD()
 	{
-       
         //Find the direction the character should be moving toward
 		var input = new Vector3(-Input.GetAxisRaw("Vertical1"), 0, Input.GetAxisRaw("Horizontal1"));
 
@@ -102,27 +101,23 @@ public class Player2Controller : Player
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
         //Disable idling animation if we are walking
-        if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
-        {
-            _animator.SetBool("Idling", false);
-        }
-        else if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy)
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+        }
+        else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
+        {
+            _animator.SetBool("Idling", false);
         }
         else
         {
             _animator.SetBool("Idling", true);
         }
 
-        //Character  jumps
-        if (Input.GetKeyDown(KeyCode.Q) && (Time.time - _lastJumpTime) > .5)
-        {
-            transform.Translate(Vector3.up * 260 * Time.deltaTime, Space.World);
-            _lastJumpTime = Time.time;
-        }
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
 
     }
 
@@ -201,7 +196,8 @@ public class Player2Controller : Player
     {
         if (_torchFuelScript.TorchInPlayer1 == false)
         {
-            Debug.Log("OH BABY THE WIND");
+            _torchFuelScript.RemoveFuelWithAmount(1);
+            Debug.Log("P2Wind");
         }
     }
 

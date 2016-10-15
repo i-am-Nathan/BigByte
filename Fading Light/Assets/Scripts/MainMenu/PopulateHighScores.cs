@@ -10,7 +10,7 @@ public class PopulateHighScores : MonoBehaviour
     private DatabaseScores databaseInteracter = new DatabaseScores();
     private bool isDone = false;
     List<HighScore> _scores = new List<HighScore>();
-    // Use this for initialization
+
     void Start()
     {
         StartCoroutine(databaseInteracter.GetScores());
@@ -31,16 +31,15 @@ public class PopulateHighScores : MonoBehaviour
         foreach (var highscore in _scores)
         {
            
-            GameObject newAchievement = Instantiate(ListItem) as GameObject;
-            HighScorePanel controller = (HighScorePanel)newAchievement.GetComponent(typeof(HighScorePanel));
+            GameObject listItem = Instantiate(ListItem) as GameObject;
+            HighScorePanel panel = (HighScorePanel)listItem.GetComponent(typeof(HighScorePanel));
 
-            if (controller != null)
+            if (panel != null && highscore != null)
             {
-                Debug.Log("ACHIEVEMENT");
-                controller.Name.text = highscore.name;
-                controller.Description.text = highscore.gold;
-                newAchievement.transform.parent = Grid.transform;
-                newAchievement.transform.localScale = Vector3.one;
+                panel.Score = highscore;
+                panel.Populate();
+                panel.transform.parent = Grid.transform;
+                panel.transform.localScale = Vector3.one;
             }
         }
 
