@@ -16,6 +16,7 @@ public class TextBoxManager : MonoBehaviour {
 	public string[] TextLines;
 	private string[] _splitText;
 	public Image CharacterImage;
+    public bool Talking = false;
 	public Text CharacterName;
 	public Sprite[] Images;
 	private Dictionary<string,Sprite> SpriteDictionary = new Dictionary<string,Sprite>();
@@ -92,6 +93,7 @@ public class TextBoxManager : MonoBehaviour {
 
 		//Ensures that the first line will also have the letter by letter feature.
 		if (FirstLine) {
+            Talking = true;
 			_splitText= new string[3];
 			_splitText = TextLines [CurrentLine].Split (':');
 			CharacterImage.sprite = SpriteDictionary [_splitText [0]];
@@ -113,6 +115,7 @@ public class TextBoxManager : MonoBehaviour {
 				//Checks whether it has reached the end of the required dialogue.
 				if (CurrentLine > EndLine) {
 					DisableDialogue ();
+                    Talking = false;
                     ThisStoryline.DialogueComplete();
 				} else {
 					//Splits the string and assigns the appropriate character image and name on the dialogue.

@@ -196,7 +196,8 @@ public class Player2Controller : Player
     {
         if (_torchFuelScript.TorchInPlayer1 == false)
         {
-            Debug.Log("OH BABY THE WIND");
+            _torchFuelScript.RemoveFuelWithAmount(1);
+            Debug.Log("P2Wind");
         }
     }
 
