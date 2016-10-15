@@ -62,7 +62,7 @@ public class SkeleBoss : BaseEntity
     private bool _summonedOnce = false;
     private bool _summonedTwice = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
 
