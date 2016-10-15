@@ -25,6 +25,7 @@ public class TextBoxManager : MonoBehaviour {
 	private AudioClip[] _dialogueSounds;
 	private int _currentClip;
 
+
 	public int CurrentLine;
 	public int EndLine;
 	public PlayerController Player1;
@@ -59,6 +60,8 @@ public class TextBoxManager : MonoBehaviour {
 		CharacterNameDictionairy.Add ("BS", "Big Sibling");
 		CharacterNameDictionairy.Add ("LS", "Little Sibling");
 		CharacterNameDictionairy.Add ("PB", "Post Board");
+
+
 		if (TextFile != null) {
 			TextLines = (TextFile.text.Split ('\n'));	
 		}
@@ -182,7 +185,7 @@ public class TextBoxManager : MonoBehaviour {
 		IsActive = true;
 		Player1.IsDisabled = true;
 		Player2.IsDisabled = true;
-        ThisStoryline.DisableMoleMan();
+        ThisStoryline.StartText();
         TorchController.IsDisabled = true;
     }
 

@@ -47,7 +47,7 @@ public class MoleManContoller : MonoBehaviour {
             //Idle the moleman and notify the storyline if the moleman has reached its destination
             if (Distance(targets[0].transform.position, transform.position) < 1 && !_storylineNotified)
             {
-                ThisStoryline.MoleManInPosition();
+                ThisStoryline.NextMoleMan();
                 _storylineNotified = true;
             }
         }
