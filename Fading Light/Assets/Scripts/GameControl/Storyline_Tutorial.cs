@@ -15,7 +15,10 @@ public class Storyline_Tutorial : Storyline {
     public List<GameObject> ReferencePoints;
     public GameObject CameraRig;
 
-    private int _currentStep = 0;
+    public List<GameObject> CutScenePositions;
+    public List<GameObject> CustSceneTargets;
+
+    public int _currentStep = 0;
     private bool _done = false;
     private ToolTips _tips;
     private bool _tipsDone = false;
@@ -45,8 +48,10 @@ public class Storyline_Tutorial : Storyline {
             return;
         }
 
-        if(_currentStep == 0)
+        if (_currentStep == 0)
         {
+            CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[0];
+            CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[0];
             TorchController.IsDisabled = true;
             //Moleman walking to players
             _done = true;
@@ -55,34 +60,44 @@ public class Storyline_Tutorial : Storyline {
             MoleMen[0].IsDisabled = false;
             CameraRig.GetComponent<PlayerCam>().CameraState = 1;
         }
-        else if(_currentStep == 1)
+        else if (_currentStep == 1)
         {
             //Moleman walks out
             _done = true;
             MoleMen[0].Next();
             TorchController.SwapPlayers();
             MoleMen[0].transform.Find("Spotlight").gameObject.SetActive(false);
-            
+            CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[1];
+            CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[1];
             Player1.IsDisabled = false;
             Player2.IsDisabled = false;
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             MoleMen[0].IsDisabled = false;
             //Turn on keys for X seconds
             _tips.EnableToolTips();
-            MoleMen[0].transform.Find("hips/Torch Light Holder").gameObject.SetActive(false);
+            MoleMen[0].transform.Find("hipcontrol/spinecontrol/chestcontrol/L_armcontrol/L_wrist_Goal/Torch Light Holder").gameObject.SetActive(false);
             _startDisplay = Time.time;
+            NextMoleMan();
 
         }
         else if (_currentStep == 2)
         {
+            //Second cut scene start
+            CameraRig.GetComponent<PlayerCam>().CameraState = 1;
+            _done = true;
+        }
+        else if (_currentStep == 3)
+        {
+            //Second cut scene start
+            CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             //Moleman walks out
             _done = true;
             MoleMen[0].IsDisabled = false;
             Player1.IsDisabled = false;
             Player2.IsDisabled = false;
-
-
+            _done = true;
         }
+
     }
 
     /// <summary>
@@ -98,13 +113,23 @@ public class Storyline_Tutorial : Storyline {
     /// </summary>
     public override void DialogueComplete()
     {
+        Debug.Log("COMPLETE");
         if(_currentStep == 0)
         {
             _currentStep++;
+           
             _done = false;
         }
 
         else if (_currentStep == 1)
+        {
+           
+            _currentStep++;
+            
+            _done = false;
+        }
+
+        else if(_currentStep == 2)
         {
             _currentStep++;
             _done = false;
@@ -121,17 +146,23 @@ public class Storyline_Tutorial : Storyline {
             if(MoleMen.Count > 1)
             {
                 MoleMen.RemoveAt(0);
+                Debug.Log("NEXT MOLE MANNN");
             }
             
-            _currentStep++;
         }
     }
 
     /// <summary>
     /// Disables the mole man.
     /// </summary>
-    public override void DisableMoleMan()
+    public override void StartText()
     {
+        if(_currentStep == 1)
+        {
+            _currentStep++;
+            _done = false;
+        }
+
         MoleMen[0].IsDisabled = true;
     }
 

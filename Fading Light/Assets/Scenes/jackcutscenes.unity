@@ -3891,7 +3891,7 @@ MonoBehaviour:
   - {fileID: 1044716765}
   Speed: 20
   IsDisabled: 1
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!136 &502107819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4471,7 +4471,7 @@ MonoBehaviour:
   - {fileID: 2078111483}
   Speed: 8
   IsDisabled: 0
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!4 &539050580 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
@@ -7548,7 +7548,7 @@ Prefab:
       objectReference: {fileID: 682942828}
     - target: {fileID: 11488212, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: CameraState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1673822d2508371498ef1be030ada982, type: 2}
@@ -8358,6 +8358,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 931685225}
   m_Mesh: {fileID: 4300002, guid: a07105af0bc77a942ac71b139b8f4c4b, type: 3}
+--- !u!1 &957170959 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 137386, guid: 1673822d2508371498ef1be030ada982, type: 2}
+  m_PrefabInternal: {fileID: 766405322}
 --- !u!1 &968258485
 GameObject:
   m_ObjectHideFlags: 0
@@ -11966,6 +11970,7 @@ MonoBehaviour:
   TorchController: {fileID: 1329372291}
   ReferencePoints:
   - {fileID: 0}
+  CameraRig: {fileID: 957170959}
 --- !u!4 &1389205620
 Transform:
   m_ObjectHideFlags: 0

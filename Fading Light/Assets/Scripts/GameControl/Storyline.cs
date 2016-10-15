@@ -16,7 +16,7 @@ public abstract class Storyline : MonoBehaviour {
     /// <summary>
     /// Disables the mole man.
     /// </summary>
-    public abstract void DisableMoleMan();
+    public abstract void StartText();
 
     /// <summary>
     /// Enables the mole man.
