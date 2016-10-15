@@ -121,7 +121,7 @@ public class MoleDoggy : BaseEntity
 
         pathfinder.enabled = false;
 
-        _animator.Play("attack2", PlayMode.StopAll);
+        _animator.Play("Attack", PlayMode.StopAll);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
         
 
@@ -162,7 +162,7 @@ public class MoleDoggy : BaseEntity
 
             if (!_isMoving)
             {
-                _animator.Play("WalkDog", PlayMode.StopAll);
+                _animator.Play("WalkDog 1", PlayMode.StopAll);
                 _isMoving = true;
             }
 
@@ -309,7 +309,7 @@ public class MoleDoggy : BaseEntity
         try
         {
             pathfinder.Stop();
-            _animator.Play("death1", PlayMode.StopAll);
+            _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
