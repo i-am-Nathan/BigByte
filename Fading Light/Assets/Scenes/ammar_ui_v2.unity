@@ -4326,7 +4326,7 @@ MonoBehaviour:
   - {fileID: 1044716765}
   Speed: 20
   IsDisabled: 1
-  ThisStoryline: {fileID: 0}
+  ThisStoryline: {fileID: 1389205619}
 --- !u!136 &502107819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4906,7 +4906,7 @@ MonoBehaviour:
   - {fileID: 1004940611}
   Speed: 8
   IsDisabled: 0
-  ThisStoryline: {fileID: 0}
+  ThisStoryline: {fileID: 1389205619}
 --- !u!4 &539050580 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
@@ -12432,7 +12432,7 @@ MonoBehaviour:
   Player1: {fileID: 1842113497}
   Player2: {fileID: 465268860}
   MoleMan: {fileID: 539050578}
-  ThisStoryline: {fileID: 0}
+  ThisStoryline: {fileID: 1389205619}
   TorchController: {fileID: 1329372291}
   StopMovement: 0
   IsActive: 0
@@ -13383,9 +13383,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1389205618}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b588649d7cb50a84f8d2f175f917b317, type: 3}
+  m_Script: {fileID: 11500000, guid: 82fca2b3ede353c43aaac760b7660feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player1: {fileID: 1842113497}
+  Player2: {fileID: 465268860}
+  MoleMen:
+  - {fileID: 539050578}
+  - {fileID: 502107818}
+  TorchController: {fileID: 1329372291}
+  ReferencePoints: []
+  CameraRig: {fileID: 1469250301}
+  CutScenePositions:
+  - {fileID: 936281421}
+  - {fileID: 1575558184}
+  CustSceneTargets:
+  - {fileID: 804729167}
+  - {fileID: 1907493373}
+  _currentStep: 0
 --- !u!4 &1389205620
 Transform:
   m_ObjectHideFlags: 0
@@ -16259,6 +16274,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e4346959fc02f4657947aec94532eaba, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1469250301 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 137386, guid: 1673822d2508371498ef1be030ada982, type: 2}
+  m_PrefabInternal: {fileID: 766405322}
 --- !u!1001 &1484723897
 Prefab:
   m_ObjectHideFlags: 0
