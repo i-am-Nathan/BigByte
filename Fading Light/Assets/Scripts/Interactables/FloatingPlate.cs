@@ -7,8 +7,10 @@ public class FloatingPlate : MonoBehaviour {
 	public float TravelSpeed;
     private bool _goingUp = true;
     private float _velocity = 50;
+	public Collider StartBoundary;
+	public Collider EndBoundary;
 	private int _direction =1 ;
-	private bool _pressedDown = false;
+	public bool Pressed;
 
 
 	void Start(){
@@ -18,12 +20,14 @@ public class FloatingPlate : MonoBehaviour {
     {
 		if (other.name == "Player 1" || other.name == "Player2") 
         {
+			if (other.transform.parent.name != "Floating") {
+				
+				other.transform.parent = transform;
+			}
 
-            other.transform.parent = transform;
-
-		} else if (other.name == "Start" || other.name== "End")
+		} 
+			if (other == StartBoundary || other == EndBoundary)
         {
-			Debug.Log ("In HERE");
 			if (_direction == 1) {
 				_direction = -1;
 			} else {
@@ -32,19 +36,27 @@ public class FloatingPlate : MonoBehaviour {
 
 		} 
     }
+	void OnTriggerStay(Collider other){
+		if (other.name == "Player 1" || other.name == "Player2") 
+		{
+
+			other.transform.parent = transform;
+
+		}
+	}
 
     public void Resume()
     {
-		_pressedDown = true;
+		Pressed = true;
     }
 
     public void Stop()
     {
-		_pressedDown = false;
+		Pressed = false;
     }
 
 	void FixedUpdate(){
-		if (_pressedDown) {
+		if (Pressed) {
 			transform.Translate (new Vector3(1,0,0)* TravelSpeed * _direction * Time.deltaTime);
 		}
 	}
@@ -52,8 +64,9 @@ public class FloatingPlate : MonoBehaviour {
     void OnTriggerExit(Collider other)
     {
 		if (other.name == "Player 1" || other.name == "Player2") {
-        
-            other.transform.parent = null;
+			if (other.transform.parent == transform) {
+				other.transform.parent = null;
+			}
 
         }
     }
