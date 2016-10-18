@@ -181,6 +181,7 @@ public class MoleDoggy : BaseEntity
 
             if (DEBUG) Debug.Log("Creating fireball");
             GameObject newFireball = (GameObject)Instantiate(Resources.Load("Fireball"));
+            newFireball.transform.parent = gameObject.transform;
             Vector3 newPos = new Vector3(0.2200114f, 7.866667f, 8.053325f);
             newFireball.transform.localPosition = newPos;
             yield return new WaitForSeconds(1f);
