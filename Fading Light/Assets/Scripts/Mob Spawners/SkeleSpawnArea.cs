@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Used to turn an object into torch fuel collectable
 /// </summary>
-public class SpiderSpawnArea : MonoBehaviour
+public class SkeleSpawnArea : MonoBehaviour
 {
     public float FuelAmount = 10;
     public int LowerBound;
