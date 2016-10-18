@@ -8,7 +8,7 @@ namespace Assets.Scripts.Mobs
 {
     class Fireball:MonoBehaviour
     {
-        float speed = 15;
+        float speed = 10;
         float damage = 1;
 
         float lifetime = 3;
