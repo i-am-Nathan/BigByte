@@ -90,8 +90,8 @@ public class SpiderBoss : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        HealthCircle.enabled = false;
-		HealthSlider = HealthSlider.GetComponent<Slider> ();
+        //HealthCircle.enabled = false;
+		//HealthSlider = HealthSlider.GetComponent<Slider> ();
 		BossName = BossName.GetComponent<Text>();
 		BossName.text = "Spider Boss";
 		Debug.Log ("name " + BossName.text);
@@ -287,9 +287,9 @@ public class SpiderBoss : BaseEntity
         // Set the health bar's value to the current health.
         try
         {
-            HealthCircle.enabled = true;
-			HealthCircle.fillAmount -= amount / 100.0f;
-			HealthSlider.value -= amount / 100.0f;
+            //HealthCircle.enabled = true;
+			//HealthCircle.fillAmount -= amount / 100.0f;
+			//HealthSlider.value -= amount / 100.0f;
             Invoke("HideHealth", 3);
         }
         catch { }
@@ -330,7 +330,7 @@ public class SpiderBoss : BaseEntity
     /// </summary>
     public void HideHealth()
     {
-		HealthCircle.enabled = false;
+		//HealthCircle.enabled = false;
     }
 }
 
