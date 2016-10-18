@@ -71,7 +71,7 @@ public class MoleDoggy : BaseEntity
     /// </summary>
     private void Awake()
 	{
-        _cloud = GameObject.Find("Fire Cloud");
+        _cloud = GameObject.Find("AOE");
         _cloud.SetActive(false);
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
@@ -129,18 +129,21 @@ public class MoleDoggy : BaseEntity
 
         pathfinder.enabled = false;
 
-        _animator.Play("Attack", PlayMode.StopAll);        
-        while (_animator.isPlaying)
-        {
-            yield return new WaitForSeconds(0.25f);
-            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
-        }
-        
-        if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
+        _animator.Play("Attack", PlayMode.StopAll);
+
+        yield return new WaitForSeconds(1.15f);
+
+        if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange + 4f)
         {
             target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
         }
         
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+        }
+
         pathfinder.enabled = true;
         fsm.ChangeState(States.Chase);
     }
@@ -177,9 +180,9 @@ public class MoleDoggy : BaseEntity
             }
 
             if (DEBUG) Debug.Log("Creating fireball");
-            GameObject newFireball = (GameObject)Instantiate(Resources.Load("Fireball2"));
-            Vector3 newPos = new Vector3(this.transform.position.x, 6, this.transform.position.z);
-            newFireball.transform.position = newPos;
+            GameObject newFireball = (GameObject)Instantiate(Resources.Load("Fireball"));
+            Vector3 newPos = new Vector3(0.2200114f, 7.866667f, 8.053325f);
+            newFireball.transform.localPosition = newPos;
             yield return new WaitForSeconds(1f);
         }
        
