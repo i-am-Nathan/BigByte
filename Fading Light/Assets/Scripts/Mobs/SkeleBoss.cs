@@ -62,7 +62,7 @@ public class SkeleBoss : BaseEntity
     private bool _summonedOnce = false;
     private bool _summonedTwice = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
 
@@ -181,7 +181,7 @@ public class SkeleBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
         //_animator["Skill 1"].speed = 0.3f;
-        _animator.Play("Skill", PlayMode.StopAll);
+        _animator.Play("Skill 1", PlayMode.StopAll);
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _summoning = true;

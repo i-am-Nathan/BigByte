@@ -81,39 +81,39 @@ public class ControlledPlatform : MonoBehaviour {
 	public void MoveUp()
 	{
 		if (!_northB) {
-			transform.Translate (new Vector3(-1,0,0)* 10 * Time.deltaTime);
+			transform.Translate (new Vector3(-1,0,0)* 3 * Time.deltaTime);
 		}
 	}
 	public void MoveDown()
 	{
 		if (!_southB) {
-			transform.Translate (new Vector3(1,0,0)* 10 * Time.deltaTime);
+			transform.Translate (new Vector3(1,0,0)* 3 * Time.deltaTime);
 		}
 	}
 
 	public void MoveLeft()
 	{
 		if (!_westB) {
-			transform.Translate (new Vector3(0,0,-1)* 10 * Time.deltaTime);
+			transform.Translate (new Vector3(0,0,-1)* 3 * Time.deltaTime);
 		}
 	}
 
 	public void MoveRight()
 	{
 		if (!_eastB) {
-			transform.Translate (new Vector3(0,0,1)* 10 * Time.deltaTime);
+			transform.Translate (new Vector3(0,0,1)* 3 * Time.deltaTime);
 		}
 	}
 		
 	void Update(){
 		if (Input.GetKey (KeyCode.LeftArrow) && P1Mounted) {
-			transform.Rotate (Vector3.left * 10);
+			transform.Rotate (new Vector3(0,-1,0) * 3);
 		}else if (Input.GetKey (KeyCode.RightArrow) && P1Mounted) {
-			transform.Rotate (Vector3.right * 10);
+			transform.Rotate (new Vector3(0,1,0) * 3);
 		}else if (Input.GetKey (KeyCode.A) && P2Mounted) {
-			transform.Rotate (Vector3.left * 10);
+			transform.Rotate (new Vector3(0,-1,0) * 3);
 		}else if (Input.GetKey (KeyCode.D) && P2Mounted) {
-			transform.Rotate (Vector3.right * 10);
+			transform.Rotate (new Vector3(0,1,0) * 3);
 		}
 	}
 	void OnTriggerExit(Collider other)
