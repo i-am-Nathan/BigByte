@@ -94,7 +94,7 @@ public class SpiderBoss : BaseEntity
 		//HealthSlider = HealthSlider.GetComponent<Slider> ();
 		BossName = BossName.GetComponent<Text>();
 		BossName.text = "Spider Boss";
-		Debug.Log ("name " + BossName.text);
+		if (DEBUG) Debug.Log ("name " + BossName.text);
 		BossPanel.SetActive(false);
         CurrentHealth = Health;
 	}
