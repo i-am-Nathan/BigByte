@@ -86,9 +86,12 @@ public class SpiderMob : BaseEntity
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
-    private void Init_Enter()
+    IEnumerator Init_Enter()
     {
         if (DEBUG) Debug.Log("Spider state machine initilized.");
+        pathfinder.enabled = false;
+        yield return new WaitForSeconds(4f);
+        pathfinder.enabled = true;
         fsm.ChangeState(States.Idle);
     }
 
@@ -114,8 +117,12 @@ public class SpiderMob : BaseEntity
 
         //Play the attack animation and deal damage to the target entitiy
         _animator.Play("attack2", PlayMode.StopAll);
-        target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
 
+        if (target != null)
+        {
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+        }
+        
         //Wait for the animation to finish before continuing back to the chase state
         while (_animator.isPlaying)
         {
@@ -326,6 +333,7 @@ public class SpiderMob : BaseEntity
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
+        _animator.Play("idle", PlayMode.StopAll);
 
         float refreshRate = 0.25f;
         _lockedOn = false;
