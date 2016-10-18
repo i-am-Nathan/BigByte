@@ -188,7 +188,7 @@ public class SpiderMob : BaseEntity
             }
 
             //Check if the torch has moved over the spider. If so then transition to the run state
-            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z))
+            if (IsInLight(this.gameObject.transform))
             {
                 if (DEBUG) Debug.Log("Spider inside torch");
                 //if (DEBUG) Debug.Log(this.gameObject.transform.position);
@@ -219,7 +219,7 @@ public class SpiderMob : BaseEntity
             }                      
             
             //Check if the player is inside the torch, if so move along outside of radius
-            if (TorchController.IsInTorchRange(target.transform.position.x, target.transform.position.z))
+            if (IsInLight(target.transform))
             {
                 if (DEBUG) Debug.Log("Player In torch range");
                 _isMoving = false;
@@ -239,20 +239,30 @@ public class SpiderMob : BaseEntity
     }
 
 
-    bool isInLight(Transform transform)
+    bool IsInLight(Transform transform)
     {
-        var torchSources = GameObject.FindGameObjectsWithTag("LightSource");
-        foreach (var torchSource in torchSources)
+
+        if (TorchController.IsInTorchRange(transform.position.x, transform.position.z))
         {
-            var CandleLight = torchSource.transform.GetComponent<CandleLight>();
-            if (CandleLight.isTriggered())
+            return true;
+        }
+
+        //Then check for candle sources.
+        var torchSources = GameObject.FindGameObjectsWithTag("LightSource");
+        if (torchSources.Length != 0)
+        {
+            foreach (var torchSource in torchSources)
             {
-                if (Vector3.Distance(transform.position, CandleLight.transform.position) < CandleLight.Radius)
+                var CandleLight = torchSource.transform.GetComponent<CandleLight>();
+                if (CandleLight.isTriggered())
                 {
-                    return true;
+                    if (Vector3.Distance(transform.position, CandleLight.transform.position) < CandleLight.Radius)
+                    {
+                        return true;
+                    }
                 }
             }
-        }
+        }        
         return false;
     }    
 
@@ -279,7 +289,7 @@ public class SpiderMob : BaseEntity
         {            
 
             //If the spider has run out of the torch light, transition back to idle
-            if (!TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z) && _inTorchLight)
+            if (!IsInLight(this.gameObject.transform) && _inTorchLight)
             {
                 if (DEBUG) Debug.Log("Escaped torchlight");
                 _inTorchLight = false;
@@ -355,7 +365,7 @@ public class SpiderMob : BaseEntity
             //Debug.Log(Vector3.Distance(this.gameObject.transform.position, TorchController.GetTorchPosition()));
 
             //Check if the torch has moved over the spider. If so then transition to the run state
-            if (TorchController.IsInTorchRange(this.gameObject.transform.position.x, this.gameObject.transform.position.z) && !_lockedOn)
+            if (IsInLight(this.gameObject.transform) && !_lockedOn)
             {
                 if (DEBUG) Debug.Log("Spider inside torch");
                 //if (DEBUG) Debug.Log(this.gameObject.transform.position);
