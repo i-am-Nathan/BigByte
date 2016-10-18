@@ -5424,6 +5424,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2579278, y: 0.9022275, z: 0.16661751}
   m_Center: {x: 0.0000054836273, y: 0.6282437, z: 0}
+--- !u!1 &301807505 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 154860, guid: 28ad6bc8a17e7284d884987726cf5100, type: 2}
+  m_PrefabInternal: {fileID: 2058031724}
+--- !u!114 &301807506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 301807505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e0bbca14ac40d6458436e286e6ac108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimSpeed: 1.5
+  AnimationName: Anim_TrapCutter_Play
 --- !u!1 &318782164
 GameObject:
   m_ObjectHideFlags: 0
@@ -16390,7 +16407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1270742901
 Transform:
   m_ObjectHideFlags: 0
@@ -22110,9 +22127,7 @@ MonoBehaviour:
   EastBoundary: {fileID: 780570245}
   SouthBoundary: {fileID: 629841518}
   WestBoundary: {fileID: 1061581175}
-  TravelSpeed: 8
-  P1Mounted: 0
-  P2Mounted: 0
+  TravelSpeed: 30
 --- !u!65 &1616718967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22123,7 +22138,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8, z: 0.8}
+  m_Size: {x: 1, y: 0.8, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1616718969
 Rigidbody:
@@ -29740,7 +29755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1955717733
 Transform:
   m_ObjectHideFlags: 0

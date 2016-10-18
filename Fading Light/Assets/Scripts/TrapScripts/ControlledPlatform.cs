@@ -96,64 +96,64 @@ public class ControlledPlatform : MonoBehaviour {
 
 	public void MoveUp()
 	{
-		if (!_northB) {
 			transform.Translate (new Vector3(-1,0,0)* TravelSpeed *  Time.deltaTime);
-		}
 	}
 	public void MoveDown()
 	{
-		if (!_southB) {
 			transform.Translate (new Vector3(1,0,0)* TravelSpeed * Time.deltaTime);
-		}
 	}
 
 	public void MoveLeft()
 	{
-		if (!_westB) {
 			transform.Translate (new Vector3(0,0,-1)* TravelSpeed * Time.deltaTime);
-		}
 	}
 
 	public void MoveRight()
 	{
-		if (!_eastB) {
 			transform.Translate (new Vector3(0,0,1)* TravelSpeed * Time.deltaTime);
-		}
 	}
 		
 	void Update(){
+		//Player 1
 		if (Input.GetKey (KeyCode.LeftArrow)) {
-			if (_p1RotationMounted) {
+			if (_p1RotationMounted && _p2TranslationMounted) {
 				transform.Rotate (new Vector3 (0, -1, 0) * 3);
-			} else if (_p1TranslationMounted) {
-				MoveLeft ();
-			}
+			} 
+//			else if (_p1TranslationMounted) {
+//				MoveLeft ();
+//			}
 		}else if (Input.GetKey (KeyCode.RightArrow)) {
-			if (_p1RotationMounted) {
+			if (_p1RotationMounted &&_p2TranslationMounted) {
 				transform.Rotate (new Vector3(0,1,0) * 3);
-			} else if (_p1TranslationMounted) {
-				MoveRight ();
-			}
-		}else if (Input.GetKey(KeyCode.UpArrow) && _p1TranslationMounted){
+			} 
+//			else if (_p1TranslationMounted) {
+//				MoveRight ();
+//			}
+		}else if (Input.GetKey(KeyCode.UpArrow) && _p1TranslationMounted &&_p2RotationMounted){
 			MoveUp ();
-		}else if (Input.GetKey(KeyCode.DownArrow) && _p1TranslationMounted){
+		}else if (Input.GetKey(KeyCode.DownArrow) && _p1TranslationMounted &&_p2RotationMounted){
 			MoveDown ();
-		}else if (Input.GetKey (KeyCode.A)) {
-			if (_p2RotationMounted) {
-				transform.Rotate (new Vector3 (0, -1, 0) * 3);
-			} else if (_p2TranslationMounted) {
-				MoveLeft ();
-			}
-		}else if (Input.GetKey (KeyCode.D) && _p2RotationMounted) {
-			if (_p2RotationMounted) {
-				transform.Rotate (new Vector3(0,1,0) * 3);
-			} else if (_p2TranslationMounted) {
-				MoveLeft ();
-			}
+		}
 
-		}else if (Input.GetKey(KeyCode.W) && _p2TranslationMounted){
+		//Player 2
+		if (Input.GetKey (KeyCode.A)) {
+			if (_p2RotationMounted && _p1TranslationMounted) {
+				transform.Rotate (new Vector3 (0, -1, 0) * 3);
+			} 
+//			else if (_p2TranslationMounted) {
+//				MoveLeft ();
+//			}
+		}else if (Input.GetKey (KeyCode.D)) {
+			if (_p2RotationMounted  && _p1TranslationMounted) {
+				transform.Rotate (new Vector3(0,1,0) * 3);
+			} 
+//			else if (_p2TranslationMounted) {
+//				MoveRight ();
+//			}
+
+		}else if (Input.GetKey(KeyCode.W) && _p2TranslationMounted  && _p1RotationMounted){
 			MoveUp ();
-		}else if (Input.GetKey(KeyCode.S) && _p2TranslationMounted){
+		}else if (Input.GetKey(KeyCode.S) && _p2TranslationMounted  && _p1RotationMounted){
 			MoveDown ();
 		}
 	}
