@@ -125,12 +125,11 @@ public class MoleDoggy : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
 
-        RotateTowards(target);
+        RotateTowards(target, false);
 
         pathfinder.enabled = false;
 
-        _animator.Play("Attack", PlayMode.StopAll);
-        
+        _animator.Play("Attack", PlayMode.StopAll);        
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.25f);
@@ -146,18 +145,31 @@ public class MoleDoggy : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
-    IEnumerator FireballSpawning_Enter()
-    {
+    private bool _isRotating = false;
 
-        
+    //http://gamedev.stackexchange.com/questions/102126/unable-to-stop-navmeshagent-for-rotation-before-moving
+    IEnumerator RotateAgent(Quaternion currentRotation, Quaternion targetRotation)
+    {
+        _isRotating = true;
+        while (currentRotation != targetRotation) {
+            transform.rotation = Quaternion.RotateTowards(currentRotation, targetRotation, RotationSpeed * Time.deltaTime);
+            yield return 1;
+        }
+        _isRotating = false;
+    }
+
+    IEnumerator FireballSpawning_Enter()
+    {        
         _cloud.SetActive(true);
+        //pathfinder.destination = false;
+        //pathfinder
 
         yield return new WaitForSeconds(3f);
 
         for (int i = 0; i<5; i++)
         {
+            //RotateTowards(target, false);
             _animator.Play("Attack", PlayMode.StopAll);
-
             while (_animator.isPlaying)
             {
                 yield return new WaitForSeconds(0.25f);
@@ -203,6 +215,7 @@ public class MoleDoggy : BaseEntity
         }
 
         _cloud.SetActive(false);
+        //pathfinder.enabled = true;
 
         fsm.ChangeState(States.Chase);
     }
