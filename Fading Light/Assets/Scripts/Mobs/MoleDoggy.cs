@@ -58,16 +58,22 @@ public class MoleDoggy : BaseEntity
     private bool _isSprinting;
     private bool _isMoving;
     private int _walkCount;
+    private bool _active = false;
 
     private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
+
+    private GameObject _cloud;
 
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
     private void Awake()
 	{
+        _cloud = GameObject.Find("Fire Cloud");
+        _cloud.SetActive(false);
+
         if (DEBUG) Debug.Log("The molemans dog wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
@@ -119,40 +125,62 @@ public class MoleDoggy : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
 
-        RotateTowards(target);
+        RotateTowards(target, false);
 
         pathfinder.enabled = false;
 
-        _animator.Play("Attack", PlayMode.StopAll);
-        target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        
-
+        _animator.Play("Attack", PlayMode.StopAll);        
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.25f);
             if (DEBUG) Debug.Log("Waiting for attack animation to finish");
-        }        
+        }
         
-        if (_isSprinting) _isSprinting = false;
-
-        //yield return new WaitForSeconds(AttackCooldown);
+        if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange)
+        {
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+        }
         
-
         pathfinder.enabled = true;
-
         fsm.ChangeState(States.Chase);
     }
 
-    private bool _active;
+    private bool _isRotating = false;
+
+    //http://gamedev.stackexchange.com/questions/102126/unable-to-stop-navmeshagent-for-rotation-before-moving
+    IEnumerator RotateAgent(Quaternion currentRotation, Quaternion targetRotation)
+    {
+        _isRotating = true;
+        while (currentRotation != targetRotation) {
+            transform.rotation = Quaternion.RotateTowards(currentRotation, targetRotation, RotationSpeed * Time.deltaTime);
+            yield return 1;
+        }
+        _isRotating = false;
+    }
 
     IEnumerator FireballSpawning_Enter()
-    {
+    {        
+        _cloud.SetActive(true);
+        //pathfinder.destination = false;
+        //pathfinder
+
+        yield return new WaitForSeconds(3f);
+
         for (int i = 0; i<5; i++)
         {
+            //RotateTowards(target, false);
+            _animator.Play("Attack", PlayMode.StopAll);
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+
             if (DEBUG) Debug.Log("Creating fireball");
             GameObject newFireball = (GameObject)Instantiate(Resources.Load("Fireball2"));
             Vector3 newPos = new Vector3(this.transform.position.x, 6, this.transform.position.z);
             newFireball.transform.position = newPos;
+            yield return new WaitForSeconds(1f);
         }
        
         _active = true;
@@ -185,6 +213,10 @@ public class MoleDoggy : BaseEntity
 
             yield return new WaitForSeconds(0.25f);           
         }
+
+        _cloud.SetActive(false);
+        //pathfinder.enabled = true;
+
         fsm.ChangeState(States.Chase);
     }
 
@@ -250,8 +282,8 @@ public class MoleDoggy : BaseEntity
             }
 
             //Set the speed of the pathfinder (either running or sprinting) and the target positions
-            pathfinder.speed = _isSprinting ? SprintSpeed : RunSpeed;
-            pathfinder.acceleration = 13f;
+            pathfinder.speed = RunSpeed;
+            pathfinder.acceleration = 18f;
             pathfinder.angularSpeed = 900f;
             pathfinder.SetDestination(target.position);
             Debug.Log(pathfinder.speed);
@@ -278,7 +310,8 @@ public class MoleDoggy : BaseEntity
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
-        float refreshRate = 0.8f;        
+        float refreshRate = 0.8f;
+        _animator.Play("Idle", PlayMode.StopSameLayer);
 
         //Check to see if either player is within activation range
         while (!_lockedOn)
@@ -305,11 +338,17 @@ public class MoleDoggy : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
-    private void RotateTowards(Transform target)
+    private void RotateTowards(Transform target, bool navMesh)
     {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * RotationSpeed);
+        if (!navMesh)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * RotationSpeed);
+        } else
+        {
+
+        }        
     }
 
     private void Death_Enter()
@@ -375,7 +414,7 @@ public class MoleDoggy : BaseEntity
         try
         {
             pathfinder.Stop();
-            _animator.Play("Death", PlayMode.StopAll);
+            _animator.Play("Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
