@@ -64,11 +64,16 @@ public class SkeleMob : BaseEntity
 
 	private AchievementManager _achievementManager;
 
+    private GameObject _cloud;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
     private void Awake()
 	{
+        _cloud = GameObject.Find("ReviveLight");
+        _cloud.SetActive(false);
+
         if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
@@ -317,6 +322,8 @@ public class SkeleMob : BaseEntity
 
     private IEnumerator Revival_Enter()
     {
+
+        _cloud.SetActive(true);
         if (DEBUG) Debug.Log("Entered state: Revival");
         
         _animator.Play("Resurrection", PlayMode.StopAll);
@@ -325,6 +332,8 @@ public class SkeleMob : BaseEntity
             yield return new WaitForSeconds(0.25f);
             if (DEBUG) Debug.Log("Waiting for revive animation to finish");
         }
+        _cloud.SetActive(false);
+
         fsm.ChangeState(States.Chase);
     }
 
