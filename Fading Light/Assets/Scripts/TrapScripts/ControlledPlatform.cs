@@ -14,12 +14,16 @@ public class ControlledPlatform : MonoBehaviour {
 	private bool _eastB;
 	private bool _southB;
 	private bool _westB;
-	public bool P1Mounted;
-	public bool P2Mounted;
+	private bool _p1RotationMounted;
+	private bool _p1TranslationMounted;
+	private bool _p2RotationMounted;
+	private bool _p2TranslationMounted;
 
 	void Start(){
-		P1Mounted = false;
-		P2Mounted = false;
+		_p1RotationMounted=false;
+		_p1TranslationMounted=false;
+		_p2RotationMounted=false;
+		_p2TranslationMounted=false;
 	}
 	/// <summary>
 	/// This will cause the player to be stuck to the moving platform and also calculate the approrpiate logic when it hits a boundary.
@@ -32,51 +36,62 @@ public class ControlledPlatform : MonoBehaviour {
 			other.transform.parent = transform;
 
 		} 
-		if (other == NorthBoundary)
-		{
-			_northB = true;
-		} 
-		if (other == EastBoundary)
-		{
-			_eastB = true;
-		} 
-		if (other == SouthBoundary)
-		{
-			_southB = true;
-		} 
-		if (other == WestBoundary)
-		{
-			_westB = true;
-		} 
+//		if (other == NorthBoundary)
+//		{
+//			_northB = true;
+//		} 
+//		if (other == EastBoundary)
+//		{
+//			_eastB = true;
+//		} 
+//		if (other == SouthBoundary)
+//		{
+//			_southB = true;
+//		} 
+//		if (other == WestBoundary)
+//		{
+//			_westB = true;
+//		} 
 	}
 	void OnTriggerStay(Collider other){
-		if (other.name == "Player 1" || other.name == "Player2") {
-
+		if (other.name == "Player 1") {
 			other.transform.parent = transform;
-			if (Input.GetKeyDown (KeyCode.T)) {
-				if (other.name == "Player 1") {
+			if (Input.GetKeyDown (KeyCode.O)) {
+				if (_p2RotationMounted && !_p1TranslationMounted && !_p1RotationMounted) {
+					_p1TranslationMounted = true;
+					other.GetComponent<PlayerController> ().IsDisabled = true;
+				} else if (!_p2RotationMounted && !_p1RotationMounted && !_p1TranslationMounted) {
+					_p1RotationMounted = true;
+					other.GetComponent<PlayerController> ().IsDisabled = true;
 
-					if (!P1Mounted && !P2Mounted) {
-						P1Mounted = true;
-						other.GetComponent<PlayerController> ().IsDisabled = true;
-					} else {
-						P1Mounted = false;
-						P2Mounted = false;
-						other.GetComponent<PlayerController> ().IsDisabled = false;
-					}
-				} else {
-						if (!P1Mounted && !P2Mounted) {
-							P2Mounted = true;
-							other.GetComponent<Player2Controller> ().IsDisabled = true;
-						}else {
-							P1Mounted = false;
-							P2Mounted = false;
-							other.GetComponent<Player2Controller> ().IsDisabled = false;
-						}
-					
+				} else if (_p1RotationMounted) {
+					_p1RotationMounted = false;
+					other.GetComponent<PlayerController> ().IsDisabled = false;
+				} else if (_p1TranslationMounted) {
+					_p1TranslationMounted = false;
+					other.GetComponent<PlayerController> ().IsDisabled = false;
+				}
+			}
+		} else if (other.name == "Player2") {
+			other.transform.parent = transform;
+			if (Input.GetKeyDown (KeyCode.Q)) {
+				if (_p1RotationMounted && !_p2TranslationMounted && !_p2RotationMounted) {
+					_p2TranslationMounted = true;
+					other.GetComponent<Player2Controller> ().IsDisabled = true;
+				} else if (!_p1RotationMounted && !_p2RotationMounted && !_p2TranslationMounted) {
+					_p2RotationMounted = true;
+					other.GetComponent<Player2Controller> ().IsDisabled = true;
+
+				} else if (_p2RotationMounted) {
+					_p2RotationMounted = false;
+					other.GetComponent<Player2Controller> ().IsDisabled = false;
+				} else if (_p2TranslationMounted) {
+					_p2TranslationMounted = false;
+					other.GetComponent<Player2Controller> ().IsDisabled = false;
 				}
 			}
 		}
+			
 	}
 
 	public void MoveUp()
@@ -107,39 +122,62 @@ public class ControlledPlatform : MonoBehaviour {
 	}
 		
 	void Update(){
-		if (Input.GetKey (KeyCode.LeftArrow) && P1Mounted) {
-			transform.Rotate (new Vector3(0,-1,0) * 3);
-		}else if (Input.GetKey (KeyCode.RightArrow) && P1Mounted) {
-			transform.Rotate (new Vector3(0,1,0) * 3);
-		}else if (Input.GetKey (KeyCode.A) && P2Mounted) {
-			transform.Rotate (new Vector3(0,-1,0) * 3);
-		}else if (Input.GetKey (KeyCode.D) && P2Mounted) {
-			transform.Rotate (new Vector3(0,1,0) * 3);
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			if (_p1RotationMounted) {
+				transform.Rotate (new Vector3 (0, -1, 0) * 3);
+			} else if (_p1TranslationMounted) {
+				MoveLeft ();
+			}
+		}else if (Input.GetKey (KeyCode.RightArrow)) {
+			if (_p1RotationMounted) {
+				transform.Rotate (new Vector3(0,1,0) * 3);
+			} else if (_p1TranslationMounted) {
+				MoveRight ();
+			}
+		}else if (Input.GetKey(KeyCode.UpArrow) && _p1TranslationMounted){
+			MoveUp ();
+		}else if (Input.GetKey(KeyCode.DownArrow) && _p1TranslationMounted){
+			MoveDown ();
+		}else if (Input.GetKey (KeyCode.A)) {
+			if (_p2RotationMounted) {
+				transform.Rotate (new Vector3 (0, -1, 0) * 3);
+			} else if (_p2TranslationMounted) {
+				MoveLeft ();
+			}
+		}else if (Input.GetKey (KeyCode.D) && _p2RotationMounted) {
+			if (_p2RotationMounted) {
+				transform.Rotate (new Vector3(0,1,0) * 3);
+			} else if (_p2TranslationMounted) {
+				MoveLeft ();
+			}
+
+		}else if (Input.GetKey(KeyCode.W) && _p2TranslationMounted){
+			MoveUp ();
+		}else if (Input.GetKey(KeyCode.S) && _p2TranslationMounted){
+			MoveDown ();
 		}
 	}
 	void OnTriggerExit(Collider other)
 	{
 		if (other.name == "Player 1" || other.name == "Player2") {
 			other.transform.parent = null;
-			P1Mounted = false;
-			P2Mounted = false;
 
 		}
-		if (other == NorthBoundary)
-		{
-			_northB = false;
-		} 
-		if (other == EastBoundary)
-		{
-			_eastB = false;
-		} 
-		if (other == SouthBoundary)
-		{
-			_southB = false;
-		} 
-		if (other == WestBoundary)
-		{
-			_westB = false;
-		} 
+//		if (other == NorthBoundary)
+//		{
+//			_northB = false;
+//		} 
+//		if (other == EastBoundary)
+//		{
+//			_eastB = false;
+//		} 
+//		if (other == SouthBoundary)
+//		{
+//			_southB = false;
+//		} 
+//		if (other == WestBoundary)
+//		{
+//			_westB = false;
+//		} 
 	}
 }
