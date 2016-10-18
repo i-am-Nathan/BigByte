@@ -11,23 +11,28 @@ public class MenuScript : MonoBehaviour {
     public Canvas quitMenu;
 	public Canvas achievementMenu;
 	public Canvas highscoreMenu;
+    public Canvas levelSelectMenu;
 
     public Button startText;
     public Button exitText;
     public Button highScoreText;
     public Button achievementText;
+    public Button levelSelectText;
 
 
 	// Use this for initialization
 	void Start () {
+        levelSelectMenu = levelSelectMenu.GetComponent<Canvas>();
         quitMenu = quitMenu.GetComponent<Canvas>();
         startText = startText.GetComponent<Button>();
         exitText = exitText.GetComponent<Button>();
         highScoreText = highScoreText.GetComponent<Button>();
         achievementText = achievementText.GetComponent<Button>();
+
         quitMenu.enabled = false;
 		highscoreMenu.enabled = false;
 		achievementMenu.enabled = false;
+        levelSelectMenu.enabled = false;
     }
 
 	//When the exit button is pressed the quit menu should pop up
@@ -65,7 +70,6 @@ public class MenuScript : MonoBehaviour {
 	//Highscore should pop up when it is pressed, to be implemented.
     public void highScorePress()
     {
-        achievementMenu.enabled = false;
         highscoreMenu.enabled = true;
         startText.enabled = false;
         exitText.enabled = false;
@@ -76,7 +80,6 @@ public class MenuScript : MonoBehaviour {
 	//When the achievements are pressed a pop up of achievements should pop up.
     public void achievementPress()
     {
-		achievementMenu.enabled = true;
         highscoreMenu.enabled = false;
         startText.enabled = false;
 		exitText.enabled = false;
@@ -94,5 +97,35 @@ public class MenuScript : MonoBehaviour {
 		achievementText.enabled = true;
 	}
 
+    public void levelPress()
+    {
+        levelSelectMenu.enabled = true;
+        startText.enabled = false;
+        exitText.enabled = false;
+        highScoreText.enabled = false;
+        achievementText.enabled = false;
+    }
+    public void levelbackPress()
+    {
+        levelSelectMenu.enabled = false;
+        startText.enabled = true;
+        exitText.enabled = true;
+        highScoreText.enabled = true;
+        achievementText.enabled = true;
+    }
 
+    public void tutLevelPress()
+    {
+
+    }
+
+    public void levelOnePress()
+    {
+
+    }
+
+    public void finalLevelPress()
+    {
+
+    }
 }
