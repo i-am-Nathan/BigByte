@@ -293,4 +293,15 @@ public class TorchFuelController : MonoBehaviour {
         }
         
     }
+
+    public bool TorchWithPlayer1()
+    {
+        if (TorchInPlayer1)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 }
