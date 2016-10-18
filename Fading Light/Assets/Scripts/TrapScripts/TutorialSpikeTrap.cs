@@ -5,8 +5,19 @@ using System.Collections.Generic;
 public class TutorialSpikeTrap : MonoBehaviour {
 
 	public GameObject[] Traps;
+	public GameObject OtherPlate; 
+
+	private TutorialSpikeTrap _otherPlateScript;
 	private int _thingsOnTop = 0;
 	private bool _pressed = false;
+
+	void Start () {
+		_otherPlateScript = OtherPlate.GetComponent<TutorialSpikeTrap>();	
+	}
+
+	public bool isPressed() {
+		return _pressed;
+	}
 
 	void OnTriggerEnter(Collider other) {
 		if (other.name == "Player 1" || other.name == "Player2")
@@ -17,6 +28,7 @@ public class TutorialSpikeTrap : MonoBehaviour {
 		//if the weight is heavy enough, then the plate is triggered
 		if (_thingsOnTop >= 1 && !_pressed) {
 			this.GetComponent<Animation>().Play("PressurePlateDown");
+			Debug.Log ("Unsetting");
 			UnsetTraps ();
 			_pressed = true;
 		}
@@ -33,7 +45,10 @@ public class TutorialSpikeTrap : MonoBehaviour {
 		//if the weight is heavy enough, then the plate is triggered
 		if (_thingsOnTop == 0 && _pressed) {
 			this.GetComponent<Animation>().Play("PressurePlateUp");
-			SetTraps ();
+			if (!_otherPlateScript.isPressed()) {
+				Debug.Log ("Setting");
+				SetTraps ();
+			}
 			_pressed = false;
 		}
 	}
