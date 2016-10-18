@@ -302,6 +302,7 @@ public class SkeleMob : BaseEntity
 
     private IEnumerator Death_Enter()
     {
+        _animator.Play("Death", PlayMode.StopAll);
         float refreshRate = 0.5f;
         if (DEBUG) Debug.Log("Entered state: Death");
         //Check to see if either player is within activation range
@@ -357,7 +358,6 @@ public class SkeleMob : BaseEntity
         {
             pathfinder.Stop();
             this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
