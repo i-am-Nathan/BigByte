@@ -59,7 +59,7 @@ public class MenuScript : MonoBehaviour {
     public void StartLevel()
     {
         //Loading level
-        Application.LoadLevel("ammar_ui");
+        Application.LoadLevel("ammar_ui_v2");
     }
 
 	//Highscore should pop up when it is pressed, to be implemented.
