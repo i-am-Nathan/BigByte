@@ -181,42 +181,13 @@ public class MoleDoggy : BaseEntity
 
             if (DEBUG) Debug.Log("Creating fireball");
             GameObject newFireball = (GameObject)Instantiate(Resources.Load("Fireball"));
-            newFireball.transform.parent = gameObject.transform;
-            Vector3 newPos = new Vector3(0.2200114f, 7.866667f, 8.053325f);
-            newFireball.transform.localPosition = newPos;
+            Vector3 newPos = transform.TransformPoint(new Vector3(0.2200114f, 7.866667f, 8.053325f));
+            newFireball.transform.position = newPos;
             yield return new WaitForSeconds(1f);
         }
-       
-        _active = true;
-        while (_active)
-        {
-            if (DEBUG) Debug.Log("Waiting for all fireballs to explode");
-
-            bool unexplodedBalls = false;
-
-            //Check too see if all fireballs have exploded
-            GameObject[] mobs = GameObject.FindGameObjectsWithTag("Fireball");
-            foreach (GameObject mob in mobs)
-            {
-                //if (DEBUG) Debug.Log("Checking enemy tagged object");
-                Fireball fireball = mob.transform.GetComponent<Fireball>();
-                if (fireball != null)
-                {
-                    if (!fireball.isExploded())
-                    {
-                        unexplodedBalls = true;
-                        break;
-                    }
-                }
-            }        
-
-            if (!unexplodedBalls)
-            {
-                break;
-            }
-
-            yield return new WaitForSeconds(0.25f);           
-        }
+               
+        _active = true;      
+        yield return new WaitForSeconds(3f);     
 
         _cloud.SetActive(false);
         //pathfinder.enabled = true;
@@ -364,7 +335,8 @@ public class MoleDoggy : BaseEntity
     private bool _fireballedTwice = false;
 
     public override void Damage(float amount, Transform attacker)
-    {        
+    {
+        if (isDead) return;
         base.Damage(amount, attacker);
 
         if (CurrentHealth < 150 && !_fireballedOnce)
@@ -419,7 +391,7 @@ public class MoleDoggy : BaseEntity
         {
             pathfinder.Stop();
             _animator.Play("Die", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
     }
