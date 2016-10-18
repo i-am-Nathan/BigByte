@@ -8,6 +8,7 @@ public class HeartPickUp : MonoBehaviour {
 
 	private bool _notPickedUp;
 	private GameData _gameDataScript;
+	private LifeManager _lifeManagerScript;
 
 	void Awake()
 	{
@@ -22,6 +23,9 @@ public class HeartPickUp : MonoBehaviour {
 	{
 		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
 		_gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+
+		GameObject go1 = GameObject.FindGameObjectWithTag("Life Manager");
+		_lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
 	}
 
 	/// <summary>
@@ -36,16 +40,8 @@ public class HeartPickUp : MonoBehaviour {
 			_source.PlayOneShot(PickUpSound);
 			GetComponent<Renderer>().enabled = false;
 			Destroy(gameObject, PickUpSound.length + 0.1f);
-			if (other.tag == "Player")
-			{
-				SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-				SubInventoryManager.AddItemQuantity("Health Pot", true);
-
-			} else
-			{
-				SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-				SubInventoryManager.AddItemQuantity("Health Pot", false);
-			}
+			_gameDataScript.UpdateNumberOfLives ();
+			_lifeManagerScript.UpdateHeartsOnUI ();
 		}
 	}
 }
