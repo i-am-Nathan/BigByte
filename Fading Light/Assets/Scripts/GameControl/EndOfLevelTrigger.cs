@@ -39,8 +39,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 
 				float mins = Mathf.Floor(totalTime / 60);
 				float secs = Mathf.RoundToInt(totalTime % 60);
-
-				_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed);
+				StartCoroutine(_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed));
 			}
 		}
 	}
