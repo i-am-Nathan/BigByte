@@ -1252,7 +1252,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 14d4f2961a8437e42ab4fad5affa64a9, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!23 &236539037
@@ -1837,8 +1837,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8, z: 0.8}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 1, y: 0.8, z: 1}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &298152303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,7 +1850,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c13b41b341283488486880b680fa7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TravelSpeed: 20
+  TravelSpeed: 10
+  StartBoundary: {fileID: 621943304}
+  EndBoundary: {fileID: 1218997705}
   Pressed: 0
 --- !u!54 &298152304
 Rigidbody:
@@ -2597,6 +2599,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TravelSpeed: 20
+  StartBoundary: {fileID: 1546769176}
+  EndBoundary: {fileID: 843371792}
   Pressed: 0
 --- !u!54 &678927519
 Rigidbody:
@@ -3053,6 +3057,54 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5490314, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 112158, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 135568, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 195210, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198452, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197084, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 159692, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 155862, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 154430, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 150236, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115826, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 110532, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102552, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3972,6 +4024,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TravelSpeed: 20
+  StartBoundary: {fileID: 883353958}
+  EndBoundary: {fileID: 1112572443}
   Pressed: 1
 --- !u!54 &1072393487
 Rigidbody:
@@ -4294,7 +4348,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 14d4f2961a8437e42ab4fad5affa64a9, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!23 &1142197726
@@ -4591,6 +4645,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TravelSpeed: 20
+  StartBoundary: {fileID: 252543785}
+  EndBoundary: {fileID: 1988828374}
   Pressed: 0
 --- !u!54 &1194874437
 Rigidbody:
@@ -5123,7 +5179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c13b41b341283488486880b680fa7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TravelSpeed: 20
+  TravelSpeed: 10
+  StartBoundary: {fileID: 882530808}
+  EndBoundary: {fileID: 1681327964}
   Pressed: 0
 --- !u!54 &1339690685
 Rigidbody:
@@ -6829,6 +6887,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TravelSpeed: 10
+  StartBoundary: {fileID: 168856881}
+  EndBoundary: {fileID: 1349621907}
   Pressed: 0
 --- !u!54 &1663635625
 Rigidbody:
@@ -7088,7 +7148,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 14d4f2961a8437e42ab4fad5affa64a9, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!23 &1680925873
@@ -7382,7 +7442,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 14d4f2961a8437e42ab4fad5affa64a9, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!23 &1728514299
@@ -8227,7 +8287,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 14d4f2961a8437e42ab4fad5affa64a9, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!23 &1998321698
@@ -8288,11 +8348,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 432090, guid: 3d0ba9093894f82429688ddeb31a11f1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 28.6
+      value: 49.5
       objectReference: {fileID: 0}
     - target: {fileID: 432090, guid: 3d0ba9093894f82429688ddeb31a11f1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -381.8
+      value: -383.4
       objectReference: {fileID: 0}
     - target: {fileID: 432090, guid: 3d0ba9093894f82429688ddeb31a11f1, type: 2}
       propertyPath: m_LocalRotation.x
