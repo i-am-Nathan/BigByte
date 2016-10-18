@@ -30,7 +30,11 @@ public class InGameUiManager : MonoBehaviour {
 		// Hiding menus which are not meant to be shown yet
         LevelFinishedMenu.enabled = false;
         ExitMenu.enabled = false;
-		ControlsMenu.enabled = false;
+        if(ControlsMenu != null)
+        {
+            ControlsMenu.enabled = false;
+        }
+	
 
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
@@ -104,6 +108,7 @@ public class InGameUiManager : MonoBehaviour {
 	/// </summary>
 	private void SetTime()
 	{
+        //return;
 		_totalTime = _gameDataScript.GetTotalTime ();
 		float minutes = Mathf.Floor(_totalTime / 60);
 		float seconds = Mathf.RoundToInt(_totalTime % 60);
