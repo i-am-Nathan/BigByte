@@ -21,9 +21,9 @@ public class CandleLight : MonoBehaviour {
         }
     }
 	
-    public bool isTriggered()
+    public bool isActive()
     {
-        return _triggered;
+        return _active;
     }
 
 	// Update is called once per frame

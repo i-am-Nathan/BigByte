@@ -55,7 +55,7 @@ public class SpiderMob : BaseEntity
     private bool _inTorchLight;
     private bool _runningAway = false;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
@@ -241,9 +241,10 @@ public class SpiderMob : BaseEntity
 
     bool IsInLight(Transform transform)
     {
-
+        if (DEBUG) Debug.Log("Checking if in a light source");
         if (TorchController.IsInTorchRange(transform.position.x, transform.position.z))
         {
+            if (DEBUG) Debug.Log("Transform is in torch light");
             return true;
         }
 
@@ -254,10 +255,14 @@ public class SpiderMob : BaseEntity
             foreach (var torchSource in torchSources)
             {
                 var CandleLight = torchSource.transform.GetComponent<CandleLight>();
-                if (CandleLight.isTriggered())
+                if (CandleLight.isActive())
                 {
+                    if (DEBUG) Debug.Log("Checking triggered candle light");
+                    if (DEBUG) Debug.Log("Distance: " + Vector3.Distance(transform.position, CandleLight.transform.position));
+                    if (DEBUG) Debug.Log("Radius: " + CandleLight.Radius);
                     if (Vector3.Distance(transform.position, CandleLight.transform.position) < CandleLight.Radius)
                     {
+                        if (DEBUG) Debug.Log("Transform is in the candle light");
                         return true;
                     }
                 }
