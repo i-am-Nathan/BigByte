@@ -55,7 +55,7 @@ public class SpiderMob : BaseEntity
     private bool _inTorchLight;
     private bool _runningAway = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
