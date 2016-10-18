@@ -3006,7 +3006,10 @@ MonoBehaviour:
   SprintSpeed: 24
   AttackCooldown: 0.25
   RotationSpeed: 10
-  healthCircle: {fileID: 0}
+  HealthCircle: {fileID: 0}
+  HealthSlider: {fileID: 0}
+  BossName: {fileID: 0}
+  BossPanel: {fileID: 0}
 --- !u!143 &265806829
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3916,6 +3919,14 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22460704, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22433478, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22433478, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
@@ -6950,7 +6961,7 @@ MonoBehaviour:
   - {fileID: 1044716765}
   Speed: 20
   IsDisabled: 1
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!136 &502107819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8744,7 +8755,7 @@ MonoBehaviour:
   - {fileID: 2078111483}
   Speed: 8
   IsDisabled: 0
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!4 &539050580 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
@@ -13089,8 +13100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DestroyWhenActivated: 0
-  MinCoins: 0
-  MaxCoins: 0
+  Minimum: 0
+  Maximum: 0
   DropList:
   - {fileID: 100816, guid: de4151dbc2521774db677921a7a163b0, type: 2}
   DropChance: 64000000
@@ -13219,8 +13230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DestroyWhenActivated: 0
-  MinCoins: 0
-  MaxCoins: 0
+  Minimum: 0
+  Maximum: 0
   DropList: []
   DropChance: 
   TreasureSound: {fileID: 8300000, guid: 54230e59114d347d69f8998a31cd8052, type: 3}
@@ -18370,7 +18381,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1211403875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.46, y: -23.62, z: 24.98}
+  m_LocalPosition: {x: 51.46, y: -23.62, z: 24.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -18901,6 +18912,7 @@ MonoBehaviour:
   TextFile: {fileID: 0}
   TextLines: []
   CharacterImage: {fileID: 1751763840}
+  Talking: 0
   CharacterName: {fileID: 1395011772}
   Images:
   - {fileID: 21300000, guid: 72f3ddb4e9c4f52438d2e4a7af4f9ee8, type: 3}
@@ -18912,7 +18924,7 @@ MonoBehaviour:
   Player1: {fileID: 1842113497}
   Player2: {fileID: 465268860}
   MoleMan: {fileID: 539050578}
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
   TorchController: {fileID: 1329372291}
   StopMovement: 0
   IsActive: 0
@@ -20319,14 +20331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaeff99edf89f94bac0832f077e0c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1: {fileID: 1842113497}
-  Player2: {fileID: 465268860}
-  MoleMen:
-  - {fileID: 539050578}
-  - {fileID: 502107818}
-  TorchController: {fileID: 1329372291}
-  ReferencePoints:
-  - {fileID: 0}
 --- !u!4 &1389205620
 Transform:
   m_ObjectHideFlags: 0
@@ -33818,7 +33822,7 @@ MonoBehaviour:
   - {fileID: 2078111483}
   Speed: 8
   IsDisabled: 0
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
 --- !u!114 &1902586979
 MonoBehaviour:
   m_ObjectHideFlags: 0
