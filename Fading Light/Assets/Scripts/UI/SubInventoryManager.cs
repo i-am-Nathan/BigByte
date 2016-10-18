@@ -53,8 +53,8 @@ public class SubInventoryManager : MonoBehaviour {
 		_itemIndexNameDictionary.Add (2, "Defense Pot");
 
 		_itemImageDictionary.Add ("Health Pot", HealthImage);
-		_itemImageDictionary.Add ("Attack Pot", DefenseImage);
-		_itemImageDictionary.Add ("Defense Pot", BerserkImage);
+		_itemImageDictionary.Add ("Attack Pot", BerserkImage);
+		_itemImageDictionary.Add ("Defense Pot", DefenseImage);
 
 		_player1ItemQuantityDictionary.Add ("Health Pot", 0);
 		_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
