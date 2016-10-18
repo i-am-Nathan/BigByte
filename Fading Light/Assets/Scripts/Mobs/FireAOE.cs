@@ -14,9 +14,9 @@ public class FireAOE : MonoBehaviour {
         if (other.tag == "Player" || other.tag == "Player2")
         {
             if (DEBUG) Debug.Log("Fireball collision: Player");
-            other.Damage(damage, this.transform.root);
+            //other.Damage(damage, this.transform.root);
 
-            _isExploded = true;
+            //_isExploded = true;
 
             if (DEBUG) Debug.Log("Creating fireball explosion");
             GameObject newFireball = (GameObject)Instantiate(Resources.Load("Explosion"));
