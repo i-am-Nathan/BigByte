@@ -53,10 +53,9 @@ public class ControlledPlatform : MonoBehaviour {
 
 			other.transform.parent = transform;
 			if (Input.GetKeyDown (KeyCode.T)) {
-			if (other.name == "Player 1") {
+				if (other.name == "Player 1") {
 
 					if (!P1Mounted && !P2Mounted) {
-						print(
 						P1Mounted = true;
 						other.GetComponent<PlayerController> ().IsDisabled = true;
 					} else {
@@ -107,13 +106,13 @@ public class ControlledPlatform : MonoBehaviour {
 	}
 		
 	void Update(){
-		if (Input.GetKeyDown (KeyCode.LeftArrow) && P1Mounted) {
+		if (Input.GetKey (KeyCode.LeftArrow) && P1Mounted) {
 			transform.Rotate (Vector3.left * 10);
-		}else if (Input.GetKeyDown (KeyCode.RightArrow) && P1Mounted) {
+		}else if (Input.GetKey (KeyCode.RightArrow) && P1Mounted) {
 			transform.Rotate (Vector3.right * 10);
-		}else if (Input.GetKeyDown (KeyCode.A) && P2Mounted) {
+		}else if (Input.GetKey (KeyCode.A) && P2Mounted) {
 			transform.Rotate (Vector3.left * 10);
-		}else if (Input.GetKeyDown (KeyCode.D) && P2Mounted) {
+		}else if (Input.GetKey (KeyCode.D) && P2Mounted) {
 			transform.Rotate (Vector3.right * 10);
 		}
 	}
