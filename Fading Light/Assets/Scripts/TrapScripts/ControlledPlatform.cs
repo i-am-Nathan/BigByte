@@ -9,6 +9,7 @@ public class ControlledPlatform : MonoBehaviour {
 	public Collider EastBoundary;
 	public Collider SouthBoundary;
 	public Collider WestBoundary;
+	public float TravelSpeed;
 	private bool _northB;
 	private bool _eastB;
 	private bool _southB;
@@ -81,27 +82,27 @@ public class ControlledPlatform : MonoBehaviour {
 	public void MoveUp()
 	{
 		if (!_northB) {
-			transform.Translate (new Vector3(-1,0,0)* 3 * Time.deltaTime);
+			transform.Translate (new Vector3(-1,0,0)* TravelSpeed *  Time.deltaTime);
 		}
 	}
 	public void MoveDown()
 	{
 		if (!_southB) {
-			transform.Translate (new Vector3(1,0,0)* 3 * Time.deltaTime);
+			transform.Translate (new Vector3(1,0,0)* TravelSpeed * Time.deltaTime);
 		}
 	}
 
 	public void MoveLeft()
 	{
 		if (!_westB) {
-			transform.Translate (new Vector3(0,0,-1)* 3 * Time.deltaTime);
+			transform.Translate (new Vector3(0,0,-1)* TravelSpeed * Time.deltaTime);
 		}
 	}
 
 	public void MoveRight()
 	{
 		if (!_eastB) {
-			transform.Translate (new Vector3(0,0,1)* 3 * Time.deltaTime);
+			transform.Translate (new Vector3(0,0,1)* TravelSpeed * Time.deltaTime);
 		}
 	}
 		
