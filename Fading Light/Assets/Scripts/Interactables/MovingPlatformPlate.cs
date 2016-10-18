@@ -7,14 +7,16 @@ public class MovingPlatformPlate : MonoBehaviour {
 	{
 		if (other.name == "Player 1" || other.name == "Player2") 
 		{
-			if (gameObject.name.Equals("NorthPlate")) {
-				Platform.MoveUp ();
-			} else if (gameObject.name.Equals("EastPlate")) {
-				Platform.MoveRight ();
-			}else if (gameObject.name.Equals("SouthPlate")) {
-				Platform.MoveDown ();
-			}else if (gameObject.name.Equals("WestPlate")) {
-				Platform.MoveLeft ();
+			if (Platform.P1Mounted || Platform.P2Mounted) {
+				if (gameObject.name.Equals ("NorthPlate")) {
+					Platform.MoveUp ();
+				} else if (gameObject.name.Equals ("EastPlate")) {
+					Platform.MoveRight ();
+				} else if (gameObject.name.Equals ("SouthPlate")) {
+					Platform.MoveDown ();
+				} else if (gameObject.name.Equals ("WestPlate")) {
+					Platform.MoveLeft ();
+				}
 			}
 		} 
 	}
@@ -23,16 +25,17 @@ public class MovingPlatformPlate : MonoBehaviour {
 	{
 		if (other.name == "Player 1" || other.name == "Player2") 
 		{
-			if (gameObject.name.Equals("NorthPlate")) {
-				Platform.MoveUp ();
-			} else if (gameObject.name.Equals("EastPlate")) {
-				Platform.MoveRight ();
-			}else if (gameObject.name.Equals("SouthPlate")) {
-				Platform.MoveDown ();
-			}else if (gameObject.name.Equals("WestPlate")) {
-				Platform.MoveLeft ();
+			if (Platform.P1Mounted || Platform.P2Mounted) {
+				if (gameObject.name.Equals ("NorthPlate")) {
+					Platform.MoveUp ();
+				} else if (gameObject.name.Equals ("EastPlate")) {
+					Platform.MoveRight ();
+				} else if (gameObject.name.Equals ("SouthPlate")) {
+					Platform.MoveDown ();
+				} else if (gameObject.name.Equals ("WestPlate")) {
+					Platform.MoveLeft ();
+				}
 			}
-
 		} 
 	}
 		
