@@ -8,7 +8,7 @@ public class FloatingPlate : MonoBehaviour {
     private bool _goingUp = true;
     private float _velocity = 50;
 	private int _direction =1 ;
-	private bool _pressedDown = false;
+	public bool Pressed;
 
 
 	void Start(){
@@ -23,7 +23,6 @@ public class FloatingPlate : MonoBehaviour {
 
 		} else if (other.name == "Start" || other.name== "End")
         {
-			Debug.Log ("In HERE");
 			if (_direction == 1) {
 				_direction = -1;
 			} else {
@@ -35,16 +34,16 @@ public class FloatingPlate : MonoBehaviour {
 
     public void Resume()
     {
-		_pressedDown = true;
+		Pressed = true;
     }
 
     public void Stop()
     {
-		_pressedDown = false;
+		Pressed = false;
     }
 
 	void FixedUpdate(){
-		if (_pressedDown) {
+		if (Pressed) {
 			transform.Translate (new Vector3(1,0,0)* TravelSpeed * _direction * Time.deltaTime);
 		}
 	}
