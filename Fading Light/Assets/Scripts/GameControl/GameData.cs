@@ -2,6 +2,69 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
+[System.Serializable]
+public class Achievement
+{
+    public string Name;
+    public string Description;
+    public Texture2D IconIncomplete;
+    public Sprite IconComplete;
+    public string Reward;
+    public float TargetProgress;
+    public bool Secret;
+
+    [HideInInspector]
+    public bool Earned = false;
+    private float currentProgress = 0.0f;
+
+    /// <summary>
+    /// Returns true if this progress added results in the Achievement being earned.
+    /// </summary>
+    /// <param name="progress">The progress.</param>
+    /// <returns></returns>
+    public bool AddProgress(float progress)
+    {
+        if (Earned)
+        {
+            return false;
+        }
+
+        currentProgress += progress;
+        if (currentProgress >= TargetProgress)
+        {
+            Earned = true;
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /// <summary>
+    ///  Returns true if this progress set results in the Achievement being earned.
+    /// </summary>
+    /// <param name="progress">The progress.</param>
+    /// <returns></returns>
+    public bool SetProgress(float progress)
+    {
+        if (Earned)
+        {
+            return false;
+        }
+
+        currentProgress = progress;
+        if (progress >= TargetProgress)
+        {
+            Earned = true;
+            return true;
+        }
+
+        return false;
+    }
+
+}
 
 public class GameData : MonoBehaviour {
 
@@ -30,7 +93,13 @@ public class GameData : MonoBehaviour {
     //private Item[] _p1Items;
     //private Item[] _p2Items;
 
-    //private Achievement[] _achievements;
+    //Achievements
+    public Achievement[] Achievements;
+    public Canvas AchievementPopup;
+    public AudioClip EarnedSound;
+    private Text achievementText;
+    private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
+
 
     /// <summary>
     /// Called before any Start methods called and is used for initialisation
@@ -43,6 +112,7 @@ public class GameData : MonoBehaviour {
         // Checking if this game data object already exists
 		if (!(objects.Length > 0))
         {
+            achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
             _numberOfLivesLeft = 3;
@@ -122,5 +192,43 @@ public class GameData : MonoBehaviour {
         _sharedGold += amount;
 		_inGameUiManager.UpdateGold (_sharedGold);
     }
+     private Achievement GetAchievementByName(string achievementName)
+    {
+        return Achievements.FirstOrDefault(achievement => achievement.Name == achievementName);
 
+    }
+    private void AchievementEarned()
+    {
+        //  UpdateRewardPointTotals();
+        AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
+    }
+    void ClosePopUpTimer()
+    {
+        currentTime = Time.time;
+        if (currentTime - executedTime > timeToWait)
+        {
+            executedTime = 0.0f;
+            AchievementPopup.enabled = false;
+        }
+    }
+
+    public void AddProgressToAchievement(string achievementName, float progressAmount)
+    {
+        Achievement achievement = GetAchievementByName(achievementName);
+        if (achievement == null)
+        {
+            Debug.LogWarning("AchievementManager::AddProgressToAchievement() - Trying to add progress to an achievemnet that doesn't exist: " + achievementName);
+            return;
+        }
+
+
+        //If the achievement has been earned than create a pop up for the achievement for 3 seconds
+        if (achievement.AddProgress(progressAmount))
+        {
+            AchievementEarned();
+            AchievementPopup.enabled = true;
+            executedTime = Time.time;
+            achievementText.text = achievement.Name;
+        }
+    }
 }

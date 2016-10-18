@@ -10,8 +10,8 @@ public class AchievementSetUp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //Getting the achievement list from achievement manager
-        GameObject go = GameObject.FindGameObjectWithTag("AchievementManager");
-        AchievementManager am = (AchievementManager)go.GetComponent(typeof(AchievementManager));
+        GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+        GameData am = (GameData)go.GetComponent(typeof(GameData));
         _achievements = am.Achievements;
 
         Debug.Log("INSIDE LIST CONTROLLER START");
