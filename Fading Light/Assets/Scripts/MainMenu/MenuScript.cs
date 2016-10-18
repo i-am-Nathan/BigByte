@@ -17,32 +17,19 @@ public class MenuScript : MonoBehaviour {
     public Button achievementText;
     public Button levelSelectText;
 
+    public AudioSource buttonClickSound;
+
 
 	// Use this for initialization
 	void Start () {
-        levelSelectMenu = levelSelectMenu.GetComponent<Canvas>();
+        levelSelectText = levelSelectText.GetComponent<Button>();
         startText = startText.GetComponent<Button>();
         highScoreText = highScoreText.GetComponent<Button>();
         achievementText = achievementText.GetComponent<Button>();
-        
+    
 		highscoreMenu.enabled = false;
 		achievementMenu.enabled = false;
         levelSelectMenu.enabled = false;
-    }
-
-	//When the exit button is pressed the quit menu should pop up
-    public void ExitPress()
-    {
-        startText.enabled = false;
-        highScoreText.enabled = false;
-        achievementText.enabled = false;
-    }
-	//When no is pressed on the quit menu close the pop up and enable all the buttons again so that it can be pressed.
-    public void NoPress()
-    {
-        startText.enabled = true;
-        highScoreText.enabled = true;
-       	achievementText.enabled = true;
     }
 
 
@@ -56,43 +43,47 @@ public class MenuScript : MonoBehaviour {
 	//Highscore should pop up when it is pressed, to be implemented.
     public void highScorePress()
     {
+        buttonClickSound.Play();
         highscoreMenu.enabled = true;
         startText.enabled = false;
         highScoreText.enabled = false;
         achievementText.enabled = false;
+        levelSelectText.enabled = false;
     }
 
 	//When the achievements are pressed a pop up of achievements should pop up.
     public void achievementPress()
     {
-        highscoreMenu.enabled = false;
+        buttonClickSound.Play();
+        achievementMenu.enabled = true;
         startText.enabled = false;
 		highScoreText.enabled = false;
 		achievementText.enabled = false;
+        levelSelectText.enabled = false;
     }
 
 	//Go back to the main menu when the back button is pressed on the achievement menu.
 	public void backPress(){
-		achievementMenu.enabled = false;
+
+        buttonClickSound.Play();
+   
+        levelSelectMenu.enabled = false;
+        achievementMenu.enabled = false;
         highscoreMenu.enabled = false;
         startText.enabled = true;
 		highScoreText.enabled = true;
 		achievementText.enabled = true;
+        levelSelectText.enabled = true;
 	}
 
     public void levelPress()
     {
+        buttonClickSound.Play();
         levelSelectMenu.enabled = true;
         startText.enabled = false;
         highScoreText.enabled = false;
         achievementText.enabled = false;
-    }
-    public void levelbackPress()
-    {
-        levelSelectMenu.enabled = false;
-        startText.enabled = true;
-        highScoreText.enabled = true;
-        achievementText.enabled = true;
+        levelSelectText.enabled = false;
     }
 
     public void tutLevelPress()
