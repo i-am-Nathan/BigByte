@@ -96,21 +96,20 @@ public class TorchFuelController : MonoBehaviour {
     {
         var currentTorch = TorchP2;
         var currentTorchLight = Player2TorchLight;
+
         if (TorchInPlayer1)
         {
             currentTorch = TorchP1;
             currentTorchLight = Player1TorchLight;
         }
 
-        var torchPosition = currentTorch.gameObject.transform.position;
+        var torchPosition = currentTorch.gameObject.transform.parent.position;
 
         var distanceToTorch = Math.Sqrt(Math.Abs((torchPosition.x - x) * (torchPosition.x - x)) + Math.Abs((torchPosition.z - z) * (torchPosition.z - z)));
 
         var torchRadius = GetTorchRadius();
         torchRadius = Math.Abs(torchRadius);
 
-        //Debug.Log("a " + torchRadius);
-        //Debug.Log("b " + distanceToTorch);
 
         if (distanceToTorch < torchRadius)
         {
@@ -146,7 +145,7 @@ public class TorchFuelController : MonoBehaviour {
 
         var torchPosition = currentTorch.gameObject.transform.position;
         
-        var torchRadius = torchPosition.y * Math.Tan((currentTorchLight.spotAngle / 2) * (Math.PI / 180));
+        var torchRadius = torchPosition.y * 1.2 * Math.Tan((currentTorchLight.spotAngle / 2) * (Math.PI / 180));
         torchRadius = Math.Abs(torchRadius);
         return torchRadius;
     }
