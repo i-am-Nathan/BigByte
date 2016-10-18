@@ -7,18 +7,20 @@ using System.Collections;
 public class SpiderSpawnArea : MonoBehaviour
 {
     public float FuelAmount = 10;
-    
+    public int LowerBound;
+    public int UpperBound;
+
     private TorchFuelController TorchFuelControllerScript;
 	private AchievementManager _achievementManager;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     /// <summary>
     /// Starts this instance.
     /// </summary>
     void Start()
     {
-        float randomNumber = Random.Range(2, 8);
+        float randomNumber = Random.Range(LowerBound, UpperBound);
         if (DEBUG) Debug.Log("Random number of spiders: " + randomNumber);
 
         var plane = this.transform.Find("Plane").gameObject;
@@ -31,7 +33,7 @@ public class SpiderSpawnArea : MonoBehaviour
 
             var xOffset = Random.Range(-collider.bounds.size.x / 2, collider.bounds.size.x / 2);
             var zOffset = Random.Range(-collider.bounds.size.z / 2, collider.bounds.size.z / 2);
-            Vector3 newPos = new Vector3(this.transform.position.x + xOffset, this.transform.position.y, this.transform.position.z + zOffset);
+            Vector3 newPos = new Vector3(this.transform.position.x + xOffset, -0.4f, this.transform.position.z + zOffset);
             newSpider.transform.position = newPos;
         }   
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));

@@ -62,7 +62,7 @@ public class ActivateText : MonoBehaviour
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
                 _talked = true;
-                Debug.Log("called");
+                //Debug.Log("called");
                 //This will execute the functions in TextBoxManager class and load the new dialogue.
                 TextBox.ReloadScript (Dialogue,DialogueSpeech);
 				TextBox.CurrentLine = StartLine;
@@ -70,7 +70,7 @@ public class ActivateText : MonoBehaviour
 				TextBox.EnableDialogue ();
 
 				if (DestroyWhenActivated) {
-                    Debug.Log("Death");
+                    //Debug.Log("Death");
                     
 					Destroy (gameObject);
 				}
@@ -84,7 +84,7 @@ public class ActivateText : MonoBehaviour
 	/// <param name="other">Other.</param>
 	void OnTriggerExit(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
-			print ("EXITING");
+			//print ("EXITING");
 			_waitForPress = false;
 		}
 	}

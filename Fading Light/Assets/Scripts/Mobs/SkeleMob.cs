@@ -64,11 +64,16 @@ public class SkeleMob : BaseEntity
 
 	private AchievementManager _achievementManager;
 
+    private GameObject _cloud;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
     private void Awake()
 	{
+        _cloud = GameObject.Find("ReviveLight");
+        _cloud.SetActive(false);
+
         if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
@@ -302,6 +307,7 @@ public class SkeleMob : BaseEntity
 
     private IEnumerator Death_Enter()
     {
+        _animator.Play("Death", PlayMode.StopAll);
         float refreshRate = 0.5f;
         if (DEBUG) Debug.Log("Entered state: Death");
         //Check to see if either player is within activation range
@@ -316,6 +322,8 @@ public class SkeleMob : BaseEntity
 
     private IEnumerator Revival_Enter()
     {
+
+        _cloud.SetActive(true);
         if (DEBUG) Debug.Log("Entered state: Revival");
         
         _animator.Play("Resurrection", PlayMode.StopAll);
@@ -324,6 +332,8 @@ public class SkeleMob : BaseEntity
             yield return new WaitForSeconds(0.25f);
             if (DEBUG) Debug.Log("Waiting for revive animation to finish");
         }
+        _cloud.SetActive(false);
+
         fsm.ChangeState(States.Chase);
     }
 
@@ -357,7 +367,6 @@ public class SkeleMob : BaseEntity
         {
             pathfinder.Stop();
             this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        

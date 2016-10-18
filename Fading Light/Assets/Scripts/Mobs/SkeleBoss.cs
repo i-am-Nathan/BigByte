@@ -180,7 +180,7 @@ public class SkeleBoss : BaseEntity
     private void Summoning_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
-        _animator["Skill 1"].speed = 0.3f;
+        //_animator["Skill 1"].speed = 0.3f;
         _animator.Play("Skill 1", PlayMode.StopAll);
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
@@ -240,7 +240,7 @@ public class SkeleBoss : BaseEntity
 
             yield return new WaitForSeconds(refreshRate);
         }
-        fsm.ChangeState(States.Chase);
+        fsm.ChangeState(States.Chase, StateTransition.Overwrite);
     }
 
     /// <summary>
@@ -285,7 +285,7 @@ public class SkeleBoss : BaseEntity
             }           
             else
             {
-                fsm.ChangeState(States.Taunt);
+                fsm.ChangeState(States.Taunt, StateTransition.Overwrite);
             }
 
             if (DEBUG) Debug.Log("Chasing player:" + target.tag);
@@ -296,7 +296,7 @@ public class SkeleBoss : BaseEntity
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
-                fsm.ChangeState(States.Taunt);
+                fsm.ChangeState(States.Taunt, StateTransition.Overwrite);
             }
 
             //If the target comes into attack range, stop chasing and enter the attack state
@@ -305,7 +305,7 @@ public class SkeleBoss : BaseEntity
                 if (DEBUG) Debug.Log("In attack range");
                 _isMoving = false;
                 _lockedOn = false;
-                fsm.ChangeState(States.Attack);
+                fsm.ChangeState(States.Attack, StateTransition.Overwrite);
             }
 
             //Set the speed of the pathfinder (either running or sprinting) and the target positions
@@ -361,7 +361,7 @@ public class SkeleBoss : BaseEntity
             }
             yield return new WaitForSeconds(refreshRate);
         }
-        fsm.ChangeState(States.Chase);
+        fsm.ChangeState(States.Chase, StateTransition.Overwrite);
     }
 
     private void RotateTowards(Transform target)
@@ -378,8 +378,9 @@ public class SkeleBoss : BaseEntity
 
     public override void Damage(float amount, Transform attacker)
     {
+        if (isDead) return;
 
-        if (fsm.State != States.Summoning)
+        if (fsm.State != States.Summoning || fsm.State != States.Sheilding)
         {
             base.Damage(amount, attacker);
 
@@ -393,7 +394,7 @@ public class SkeleBoss : BaseEntity
 
             if (CurrentHealth < 40 && !_summonedTwice)
             {
-                _summonedTwice = false;
+                _summonedTwice = true;
                 Debug.Log("Health reduced to first summoning level");
                 fsm.ChangeState(States.Summoning, StateTransition.Overwrite);
                 return;
