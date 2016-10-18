@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 /// <summary>
 /// Used to register when players have reached the end of the level
@@ -16,6 +18,12 @@ public class EndOfLevelTrigger : MonoBehaviour {
 			// Pauses the game and shows the menu indicating that players have completed the level
 			Time.timeScale = 0;
 			LevelFinishedMenu.enabled = true;
+			Scene scene = SceneManager.GetActiveScene();
+			if (scene.name == "ammar_ui_v2") {
+				Debug.Log ("End of game yoooooooooooooooo");
+				// Get users names
+				// Post scores to database
+			}
 		}
 	}
 
