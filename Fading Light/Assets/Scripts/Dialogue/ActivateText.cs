@@ -84,7 +84,7 @@ public class ActivateText : MonoBehaviour
 	/// <param name="other">Other.</param>
 	void OnTriggerExit(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
-			print ("EXITING");
+			//print ("EXITING");
 			_waitForPress = false;
 		}
 	}

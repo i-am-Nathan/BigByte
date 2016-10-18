@@ -7,6 +7,8 @@ public class FloatingPlate : MonoBehaviour {
 	public float TravelSpeed;
     private bool _goingUp = true;
     private float _velocity = 50;
+	public Collider StartBoundary;
+	public Collider EndBoundary;
 	private int _direction =1 ;
 	public bool Pressed;
 
@@ -21,7 +23,7 @@ public class FloatingPlate : MonoBehaviour {
 
             other.transform.parent = transform;
 
-		} else if (other.name == "Start" || other.name== "End")
+		} else if (other == StartBoundary || other == EndBoundary)
         {
 			if (_direction == 1) {
 				_direction = -1;
@@ -31,6 +33,14 @@ public class FloatingPlate : MonoBehaviour {
 
 		} 
     }
+	void OnTriggerStay(Collider other){
+		if (other.name == "Player 1" || other.name == "Player2") 
+		{
+
+			other.transform.parent = transform;
+
+		}
+	}
 
     public void Resume()
     {
