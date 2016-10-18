@@ -20,10 +20,13 @@ public class FloatingPlate : MonoBehaviour {
     {
 		if (other.name == "Player 1" || other.name == "Player2") 
         {
+			if (other.transform.parent.name != "Floating") {
+				
+				other.transform.parent = transform;
+			}
 
-            other.transform.parent = transform;
-
-		} else if (other == StartBoundary || other == EndBoundary)
+		} 
+			if (other == StartBoundary || other == EndBoundary)
         {
 			if (_direction == 1) {
 				_direction = -1;
@@ -61,8 +64,9 @@ public class FloatingPlate : MonoBehaviour {
     void OnTriggerExit(Collider other)
     {
 		if (other.name == "Player 1" || other.name == "Player2") {
-        
-            other.transform.parent = null;
+			if (other.transform.parent == transform) {
+				other.transform.parent = null;
+			}
 
         }
     }
