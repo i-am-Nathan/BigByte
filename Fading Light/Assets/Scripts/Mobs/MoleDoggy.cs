@@ -2,6 +2,7 @@
 using System.Collections;
 using MonsterLove.StateMachine;
 using UnityEngine.UI;
+using Assets.Scripts.Mobs;
 
 /// <summary>
 /// Controls the AI (using FSM) of the large molemans dog bosses (e.i. the one found in the tutorial level)
@@ -16,7 +17,8 @@ public class MoleDoggy : BaseEntity
 		Idle,
 		Chase,
         Attack,
-        Taunt, 
+        Taunt,
+        FireballSpawning,
         Death
 	}
 
@@ -57,7 +59,7 @@ public class MoleDoggy : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
 
@@ -87,7 +89,7 @@ public class MoleDoggy : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        healthCircle.enabled = false;
+        //healthCircle.enabled = false;
         CurrentHealth = Health;
 	}
 
@@ -141,6 +143,51 @@ public class MoleDoggy : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
+    private bool _active;
+
+    IEnumerator FireballSpawning_Enter()
+    {
+        for (int i = 0; i<5; i++)
+        {
+            if (DEBUG) Debug.Log("Creating fireball");
+            GameObject newFireball = (GameObject)Instantiate(Resources.Load("Fireball2"));
+            Vector3 newPos = new Vector3(this.transform.position.x, 6, this.transform.position.z);
+            newFireball.transform.position = newPos;
+        }
+       
+        _active = true;
+        while (_active)
+        {
+            if (DEBUG) Debug.Log("Waiting for all fireballs to explode");
+
+            bool unexplodedBalls = false;
+
+            //Check too see if all fireballs have exploded
+            GameObject[] mobs = GameObject.FindGameObjectsWithTag("Fireball");
+            foreach (GameObject mob in mobs)
+            {
+                //if (DEBUG) Debug.Log("Checking enemy tagged object");
+                Fireball fireball = mob.transform.GetComponent<Fireball>();
+                if (fireball != null)
+                {
+                    if (!fireball.isExploded())
+                    {
+                        unexplodedBalls = true;
+                        break;
+                    }
+                }
+            }        
+
+            if (!unexplodedBalls)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.25f);           
+        }
+        fsm.ChangeState(States.Chase);
+    }
+
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
     /// molemans dogs alert area, or comes into attack range.
@@ -162,7 +209,7 @@ public class MoleDoggy : BaseEntity
 
             if (!_isMoving)
             {
-                _animator.Play("WalkDog 1", PlayMode.StopAll);
+                _animator.Play("WalkDog", PlayMode.StopAll);
                 _isMoving = true;
             }
 
@@ -270,9 +317,28 @@ public class MoleDoggy : BaseEntity
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
+    private bool _fireballedOnce = false;
+    private bool _fireballedTwice = false;
+
     public override void Damage(float amount, Transform attacker)
     {        
         base.Damage(amount, attacker);
+
+        if (CurrentHealth < 150 && !_fireballedOnce)
+        {
+            _fireballedOnce = true;
+            Debug.Log("Health reduced to first fireballing level");
+            fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
+            return;
+        }
+
+        if (CurrentHealth < 40 && !_fireballedTwice)
+        {
+            _fireballedTwice = true;
+            Debug.Log("Health reduced to first fireballing level");
+            fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
+            return;
+        }
 
         // Set the health bar's value to the current health.
         try

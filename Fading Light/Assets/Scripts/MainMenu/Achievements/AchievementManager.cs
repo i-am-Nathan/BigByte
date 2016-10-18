@@ -9,7 +9,7 @@ using System.Collections;
 /// in the game. Each Achievement specifies 
 /// </summary>
 [System.Serializable]
-public class Achievement
+/*public class Achievement
 {
     public string Name;
     public string Description;
@@ -70,7 +70,7 @@ public class Achievement
         return false;
     }
 		
-}
+}*/
 
 /// <summary>
 /// 

@@ -7,18 +7,20 @@ using System.Collections;
 public class SpiderSpawnArea : MonoBehaviour
 {
     public float FuelAmount = 10;
-    
+    public int LowerBound;
+    public int UpperBound;
+
     private TorchFuelController TorchFuelControllerScript;
 	private AchievementManager _achievementManager;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     /// <summary>
     /// Starts this instance.
     /// </summary>
     void Start()
     {
-        float randomNumber = Random.Range(2, 8);
+        float randomNumber = Random.Range(LowerBound, UpperBound);
         if (DEBUG) Debug.Log("Random number of spiders: " + randomNumber);
 
         var plane = this.transform.Find("Plane").gameObject;

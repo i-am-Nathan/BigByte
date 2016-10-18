@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Coin objects which players can pick up and purchase items through the shop.
 /// </summary>
-public class HealthPotion : MonoBehaviour
+public class AttackPotion : MonoBehaviour
 {
     private AudioSource _source;
     public AudioClip PickUpSound;
@@ -43,12 +43,12 @@ public class HealthPotion : MonoBehaviour
             if (other.tag == "Player")
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-                SubInventoryManager.AddItemQuantity("Health Pot", true);
+                SubInventoryManager.AddItemQuantity("Attack Pot", true);
 
             } else
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-                SubInventoryManager.AddItemQuantity("Health Pot", false);
+				SubInventoryManager.AddItemQuantity("Attack Pot", false);
             }
         }
     }
