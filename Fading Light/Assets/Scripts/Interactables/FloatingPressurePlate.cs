@@ -11,35 +11,33 @@ public class FloatingPressurePlate : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        
-        _thingsOnTop++;
+		if (other.name == "Player 1" || other.name == "Player2") {
+			_thingsOnTop++;
 
-        //if the weight is heavy enough, then the plate is triggered
-        if (_thingsOnTop >= 1 && !_pressed)
+			//if the weight is heavy enough, then the plate is triggered
+			if (_thingsOnTop >= 1 && !_pressed) {
+				this.GetComponent<Animation> ().Play ("PressurePlateDown");
+				floater.gameObject.GetComponent <FloatingPlate> ().Resume ();
+				_pressed = true;
 
-        {
-            this.GetComponent<Animation>().Play("PressurePlateDown");
-            floater.gameObject.GetComponent <FloatingPlate> ().Resume();
-            _pressed = true;
-
-        }
+			}
+		}
 
     }
 
     void OnTriggerExit(Collider other)
     {
+		if (other.name == "Player 1" || other.name == "Player2") {
+			_thingsOnTop--;
 
-        _thingsOnTop--;
+			//if the weight is heavy enough, then the plate is triggered
+			if (_thingsOnTop < 1 && _pressed) {
+				this.GetComponent<Animation> ().Play ("PressurePlateUp");
+				floater.gameObject.GetComponent<FloatingPlate> ().Stop ();
+				_pressed = false;
 
-        //if the weight is heavy enough, then the plate is triggered
-        if (_thingsOnTop < 1 && _pressed)
-
-        {
-            this.GetComponent<Animation>().Play("PressurePlateUp");
-            floater.gameObject.GetComponent<FloatingPlate>().Stop();
-            _pressed = false;
-
-        }
+			}
+		}
 
     }
 
