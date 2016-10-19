@@ -13,7 +13,7 @@ public class TrapPlate : MonoBehaviour {
 	private int _thingsOnTop = 0;
 	public bool Pressed = false;
 	public GameObject[] otherPlates;
-
+	public bool Disabled;
 	/// <summary>
 	/// Called when an object enters on top of the plate
 	/// </summary>
@@ -23,6 +23,7 @@ public class TrapPlate : MonoBehaviour {
 		for (int i = 0; i < traps.Length; i++) {
 			_trapList.Add(traps[i]);
 		}
+		Disabled = false;
 	}
 
 
@@ -34,9 +35,10 @@ public class TrapPlate : MonoBehaviour {
 		} 
 
 		//if the weight is heavy enough, then the plate is triggered
-		if (_thingsOnTop >= 1 && !Pressed)
+		if (_thingsOnTop >= 1 && !Pressed && !Disabled)
 
 		{
+			
 			this.GetComponent<Animation>().Play("PressurePlateDown");
 			_trapList.Clear ();
 			for (int i = 0; i < traps.Length; i++) {
@@ -62,7 +64,7 @@ public class TrapPlate : MonoBehaviour {
 		GameObject[] otherTraps = plate.GetComponent<TrapPlate> ().traps;
 		bool duplicate = false;
 		if (plate.GetComponent<TrapPlate>().Pressed) {
-			this.GetComponent<Animation> ().Play ("PressurePlateUp");
+			plate.GetComponent<Animation> ().Play ("PressurePlateUp");
 			for (int i = 0; i < otherTraps.Length; i++) {
 				duplicate = false;
 				for (int j = 0; j < traps.Length; j++) {
