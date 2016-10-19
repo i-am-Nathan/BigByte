@@ -114,6 +114,7 @@ public class OpenTreasure : MonoBehaviour {
 			_source.PlayOneShot (TreasureSound);
 		}
 		_source.Stop ();
+		Destroy(this.transform.FindChild ("Eternal Light").gameObject);
 	}
 
 
