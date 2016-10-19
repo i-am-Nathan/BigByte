@@ -39,10 +39,12 @@ public class Storyline_Tutorial : Storyline {
     /// Updates this instance.
     /// </summary>
     void Update() {
+
         if(Time.time - _startDisplay > 5 && !_tipsDone)
         {
             _tips.DisableToolTips();
         }
+
         if (_done)
         {
             return;
@@ -73,7 +75,6 @@ public class Storyline_Tutorial : Storyline {
             Player2.IsDisabled = false;
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             MoleMen[0].IsDisabled = false;
-            //Turn on keys for X seconds
             _tips.EnableToolTips();
             MoleMen[0].transform.Find("hipcontrol/spinecontrol/chestcontrol/L_armcontrol/L_wrist_Goal/Torch Light Holder").gameObject.SetActive(false);
             _startDisplay = Time.time;
@@ -172,6 +173,12 @@ public class Storyline_Tutorial : Storyline {
     public override void EnableMoleMan()
     {
         MoleMen[0].IsDisabled = false;
+    }
+
+    public override void CharacterDamageEnabled(bool enabled)
+    {
+        Player1.CanTakeDamage = enabled;
+        Player2.CanTakeDamage = enabled;
     }
 
 }
