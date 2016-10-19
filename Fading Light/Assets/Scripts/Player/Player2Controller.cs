@@ -41,7 +41,7 @@ public class Player2Controller : Player
     public AudioSource WalkSounds;
     public AudioSource HitSounds;
     public AudioSource HurtSounds;
-    public AudioSource DeathSounds;
+    public AudioSource DeathSound;
 
     public bool IsMainMenu = false;
     /// <summary>
@@ -112,10 +112,10 @@ public class Player2Controller : Player
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
-	    /*if(!HitSounds.isPlaying)
+	        if(!HitSounds.isPlaying)
             {
                 HitSounds.Play();
-            }*/
+            }
         }
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
@@ -129,7 +129,7 @@ public class Player2Controller : Player
         {
             _animator.SetBool("Idling", true);
         }
-	/*if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+	    if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
         {
             WalkSounds.Play();
         }
@@ -137,7 +137,7 @@ public class Player2Controller : Player
         else if ((Input.GetKeyUp("w") || Input.GetKeyUp("s") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) && !(Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d")))
         {
             WalkSounds.Stop();
-        }*/
+        }
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public class Player2Controller : Player
             // ... it should die.
             Killed();
         }
-	   /*    else
+	   /* else
         {
             if (!HurtSounds.isPlaying)
             {
@@ -208,7 +208,7 @@ public class Player2Controller : Player
         IsDisabled = true;
         _lifeManagerScript.LoseLife();
 
-       //DeathSound.Play();
+        DeathSound.Play();
     }
 
     /// <summary>
