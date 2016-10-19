@@ -120,7 +120,7 @@ public class PlayerController : Player
 
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
-        if (Input.GetKeyDown(KeyCode.RightControl) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.P) && !_torch.activeInHierarchy)
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
