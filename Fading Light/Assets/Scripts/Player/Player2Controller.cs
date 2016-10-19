@@ -39,6 +39,7 @@ public class Player2Controller : Player
     
     //audio
     public AudioSource WalkSounds;
+    public AudioSource DeathSound;
     
     public bool IsMainMenu = false;
     /// <summary>
@@ -47,6 +48,7 @@ public class Player2Controller : Player
     void Start()
 	{
         base.Start();
+	WalkSounds.loop = true;
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
@@ -196,8 +198,7 @@ public class Player2Controller : Player
         base.Killed();
         IsDisabled = true;
         _lifeManagerScript.LoseLife();
-
-        Debug.Log("Dead");
+	DeathSound.Play();
     }
 
     /// <summary>
