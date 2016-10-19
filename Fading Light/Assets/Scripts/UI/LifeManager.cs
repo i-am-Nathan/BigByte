@@ -59,6 +59,7 @@ public class LifeManager : MonoBehaviour
 		// Decrementing the number of shared lives left
         _numberOfLivesLeft = _numberOfLivesLeft - 1;
         _gameDataScript.SetNumberOfLives(_numberOfLivesLeft);
+		_gameDataScript.UpdateTimesKilled ();
 
 		// Removing a heart from the UI
 		Lives[_numberOfLivesLeft].SetActive(false);

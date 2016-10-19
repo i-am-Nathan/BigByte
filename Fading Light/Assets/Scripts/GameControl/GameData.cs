@@ -266,16 +266,16 @@ public class GameData : MonoBehaviour {
 		return _playerTwoAccuracy;
 	}
 
-	public void SetChestsMissed(float amount) {
-		_chestsMissed = amount;
+	public void UpdateChestsMissed() {
+		_chestsMissed++;
 	}
 
 	public float GetChestsMissed() {
 		return _chestsMissed;
 	}
 
-	public void SetTimesKilled(float amount) {
-		_timesKilled = amount;
+	public void UpdateTimesKilled() {
+		_timesKilled++;
 	}
 
 	public float GetTimesKilled() {
