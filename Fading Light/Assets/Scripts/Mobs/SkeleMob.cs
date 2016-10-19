@@ -60,7 +60,7 @@ public class SkeleMob : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
 

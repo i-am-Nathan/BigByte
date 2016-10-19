@@ -64,7 +64,7 @@ namespace Assets.Scripts.Mobs
                 _isExploded = true;
 
                 if (DEBUG) Debug.Log("Creating fireball explosion");
-                GameObject newFireball = (GameObject)Instantiate(Resources.Load("Explosion"));
+                GameObject newFireball = (GameObject)Instantiate(Resources.Load("Explosion2"));
                 Vector3 newPos = new Vector3(this.transform.position.x, 6, this.transform.position.z);
                 newFireball.transform.position = newPos;
                 GameObject.Destroy(gameObject);
