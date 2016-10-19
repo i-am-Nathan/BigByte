@@ -107,57 +107,7 @@ public class SkeleMob : BaseEntity
         if (DEBUG) Debug.Log("skeleton state machine initilized.");
         fsm.ChangeState(States.Death);
     }
-
-    /// <summary>
-    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
-    /// </summary>
-    private IEnumerator Sleep_Enter()
-    {
-        if (DEBUG) Debug.Log("Entered state: Sleep");
-        float refreshRate = 0.8f;
-        _sleeping = true;
-        _animator["NewStandUp01"].speed = 0;
-        _animator.Play("NewStandUp01", PlayMode.StopAll);
-
-        //Check to see if either player is within activation range
-        while (_sleeping)
-        {
-            if (DEBUG) Debug.Log("Waiting for players to wake me up.");
-            
-            //Retrieve the distance to the two playesr and their entity objects
-            float player1distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
-            float player2distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player2").transform.position, this.gameObject.transform.position);
-            BaseEntity player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<BaseEntity>();
-            BaseEntity player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<BaseEntity>();
-
-            //If there is a non-dead player inside the hard activiation distance, break the loop and wake up them
-            if (!player1.isDead && (player1distance < HardActivationDistance) || !player2.isDead && (player2distance < HardActivationDistance))
-            {
-                if (DEBUG) Debug.Log("Skele woken up by player.");
-                _sleeping = false;
-            }
-            yield return new WaitForSeconds(refreshRate);
-        }
-        fsm.ChangeState(States.Wake);
-    }
-
-    /// <summary>
-    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
-    /// </summary>
-    private IEnumerator Wake_Enter()
-    {
-        if (DEBUG) Debug.Log("Entered state: Wake");
-        _animator["NewStandUp01"].speed = 1;
-        _animator.Play("NewStandUp01", PlayMode.StopAll);
-
-        while (_animator.isPlaying)
-        {
-            yield return new WaitForSeconds(0.25f);
-            if (DEBUG) Debug.Log("Waiting for waking animation to finish");
-        }
-        fsm.ChangeState(States.Idle);
-    }
-
+        
     /// <summary>
     /// Entry method for the attack state. Plays the attack animation once, and deals damage once, before transitioning back to the chase state.
     /// </summary>
@@ -322,6 +272,9 @@ public class SkeleMob : BaseEntity
 
     private IEnumerator Revival_Enter()
     {
+        
+        Vector3 randomDirection = new Vector3(Random.value, Random.value, Random.value);
+        transform.Rotate(randomDirection);
 
         _cloud.SetActive(true);
         if (DEBUG) Debug.Log("Entered state: Revival");

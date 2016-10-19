@@ -17,6 +17,10 @@ namespace Assets.Scripts.Mobs
 
         Player target;
         TorchFuelController TorchController;
+        
+        public AudioClip FireballCreated;
+        public AudioClip FireballExplodes;
+        private AudioSource _source;
 
         public bool isExploded()
         {
@@ -25,6 +29,8 @@ namespace Assets.Scripts.Mobs
 
         void Start()
         {
+            _source = GetComponent<AudioSource>();
+            _source.PlayOneShot(FireballCreated);
             //Destroy(gameObject, lifetime);
             if (DEBUG) Debug.Log("Starting fireball!");
             //Find player with the torch and set them as the target for this fireball
@@ -52,6 +58,8 @@ namespace Assets.Scripts.Mobs
             {
                 if (DEBUG) Debug.Log("Fireball collision: Player");
                 target.Damage(damage, this.transform.root);
+
+                _source.PlayOneShot(FireballExplodes);
 
                 _isExploded = true;
 
