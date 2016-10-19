@@ -29,7 +29,7 @@ public class DatabaseScores : MonoBehaviour
     /// Example: StartCoroutine(PostScores("jack", 100, 99, 99, 99, 99, 99, 99));
     public IEnumerator PostScores(string name, int gold, float player1Accuracy, float player2Accuracy, float minutes, float seconds, float monsterskilled, float timeskilled, float chestsmissed)
     {
-        Debug.Log("LOL");
+		Debug.Log("LOL");
         //Create hash to ensure things that arent this game arent posting scores
         var md5 = MD5.Create();
         var asciiBytes = System.Text.Encoding.ASCII.GetBytes(name + gold + SecretKey);
@@ -47,6 +47,7 @@ public class DatabaseScores : MonoBehaviour
             Debug.Log("ERROR");
             Debug.Log("There was an error posting the high score: " + post.error);
         }
+		Debug.Log ("aay");
     }
 
 

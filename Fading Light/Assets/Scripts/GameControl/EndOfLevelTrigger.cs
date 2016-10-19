@@ -40,7 +40,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		Player1Name = Player1Name.GetComponent<Text>();
 		Player2Name = Player2Name.GetComponent<Text>();
 
-		string playersNames = Player1Name.text + " " + Player2Name.text;
+		string playersNames = Player1Name.text + "-" + Player2Name.text;
 		int gold = _gameDataScript.GetAmountOfGold ();
 		float totalTime = _gameDataScript.GetTotalTime ();
 		float player1Accuracy = _gameDataScript.GetPlayer1Accuracy ();
@@ -48,9 +48,9 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		float monstersKilled = _gameDataScript.GetMonstersKilled ();
 		float timesKilled = _gameDataScript.GetTimesKilled ();
 		float chestsMissed = _gameDataScript.GetChestsMissed ();
-
 		float mins = Mathf.Floor(totalTime / 60);
 		float secs = Mathf.RoundToInt(totalTime % 60);
+
 		StartCoroutine(_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed));
 	}
 
@@ -61,6 +61,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
     {
 		// Hiding the menu
         LevelFinishedMenu.enabled = false;
+		SubmitHighScoreMenu.enabled = false;
 		_dbScoresScript = GameObject.Find("DatabaseScores").GetComponent<DatabaseScores>();
 		_gameDataScript = GameObject.Find("GameData").GetComponent<GameData>();
     }
@@ -68,7 +69,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	public void SubmitHighScore () {
 		SendToDatabase ();
 		SubmitHighScoreMenu.enabled = false;
-		SceneManager.LoadScene("MainMenu");
+		//SceneManager.LoadScene("MainMenu");
 	}
 
 	/// <summary>
