@@ -118,18 +118,18 @@ public class GameData : MonoBehaviour {
             _numberOfLivesLeft = 3;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
-            _sharedGold = 0;
+            _sharedGold = 100;
 			_timesKilled = 0;
 			_monstersKilled = 0;
 			_chestsMissed = 0;
 			_playerOneAccuracy = 0;
 			_playerTwoAccuracy = 0;
-			_player1ItemQuantityDictionary.Add ("Health Pot", 0);
-			_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
-			_player1ItemQuantityDictionary.Add ("Defense Pot",0);
-			_player2ItemQuantityDictionary.Add ("Health Pot", 0);
-			_player2ItemQuantityDictionary.Add ("Attack Pot", 0);
-			_player2ItemQuantityDictionary.Add ("Defense Pot", 0);
+			_player1ItemQuantityDictionary.Add ("Health Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Attack Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Defense Potion",0);
+			_player2ItemQuantityDictionary.Add ("Health Potion", 0);
+			_player2ItemQuantityDictionary.Add ("Attack Potion", 0);
+			_player2ItemQuantityDictionary.Add ("Defense Potion", 0);
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }
@@ -177,7 +177,6 @@ public class GameData : MonoBehaviour {
     /// </summary>
     public int GetAmountOfGold()
     {
-		Debug.Log ("gold " + _sharedGold);
         return _sharedGold;
     }
 

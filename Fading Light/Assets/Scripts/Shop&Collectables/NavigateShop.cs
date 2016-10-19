@@ -51,7 +51,7 @@ public class NavigateShop : MonoBehaviour {
 			Previous ();
 		} else if (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
 			Next ();
-		} else if (Input.GetKeyDown (KeyCode.KeypadEnter)) {
+		} else if (Input.GetKeyDown (KeyCode.L)) {
 			// Player 1
 			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
 				ItemQuantity [Index]--;
@@ -59,19 +59,23 @@ public class NavigateShop : MonoBehaviour {
 				_currentGold.text = _gameData.GetAmountOfGold() + "";
 				_quantity.text= ItemQuantity [Index] +"";
 				_source.PlayOneShot (BuySound);
-				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name, true);
+
+				Debug.Log ("buying: " + Items [Index].GetComponent<Item> ().GetName ());
+
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().GetName(), true);
 			}
-		} else if (Input.GetKeyDown (KeyCode.J)) {
+		} else if (Input.GetKeyDown (KeyCode.C)) {
 			// Player 2
-			//Debug.Log(ItemQuantity [Index] + "");
-			Debug.Log (_gameData.GetAmountOfGold () + "");
 			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
 				ItemQuantity [Index]--;
 				_gameData.UpdateGold (0 - Price [Index]);
 				_currentGold.text = _gameData.GetAmountOfGold() + "";
 				_quantity.text= ItemQuantity [Index] +"";
 				_source.PlayOneShot (BuySound);
-				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name, false);
+
+				Debug.Log ("buying: " + Items [Index].GetComponent<Item> ().GetName ());
+
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().GetName(), false);
 			}
 		}
 
