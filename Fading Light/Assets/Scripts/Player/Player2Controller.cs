@@ -120,7 +120,7 @@ public class Player2Controller : Player
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
             _animator.SetBool("Idling", false);
-            if (!controller.isGrounded)
+            if (!controller.isGrounded && _animator.GetCurrentAnimatorStateInfo(0).IsName("1HCombatMove"))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             }
@@ -171,7 +171,7 @@ public class Player2Controller : Player
     /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
-        Debug.Log("Player damaged");
+        //Debug.Log("Player damaged");
         healthCircle.enabled = true;
         base.Damage(amount, null);
 

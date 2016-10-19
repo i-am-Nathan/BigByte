@@ -127,7 +127,7 @@ public class PlayerController : Player
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {
             _animator.SetBool("Idling", false);
-            if (!_controller.isGrounded)
+            if (!_controller.isGrounded && _animator.GetCurrentAnimatorStateInfo(0).IsName("1HCombatMove"))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             }
