@@ -115,9 +115,6 @@ public class Player2Controller : Player
         {
             _animator.SetBool("Idling", true);
         }
-
-
-
     }
 
     /// <summary>

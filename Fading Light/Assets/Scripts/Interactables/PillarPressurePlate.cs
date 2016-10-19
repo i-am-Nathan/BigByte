@@ -23,15 +23,12 @@ public class PillarPressurePlate : MonoBehaviour {
 
         if ((other.tag == "Player") || (other.tag == "Player2")) {
             _thingsOnTop++;
-            Debug.Log(other);
-            Debug.Log("on" + _thingsOnTop);
             //if the weight is heavy enough, then the plate is triggered
             if (_thingsOnTop >= 2 && !_pressed)
 
             {
                 GameObject parent = transform.parent.gameObject;
                 this.GetComponent<Animation>().Play("CirclePlateDown");
-                Debug.LogWarning("down");
 
                 //set pillar to charged state
                 Transform lightning = transform.Find("Lightning");
@@ -55,17 +52,14 @@ public class PillarPressurePlate : MonoBehaviour {
     {
         if ((other.tag == "Player") || (other.tag == "Player2"))
             {
-            Debug.Log(other);
             _thingsOnTop--;
-            Debug.Log("off" + _thingsOnTop);
             //if the weight is heavy enough, then the plate is triggered
             if (_thingsOnTop < 1 && _pressed)
 
             {
                 GameObject parent = transform.parent.gameObject;
                 this.GetComponent<Animation>().Play("CirclePlateUp");
-                Debug.LogWarning("up");
-
+                
                 //set pillar to uncharged state
                 Transform lightning = transform.Find("Lightning");
                 ParticleSystem lightningPS = lightning.GetComponent<ParticleSystem>();

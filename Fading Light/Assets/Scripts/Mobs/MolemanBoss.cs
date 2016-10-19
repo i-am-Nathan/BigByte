@@ -217,7 +217,6 @@ public class MolemanBoss : BaseEntity
             pathfinder.acceleration = 19f;
             pathfinder.angularSpeed = 900f;
             pathfinder.SetDestination(target.position);
-            Debug.Log(pathfinder.speed);
 
             //Every so often sprint at the player
             if (_walkCount > 12)
@@ -266,6 +265,14 @@ public class MolemanBoss : BaseEntity
             yield return new WaitForSeconds(refreshRate);
         }
         fsm.ChangeState(States.Chase);
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        if (other)
+        {
+        }
+        Debug.Log("OWOWWWWWOWOWOWOW");
     }
 
     private void RotateTowards(Transform target)
