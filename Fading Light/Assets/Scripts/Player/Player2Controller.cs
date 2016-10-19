@@ -44,6 +44,7 @@ public class Player2Controller : Player
     public AudioSource DeathSound;
 
     public bool IsMainMenu = false;
+
     /// <summary>
     /// Starts this instance.
     /// </summary>
@@ -54,6 +55,7 @@ public class Player2Controller : Player
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
         _lastJumpTime = Time.time;
+
         if (!IsMainMenu)
         {
             _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
@@ -87,6 +89,13 @@ public class Player2Controller : Player
         {
             ControlWASD();
         }
+
+		if (isHealthPotActive ()) {
+			UpdateHealthUI ();
+			SetHealthPotActive ();
+		}
+
+		UpdateEffects ();
     }
 
     /// <summary>
@@ -175,6 +184,11 @@ public class Player2Controller : Player
         healthCircle.enabled = true;
         base.Damage(amount, null);
 
+		if (isDefensePotActive ()) {
+			amount = amount / 2;
+			Debug.Log ("Damage taken p2 " + amount);
+		}
+
         // Set the damaged flag so the screen will flash.
         damaged = true;
 
@@ -231,4 +245,11 @@ public class Player2Controller : Player
         }
     }
 
+	/// <summary>
+	/// Increases health sliders when health pot is activated
+	/// </summary>
+	public void UpdateHealthUI () {
+		healthCircle.fillAmount += 30f;
+		_healthSlider.value += 30f;
+	}
 }

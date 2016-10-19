@@ -2,27 +2,27 @@
 
 /// <summary>
 /// Used to control the movement of the main camera
+/// Referenced from https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control
 /// </summary>
 public class PlayerCam : MonoBehaviour
 {
     //These are all modified in inspector
-	public float _dampTime;                 // Approximate time for the camera to refocus.
-	public float _screenEdgeBuffer;           // Space between the top/bottom most target and the screen edge.
-    public float _screenEdgeBufferTop;           // Space between the top/bottom most target and the screen edge.
-    public float _minSize;                  // The smallest orthographic size the camera can be.
-	public float _maxSize;                  // The smallest orthographic size the camera can be.
-    public float _xOffset;                 //Offsets the camera to account for it being on an angle
-    /*[HideInInspector]*/
-    public Transform[] m_Targets; // All the targets the camera needs to encompass.
+	public float DampTime;                 // Approximate time for the camera to refocus.
+	public float ScreenEdgeBuffer;           // Space between the top/bottom most target and the screen edge.
+    public float ScreenEdgeBufferTop;           // Space between the top/bottom most target and the screen edge.
+    public float MinSize;                  // The smallest orthographic size the camera can be.
+	public float MaxSize;                  // The smallest orthographic size the camera can be.
+    public float XOffset;                 //Offsets the camera to account for it being on an angle
+    public Transform[] Targets; // All the targets the camera needs to encompass.
 
 
     public GameObject SwoopPositionTarget;
     public GameObject SwoopAngleTarget;
 
-    private Camera m_Camera;                        // Used for referencing the camera.
-	private float m_ZoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
-	private Vector3 m_MoveVelocity;                 // Reference velocity for the smooth damping of the position.
-	private Vector3 m_DesiredPosition;              // The position the camera is moving towards.
+	private Camera _camera;                        // Used for referencing the camera.
+	private float _zoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
+	private Vector3 _moveVelocity;                 // Reference velocity for the smooth damping of the position.
+	private Vector3 _desiredPosition;              // The position the camera is moving towards.
 
     public int CameraState = 0;
 
@@ -35,7 +35,7 @@ public class PlayerCam : MonoBehaviour
     /// </summary>
     private void Awake ()
 	{
-		m_Camera = GetComponentInChildren<Camera> ();
+		_camera = GetComponentInChildren<Camera> ();
         _startAngle = gameObject.transform.eulerAngles;
         _startPosition = gameObject.transform.position;
 	}
@@ -61,7 +61,7 @@ public class PlayerCam : MonoBehaviour
             var lookPos = SwoopAngleTarget.transform.position - transform.position;
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2);
-            m_Camera.fieldOfView = Mathf.SmoothDamp(m_Camera.fieldOfView, tmpFOV, ref m_ZoomSpeed, _dampTime);
+            _camera.fieldOfView = Mathf.SmoothDamp(_camera.fieldOfView, tmpFOV, ref _zoomSpeed, DampTime);
             //swinging down
         }
 		
@@ -77,7 +77,7 @@ public class PlayerCam : MonoBehaviour
 		FindAveragePosition();
 
 		// Smoothly transition to that position.
-		transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, _dampTime);
+		transform.position = Vector3.SmoothDamp(transform.position, _desiredPosition, ref _moveVelocity, DampTime);
 
         float anglex = Mathf.MoveTowardsAngle(transform.eulerAngles.x, _startAngle.x, 30f * Time.deltaTime);
         float angley = Mathf.MoveTowardsAngle(transform.eulerAngles.y, _startAngle.y, 30f * Time.deltaTime);
@@ -95,14 +95,14 @@ public class PlayerCam : MonoBehaviour
 		int numTargets = 0;
 
 		// Go through all the targets and add their positions together.
-		for (int i = 0; i < m_Targets.Length; i++)
+		for (int i = 0; i < Targets.Length; i++)
 		{
 			// If the target isn't active, go on to the next one.
-			if (!m_Targets[i].gameObject.activeSelf)
+			if (!Targets[i].gameObject.activeSelf)
 				continue;
 
 			// Add to the average and increment the number of targets in the average.
-			averagePos += m_Targets[i].position;
+			averagePos += Targets[i].position;
 			numTargets++;
 		}
 
@@ -114,12 +114,12 @@ public class PlayerCam : MonoBehaviour
 		averagePos.y = transform.position.y;
 
         //Offset the camera to account for it being on an angle
-        averagePos.x += _xOffset;
+        averagePos.x += XOffset;
 
         averagePos.y = _startPosition.y;
 
         // The desired position is the average position;
-        m_DesiredPosition = averagePos;
+        _desiredPosition = averagePos;
 
        
 
@@ -134,7 +134,7 @@ public class PlayerCam : MonoBehaviour
 		// Find the required size based on the desired position and smoothly transition to that size.
 		float requiredSize = FindRequiredSize();
 		//m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, _dampTime);
-        m_Camera.fieldOfView = Mathf.SmoothDamp(m_Camera.fieldOfView, requiredSize, ref m_ZoomSpeed, _dampTime);
+        _camera.fieldOfView = Mathf.SmoothDamp(_camera.fieldOfView, requiredSize, ref _zoomSpeed, DampTime);
     }
 
 
@@ -145,20 +145,20 @@ public class PlayerCam : MonoBehaviour
     private float FindRequiredSize ()
 	{
 		// Find the position the camera rig is moving towards in its local space.
-		Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition);
+		Vector3 desiredLocalPos = transform.InverseTransformPoint(_desiredPosition);
 
 		// Start the camera's size calculation at zero.
 		float size = 0f;
 
 		// Go through all the targets...
-		for (int i = 0; i < m_Targets.Length; i++)
+		for (int i = 0; i < Targets.Length; i++)
 		{
 			// ... and if they aren't active continue on to the next target.
-			if (!m_Targets[i].gameObject.activeSelf)
+			if (!Targets[i].gameObject.activeSelf)
 				continue;
 
 			// Otherwise, find the position of the target in the camera's local space.
-			Vector3 targetLocalPos = transform.InverseTransformPoint(m_Targets[i].position);
+			Vector3 targetLocalPos = transform.InverseTransformPoint(Targets[i].position);
 
 			// Find the position of the target from the desired position of the camera's local space.
 			Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
@@ -167,16 +167,16 @@ public class PlayerCam : MonoBehaviour
 			size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
 
 			// Choose the largest out of the current size and the calculated size based on the tank being to the left or right of the camera.
-			size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / m_Camera.aspect);
+			size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / _camera.aspect);
 		}
 
 		// Add the edge buffer to the size.
-		size += _screenEdgeBuffer;
+		size += ScreenEdgeBuffer;
 
 		// Make sure the camera's size isn't below the minimum.
-		size = Mathf.Max (size, _minSize);
+		size = Mathf.Max (size, MinSize);
 
-		size = Mathf.Min (size, _maxSize);
+		size = Mathf.Min (size, MaxSize);
 
 		return size;
 	}
@@ -193,10 +193,10 @@ public class PlayerCam : MonoBehaviour
     
 
 		// Set the camera's position to the desired position without damping.
-		transform.position = m_DesiredPosition;
+		transform.position = _desiredPosition;
 
 		// Find and set the required size of the camera.
-		m_Camera.orthographicSize = FindRequiredSize ();
+		_camera.orthographicSize = FindRequiredSize ();
 	}
 
     public void SwingDown()
