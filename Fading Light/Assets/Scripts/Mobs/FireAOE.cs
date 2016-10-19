@@ -4,7 +4,7 @@ using System.Collections;
 public class FireAOE : MonoBehaviour {
 
     public float DamagePerSec = 5f;
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     void OnTriggerEnter(Collider other)
     {
