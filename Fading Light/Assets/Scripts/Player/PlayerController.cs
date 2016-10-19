@@ -37,6 +37,7 @@ public class PlayerController : Player
     public AudioSource WalkingSounds;
     public AudioSource DeathSound;
     public AudioSource HurtSounds;
+    public AudioSource HitSounds;
     
     public bool IsMainMenu = false;
     
@@ -118,10 +119,10 @@ public class PlayerController : Player
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
-	    if(!HitSounds.isPlaying)
+	    /*if(!HitSounds.isPlaying)
             {
                 HitSounds.Play();
-            }
+            }*/
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {
@@ -236,6 +237,8 @@ public class PlayerController : Player
         base.Killed();
         _lifeManagerScript.LoseLife();
         Debug.Log("Dead");
+	//DeathSound.Play();
+	
     }
 
     /// <summary>
