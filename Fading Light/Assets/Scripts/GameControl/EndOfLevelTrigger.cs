@@ -70,7 +70,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	public void SubmitHighScore () {
 		SendToDatabase ();
 		SubmitHighScoreMenu.enabled = false;
-		//SceneManager.LoadScene("MainMenu");
+		SceneManager.LoadScene("MainMenu");
 	}
 
 	/// <summary>
