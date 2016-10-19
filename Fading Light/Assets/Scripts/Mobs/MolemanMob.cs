@@ -110,28 +110,31 @@ public class MolemanMob : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Attack");
-        pathfinder.enabled = false;
-
-        _animator["Attack"].speed = 1.5f;
-        _animator.Play("Attack", PlayMode.StopAll);
-        target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        
-
-        while (_animator.isPlaying)
+        if (!isDead)
         {
-            yield return new WaitForSeconds(0.25f);
-            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            if (DEBUG) Debug.Log("Entered state: Attack");
+            pathfinder.enabled = false;
+
+            _animator["Attack"].speed = 1.5f;
+            _animator.Play("Attack", PlayMode.StopAll);
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+
+
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+
+            if (_isSprinting) _isSprinting = false;
+
+            //yield return new WaitForSeconds(AttackCooldown);
+
+
+            pathfinder.enabled = true;
+
+            fsm.ChangeState(States.Chase);
         }        
-        
-        if (_isSprinting) _isSprinting = false;
-
-        //yield return new WaitForSeconds(AttackCooldown);
-        
-
-        pathfinder.enabled = true;
-
-        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>
@@ -150,7 +153,7 @@ public class MolemanMob : BaseEntity
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
 
-        while (_lockedOn)
+        while (_lockedOn && !isDead)
         {
 
             if (!_isMoving)
