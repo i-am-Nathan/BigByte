@@ -66,6 +66,12 @@ public class MoleDoggy : BaseEntity
 
     private GameObject _cloud;
 
+    public AudioClip Hit;
+    public AudioClip Death;
+    public AudioClip Attack;
+    public AudioClip AOE;
+    private AudioSource _source;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
@@ -73,6 +79,7 @@ public class MoleDoggy : BaseEntity
 	{
         _cloud = GameObject.Find("AOE");
         _cloud.SetActive(false);
+        _source = GetComponent<AudioSource>();
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
         //base.Start();
