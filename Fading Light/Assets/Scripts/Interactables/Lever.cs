@@ -8,7 +8,14 @@ using System.Collections;
 public class Lever : MonoBehaviour
 {
     private bool _pulled = false;
-    public AudioSource leverSound;
+
+    public AudioClip leverPulled;
+    private AudioSource _source;
+
+    void Awake()
+    {
+        //_source = GetComponent<AudioSource>();
+    }
 
     /// <summary>
     /// Called when the player is close enough to the lever, and presses T
@@ -18,6 +25,8 @@ public class Lever : MonoBehaviour
         //if T is pressed to interact with the lever, the walls move
         if (Input.GetKeyDown(KeyCode.T) && !_pulled)
         {
+
+            //_source.PlayOneShot(leverPulled);
             this.GetComponent<Animation>().Play("Armature|LeverDown");
             GameObject rightMovingWall = GameObject.FindGameObjectWithTag("Right Moving Wall");
 
@@ -37,7 +46,7 @@ public class Lever : MonoBehaviour
     
     void OnTriggerExit(Collider other)
     {
-        leverSound.Play();
+        //_source.PlayOneShot(leverPulled);
     }
     
 }

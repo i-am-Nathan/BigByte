@@ -114,7 +114,7 @@ public class GameData : MonoBehaviour {
             achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
-            _numberOfLivesLeft = 2;
+            _numberOfLivesLeft = 3;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
             _sharedGold = 0;

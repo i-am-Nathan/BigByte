@@ -66,6 +66,12 @@ public class MoleDoggy : BaseEntity
 
     private GameObject _cloud;
 
+    public AudioClip Hit;
+    public AudioClip Death;
+    public AudioClip Attack;
+    public AudioClip AOE;
+    private AudioSource _source;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
@@ -73,6 +79,7 @@ public class MoleDoggy : BaseEntity
 	{
         _cloud = GameObject.Find("AOE");
         _cloud.SetActive(false);
+        _source = GetComponent<AudioSource>();
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
         //base.Start();
@@ -123,29 +130,33 @@ public class MoleDoggy : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Attack");
-
-        RotateTowards(target, false);
-
-        pathfinder.enabled = false;
-
-        _animator.Play("Attack", PlayMode.StopAll);
-
-        yield return new WaitForSeconds(1.15f);
-
-        if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange + 4f)
+        if (!isDead)
         {
-            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        }
-        
-        while (_animator.isPlaying)
-        {
-            yield return new WaitForSeconds(0.2f);
-            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
-        }
+            if (DEBUG) Debug.Log("Entered state: Attack");
 
-        pathfinder.enabled = true;
-        fsm.ChangeState(States.Chase);
+            RotateTowards(target, false);
+
+            pathfinder.enabled = false;
+           
+            _animator.Play("Attack", PlayMode.StopAll);
+            _source.PlayOneShot(Attack);
+
+            yield return new WaitForSeconds(1.15f);
+
+            if (Vector3.Distance(target.position, this.gameObject.transform.position) < AttackRange + 4f)
+            {
+                target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+            }
+
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.2f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+
+            pathfinder.enabled = true;
+            fsm.ChangeState(States.Chase);
+        }        
     }
 
     private bool _isRotating = false;
@@ -211,7 +222,7 @@ public class MoleDoggy : BaseEntity
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
 
-        while (_lockedOn)
+        while (_lockedOn && !isDead)
         {
 
             if (!_isMoving)
@@ -328,6 +339,8 @@ public class MoleDoggy : BaseEntity
 
     private void Death_Enter()
     {
+        _source.PlayOneShot(Death);
+        _cloud.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
@@ -337,49 +350,54 @@ public class MoleDoggy : BaseEntity
     public override void Damage(float amount, Transform attacker)
     {
         if (isDead) return;
-        base.Damage(amount, attacker);
-
-        if (CurrentHealth < 150 && !_fireballedOnce)
+        if (fsm.State != States.FireballSpawning)
         {
-            _fireballedOnce = true;
-            Debug.Log("Health reduced to first fireballing level");
-            fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
-            return;
-        }
+            base.Damage(amount, attacker);
+            _source.PlayOneShot(Hit);
 
-        if (CurrentHealth < 40 && !_fireballedTwice)
-        {
-            _fireballedTwice = true;
-            Debug.Log("Health reduced to first fireballing level");
-            fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
-            return;
-        }
+            if (CurrentHealth < 150 && !_fireballedOnce)
+            {
+                _fireballedOnce = true;
+                Debug.Log("Health reduced to first fireballing level");
+                fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
+                return;
+            }
 
-        // Set the health bar's value to the current health.
-        try
-        {
-            healthCircle.enabled = true;
-            healthCircle.fillAmount -= amount / 100.0f;
-            Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
-            Invoke("HideHealth", 3);
-        }
-        catch { }
+            if (CurrentHealth < 40 && !_fireballedTwice)
+            {
+                _fireballedTwice = true;
+                Debug.Log("Health reduced to first fireballing level");
+                fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
+                return;
+            }
 
-
-        if (DEBUG) Debug.Log("molemans dog damaged");
-
-        if (amount >= CurrentHealth)
-        {
-            if (DEBUG) Debug.Log("molemans dog killed");
-            Killed();
-        } else
-        {
+            // Set the health bar's value to the current health.
             try
             {
-                _animator.Play("hit1", PlayMode.StopSameLayer);
-            } catch { }
-            
-        }
+                healthCircle.enabled = true;
+                healthCircle.fillAmount -= amount / 100.0f;
+                Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
+                Invoke("HideHealth", 3);
+            }
+            catch { }
+
+
+            if (DEBUG) Debug.Log("molemans dog damaged");
+
+            if (amount >= CurrentHealth)
+            {
+                if (DEBUG) Debug.Log("molemans dog killed");
+                Killed();
+            }
+            else
+            {
+                try
+                {
+                    _animator.Play("hit1", PlayMode.StopSameLayer);
+                }
+                catch { }
+            }
+        }        
     }
 
     public override void Killed()
