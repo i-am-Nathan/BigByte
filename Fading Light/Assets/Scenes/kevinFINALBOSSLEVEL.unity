@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35c616780ab32543bc7887435735a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaitTime: 2
+  WaitTime: 0
 --- !u!225 &12713446
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -850,6 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arcGroup: {fileID: 486969112}
+  prefab: {fileID: 160776, guid: 979f85fde09d447458f13fefff15315d, type: 2}
 --- !u!1001 &243979258
 Prefab:
   m_ObjectHideFlags: 0
@@ -1128,12 +1129,6 @@ Prefab:
     - {fileID: 11498912, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &465268860 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11453486, guid: 1673822d2508371498ef1be030ada982,
-    type: 2}
-  m_PrefabInternal: {fileID: 766405322}
-  m_Script: {fileID: 11500000, guid: 30bd3b2973dff224cbd320a332edffc2, type: 3}
 --- !u!1 &486969112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,7 +1218,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78479fb0073753e4182f24a6b1e3cf8b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78479fb0073753e4182f24a6b1e3cf8b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1313,7 +1308,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1001 &609527934
 Prefab:
   m_ObjectHideFlags: 0
@@ -2654,7 +2649,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 436266, guid: b672c83bd8876e44b8d7220a48051bc0, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 19534532, guid: b672c83bd8876e44b8d7220a48051bc0, type: 2}
       propertyPath: m_Radius
@@ -3666,7 +3661,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 9680fdee2d8014d93863eb27387ae851, type: 2}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 0.01
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 9680fdee2d8014d93863eb27387ae851, type: 2}
       propertyPath: ShapeModule.angle
@@ -3807,6 +3802,14 @@ Prefab:
     - target: {fileID: 100000, guid: 9680fdee2d8014d93863eb27387ae851, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 9680fdee2d8014d93863eb27387ae851, type: 2}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 9680fdee2d8014d93863eb27387ae851, type: 2}
+      propertyPath: CollisionModule.type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9680fdee2d8014d93863eb27387ae851, type: 2}
@@ -4657,30 +4660,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffd934f4ed361845a9c828092456ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextBox: {fileID: 249485965}
-  Dialogue: {fileID: 1822397510}
+  TextBox: {fileID: 0}
+  Dialogue: {fileID: 0}
   TextFile: {fileID: 0}
   TextLines: []
-  CharacterImage: {fileID: 1751763840}
+  CharacterImage: {fileID: 0}
   Talking: 0
-  CharacterName: {fileID: 1395011772}
-  Images:
-  - {fileID: 21300000, guid: 72f3ddb4e9c4f52438d2e4a7af4f9ee8, type: 3}
-  - {fileID: 21300000, guid: 4f6d24a9471be5241a6b2f2287a28e42, type: 3}
-  - {fileID: 21300000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
-  - {fileID: 21300000, guid: f3008e3d7cbf1484c931737ee2cef76f, type: 3}
+  CharacterName: {fileID: 0}
+  Images: []
   CurrentLine: 0
   EndLine: 0
-  Player1: {fileID: 1842113497}
-  Player2: {fileID: 465268860}
+  Player1: {fileID: 0}
+  Player2: {fileID: 0}
   MoleMan: {fileID: 0}
   ThisStoryline: {fileID: 0}
-  TorchController: {fileID: 1329372291}
+  TorchController: {fileID: 0}
   StopMovement: 0
   IsActive: 0
   FirstLine: 0
-  TypeSound: {fileID: 8300000, guid: 284c5d72fed0df24782807decd3e384f, type: 3}
-  TypeSpeed: 0.05
+  TypeSound: {fileID: 0}
+  TypeSpeed: 0
 --- !u!82 &1275513154
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4789,12 +4788,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onCooldown: 0
   pillarNumber: 6
---- !u!114 &1329372291 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11406566, guid: 1673822d2508371498ef1be030ada982,
-    type: 2}
-  m_PrefabInternal: {fileID: 766405322}
-  m_Script: {fileID: 11500000, guid: 3a5d54bccf98fcd45a9fa2e13f2c18ac, type: 3}
 --- !u!1001 &1360625342
 Prefab:
   m_ObjectHideFlags: 0
@@ -5929,7 +5922,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1001 &1615340657
 Prefab:
   m_ObjectHideFlags: 0
@@ -6752,7 +6745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Achievements: []
-  AchievementPopup: {fileID: 966295942}
+  AchievementPopup: {fileID: 0}
 --- !u!4 &1737645111
 Transform:
   m_ObjectHideFlags: 0
@@ -6912,12 +6905,6 @@ CanvasRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 450910, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
   m_PrefabInternal: {fileID: 946694540}
---- !u!114 &1842113497 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11455872, guid: 1673822d2508371498ef1be030ada982,
-    type: 2}
-  m_PrefabInternal: {fileID: 766405322}
-  m_Script: {fileID: 11500000, guid: 0605cd9e17c110940be8d8f845469c38, type: 3}
 --- !u!1001 &1884678297
 Prefab:
   m_ObjectHideFlags: 0
@@ -7842,7 +7829,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22471484, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 22471484, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
       propertyPath: m_AnchoredPosition.x
