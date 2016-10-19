@@ -26,7 +26,7 @@ public class Lever : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T) && !_pulled)
         {
 
-            _source.PlayOneShot(leverPulled);
+            //_source.PlayOneShot(leverPulled);
             this.GetComponent<Animation>().Play("Armature|LeverDown");
             GameObject rightMovingWall = GameObject.FindGameObjectWithTag("Right Moving Wall");
 
