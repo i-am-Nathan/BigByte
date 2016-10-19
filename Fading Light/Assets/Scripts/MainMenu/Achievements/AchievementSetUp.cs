@@ -11,10 +11,9 @@ public class AchievementSetUp : MonoBehaviour {
 	void Start () {
         //Getting the achievement list from achievement manager
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
-        GameData am = (GameData)go.GetComponent(typeof(GameData));
+        GameData am = (GameData)go.GetComponent<GameData>();
         _achievements = am.Achievements;
 
-        Debug.Log("INSIDE LIST CONTROLLER START");
         foreach(Achievement achievement in am.Achievements)
         {
             Debug.Log(achievement.Name);
