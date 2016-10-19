@@ -19,7 +19,7 @@ public class NeedleAndPlate : MonoBehaviour {
     /// </summary>
     void OnTriggerEnter(Collider other) {
         //if the weight is heavy enough, then the plate is triggered
-        if (!_pressed)
+		if ((other.tag.Equals("Player") || other.tag.Equals("Player2")) && !_pressed)
         {
 			GetComponent<Animation> ().Play ("ppdown");
 			needle.GetComponent<Animation> ().Play("NeedleDown");
@@ -34,7 +34,8 @@ public class NeedleAndPlate : MonoBehaviour {
     /// </summary>
     void OnTriggerExit(Collider other) {
         //same as the method above, but for the upward motion.
-        if (_pressed)
+
+		if ((other.tag.Equals("Player") || other.tag.Equals("Player2")) && _pressed)
         {
 			GetComponent<Animation> ().Play ("ppup");
 			needle.GetComponent<Animation> ().Play("NeedleUp");
