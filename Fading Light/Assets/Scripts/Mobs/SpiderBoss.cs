@@ -97,7 +97,6 @@ public class SpiderBoss : BaseEntity
             HealthSlider = HealthSlider.GetComponent<Slider>();
             BossName = BossName.GetComponent<Text>();
             BossName.text = "Spider Boss";
-            Debug.Log("name " + BossName.text);
             BossPanel.SetActive(false);
         }
         CurrentHealth = Health;
@@ -322,6 +321,11 @@ public class SpiderBoss : BaseEntity
     public override void Killed()
     {
         base.Killed();
+
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+
+		_gameDataScript.UpdateMonstersKilled ();
 
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try

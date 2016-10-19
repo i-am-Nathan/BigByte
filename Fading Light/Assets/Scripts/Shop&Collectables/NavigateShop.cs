@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/// <summary>
+/// This is the class used to navigate the user through the shop.
+/// </summary>
 public class NavigateShop : MonoBehaviour {
 
 	public List<GameObject> ItemList;
@@ -21,6 +24,9 @@ public class NavigateShop : MonoBehaviour {
 	private GameData _gameData;
 	private SubInventoryManager _subInventoryManager;
 
+	/// <summary>
+	/// This will set the appropriate fields in my class.
+	/// </summary>
 	void Awake(){
 		_price = GameObject.FindGameObjectWithTag ("Price").GetComponent<Text> ();
 		_quantity = GameObject.FindGameObjectWithTag ("Quantity").GetComponent<Text>();
@@ -31,7 +37,10 @@ public class NavigateShop : MonoBehaviour {
 		_subInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager> ();
 		_currentGold = GameObject.FindGameObjectWithTag ("Current Gold").GetComponent<Text> ();
 	}
-	// Use this for initialization
+
+	/// <summary>
+	/// Grabs the approrpiate items and sets the shop up.
+	/// </summary>
 	void Start () {
 		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
 		_gameData = (GameData)go.GetComponent(typeof(GameData));
@@ -45,13 +54,19 @@ public class NavigateShop : MonoBehaviour {
 		}
 		UpdateInfo ();
 	}
+
+
+	/// <summary>
+	/// This will allow players to navigate the shop and acknowledges the keypress from players. Players can navigate with the
+	/// A/D key for Player 2 and Left Arrow/Right Arrow for Player 1.Purchase button is L and C for player 1 and 2 respectivly. 
+	/// </summary>
 	void Update(){
 			ItemList [Index].transform.Rotate (0, 0, 0.5f);
 		if (Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
 			Previous ();
 		} else if (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
 			Next ();
-		} else if (Input.GetKeyDown (KeyCode.KeypadEnter)) {
+		} else if (Input.GetKeyDown (KeyCode.L)) {
 			// Player 1
 			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
 				ItemQuantity [Index]--;
@@ -59,23 +74,30 @@ public class NavigateShop : MonoBehaviour {
 				_currentGold.text = _gameData.GetAmountOfGold() + "";
 				_quantity.text= ItemQuantity [Index] +"";
 				_source.PlayOneShot (BuySound);
-				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name, true);
+
+				Debug.Log ("buying: " + Items [Index].GetComponent<Item> ().GetName ());
+
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().GetName(), true);
 			}
-		} else if (Input.GetKeyDown (KeyCode.J)) {
+		} else if (Input.GetKeyDown (KeyCode.C)) {
 			// Player 2
-			//Debug.Log(ItemQuantity [Index] + "");
-			Debug.Log (_gameData.GetAmountOfGold () + "");
 			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
 				ItemQuantity [Index]--;
 				_gameData.UpdateGold (0 - Price [Index]);
 				_currentGold.text = _gameData.GetAmountOfGold() + "";
 				_quantity.text= ItemQuantity [Index] +"";
 				_source.PlayOneShot (BuySound);
-				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().Name, false);
+
+				Debug.Log ("buying: " + Items [Index].GetComponent<Item> ().GetName ());
+
+				_subInventoryManager.AddItemQuantity (Items[Index].GetComponent<Item>().GetName(), false);
 			}
 		}
 
 	}
+	/// <summary>
+	/// Move to the next item in the shop i.e. go right
+	/// </summary>
 	public void Next(){
 		ItemList [Index].SetActive (false);
 		if (Index == ItemList.Count - 1) {
@@ -86,6 +108,9 @@ public class NavigateShop : MonoBehaviour {
 		UpdateInfo ();
 
 	}
+	/// <summary>
+	/// Move to the previous item in the shop i.e. go left.
+	/// </summary>
 	public void Previous(){
 		ItemList [Index].SetActive (false);
 		if (Index == 0) {
@@ -96,6 +121,10 @@ public class NavigateShop : MonoBehaviour {
 		UpdateInfo ();
 	}
 
+	/// <summary>
+	/// This will update the information according to the current item.
+	/// The information it updates would be its lore, price, effect, name and price.
+	/// </summary>
 	public void UpdateInfo(){
 		ItemList [Index].SetActive (true);
 		_price.text= Price [Index] + " Coins";

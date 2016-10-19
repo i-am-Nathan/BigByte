@@ -47,16 +47,17 @@ public class Player: BaseEntity
 
     private bool _attackPotActive = false;
     private bool _defensePotActive = false;
+	private bool _healthPotActive = false;
 
     private float _attackPotTimeLeft;
     private float _defensePotTimeLeft;
-    private float _attackPotDuration = 30f;
-    private float _defensePotDuration = 30f;
+    private float _attackPotDuration = 10f;
+    private float _defensePotDuration = 10f;
     
     /// <summary>
     /// Update the timers on certain effects the character is under
     /// </summary>
-    void UpdateEffects()
+    public void UpdateEffects ()
     {
         if (_attackPotActive)
         {
@@ -90,6 +91,16 @@ public class Player: BaseEntity
 		return _defensePotActive;
 	}
 
+	public bool isHealthPotActive()
+	{
+		return _healthPotActive;
+	}
+
+	public void SetHealthPotActive ()
+	{
+		_healthPotActive = false;
+	}
+
     /// <summary>
     /// 
     /// </summary>
@@ -98,6 +109,7 @@ public class Player: BaseEntity
         //BEGIN THE BLOODY ANIM
         if (DEBUG) Debug.Log("Health pot activated");
         _source.PlayOneShot(DrinkPotion);
+		_healthPotActive = true;
         if ((CurrentHealth + 30) > IntialHealth)
         {
             CurrentHealth = IntialHealth;
@@ -117,16 +129,8 @@ public class Player: BaseEntity
         if (DEBUG) Debug.Log("Attack pot activated");
         _source.PlayOneShot(DrinkPotion);
 		this.transform.Find ("AttackParticles").gameObject.SetActive(true);
-        if (_attackPotActive)
-        {
-            //Reset the timer if attack potion already active
-            _attackPotTimeLeft = _attackPotDuration;
-        }
-        else
-        {
-            //Otherwise set the boolean and begin the timer
-            _attackPotActive = true;
-        }
+		_attackPotTimeLeft = _attackPotDuration;
+		_attackPotActive = true;
     }
 
     /// <summary>
@@ -137,15 +141,8 @@ public class Player: BaseEntity
         if (DEBUG) Debug.Log("Defense pot activated");
         _source.PlayOneShot(DrinkPotion);
 		this.transform.Find ("DefenseParticles").gameObject.SetActive(true);
-        if (_defensePotActive)
-        {
-            //Reset the timer if attack potion already active
-            _defensePotTimeLeft = _defensePotDuration;
-        }
-        else
-        {
-            //Otherwise set the boolean and begin the timer
-            _defensePotActive = true;
-        }
+
+		_defensePotTimeLeft = _defensePotDuration;
+		_defensePotActive = true;
     }
 }

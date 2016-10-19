@@ -38,21 +38,6 @@ public class OpenTreasure : MonoBehaviour {
 	/// When players press T when they are collding with the chest, it will open it.
 	/// </summary>
 	/// <param name="other">Other.</param>
-	void OnTriggerEnter(Collider other){
-		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.T)) {
-				if (!_open) {
-					StartCoroutine (Open ());
-					_open = true;
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// When players press T when they are collding with the chest, it will open it.
-	/// </summary>
-	/// <param name="other">Other.</param>
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.T)) {
@@ -91,7 +76,7 @@ public class OpenTreasure : MonoBehaviour {
 		//This will instantiate a coin which will fly out in random directins from the chest. 
 	
 		for (int i = 0; i < randomNumber; i++) {
-			yield return new WaitForSeconds (0.01f);
+			yield return new WaitForSeconds (0.1f);
 			int itemIndex = 0;
 			float drop = Random.Range (1, 100);
 			for (int j = 0; j < DropChance.Length; j++) {
@@ -103,15 +88,20 @@ public class OpenTreasure : MonoBehaviour {
 
 			}
 			_prefab = Instantiate (DropList[itemIndex], transform.position + new Vector3(0,4,0), Quaternion.identity)as GameObject;
-			float[] randomValues = new float[10] {-40,-30,-50, -10, -20, 10,20,30,40,50};
+			float[] randomValues = new float[6] {-20,-30, -25, 20,30,25};
 
-			float randomX = Random.Range (0,10);
-			float randomZ = Random.Range (0,10);
-			_prefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 10f, randomValues[(int)randomZ]);
+			float randomX = Random.Range (0,6);
+			float randomZ = Random.Range (0,6);
+			_prefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 7f, randomValues[(int)randomZ]);
 			//Plays the sound of treasure coming out.
 			_source.PlayOneShot (TreasureSound);
 		}
 		_source.Stop ();
+
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		GameData gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+		gameDataScript.UpdateChestsMissed ();
+
 		Destroy(this.transform.FindChild ("Eternal Light").gameObject);
 	}
 

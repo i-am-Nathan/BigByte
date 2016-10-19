@@ -124,12 +124,12 @@ public class GameData : MonoBehaviour {
 			_chestsMissed = 0;
 			_playerOneAccuracy = 0;
 			_playerTwoAccuracy = 0;
-			_player1ItemQuantityDictionary.Add ("Health Pot", 0);
-			_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
-			_player1ItemQuantityDictionary.Add ("Defense Pot",0);
-			_player2ItemQuantityDictionary.Add ("Health Pot", 0);
-			_player2ItemQuantityDictionary.Add ("Attack Pot", 0);
-			_player2ItemQuantityDictionary.Add ("Defense Pot", 0);
+			_player1ItemQuantityDictionary.Add ("Health Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Attack Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Defense Potion",0);
+			_player2ItemQuantityDictionary.Add ("Health Potion", 0);
+			_player2ItemQuantityDictionary.Add ("Attack Potion", 0);
+			_player2ItemQuantityDictionary.Add ("Defense Potion", 0);
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }
@@ -177,7 +177,6 @@ public class GameData : MonoBehaviour {
     /// </summary>
     public int GetAmountOfGold()
     {
-		Debug.Log ("gold " + _sharedGold);
         return _sharedGold;
     }
 
@@ -267,24 +266,24 @@ public class GameData : MonoBehaviour {
 		return _playerTwoAccuracy;
 	}
 
-	public void SetChestsMissed(float amount) {
-		_chestsMissed = amount;
+	public void UpdateChestsMissed() {
+		_chestsMissed++;
 	}
 
 	public float GetChestsMissed() {
 		return _chestsMissed;
 	}
 
-	public void SetTimesKilled(float amount) {
-		_timesKilled = amount;
+	public void UpdateTimesKilled() {
+		_timesKilled++;
 	}
 
 	public float GetTimesKilled() {
 		return _timesKilled;
 	}
 
-	public void SetMonstersKilled(float amount) {
-		_monstersKilled = amount;
+	public void UpdateMonstersKilled() {
+		_monstersKilled++;
 	}
 
 	public float GetMonstersKilled() {
