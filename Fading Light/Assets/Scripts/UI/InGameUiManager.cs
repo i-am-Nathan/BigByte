@@ -89,6 +89,10 @@ public class InGameUiManager : MonoBehaviour {
     {
 		// Unpausing the game and loading the main menu scene
         Time.timeScale = 1;
+
+		// Destroying game data to reset all data
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		Destroy (go);
         SceneManager.LoadScene("MainMenu");
     }
 
