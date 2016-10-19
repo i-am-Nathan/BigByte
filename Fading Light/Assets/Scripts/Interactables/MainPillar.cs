@@ -20,7 +20,7 @@ public class MainPillar : MonoBehaviour {
         _activePillars.Add(pillar);
 
     }
-
+    
     public void deactivatePillar(PillarPressurePlate pillar)
     {
         _activePillars.Remove(pillar);
