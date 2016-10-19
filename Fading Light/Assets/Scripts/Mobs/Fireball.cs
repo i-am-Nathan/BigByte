@@ -12,7 +12,7 @@ namespace Assets.Scripts.Mobs
         float damage = 1;
 
         float lifetime = 3;
-        private bool DEBUG = true;
+        private bool DEBUG = false;
         private bool _isExploded = false;
 
         Player target;

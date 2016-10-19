@@ -8,6 +8,7 @@ using System.Collections;
 public class Lever : MonoBehaviour
 {
     private bool _pulled = false;
+    public AudioSource leverSound;
 
     /// <summary>
     /// Called when the player is close enough to the lever, and presses T
@@ -33,4 +34,10 @@ public class Lever : MonoBehaviour
 
         }
     }
+    
+    void OnTriggerExit(Collider other)
+    {
+        leverSound.Play();
+    }
+    
 }

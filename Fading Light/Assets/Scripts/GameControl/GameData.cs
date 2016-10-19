@@ -114,7 +114,7 @@ public class GameData : MonoBehaviour {
             achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
-            _numberOfLivesLeft = 3;
+            _numberOfLivesLeft = 2;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
             _sharedGold = 0;
@@ -157,6 +157,13 @@ public class GameData : MonoBehaviour {
     {
         _numberOfLivesLeft = lives;
     }
+
+	public void UpdateNumberOfLives() {
+		// Cannot get more than 3 lives
+		if (_numberOfLivesLeft != 3) {
+			_numberOfLivesLeft++;
+		}
+	}
 
     /// <summary>
     /// Used to get the amount of shared gold
