@@ -41,7 +41,7 @@ public class Player2Controller : Player
     public AudioSource WalkSounds;
     public AudioSource HitSounds;
     public AudioSource HurtSounds;
-    public AudioSource DeathSounds;
+    public AudioSource DeathSound;
 
     public bool IsMainMenu = false;
     /// <summary>
@@ -54,6 +54,7 @@ public class Player2Controller : Player
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
         _lastJumpTime = Time.time;
+		_animator.ApplyBuiltinRootMotion();		
         if (!IsMainMenu)
         {
             _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
@@ -112,24 +113,20 @@ public class Player2Controller : Player
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
-	    /*if(!HitSounds.isPlaying)
+	        if(!HitSounds.isPlaying)
             {
                 HitSounds.Play();
-            }*/
+            }
         }
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
             _animator.SetBool("Idling", false);
-            if (!controller.isGrounded && _animator.GetCurrentAnimatorStateInfo(0).IsName("1HCombatMove"))
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            }
         }
         else
         {
             _animator.SetBool("Idling", true);
         }
-	/*if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+	    if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
         {
             WalkSounds.Play();
         }
@@ -137,7 +134,7 @@ public class Player2Controller : Player
         else if ((Input.GetKeyUp("w") || Input.GetKeyUp("s") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) && !(Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d")))
         {
             WalkSounds.Stop();
-        }*/
+        }
     }
 
     /// <summary>
@@ -171,11 +168,7 @@ public class Player2Controller : Player
     /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
-        if (!CanTakeDamage)
-        {
-            return;
-        }
-        //Debug.Log("Player damaged");
+        Debug.Log("Player damaged");
         healthCircle.enabled = true;
         base.Damage(amount, null);
 
@@ -193,7 +186,7 @@ public class Player2Controller : Player
             // ... it should die.
             Killed();
         }
-	   /*    else
+	   /* else
         {
             if (!HurtSounds.isPlaying)
             {
@@ -212,7 +205,7 @@ public class Player2Controller : Player
         IsDisabled = true;
         _lifeManagerScript.LoseLife();
 
-       //DeathSound.Play();
+        DeathSound.Play();
     }
 
     /// <summary>
