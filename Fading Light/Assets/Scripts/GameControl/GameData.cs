@@ -118,7 +118,7 @@ public class GameData : MonoBehaviour {
             _numberOfLivesLeft = 3;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
-            _sharedGold = 100;
+            _sharedGold = 0;
 			_timesKilled = 0;
 			_monstersKilled = 0;
 			_chestsMissed = 0;
@@ -266,24 +266,24 @@ public class GameData : MonoBehaviour {
 		return _playerTwoAccuracy;
 	}
 
-	public void SetChestsMissed(float amount) {
-		_chestsMissed = amount;
+	public void UpdateChestsMissed() {
+		_chestsMissed++;
 	}
 
 	public float GetChestsMissed() {
 		return _chestsMissed;
 	}
 
-	public void SetTimesKilled(float amount) {
-		_timesKilled = amount;
+	public void UpdateTimesKilled() {
+		_timesKilled++;
 	}
 
 	public float GetTimesKilled() {
 		return _timesKilled;
 	}
 
-	public void SetMonstersKilled(float amount) {
-		_monstersKilled = amount;
+	public void UpdateMonstersKilled() {
+		_monstersKilled++;
 	}
 
 	public float GetMonstersKilled() {

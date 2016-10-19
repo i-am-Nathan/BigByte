@@ -43,12 +43,12 @@ public class DefensePotion : MonoBehaviour
             if (other.tag == "Player")
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-                SubInventoryManager.AddItemQuantity("Defense Pot", true);
+				SubInventoryManager.AddItemQuantity("Defense Potion", true);
 
             } else
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-				SubInventoryManager.AddItemQuantity("Defense Pot", false);
+				SubInventoryManager.AddItemQuantity("Defense Potion", false);
             }
         }
     }

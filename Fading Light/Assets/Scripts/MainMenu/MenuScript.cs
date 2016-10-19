@@ -24,7 +24,7 @@ public class MenuScript : MonoBehaviour {
 
     private void PlayButtonSound()
     {
-        //ButtonClickSound.Play();
+        ButtonClickSound.Play();
     }
 
     private void HideAllMenus()
@@ -44,6 +44,7 @@ public class MenuScript : MonoBehaviour {
 	//Highscore should pop up when it is pressed, to be implemented.
     public void highScorePress()
     {
+		PlayButtonSound();
         HideAllMenus();
         HighscoreMenu.SetActive(true);
         HighscoreMenu.transform.Find("Scrollbar").GetComponent<Scrollbar>().value = 1;
