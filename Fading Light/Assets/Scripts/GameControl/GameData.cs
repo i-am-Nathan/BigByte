@@ -282,8 +282,8 @@ public class GameData : MonoBehaviour {
 		return _timesKilled;
 	}
 
-	public void SetMonstersKilled(float amount) {
-		_monstersKilled = amount;
+	public void UpdateMonstersKilled() {
+		_monstersKilled++;
 	}
 
 	public float GetMonstersKilled() {

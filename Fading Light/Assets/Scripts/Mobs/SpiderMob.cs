@@ -405,6 +405,11 @@ public class SpiderMob : BaseEntity
     {
         base.Killed();
 
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+
+		_gameDataScript.UpdateMonstersKilled ();
+
         try
         {
             pathfinder.Stop();
