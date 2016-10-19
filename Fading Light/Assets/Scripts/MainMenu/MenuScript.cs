@@ -15,6 +15,7 @@ public class MenuScript : MonoBehaviour {
 
     public AudioSource ButtonClickSound;
 
+    public static string[] LevelNames = { "ammar_ui_v2", "ammar_ui_v2", "ammar_ui_v2" };
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +38,7 @@ public class MenuScript : MonoBehaviour {
     public void StartLevel()
     {
         //Loading level
-        Application.LoadLevel("ammar_ui_v2");
+        StartLevel(0);
     }
 
 	//Highscore should pop up when it is pressed, to be implemented.
@@ -70,18 +71,11 @@ public class MenuScript : MonoBehaviour {
 
     }
 
-    public void tutLevelPress()
+    public void StartLevel(int levelIndex)
     {
-
+        Application.LoadLevel(LevelNames[levelIndex]);
     }
 
-    public void levelOnePress()
-    {
 
-    }
-
-    public void finalLevelPress()
-    {
-
-    }
+   
 }
