@@ -56,6 +56,7 @@ public class SpiderMob : BaseEntity
     private bool _runningAway = false;
 
     private bool DEBUG = false;
+    private object hit;
 
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
@@ -305,9 +306,9 @@ public class SpiderMob : BaseEntity
                 //Determine which way the spider should run
                 Vector3 torchDirection = this.gameObject.transform.position - TorchController.GetTorchPosition();
                 Vector3 dest = this.gameObject.transform.position + torchDirection;
-
+                //out hit;
                 //TODO: CHECK FOR IF DEST POSITION IS IN THE NAVMESH
-                //if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+                //if (NavMesh.SamplePosition(new Vector3(dest.x, 0, dest.z), out hit, 1.0f, NavMesh.AllAreas))
                 //{
                 //    if (DEBUG) Debug.Log("Nevmesh dest is inside navmesh");
                 //}
