@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
@@ -88,9 +89,8 @@ public class GameData : MonoBehaviour {
 	private InGameUiManager _inGameUiManager;
 	private bool _firstLevel = true;
 
-    // Inventory
-    //private Item[] _p1Items;
-    //private Item[] _p2Items;
+	private Dictionary<string,int> _player1ItemQuantityDictionary = new Dictionary<string,int>();
+	private Dictionary<string,int> _player2ItemQuantityDictionary = new Dictionary<string,int>();
 
     //Achievements
     public Achievement[] Achievements;
@@ -112,6 +112,7 @@ public class GameData : MonoBehaviour {
 		if (!(objects.Length > 0))
         {
             achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
+
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
             _numberOfLivesLeft = 3;
@@ -123,6 +124,12 @@ public class GameData : MonoBehaviour {
 			_chestsMissed = 0;
 			_playerOneAccuracy = 0;
 			_playerTwoAccuracy = 0;
+			_player1ItemQuantityDictionary.Add ("Health Pot", 0);
+			_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
+			_player1ItemQuantityDictionary.Add ("Defense Pot",0);
+			_player2ItemQuantityDictionary.Add ("Health Pot", 0);
+			_player2ItemQuantityDictionary.Add ("Attack Pot", 0);
+			_player2ItemQuantityDictionary.Add ("Defense Pot", 0);
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }
@@ -281,5 +288,21 @@ public class GameData : MonoBehaviour {
 
 	public float GetMonstersKilled() {
 		return _monstersKilled;
+	}
+
+	public Dictionary<string,int> GetPlayer1ItemQuantityDictionary() {
+		return _player1ItemQuantityDictionary;
+	}
+
+	public Dictionary<string,int> GetPlayer2ItemQuantityDictionary() {
+		return _player2ItemQuantityDictionary;
+	}
+
+	public void SetPlayer1ItemQuantityDictionary(string item, int num) {
+		_player1ItemQuantityDictionary [item] = num;
+	}
+
+	public void SetPlayer2ItemQuantityDictionary(string item, int num) {
+		_player2ItemQuantityDictionary [item] = num;
 	}
 }
