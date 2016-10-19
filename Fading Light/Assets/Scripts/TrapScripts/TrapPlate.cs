@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 /// <summary>
-/// This script controls the pressure plate and falling wall's trigger animations
+/// This script controls the pressure plate animation as well as the spear trap animations.
 /// </summary>
 public class TrapPlate : MonoBehaviour {
 
@@ -14,10 +14,11 @@ public class TrapPlate : MonoBehaviour {
 	public bool Pressed = false;
 	public GameObject[] otherPlates;
 	public bool Disabled;
-	/// <summary>
-	/// Called when an object enters on top of the plate
-	/// </summary>
 
+
+	/// <summary>
+	/// Initialises my variables and grabs my list of traps.
+	/// </summary>
 	void Awake(){
 		otherPlates = GameObject.FindGameObjectsWithTag ("SpearTrap");
 		for (int i = 0; i < traps.Length; i++) {
@@ -26,7 +27,10 @@ public class TrapPlate : MonoBehaviour {
 		Disabled = false;
 	}
 
-
+	/// <summary>
+	/// This will set the plates down and unset the other plates that are current set.
+	/// </summary>
+	/// <param name="other">Other.</param>
 	void OnTriggerEnter(Collider other) {
 		// the crate has a weight of 2
 		if (other.name == "Player 1" || other.name == "Player2")
@@ -40,6 +44,7 @@ public class TrapPlate : MonoBehaviour {
 		{
 			
 			this.GetComponent<Animation>().Play("PressurePlateDown");
+			//Ensures that the animation plays smoothly.
 			_trapList.Clear ();
 			for (int i = 0; i < traps.Length; i++) {
 				_trapList.Add(traps[i]);
@@ -58,10 +63,11 @@ public class TrapPlate : MonoBehaviour {
 
 
 	/// <summary>
-	/// Called when an object leaves the plate
+	/// Called when a player goes to another plate. This will reset all the traps for that particular plate..
 	/// </summary>
 	public void UnsetPlate(GameObject plate) {
 		GameObject[] otherTraps = plate.GetComponent<TrapPlate> ().traps;
+		//Duplicate variable needed to ensure that you dont reset your own traps.
 		bool duplicate = false;
 		if (plate.GetComponent<TrapPlate>().Pressed) {
 			plate.GetComponent<Animation> ().Play ("PressurePlateUp");
@@ -74,6 +80,7 @@ public class TrapPlate : MonoBehaviour {
 					break;
 				}
 				}
+				//Won't set your own trap.
 				if (duplicate == false) {
 					plate.GetComponent<TrapPlate> ().SetTraps (otherTraps [i]);
 				}
@@ -83,12 +90,19 @@ public class TrapPlate : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// This will play the animation which hides the traps.
+	/// </summary>
 	public void UnsetTraps(){
 		foreach (GameObject o in _trapList) {
 			o.GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
 		}
 	}
 
+	/// <summary>
+	/// This will play the animation where it sets the traps.
+	/// </summary>
+	/// <param name="trap">Trap.</param>
 	public void SetTraps(GameObject trap){
 			trap.GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
 
