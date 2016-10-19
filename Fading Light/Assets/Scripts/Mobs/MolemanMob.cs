@@ -110,6 +110,7 @@ public class MolemanMob : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
+<<<<<<< HEAD
         if (DEBUG) Debug.Log("Entered state: Attack");
         pathfinder.enabled = false;
 
@@ -132,6 +133,33 @@ public class MolemanMob : BaseEntity
         pathfinder.enabled = true;
 
         fsm.ChangeState(States.Chase);
+=======
+        if (!isDead)
+        {
+            if (DEBUG) Debug.Log("Entered state: Attack");
+            pathfinder.enabled = false;
+
+            _animator["Attack"].speed = 1.5f;
+            _animator.Play("Attack", PlayMode.StopAll);
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+
+
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+
+            if (_isSprinting) _isSprinting = false;
+
+            //yield return new WaitForSeconds(AttackCooldown);
+
+
+            pathfinder.enabled = true;
+
+            fsm.ChangeState(States.Chase);
+        }        
+>>>>>>> 503811e37bdd029715852a9a4801b62053967556
     }
 
     /// <summary>
@@ -150,7 +178,11 @@ public class MolemanMob : BaseEntity
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
 
+<<<<<<< HEAD
         while (_lockedOn)
+=======
+        while (_lockedOn && !isDead)
+>>>>>>> 503811e37bdd029715852a9a4801b62053967556
         {
 
             if (!_isMoving)
