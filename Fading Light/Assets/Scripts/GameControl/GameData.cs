@@ -118,7 +118,7 @@ public class GameData : MonoBehaviour {
             _numberOfLivesLeft = 3;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
-            _sharedGold = 100;
+            _sharedGold = 0;
 			_timesKilled = 0;
 			_monstersKilled = 0;
 			_chestsMissed = 0;
