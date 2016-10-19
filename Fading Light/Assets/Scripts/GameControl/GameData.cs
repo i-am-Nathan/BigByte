@@ -83,8 +83,13 @@ public class GameData : MonoBehaviour {
 	private float _chestsMissed;
     //private float _playerTwoTotalDamageTaken;
 
-    private float _playerOneAccuracy;
-    private float _playerTwoAccuracy;
+	private float _playerOneAccuracy = 0f;
+	private float _playerTwoAccuracy = 0f;
+
+	private float _playerOneNumHitsMissed = 0f;
+	private float _playerOneNumHitsAchieved = 0f; 
+	private float _playerTwoNumHitsMissed = 0f;
+	private float _playerTwoNumHitsAchieved = 0f; 
 
 	private InGameUiManager _inGameUiManager;
 	private bool _firstLevel = true;
@@ -255,6 +260,10 @@ public class GameData : MonoBehaviour {
 	}
 
 	public float GetPlayer1Accuracy() {
+		float totalSwings = _playerOneNumHitsAchieved + _playerOneNumHitsMissed;
+		if (totalSwings != 0) {
+			_playerOneAccuracy = _playerOneNumHitsAchieved / totalSwings;
+		}
 		return _playerOneAccuracy;
 	}
 
@@ -263,6 +272,11 @@ public class GameData : MonoBehaviour {
 	}
 
 	public float GetPlayer2Accuracy() {
+		float totalSwings = _playerTwoNumHitsAchieved + _playerTwoNumHitsMissed;
+
+		if (totalSwings != 0) {
+			_playerTwoAccuracy = _playerTwoNumHitsAchieved / totalSwings;
+		}
 		return _playerTwoAccuracy;
 	}
 
@@ -304,5 +318,21 @@ public class GameData : MonoBehaviour {
 
 	public void SetPlayer2ItemQuantityDictionary(string item, int num) {
 		_player2ItemQuantityDictionary [item] = num;
+	}
+
+	public void UpdatePlayerNumHitsMissed (bool isPlayer1) {
+		if (isPlayer1) {
+			_playerOneNumHitsMissed++;
+		} else {
+			_playerTwoNumHitsMissed++;
+		}
+	}
+
+	public void UpdatePlayerNumHitsAchieved (bool isPlayer1) {
+		if (isPlayer1) {
+			_playerOneNumHitsAchieved++;
+		} else {
+			_playerTwoNumHitsAchieved++;
+		}
 	}
 }
