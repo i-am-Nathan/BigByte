@@ -33,7 +33,7 @@ public class SpiderSpawnArea : MonoBehaviour
 
             var xOffset = Random.Range(-collider.bounds.size.x / 2, collider.bounds.size.x / 2);
             var zOffset = Random.Range(-collider.bounds.size.z / 2, collider.bounds.size.z / 2);
-            Vector3 newPos = new Vector3(this.transform.position.x + xOffset, this.transform.position.y, this.transform.position.z + zOffset);
+            Vector3 newPos = new Vector3(this.transform.position.x + xOffset, -0.4f, this.transform.position.z + zOffset);
             newSpider.transform.position = newPos;
         }   
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));

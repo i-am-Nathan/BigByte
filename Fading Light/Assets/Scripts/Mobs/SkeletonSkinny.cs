@@ -35,6 +35,8 @@ public class SkeletonSkinny : BaseEntity
     public float AttackCooldown = 0.5f;
     public float AngularSpeed = 10f;
 
+    public bool IsActive = true;
+
     //Reference to the UI's health circle.
     public Image healthCircle;                                 
 
@@ -98,7 +100,7 @@ public class SkeletonSkinny : BaseEntity
     /// </summary>
     private void Init_Enter()
     {
-        if (DEBUG) Debug.Log("skeleton state machine initilized.");
+        if (DEBUG) Debug.Log("skeleton state machine initilized.");    
         fsm.ChangeState(States.Sleep);
     }
 
@@ -107,6 +109,11 @@ public class SkeletonSkinny : BaseEntity
     /// </summary>
     private IEnumerator Sleep_Enter()
     {
+        if (IsActive)
+        {
+            fsm.ChangeState(States.Death);
+        }
+
         if (DEBUG) Debug.Log("Entered state: Sleep");
         float refreshRate = 0.8f;
         _sleeping = true;
@@ -305,7 +312,8 @@ public class SkeletonSkinny : BaseEntity
     }
 
     public override void Damage(float amount, Transform attacker)
-    {        
+    {
+        if (isDead) return;
         base.Damage(amount, attacker);
 
         // Set the health bar's value to the current health.
@@ -343,7 +351,7 @@ public class SkeletonSkinny : BaseEntity
         {
             pathfinder.Stop();
             _animator.Play("Death", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
     }

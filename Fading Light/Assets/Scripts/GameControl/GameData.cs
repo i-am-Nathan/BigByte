@@ -77,11 +77,10 @@ public class GameData : MonoBehaviour {
     private int _torchFuel;
     private Slider _torchFuelSlider;
 
-    private float _playerOneTotalDamageGiven;
-    private float _playerTwoTotalDamageGiven;
-
-    private float _playerOneTotalDamageTaken;
-    private float _playerTwoTotalDamageTaken;
+    private float _timesKilled;
+	private float _monstersKilled;
+	private float _chestsMissed;
+    //private float _playerTwoTotalDamageTaken;
 
     private float _playerOneAccuracy;
     private float _playerTwoAccuracy;
@@ -115,14 +114,19 @@ public class GameData : MonoBehaviour {
             achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
-            _numberOfLivesLeft = 3;
+            _numberOfLivesLeft = 2;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
             _sharedGold = 0;
+			_timesKilled = 0;
+			_monstersKilled = 0;
+			_chestsMissed = 0;
+			_playerOneAccuracy = 0;
+			_playerTwoAccuracy = 0;
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }
-		
+
 	void Start() {
 		// Getting the game data object which shows the total lives left
 		GameObject go = GameObject.Find("InGameUiManager");
@@ -153,6 +157,13 @@ public class GameData : MonoBehaviour {
     {
         _numberOfLivesLeft = lives;
     }
+
+	public void UpdateNumberOfLives() {
+		// Cannot get more than 3 lives
+		if (_numberOfLivesLeft != 3) {
+			_numberOfLivesLeft++;
+		}
+	}
 
     /// <summary>
     /// Used to get the amount of shared gold
@@ -231,4 +242,44 @@ public class GameData : MonoBehaviour {
             achievementText.text = achievement.Name;
         }
     }
+
+	public void SetPlayer1Accuracy(float acc) {
+		_playerOneAccuracy = acc;
+	}
+
+	public float GetPlayer1Accuracy() {
+		return _playerOneAccuracy;
+	}
+
+	public void SetPlayer2Accuracy(float acc) {
+		_playerTwoAccuracy = acc;
+	}
+
+	public float GetPlayer2Accuracy() {
+		return _playerTwoAccuracy;
+	}
+
+	public void SetChestsMissed(float amount) {
+		_chestsMissed = amount;
+	}
+
+	public float GetChestsMissed() {
+		return _chestsMissed;
+	}
+
+	public void SetTimesKilled(float amount) {
+		_timesKilled = amount;
+	}
+
+	public float GetTimesKilled() {
+		return _timesKilled;
+	}
+
+	public void SetMonstersKilled(float amount) {
+		_monstersKilled = amount;
+	}
+
+	public float GetMonstersKilled() {
+		return _monstersKilled;
+	}
 }
