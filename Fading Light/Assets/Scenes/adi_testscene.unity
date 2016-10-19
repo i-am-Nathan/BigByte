@@ -1537,6 +1537,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 202536215}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &203177529 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 142846, guid: 427e851e8ea40af4a9c14a042a3f35ef, type: 2}
+  m_PrefabInternal: {fileID: 762102309}
 --- !u!1001 &212740550
 Prefab:
   m_ObjectHideFlags: 0
@@ -1649,6 +1653,10 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 453134, guid: 2af507df9cc6fba498647373281b58e0, type: 2}
   m_PrefabInternal: {fileID: 213174295}
+--- !u!1 &224327395 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 169414, guid: f72a59c09a71ed64381535a24991d8b6, type: 2}
+  m_PrefabInternal: {fileID: 2005261547}
 --- !u!1 &231455040
 GameObject:
   m_ObjectHideFlags: 0
@@ -6006,7 +6014,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: RequireButtonPress
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: Dialogue
@@ -6034,11 +6042,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: TalkOnce
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: DestroyWhenActivated
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
@@ -7209,7 +7217,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 407470, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -145.7
+      value: 412.1
       objectReference: {fileID: 0}
     - target: {fileID: 407470, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7217,7 +7225,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 407470, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -121.3
+      value: -283.4
       objectReference: {fileID: 0}
     - target: {fileID: 407470, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_LocalRotation.x
@@ -15244,6 +15252,10 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 400014, guid: d8e6116652f17784087610025c66ec2e, type: 3}
   m_PrefabInternal: {fileID: 1265382917}
+--- !u!1 &1278849441 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 169414, guid: f72a59c09a71ed64381535a24991d8b6, type: 2}
+  m_PrefabInternal: {fileID: 674589143}
 --- !u!1 &1286654985 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 115018, guid: afd19ab1d4bb70b499bb2f62171a522d, type: 2}
@@ -20688,14 +20700,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba795bf954865c7429ca4cefdc62a941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue: {fileID: 0}
+  Dialogue: {fileID: 4900000, guid: f152d73a87ed17544a81ed9bd3d1b8c7, type: 3}
   StartLine: 0
   EndLine: 0
-  TextBox: {fileID: 0}
+  TextBox: {fileID: 1275513153}
   RequireButtonPress: 0
-  DestroyWhenActivated: 0
+  DestroyWhenActivated: 1
   DialogueSpeech: []
-  TalkOnce: 0
+  TalkOnce: 1
 --- !u!1001 &1599881707
 Prefab:
   m_ObjectHideFlags: 0
@@ -21007,8 +21019,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8e40a9c2ca14e42833075df3be1bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hammerTrap: []
-  spearTrap: []
+  hammerTrap:
+  - {fileID: 2040460131}
+  - {fileID: 224327395}
+  - {fileID: 1278849441}
+  spearTrap:
+  - {fileID: 203177529}
+  - {fileID: 1928660233}
+  - {fileID: 1855004006}
 --- !u!65 &1637475049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23725,6 +23743,10 @@ Transform:
   - {fileID: 1733875954}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!1 &1855004006 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 142846, guid: 427e851e8ea40af4a9c14a042a3f35ef, type: 2}
+  m_PrefabInternal: {fileID: 470877155}
 --- !u!1001 &1867671254
 Prefab:
   m_ObjectHideFlags: 0
@@ -25605,6 +25627,10 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
+--- !u!1 &1928660233 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 142846, guid: 427e851e8ea40af4a9c14a042a3f35ef, type: 2}
+  m_PrefabInternal: {fileID: 1946375431}
 --- !u!1001 &1946375431
 Prefab:
   m_ObjectHideFlags: 0
@@ -26687,6 +26713,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2037076591}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2040460131 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 169414, guid: f72a59c09a71ed64381535a24991d8b6, type: 2}
+  m_PrefabInternal: {fileID: 784499679}
 --- !u!1 &2043348113
 GameObject:
   m_ObjectHideFlags: 0
