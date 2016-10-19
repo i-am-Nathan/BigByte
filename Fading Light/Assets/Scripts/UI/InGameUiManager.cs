@@ -102,8 +102,8 @@ public class InGameUiManager : MonoBehaviour {
 
 		GameObject go = GameObject.FindGameObjectWithTag("Life Manager");
 		LifeManager lifeManagerScript = (LifeManager)go.GetComponent(typeof(LifeManager));
-
 		lifeManagerScript.LoseLife ();
+
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
