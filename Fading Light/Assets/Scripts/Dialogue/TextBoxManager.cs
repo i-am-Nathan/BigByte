@@ -35,6 +35,8 @@ public class TextBoxManager : MonoBehaviour {
     public Storyline ThisStoryline;
     public TorchFuelController TorchController;
 
+    public bool NotifyStoryline = true;
+
     public bool StopMovement;
 	public bool IsActive;
 	public bool FirstLine;
@@ -119,7 +121,11 @@ public class TextBoxManager : MonoBehaviour {
 				if (CurrentLine > EndLine) {
 					DisableDialogue ();
                     Talking = false;
-                    ThisStoryline.DialogueComplete();
+                    if (NotifyStoryline)
+                    {
+                        ThisStoryline.DialogueComplete();
+                    }
+                    
 				} else {
 					//Splits the string and assigns the appropriate character image and name on the dialogue.
 					_splitText= new string[3];
@@ -185,7 +191,11 @@ public class TextBoxManager : MonoBehaviour {
 		IsActive = true;
 		Player1.IsDisabled = true;
 		Player2.IsDisabled = true;
-        ThisStoryline.StartText();
+        ThisStoryline.CharacterDamageEnabled(false);
+        if (NotifyStoryline)
+        {
+            ThisStoryline.StartText();
+        }
         TorchController.IsDisabled = true;
     }
 
@@ -194,13 +204,19 @@ public class TextBoxManager : MonoBehaviour {
 	/// This will stop the dialogue and allow the players to move again.
 	/// </summary>
 	public void DisableDialogue(){
-		_gameUI.SetActive (true);
+        ThisStoryline.CharacterDamageEnabled(true);
+        _gameUI.SetActive (true);
 		TextBox.SetActive (false);
 		IsActive = false;
 		Player1.IsDisabled = false;
 		Player2.IsDisabled = false;
         MoleMan.IsDisabled = false;
-        ThisStoryline.EnableMoleMan();
+
+        if (NotifyStoryline)
+        {
+            ThisStoryline.EnableMoleMan();
+        }
+        
         TorchController.IsDisabled = false;
     }
 		
@@ -209,7 +225,8 @@ public class TextBoxManager : MonoBehaviour {
 	/// </summary>
 	/// <param name="thisText">This text.</param>
 	/// <param name="audioClips">Audio clips.</param>
-	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips){
+	public void ReloadScript(TextAsset thisText, AudioClip[] audioClips, bool notify){
+        NotifyStoryline = notify;
 		if (thisText != null) {
 			TextLines = new string[1];
 			TextLines = (thisText.text.Split ('\n'));	

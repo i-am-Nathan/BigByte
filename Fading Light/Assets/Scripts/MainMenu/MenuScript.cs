@@ -11,6 +11,7 @@ public class MenuScript : MonoBehaviour {
 	public GameObject AchievementMenu;
 	public GameObject HighscoreMenu;
     public GameObject LevelSelectMenu;
+    public GameData GameData;
 
 
     public AudioSource ButtonClickSound;
@@ -19,6 +20,7 @@ public class MenuScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         HideAllMenus();
     }
 
@@ -38,6 +40,7 @@ public class MenuScript : MonoBehaviour {
     public void StartLevel()
     {
         //Loading level
+        GameData.isMainMenu = false;
         StartLevel(0);
     }
 

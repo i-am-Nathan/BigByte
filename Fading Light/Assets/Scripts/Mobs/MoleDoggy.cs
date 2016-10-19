@@ -175,13 +175,24 @@ public class MoleDoggy : BaseEntity
     IEnumerator FireballSpawning_Enter()
     {        
         _cloud.SetActive(true);
-        //pathfinder.destination = false;
-        //pathfinder
+        pathfinder.enabled = false;
 
         yield return new WaitForSeconds(3f);
 
         for (int i = 0; i<5; i++)
         {
+
+            TorchFuelController TorchController = GameObject.FindGameObjectWithTag("TorchFuelController").transform.GetComponent<TorchFuelController>();
+            if (TorchController.TorchWithPlayer1())
+            {
+                target = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<Player>().transform;
+            }
+            else
+            {
+                target = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player>().transform;
+            }
+
+           
             //RotateTowards(target, false);
             _animator.Play("Attack", PlayMode.StopAll);
             while (_animator.isPlaying)
@@ -201,9 +212,34 @@ public class MoleDoggy : BaseEntity
         yield return new WaitForSeconds(3f);     
 
         _cloud.SetActive(false);
-        //pathfinder.enabled = true;
+        pathfinder.enabled = true;
 
         fsm.ChangeState(States.Chase);
+    }
+
+    //values that will be set in the Inspector
+    public Transform Target;
+    public float FireballRotationSpeed = 10f;
+
+    //values for internal use
+    private Quaternion _lookRotation;
+    private Vector3 _direction;
+
+    // Update is called once per frame
+    IEnumerator RotateTowardsPlayer()
+    {
+        while (!(_lookRotation == transform.rotation))
+        {
+            //find the vector pointing from our position to the target
+            _direction = (Target.position - transform.position).normalized;
+
+            //create the rotation we need to be in to look at the target
+            _lookRotation = Quaternion.LookRotation(_direction);
+
+            //rotate us over time according to speed until we are in the required rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * FireballRotationSpeed);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     /// <summary>
@@ -227,7 +263,7 @@ public class MoleDoggy : BaseEntity
 
             if (!_isMoving)
             {
-                _animator.Play("WalkDog", PlayMode.StopAll);
+                _animator.Play("Walk Fixed", PlayMode.StopAll);
                 _isMoving = true;
             }
 

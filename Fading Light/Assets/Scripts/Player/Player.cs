@@ -13,6 +13,7 @@ public class Player: BaseEntity
 
     private bool DEBUG = true;
 
+    public bool CanTakeDamage = true;
 
     public AudioClip DrinkPotion;
     private AudioSource _source;
