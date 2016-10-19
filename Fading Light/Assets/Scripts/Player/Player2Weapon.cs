@@ -25,7 +25,14 @@ public class Player2Weapon : MonoBehaviour {
         if (player2.isAttacking() && other.tag == "Enemy")
         {
             if (DEBUG) Debug.Log("Weapon collision: Enemy");
-            if (player2.isAttackPotActive()) WeaponDamage = WeaponDamage * 2;
+
+			if (player2.isAttackPotActive ()) {
+				WeaponDamage = WeaponDamage * 2;
+				Debug.Log ("attack damage p2 " + WeaponDamage);
+			} else {
+				WeaponDamage = 30f;
+			}
+
             other.transform.GetComponent<BaseEntity>().Damage(WeaponDamage, this.transform.root);
             player2.setAttacking(false);
         }
