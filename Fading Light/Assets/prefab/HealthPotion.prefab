@@ -12,8 +12,8 @@ GameObject:
   - 114: {fileID: 11444896}
   - 54: {fileID: 5497168}
   - 23: {fileID: 2373604}
-  - 114: {fileID: 11423554}
   - 82: {fileID: 8230464}
+  - 114: {fileID: 11448038}
   m_Layer: 9
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -352,18 +352,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &11423554
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83207edd241a7a9439b5bd1a0ce5899d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PickUpSound: {fileID: 8300000, guid: 7c7097e1acad4ab4e9f05d1661e26bda, type: 3}
 --- !u!114 &11444896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -379,6 +367,18 @@ MonoBehaviour:
   Lore: A potion from the historic times. This blood red liquid can heal any wound
     and a must have for any dungeon experience.  Comes in tomato and cherry flavour
   Effect: Heals 30HP when consumed
+--- !u!114 &11448038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83207edd241a7a9439b5bd1a0ce5899d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickUpSound: {fileID: 8300000, guid: eda4b59768c39064db8f8843e94b5216, type: 3}
 --- !u!114 &11498300
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -31,7 +31,7 @@ public class MolemanBoss : BaseEntity
     public float WalkSpeed = 9f;
     public float RunSpeed = 15f;
     public float SprintSpeed = 35f;
-    public float AttackCooldown = 0.5f;
+    public float AttackCooldown = 2f;
     public float RotationSpeed = 10f;
 
 
@@ -133,8 +133,7 @@ public class MolemanBoss : BaseEntity
 
         _animator.Play("creature1Attack1", PlayMode.StopAll);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-
-
+        
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.25f);
@@ -143,7 +142,7 @@ public class MolemanBoss : BaseEntity
 
         if (_isSprinting) _isSprinting = false;
 
-        //yield return new WaitForSeconds(AttackCooldown);
+        yield return new WaitForSeconds(AttackCooldown);
 
 
         pathfinder.enabled = true;
@@ -215,10 +214,9 @@ public class MolemanBoss : BaseEntity
 
             //Set the speed of the pathfinder (either running or sprinting) and the target positions
             pathfinder.speed = _isSprinting ? SprintSpeed : RunSpeed;
-            pathfinder.acceleration = 13f;
+            pathfinder.acceleration = 19f;
             pathfinder.angularSpeed = 900f;
             pathfinder.SetDestination(target.position);
-            Debug.Log(pathfinder.speed);
 
             //Every so often sprint at the player
             if (_walkCount > 12)
@@ -267,6 +265,14 @@ public class MolemanBoss : BaseEntity
             yield return new WaitForSeconds(refreshRate);
         }
         fsm.ChangeState(States.Chase);
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        if (other)
+        {
+        }
+        Debug.Log("OWOWWWWWOWOWOWOW");
     }
 
     private void RotateTowards(Transform target)

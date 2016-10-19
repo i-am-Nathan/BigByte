@@ -32,8 +32,23 @@ public class LevelTwoTreasure : MonoBehaviour
     /// </summary>
     void OnTriggerStay(Collider other)
     {
-        //if T is pressed to interact with the lever, the walls move
-        if (Input.GetKeyDown(KeyCode.T) && !_pulled)
+        //if Q is pressed to interact with the lever, the walls move
+        if (Input.GetKeyDown(KeyCode.O) && !_pulled && other.gameObject.tag.Equals("Player"))
+        {
+            this.GetComponent<Animation>().Play("Armature|LeverDown");
+            foreach (GameObject obj in hammerTrap)
+            {
+                Destroy(obj);
+            }
+            foreach (GameObject obj2 in spearTrap)
+            {
+
+                Destroy(obj2);
+            }
+            _pulled = true;
+        }
+        //if O is pressed to interact with the lever, the walls move
+        if (Input.GetKeyDown(KeyCode.Q) && !_pulled && other.gameObject.tag.Equals("Player2"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
             foreach (GameObject obj in hammerTrap)

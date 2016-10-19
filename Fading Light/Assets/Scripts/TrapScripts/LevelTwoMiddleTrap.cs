@@ -29,8 +29,8 @@ public class LevelTwoMiddleTrap : MonoBehaviour {
     /// </summary>
     void OnTriggerStay(Collider other)
     {
-        //if T is pressed to interact with the lever, the walls move
-        if (Input.GetKeyDown(KeyCode.T) && !_pulled)
+        //if O is pressed to interact with the lever, the walls move
+		if (Input.GetKeyDown(KeyCode.O) && !_pulled && other.gameObject.tag.Equals("Player"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
             foreach (GameObject obj in sawTrap)
@@ -44,5 +44,20 @@ public class LevelTwoMiddleTrap : MonoBehaviour {
             Destroy(door);
             _pulled = true;
         }
+		//if Q is pressed to interact with the lever, the walls move
+		if (Input.GetKeyDown(KeyCode.Q) && !_pulled && other.gameObject.tag.Equals("Player2"))
+		{
+			this.GetComponent<Animation>().Play("Armature|LeverDown");
+			foreach (GameObject obj in sawTrap)
+			{
+				obj.GetComponent<Animation>().Play();
+			}
+			foreach (GameObject obj in axeTrap)
+			{
+				obj.GetComponent<Animation>().Play();
+			}
+			Destroy(door);
+			_pulled = true;
+		}
     }
 }

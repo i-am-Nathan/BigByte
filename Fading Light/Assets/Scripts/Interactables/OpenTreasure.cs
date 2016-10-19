@@ -44,8 +44,6 @@ public class OpenTreasure : MonoBehaviour {
 				if (!_open) {
 					StartCoroutine (Open ());
 					_open = true;
-                    GameObject label = GameObject.FindGameObjectWithTag("tbl");
-                    label.SetActive(false);
 				}
 			}
 		}
@@ -114,6 +112,7 @@ public class OpenTreasure : MonoBehaviour {
 			_source.PlayOneShot (TreasureSound);
 		}
 		_source.Stop ();
+		Destroy(this.transform.FindChild ("Eternal Light").gameObject);
 	}
 
 
