@@ -68,12 +68,6 @@ public class SkeleBoss : BaseEntity
 
     private bool _isAttacking;
 
-    public AudioClip Hit;
-    public AudioClip Death;
-    public AudioClip Attack;
-    public AudioClip Summoning;
-    private AudioSource _source;
-
     /// <summary>
     /// Determines whether this instance is attacking.
     /// </summary>
@@ -100,7 +94,6 @@ public class SkeleBoss : BaseEntity
     private void Awake()
 	{
         if (DEBUG) Debug.Log("The skeleton wakes.");
-        _source = GetComponent<AudioSource>();
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
 
@@ -186,13 +179,12 @@ public class SkeleBoss : BaseEntity
     /// <returns></returns>
     private void Summoning_Enter()
     {
-        _summoning = true;
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
         _animator["Summon2"].speed = 0.2f;
         _animator.Play("Summon2", PlayMode.StopAll);
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
-        
+        _summoning = true;
        
         //Check too see if all minion mobs have been killed
         GameObject[] mobs = GameObject.FindGameObjectsWithTag("Enemy");
@@ -218,6 +210,7 @@ public class SkeleBoss : BaseEntity
         if (DEBUG) Debug.Log("Entered state: Summoning exit");
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
+        _summoning = true;
 
         while (_summoning)
         {
@@ -247,7 +240,6 @@ public class SkeleBoss : BaseEntity
 
             yield return new WaitForSeconds(refreshRate);
         }
-        _summoning = false;
         fsm.ChangeState(States.Chase, StateTransition.Overwrite);
     }
 
@@ -388,7 +380,7 @@ public class SkeleBoss : BaseEntity
     {
         if (isDead) return;
 
-        if (!_summoning)
+        if (fsm.State != States.Summoning || fsm.State != States.Sheilding)
         {
             base.Damage(amount, attacker);
 

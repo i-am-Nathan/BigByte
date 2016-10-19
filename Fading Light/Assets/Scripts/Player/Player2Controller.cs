@@ -36,11 +36,7 @@ public class Player2Controller : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     private TorchFuelController _torchFuelScript;
-    
-    //audio
-    public AudioSource WalkSounds;
-    public AudioSource DeathSound;
-    
+
     public bool IsMainMenu = false;
     /// <summary>
     /// Starts this instance.
@@ -48,7 +44,6 @@ public class Player2Controller : Player
     void Start()
 	{
         base.Start();
-	WalkSounds.loop = true;
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
@@ -115,25 +110,12 @@ public class Player2Controller : Player
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
             _animator.SetBool("Idling", false);
-            if (!controller.isGrounded)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            }
         }
         else
         {
             _animator.SetBool("Idling", true);
         }
-	
-        if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
-        {
-            WalkSounds.Play();
-        }
 
-        else if ((Input.GetKeyUp("w") || Input.GetKeyUp("s") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) && !(Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d")))
-        {
-            WalkSounds.Stop();
-        }
 
 
     }
@@ -198,7 +180,8 @@ public class Player2Controller : Player
         base.Killed();
         IsDisabled = true;
         _lifeManagerScript.LoseLife();
-	DeathSound.Play();
+
+        Debug.Log("Dead");
     }
 
     /// <summary>
