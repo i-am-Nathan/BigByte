@@ -41,7 +41,6 @@ public class PlayerController : Player
     
     public bool IsMainMenu = false;
     
-
     /// <summary>
     /// Starts this instance.
     /// </summary>
@@ -91,6 +90,13 @@ public class PlayerController : Player
         {
             ControlWASD();
         }
+
+		if (isHealthPotActive ()) {
+			UpdateHealthUI ();
+			SetHealthPotActive ();
+		}
+
+		UpdateEffects ();
     }
 
     /// <summary>
@@ -199,6 +205,11 @@ public class PlayerController : Player
     {
         Debug.Log("Player damaged");
 
+		if (isDefensePotActive ()) {
+			amount = amount / 2;
+			Debug.Log ("Damage taken p1 " + amount);
+		}
+
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
         damaged = true;
@@ -260,4 +271,11 @@ public class PlayerController : Player
         }
     }
 
+	/// <summary>
+	/// Increases health sliders when health pot is activated
+	/// </summary>
+	public void UpdateHealthUI () {
+		healthCircle.fillAmount += 30f;
+		_healthSlider.value += 30f;
+	}
 }
