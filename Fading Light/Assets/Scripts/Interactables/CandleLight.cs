@@ -43,7 +43,7 @@ public class CandleLight : MonoBehaviour {
         if (torchInPlayer1 && other.gameObject.tag.Equals("Player"))
         {
             //check for key pressed
-            if (Input.GetKeyDown(KeyCode.O) && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active)
@@ -60,7 +60,7 @@ public class CandleLight : MonoBehaviour {
 
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.O))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
                 _triggered = false;
             }
@@ -70,7 +70,7 @@ public class CandleLight : MonoBehaviour {
         else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player2"))
         {
             //check for key pressed
-            if (Input.GetKeyDown(KeyCode.Q) && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)
@@ -87,7 +87,7 @@ public class CandleLight : MonoBehaviour {
                 }
 
             }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
                 _triggered = false;
             }
@@ -95,7 +95,7 @@ public class CandleLight : MonoBehaviour {
         }
         else if (torchInPlayer1 && other.gameObject.tag.Equals("Player2"))
         {
-            if (Input.GetKeyDown(KeyCode.Q) && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)
@@ -105,7 +105,7 @@ public class CandleLight : MonoBehaviour {
                     _active = false;
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
                 _triggered = false;
             }
@@ -113,7 +113,7 @@ public class CandleLight : MonoBehaviour {
         }
         else if (!torchInPlayer1 && other.gameObject.tag.Equals("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.O) && !_triggered)
+            if (Input.GetKeyDown(KeyCode.T) && !_triggered)
             {
                 _triggered = true;
                 if (_active && _triggered)
@@ -123,7 +123,7 @@ public class CandleLight : MonoBehaviour {
                     _active = false;
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.O))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
                 _triggered = false;
             }

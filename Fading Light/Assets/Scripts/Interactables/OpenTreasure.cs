@@ -44,8 +44,6 @@ public class OpenTreasure : MonoBehaviour {
 				if (!_open) {
 					StartCoroutine (Open ());
 					_open = true;
-                    GameObject label = GameObject.FindGameObjectWithTag("tbl");
-                    label.SetActive(false);
 				}
 			}
 		}

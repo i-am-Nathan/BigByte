@@ -36,10 +36,7 @@ public class Player2Controller : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     private TorchFuelController _torchFuelScript;
-    
-    //audio
-    public AudioSource WalkSounds;
-    
+
     public bool IsMainMenu = false;
     /// <summary>
     /// Starts this instance.
@@ -118,16 +115,7 @@ public class Player2Controller : Player
         {
             _animator.SetBool("Idling", true);
         }
-	
-        if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
-        {
-            WalkSounds.Play();
-        }
 
-        else if ((Input.GetKeyUp("w") || Input.GetKeyUp("s") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) && !(Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d")))
-        {
-            WalkSounds.Stop();
-        }
 
 
     }
