@@ -190,7 +190,11 @@ public class Player2Controller : Player
     }
     void OnParticleCollision(GameObject other)
     {
-        if (_torchFuelScript.TorchInPlayer1 == false)
+		if(other.name.Equals("Afterburner")) {
+			Damage(0.8f, transform);
+		}
+			
+		else if (_torchFuelScript.TorchInPlayer1 == false && other.name.Equals("Wind"))
         {
             _torchFuelScript.RemoveFuelWithAmount(1f);
             Debug.Log("P2Wind");

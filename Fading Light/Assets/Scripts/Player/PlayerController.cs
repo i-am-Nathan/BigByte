@@ -221,9 +221,12 @@ public class PlayerController : Player
     }
     void OnParticleCollision(GameObject other)
     {
-        if (TorchFuelControllerScript.TorchInPlayer1)
+		if(other.name.Equals("Afterburner")){
+			Damage(0.8f, transform);
+		}
+			
+		if (TorchFuelControllerScript.TorchInPlayer1 && other.name.Equals("Wind"))
         {
-            Debug.Log("OH BABY THE WIND");
             TorchFuelControllerScript.RemoveFuelWithAmount(1);
         }
     }

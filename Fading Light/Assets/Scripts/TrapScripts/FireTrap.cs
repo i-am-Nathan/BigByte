@@ -5,11 +5,15 @@ public class FireTrap : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		InvokeRepeating ("StartEmitting", 3, 6);
+		InvokeRepeating ("StopLight", 5, 6);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void StartEmitting(){
+		gameObject.GetComponent<ParticleSystem> ().Play();
+		transform.Find ("Point light").gameObject.SetActive(true);
+	}		
+	void StopLight(){
+		transform.Find ("Point light").gameObject.SetActive (false);
 	}
 }
