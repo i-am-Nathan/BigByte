@@ -55,7 +55,7 @@ public class SpiderMob : BaseEntity
     private bool _inTorchLight;
     private bool _runningAway = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
@@ -302,39 +302,23 @@ public class SpiderMob : BaseEntity
                 fsm.ChangeState(States.Idle);
             } else
             {
-                if (DEBUG) Debug.Log("Spider running");
-                //if (DEBUG) Debug.Log(this.gameObject.transform.position);
-                //if (DEBUG) Debug.Log(TorchController.GetTorchPosition());
-
                 //Determine which way the spider should run
                 Vector3 torchDirection = this.gameObject.transform.position - TorchController.GetTorchPosition();
                 Vector3 dest = this.gameObject.transform.position + torchDirection;
 
                 //TODO: CHECK FOR IF DEST POSITION IS IN THE NAVMESH
-                                
-                
-                //if (!_runningAway)
+                //if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
                 //{
-                    //Set the spider to run away as fast as possible
-                    pathfinder.speed = SprintSpeed;
-                    pathfinder.acceleration = 15;
-                    pathfinder.angularSpeed = 900f;
-                    pathfinder.SetDestination(dest);
-                    _runningAway = true;
-                /*} else
-                {
-                    //Check to see if we have reached the destination if we were running
-                    if (!pathfinder.pathPending)
-                    {
-                        if (pathfinder.remainingDistance <= pathfinder.stoppingDistance)
-                        {
-                            if (!pathfinder.hasPath || pathfinder.velocity.sqrMagnitude == 0f)
-                            {
-                                _runningAway = false;
-                            }
-                        }
-                    }
-                }*/
+                //    if (DEBUG) Debug.Log("Nevmesh dest is inside navmesh");
+                //}
+
+                pathfinder.speed = SprintSpeed;
+                pathfinder.acceleration = 15;
+                pathfinder.angularSpeed = 900f;
+                pathfinder.SetDestination(new Vector3(dest.x, 0, dest.z));
+                _runningAway = true;
+
+                if (DEBUG) Debug.Log("Spider running to: " + dest);
             }          
             yield return new WaitForSeconds(refreshRate);
         }
@@ -348,7 +332,7 @@ public class SpiderMob : BaseEntity
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
-        _animator.Play("idle", PlayMode.StopAll);
+        //_animator.Play("idle", PlayMode.StopAll);
 
         float refreshRate = 0.25f;
         _lockedOn = false;

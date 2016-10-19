@@ -8,96 +8,74 @@ using UnityEngine.UI;
 public class MenuScript : MonoBehaviour {
 
 	//Canvas is used to pop up when the specified buttons are pressed
-	public Canvas achievementMenu;
-	public Canvas highscoreMenu;
-    public Canvas levelSelectMenu;
+	public GameObject AchievementMenu;
+	public GameObject HighscoreMenu;
+    public GameObject LevelSelectMenu;
 
-    public Button startText;
-    public Button highScoreText;
-    public Button achievementText;
-    public Button levelSelectText;
 
-    public AudioSource buttonClickSound;
+    public AudioSource ButtonClickSound;
 
+    public static string[] LevelNames = { "ammar_ui_v2", "ammar_ui_v2", "ammar_ui_v2" };
 
 	// Use this for initialization
 	void Start () {
-        levelSelectText = levelSelectText.GetComponent<Button>();
-        startText = startText.GetComponent<Button>();
-        highScoreText = highScoreText.GetComponent<Button>();
-        achievementText = achievementText.GetComponent<Button>();
-    
-		highscoreMenu.enabled = false;
-		achievementMenu.enabled = false;
-        levelSelectMenu.enabled = false;
+        HideAllMenus();
     }
 
+    private void PlayButtonSound()
+    {
+        //ButtonClickSound.Play();
+    }
+
+    private void HideAllMenus()
+    {
+        HighscoreMenu.SetActive(false);
+        AchievementMenu.SetActive(false);
+        LevelSelectMenu.SetActive(false);
+    }
 
 	//Start game when the start text is pressed
     public void StartLevel()
     {
         //Loading level
-        Application.LoadLevel("ammar_ui_v2");
+        StartLevel(0);
     }
 
 	//Highscore should pop up when it is pressed, to be implemented.
     public void highScorePress()
     {
-        buttonClickSound.Play();
-        highscoreMenu.enabled = true;
-        startText.enabled = false;
-        highScoreText.enabled = false;
-        achievementText.enabled = false;
-        levelSelectText.enabled = false;
+        HideAllMenus();
+        HighscoreMenu.SetActive(true);
+        HighscoreMenu.transform.Find("Scrollbar").GetComponent<Scrollbar>().value = 1;
     }
 
 	//When the achievements are pressed a pop up of achievements should pop up.
     public void achievementPress()
     {
-        buttonClickSound.Play();
-        achievementMenu.enabled = true;
-        startText.enabled = false;
-		highScoreText.enabled = false;
-		achievementText.enabled = false;
-        levelSelectText.enabled = false;
+        PlayButtonSound();
+        HideAllMenus();
+        AchievementMenu.SetActive(true);
     }
 
 	//Go back to the main menu when the back button is pressed on the achievement menu.
 	public void backPress(){
-
-        buttonClickSound.Play();
-   
-        levelSelectMenu.enabled = false;
-        achievementMenu.enabled = false;
-        highscoreMenu.enabled = false;
-        startText.enabled = true;
-		highScoreText.enabled = true;
-		achievementText.enabled = true;
-        levelSelectText.enabled = true;
-	}
+        PlayButtonSound();
+        HideAllMenus();
+    }
 
     public void levelPress()
     {
-        buttonClickSound.Play();
-        levelSelectMenu.enabled = true;
-        startText.enabled = false;
-        highScoreText.enabled = false;
-        achievementText.enabled = false;
-        levelSelectText.enabled = false;
+        PlayButtonSound();
+        HideAllMenus();
+        LevelSelectMenu.SetActive(true);
+
     }
 
-    public void tutLevelPress()
+    public void StartLevel(int levelIndex)
     {
-
+        Application.LoadLevel(LevelNames[levelIndex]);
     }
 
-    public void levelOnePress()
-    {
 
-    }
-
-    public void finalLevelPress()
-    {
-
-    }
+   
 }

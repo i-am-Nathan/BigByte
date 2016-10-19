@@ -180,8 +180,8 @@ public class SkeleBoss : BaseEntity
     private void Summoning_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
-        //_animator["Skill 1"].speed = 0.3f;
-        _animator.Play("Skill 1", PlayMode.StopAll);
+        _animator["Summon2"].speed = 0.2f;
+        _animator.Play("Summon2", PlayMode.StopAll);
 
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _summoning = true;
