@@ -36,6 +36,12 @@ public class Player2Controller : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     private TorchFuelController _torchFuelScript;
+    
+    //audio
+    public AudioSource WalkSounds;
+    public AudioSource HitSounds;
+    public AudioSource HurtSounds;
+    public AudioSource DeathSounds;
 
     public bool IsMainMenu = false;
     /// <summary>
@@ -106,6 +112,10 @@ public class Player2Controller : Player
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+	    /*if(!HitSounds.isPlaying)
+            {
+                HitSounds.Play();
+            }*/
         }
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
@@ -115,6 +125,15 @@ public class Player2Controller : Player
         {
             _animator.SetBool("Idling", true);
         }
+	/*if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+        {
+            WalkSounds.Play();
+        }
+
+        else if ((Input.GetKeyUp("w") || Input.GetKeyUp("s") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) && !(Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d")))
+        {
+            WalkSounds.Stop();
+        }*/
     }
 
     /// <summary>
@@ -166,6 +185,13 @@ public class Player2Controller : Player
             // ... it should die.
             Killed();
         }
+	   /*    else
+        {
+            if (!HurtSounds.isPlaying)
+            {
+                HurtSounds.Play();
+            }
+        }*/
     }
 
     /// <summary>
@@ -178,7 +204,7 @@ public class Player2Controller : Player
         IsDisabled = true;
         _lifeManagerScript.LoseLife();
 
-        Debug.Log("Dead");
+       //DeathSound.Play();
     }
 
     /// <summary>
@@ -190,7 +216,11 @@ public class Player2Controller : Player
     }
     void OnParticleCollision(GameObject other)
     {
-        if (_torchFuelScript.TorchInPlayer1 == false)
+		if(other.name.Equals("Afterburner")) {
+			Damage(0.8f, transform);
+		}
+			
+		else if (_torchFuelScript.TorchInPlayer1 == false && other.name.Equals("Wind"))
         {
             _torchFuelScript.RemoveFuelWithAmount(1f);
             Debug.Log("P2Wind");
