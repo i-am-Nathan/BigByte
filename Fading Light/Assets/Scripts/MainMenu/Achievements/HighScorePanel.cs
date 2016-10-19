@@ -8,13 +8,16 @@ using System.Collections;
 public class HighScorePanel : MonoBehaviour
 {
 
-    public Text Name, Description;
+    public Text Name, Time, Gold, Accuracy, Deaths;
     public HighScore Score;
 
     public void Populate()
     {
         Name.text = Score.name;
-        Description.text = Score.ContractedString();
+        Time.text = Score.TimeString();
+        Gold.text = Score.gold;
+        Accuracy.text = string.Format("{0}", (float.Parse(Score.p1accuracy ) + float.Parse(Score.p2accuracy)) / 2);
+        Deaths.text = Score.timeskilled;
     }
 
     

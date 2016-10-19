@@ -34,7 +34,7 @@ public class HighScoreExpander : MonoBehaviour {
         }
         else
         {
-            textBox.text = GetComponent<HighScorePanel>().Score.ContractedString();
+            textBox.text = GetComponent<HighScorePanel>().Score.TimeString();
             layoutElement.preferredHeight = 60;
             buttonTextBox.text = "More";
         }

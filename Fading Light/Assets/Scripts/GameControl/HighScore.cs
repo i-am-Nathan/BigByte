@@ -30,8 +30,13 @@ public class HighScore
 
     }
 
-    public string ContractedString()
+    public string TimeString()
     {
         return minutes + " min, " + seconds + " sec";
+    }
+
+    public int GetTotalSeconds()
+    {
+        return int.Parse(minutes) * 60 + int.Parse(seconds);
     }
 }
