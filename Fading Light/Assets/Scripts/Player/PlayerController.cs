@@ -33,7 +33,13 @@ public class PlayerController : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     
+    //audio
+    public AudioSource WalkingSounds;
+    public AudioSource DeathSound;
+    public AudioSource HurtSounds;
+    
     public bool IsMainMenu = false;
+    
 
     /// <summary>
     /// Starts this instance.
