@@ -33,7 +33,14 @@ public class PlayerController : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     
+    //audio
+    public AudioSource WalkingSounds;
+    public AudioSource DeathSound;
+    public AudioSource HurtSounds;
+    public AudioSource HitSounds;
+    
     public bool IsMainMenu = false;
+    
 
     /// <summary>
     /// Starts this instance.
@@ -112,6 +119,10 @@ public class PlayerController : Player
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+	    /*if(!HitSounds.isPlaying)
+            {
+                HitSounds.Play();
+            }*/
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {
@@ -122,7 +133,16 @@ public class PlayerController : Player
         {
             _animator.SetBool("Idling", true);
         }
+	
+      /*  if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right"))
+        {
+            WalkingSounds.Play();
+        }
 
+        else if ((Input.GetKeyUp("up") || Input.GetKeyUp("down") || Input.GetKeyUp("left") || Input.GetKeyUp("right"))&&!(Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right")))
+        {
+            WalkingSounds.Stop();
+        }*/
         //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
     }
@@ -199,6 +219,13 @@ public class PlayerController : Player
             // ... it should die.
             Killed();
         }
+	/*else
+        {
+            if (!HurtSounds.isPlaying)
+            {
+                HurtSounds.Play();
+            }
+        }*/
     }
 
     /// <summary>
@@ -210,6 +237,8 @@ public class PlayerController : Player
         base.Killed();
         _lifeManagerScript.LoseLife();
         Debug.Log("Dead");
+	//DeathSound.Play();
+	
     }
 
     /// <summary>

@@ -40,12 +40,12 @@ public class HealthPotion : MonoBehaviour {
 			if (other.tag == "Player")
 			{
 				SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-				SubInventoryManager.AddItemQuantity("Health Pot", true);
+				SubInventoryManager.AddItemQuantity("Health Potion", true);
 
 			} else
 			{
 				SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-				SubInventoryManager.AddItemQuantity("Health Pot", false);
+				SubInventoryManager.AddItemQuantity("Health Potion", false);
 			}
 		}
 	}

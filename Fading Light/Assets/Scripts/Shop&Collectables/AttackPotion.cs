@@ -43,12 +43,12 @@ public class AttackPotion : MonoBehaviour
             if (other.tag == "Player")
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-                SubInventoryManager.AddItemQuantity("Attack Pot", true);
+                SubInventoryManager.AddItemQuantity("Attack Potion", true);
 
             } else
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();
-				SubInventoryManager.AddItemQuantity("Attack Pot", false);
+				SubInventoryManager.AddItemQuantity("Attack Potion", false);
             }
         }
     }
