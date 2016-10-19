@@ -20,8 +20,11 @@ public class ActivateText : MonoBehaviour
 	public bool DestroyWhenActivated;
 	public AudioClip[] DialogueSpeech;
 	public bool TalkOnce;
-	private bool _talked;
+    public bool Notify = true;
+    private bool _talked;
+
 	void Start () {
+        Debug.Log(Notify);
 		_talked = false;
 	}
 		
@@ -34,7 +37,7 @@ public class ActivateText : MonoBehaviour
 			//This will check if the character can only talk once or not and check if it has talked.
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
 				//This will execute the functions in TextBoxManager class and load the new dialogue.
-				TextBox.ReloadScript (Dialogue,DialogueSpeech);
+				TextBox.ReloadScript (Dialogue,DialogueSpeech, Notify);
 				TextBox.CurrentLine = StartLine;
 				TextBox.EndLine = EndLine;
 				TextBox.EnableDialogue ();
@@ -64,7 +67,8 @@ public class ActivateText : MonoBehaviour
                 _talked = true;
                 //Debug.Log("called");
                 //This will execute the functions in TextBoxManager class and load the new dialogue.
-                TextBox.ReloadScript (Dialogue,DialogueSpeech);
+                Debug.Log(Notify);
+                TextBox.ReloadScript (Dialogue, DialogueSpeech, Notify);
 				TextBox.CurrentLine = StartLine;
 				TextBox.EndLine = EndLine;
 				TextBox.EnableDialogue ();
