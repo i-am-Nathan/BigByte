@@ -54,6 +54,7 @@ public class Player2Controller : Player
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
         _lastJumpTime = Time.time;
+		_animator.ApplyBuiltinRootMotion();		
         if (!IsMainMenu)
         {
             _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
@@ -120,10 +121,6 @@ public class Player2Controller : Player
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
             _animator.SetBool("Idling", false);
-            if (!controller.isGrounded)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            }
         }
         else
         {
