@@ -129,6 +129,10 @@ public class Player2Controller : Player
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
             _animator.SetBool("Idling", false);
+            if (!controller.isGrounded)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+            }
         }
         else
         {

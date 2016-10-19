@@ -9095,6 +9095,8 @@ MonoBehaviour:
   torchSprite: {fileID: 21300000, guid: 9122a0cf68367ab46b28868c91598a5e, type: 3}
   swordSprite: {fileID: 21300000, guid: 9d542f7aa401e404b9c53b356b7f8f1e, type: 3}
   IsDisabled: 1
+  AddFuelSound: {fileID: 0}
+  FlameSound: {fileID: 0}
   IsMainMenu: 0
 --- !u!114 &11413152
 MonoBehaviour:
@@ -9443,6 +9445,10 @@ MonoBehaviour:
   PushPower: 20
   WeaponState: 1
   IsDisabled: 0
+  WalkSounds: {fileID: 0}
+  HitSounds: {fileID: 0}
+  HurtSounds: {fileID: 0}
+  DeathSounds: {fileID: 0}
   IsMainMenu: 0
 --- !u!114 &11454126
 MonoBehaviour:
@@ -9498,6 +9504,10 @@ MonoBehaviour:
   WeaponState: 1
   PushPower: 20
   IsDisabled: 0
+  WalkingSounds: {fileID: 0}
+  DeathSound: {fileID: 0}
+  HurtSounds: {fileID: 0}
+  HitSounds: {fileID: 0}
   IsMainMenu: 0
 --- !u!114 &11459374
 MonoBehaviour:
@@ -9658,13 +9668,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0175766fcd0b6547b6e58298f5371a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dampTime: 0.2
-  _screenEdgeBuffer: 0
-  _screenEdgeBufferTop: 6
-  _minSize: 40
-  _maxSize: 60
-  _xOffset: 50
-  m_Targets:
+  DampTime: 0.2
+  ScreenEdgeBuffer: 0
+  ScreenEdgeBufferTop: 6
+  MinSize: 40
+  MaxSize: 60
+  XOffset: 50
+  Targets:
   - {fileID: 478300}
   - {fileID: 498284}
   SwoopPositionTarget: {fileID: 0}
