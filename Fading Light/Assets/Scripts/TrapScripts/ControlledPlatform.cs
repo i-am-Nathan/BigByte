@@ -34,8 +34,7 @@ public class ControlledPlatform : MonoBehaviour {
 			if (other.name == "Player 1") {
 				other.transform.parent = transform;
 			_p1OnPlate = true;
-			} 
-		if (other.name == "Player2") {
+		} else if (other.name == "Player2") {
 				other.transform.parent = transform;
 			_p2OnPlate = true;
 			}
@@ -65,6 +64,7 @@ public class ControlledPlatform : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.O)) {
 			if (_p1OnPlate) {
+				Debug.Log ("IN HERE GG");
 				if (!_p1RotationMounted) {
 					_p1RotationMounted = true;
 					GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ().IsDisabled = true;
