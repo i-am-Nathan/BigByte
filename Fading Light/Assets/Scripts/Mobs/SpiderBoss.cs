@@ -35,7 +35,7 @@ public class SpiderBoss : BaseEntity
     public float RotationSpeed = 10f;
 
 
-    public Image HealthCircle;                                 // Reference to the UI's health circle.
+    //public Image HealthCircle;                                 // Reference to the UI's health circle.
 	public Slider HealthSlider;
 	public Text BossName;
 	public GameObject BossPanel;
@@ -91,7 +91,7 @@ public class SpiderBoss : BaseEntity
 
     private void Start() {
         _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
-        HealthCircle.enabled = false;
+        //HealthCircle.enabled = false;
         if (isBoss)
         {
             HealthSlider = HealthSlider.GetComponent<Slider>();
@@ -291,8 +291,8 @@ public class SpiderBoss : BaseEntity
         // Set the health bar's value to the current health.
         try
         {
-            HealthCircle.enabled = true;
-            HealthCircle.fillAmount -= amount / 100.0f;
+            //HealthCircle.enabled = true;
+            //HealthCircle.fillAmount -= amount / 100.0f;
             if (isBoss)
             {
                 HealthSlider.value -= amount / 100.0f;
@@ -338,7 +338,7 @@ public class SpiderBoss : BaseEntity
     /// </summary>
     public void HideHealth()
     {
-		HealthCircle.enabled = false;
+		//HealthCircle.enabled = false;
     }
 }
 
