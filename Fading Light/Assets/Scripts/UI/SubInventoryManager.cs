@@ -185,10 +185,17 @@ public class SubInventoryManager : MonoBehaviour {
 		if (player1) {
 			_player1CurrentItem.sprite = _itemImageDictionary [itemName];
 			_player1ItemName.text = itemName;
+
+			// Updating local player 1 item quantities
+			_player1ItemQuantityDictionary = _gameDataScript.GetPlayer1ItemQuantityDictionary ();
 			_player1ItemQuantity.text = "" + _player1ItemQuantityDictionary [itemName];
 		} else {
 			_player2CurrentItem.sprite = _itemImageDictionary[itemName];
 			_player2ItemName.text = itemName;
+
+			// Updating local player 2 item quantities
+			_player2ItemQuantityDictionary = _gameDataScript.GetPlayer2ItemQuantityDictionary ();
+
 			_player2ItemQuantity.text = "" + _player2ItemQuantityDictionary [itemName];
 		}
 	}
