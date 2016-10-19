@@ -60,7 +60,7 @@ public class MoleDoggy : BaseEntity
     private int _walkCount;
     private bool _active = false;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
 
@@ -192,7 +192,20 @@ public class MoleDoggy : BaseEntity
                 target = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player>().transform;
             }
 
-           
+            while (true)
+            {
+                float step = 10f * Time.deltaTime;
+                Vector3 targetDir = target.transform.position - transform.position;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+                transform.rotation = Quaternion.LookRotation(newDir);
+
+                if (targetDir == transform.forward)
+                {
+                    break;
+                }
+                yield return new WaitForSeconds(0.05f);
+            }
+            
             //RotateTowards(target, false);
             _animator.Play("Attack", PlayMode.StopAll);
             while (_animator.isPlaying)
@@ -228,10 +241,12 @@ public class MoleDoggy : BaseEntity
     // Update is called once per frame
     IEnumerator RotateTowardsPlayer()
     {
-        while (!(_lookRotation == transform.rotation))
+        if (DEBUG) Debug.Log("Begin rotating");
+        while (1==1)
         {
+            if (DEBUG) Debug.Log("Rotating");
             //find the vector pointing from our position to the target
-            _direction = (Target.position - transform.position).normalized;
+            _direction = (target.position - transform.position).normalized;
 
             //create the rotation we need to be in to look at the target
             _lookRotation = Quaternion.LookRotation(_direction);
@@ -263,7 +278,7 @@ public class MoleDoggy : BaseEntity
 
             if (!_isMoving)
             {
-                _animator.Play("Walk Fixed", PlayMode.StopAll);
+                _animator.Play("WalkFixed", PlayMode.StopAll);
                 _isMoving = true;
             }
 
@@ -411,7 +426,7 @@ public class MoleDoggy : BaseEntity
             try
             {
                 healthCircle.enabled = true;
-                healthCircle.fillAmount -= amount / 100.0f;
+                healthCircle.fillAmount -= amount / base.IntialHealth;
                 Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
                 Invoke("HideHealth", 3);
             }
