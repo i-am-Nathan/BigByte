@@ -125,19 +125,14 @@ public class PlayerController : Player
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
-	    /*if(!HitSounds.isPlaying)
+	        if(!HitSounds.isPlaying)
             {
                 HitSounds.Play();
-            }*/
+            }
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {
             _animator.SetBool("Idling", false);
-            if (!_controller.isGrounded)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            }
-
         }
 
         else
@@ -145,7 +140,7 @@ public class PlayerController : Player
             _animator.SetBool("Idling", true);
         }
 	
-      /*  if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right"))
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right"))
         {
             WalkingSounds.Play();
         }
@@ -153,7 +148,7 @@ public class PlayerController : Player
         else if ((Input.GetKeyUp("up") || Input.GetKeyUp("down") || Input.GetKeyUp("left") || Input.GetKeyUp("right"))&&!(Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right")))
         {
             WalkingSounds.Stop();
-        }*/
+        }
         //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
     }
@@ -253,7 +248,7 @@ public class PlayerController : Player
         base.Killed();
         _lifeManagerScript.LoseLife();
         Debug.Log("Dead");
-	//DeathSound.Play();
+	    DeathSound.Play();
 	
     }
 

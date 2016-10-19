@@ -15,10 +15,12 @@ public class Achievement
     public string Reward;
     public float TargetProgress;
     public bool Secret;
+ 
 
     [HideInInspector]
     public bool Earned = false;
     private float currentProgress = 0.0f;
+
 
     /// <summary>
     /// Returns true if this progress added results in the Achievement being earned.
@@ -104,6 +106,8 @@ public class GameData : MonoBehaviour {
     private Text achievementText;
     private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
 
+    public bool isMainMenu = false;
+
 
     /// <summary>
     /// Called before any Start methods called and is used for initialisation
@@ -140,9 +144,12 @@ public class GameData : MonoBehaviour {
     }
 
 	void Start() {
-		// Getting the game data object which shows the total lives left
-		GameObject go = GameObject.Find("InGameUiManager");
-		_inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));	
+        if (!isMainMenu)
+        {
+            // Getting the game data object which shows the total lives left
+            GameObject go = GameObject.Find("InGameUiManager");
+            _inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));
+        }
 	}
 
     /// <summary>

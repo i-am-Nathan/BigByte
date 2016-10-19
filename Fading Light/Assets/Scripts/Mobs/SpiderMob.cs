@@ -246,6 +246,8 @@ public class SpiderMob : BaseEntity
         if (TorchController.IsInTorchRange(transform.position.x, transform.position.z))
         {
             if (DEBUG) Debug.Log("Transform is in torch light");
+            _runningFromTorch = true;
+            _runningFromCandle = false;
             return true;
         }
 
@@ -264,13 +266,20 @@ public class SpiderMob : BaseEntity
                     if (Vector3.Distance(transform.position, CandleLight.transform.position) < CandleLight.Radius)
                     {
                         if (DEBUG) Debug.Log("Transform is in the candle light");
+                        _runningFromTorch = false;
+                        _runningFromCandle = true;
+                        _candleRunningFrom = torchSource;
                         return true;
                     }
                 }
             }
         }        
-        return false;
-    }    
+        return false;  
+    }
+
+    private bool _runningFromTorch;
+    private bool _runningFromCandle;
+    GameObject _candleRunningFrom;
 
     /// <summary>
     /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
@@ -304,14 +313,17 @@ public class SpiderMob : BaseEntity
             } else
             {
                 //Determine which way the spider should run
-                Vector3 torchDirection = this.gameObject.transform.position - TorchController.GetTorchPosition();
-                Vector3 dest = this.gameObject.transform.position + torchDirection;
-                //out hit;
-                //TODO: CHECK FOR IF DEST POSITION IS IN THE NAVMESH
-                //if (NavMesh.SamplePosition(new Vector3(dest.x, 0, dest.z), out hit, 1.0f, NavMesh.AllAreas))
-                //{
-                //    if (DEBUG) Debug.Log("Nevmesh dest is inside navmesh");
-                //}
+                Vector3 dest;
+
+                if (_runningFromTorch)
+                {
+                    Vector3 torchDirection = this.gameObject.transform.position - TorchController.GetTorchPosition();
+                    dest = this.gameObject.transform.position + torchDirection;
+                } else
+                {
+                    Vector3 torchDirection = this.gameObject.transform.position - _candleRunningFrom.transform.position;
+                    dest = this.gameObject.transform.position + torchDirection;
+                }                
 
                 pathfinder.speed = SprintSpeed;
                 pathfinder.acceleration = 15;
