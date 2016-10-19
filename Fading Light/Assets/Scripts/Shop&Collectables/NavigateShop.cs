@@ -28,12 +28,14 @@ public class NavigateShop : MonoBehaviour {
 		_effect = GameObject.FindGameObjectWithTag("Effect").GetComponent<Text>();
 		_itemName = GameObject.FindGameObjectWithTag("ShopItemName").GetComponent<Text>();
 		_source = GetComponent<AudioSource>();
-		_gameData = GameObject.FindGameObjectWithTag ("Game Data").GetComponent<GameData> ();
-		_subInventoryManager = GameObject.FindGameObjectWithTag ("SubInventory Manager").GetComponent<SubInventoryManager> ();
+		_subInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager> ();
 		_currentGold = GameObject.FindGameObjectWithTag ("Current Gold").GetComponent<Text> ();
 	}
 	// Use this for initialization
 	void Start () {
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		_gameData = (GameData)go.GetComponent(typeof(GameData));
+
 		foreach (GameObject o in Items) {
 			GameObject item = Instantiate (o) as GameObject;
 			item.transform.SetParent (GameObject.Find ("ShopItem").transform);
@@ -61,6 +63,8 @@ public class NavigateShop : MonoBehaviour {
 			}
 		} else if (Input.GetKeyDown (KeyCode.J)) {
 			// Player 2
+			//Debug.Log(ItemQuantity [Index] + "");
+			Debug.Log (_gameData.GetAmountOfGold () + "");
 			if (ItemQuantity [Index] != 0 && _gameData.GetAmountOfGold() >= Price[Index]) {
 				ItemQuantity [Index]--;
 				_gameData.UpdateGold (0 - Price [Index]);

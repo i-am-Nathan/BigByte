@@ -95,7 +95,7 @@ public class GameData : MonoBehaviour {
     //Achievements
     public Achievement[] Achievements;
     public Canvas AchievementPopup;
-    public AudioClip EarnedSound;
+    //public AudioClip EarnedSound;
     private Text achievementText;
     private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
 
@@ -170,6 +170,7 @@ public class GameData : MonoBehaviour {
     /// </summary>
     public int GetAmountOfGold()
     {
+		Debug.Log ("gold " + _sharedGold);
         return _sharedGold;
     }
 
@@ -211,7 +212,7 @@ public class GameData : MonoBehaviour {
     private void AchievementEarned()
     {
         //  UpdateRewardPointTotals();
-        AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
+        //AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
     void ClosePopUpTimer()
     {

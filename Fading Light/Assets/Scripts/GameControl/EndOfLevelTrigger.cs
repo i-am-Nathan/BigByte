@@ -12,7 +12,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	private bool _player1Entered = false;
 	private bool _player2Entered = false;
 	private bool _endOfGame = false;
-	private DatabaseScores _dbScoresScript;
+	//private DatabaseScores _dbScoresScript;
 	private GameData _gameDataScript;
 
 	// Canvas indicating to players they have finished the level
@@ -51,7 +51,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		float mins = Mathf.Floor(totalTime / 60);
 		float secs = Mathf.RoundToInt(totalTime % 60);
 
-		StartCoroutine(_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed));
+		//StartCoroutine(_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed));
 	}
 
 	/// <summary>
@@ -62,7 +62,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		// Hiding the menu
         LevelFinishedMenu.enabled = false;
 		SubmitHighScoreMenu.enabled = false;
-		_dbScoresScript = GameObject.Find("DatabaseScores").GetComponent<DatabaseScores>();
+		//_dbScoresScript = GameObject.Find("DatabaseScores").GetComponent<DatabaseScores>();
 		_gameDataScript = GameObject.Find("GameData").GetComponent<GameData>();
     }
 		
