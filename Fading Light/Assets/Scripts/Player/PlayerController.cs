@@ -35,6 +35,7 @@ public class PlayerController : Player
     
     //audio
     public AudioSource WalkingSounds;
+    public AudioSource DeathSound;
     
     public bool IsMainMenu = false;
 
@@ -44,6 +45,7 @@ public class PlayerController : Player
     protected override void Start()
     {
         base.Start();
+	WalkingSounds.loop = true;
         _lastJumpTime = Time.time;
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));
@@ -225,7 +227,7 @@ public class PlayerController : Player
         // Set the death flag so this function won't be called again.
         base.Killed();
         _lifeManagerScript.LoseLife();
-        Debug.Log("Dead");
+        DeathSound.Play();
     }
 
     /// <summary>
