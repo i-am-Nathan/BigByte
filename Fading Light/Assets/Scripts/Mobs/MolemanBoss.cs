@@ -386,6 +386,12 @@ public class MolemanBoss : BaseEntity
         }
     }
 
+	public IEnumerator BossDeadWait () 
+	{
+		yield return new WaitForSeconds(1f);
+		EndOfLevelTriggerScript.TriggerEndOfLevel ();
+	}
+
     public override void Killed()
     {
         base.Killed();
@@ -397,7 +403,9 @@ public class MolemanBoss : BaseEntity
             _animator.Play("creature1Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
-            
+
+			// Triggering end of level 1 second after boss is defeated
+			StartCoroutine(BossDeadWait());
         }
         catch { }
     }
