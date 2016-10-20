@@ -1043,7 +1043,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Caved In
+  m_Text: Fading Light
 --- !u!222 &181416354
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2782,6 +2782,10 @@ Prefab:
     - target: {fileID: 195602, guid: 269cf79af4e037946b6516da7829156c, type: 2}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426432, guid: 269cf79af4e037946b6516da7829156c, type: 2}
+      propertyPath: m_Text
+      value: Fading Light
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -12982,8 +12986,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 649691627}
+  - 114: {fileID: 649691628}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DatabaseScores
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13002,6 +13007,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 22
+--- !u!114 &649691628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 649691626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee72df8f821e1644a345cba043f6800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDone: 0
 --- !u!4 &668467868 stripped
 Transform:
   m_PrefabParentObject: {fileID: 450910, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
@@ -19490,10 +19507,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13644832, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2322300, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11131388, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
+      propertyPath: m_PlayAutomatically
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
