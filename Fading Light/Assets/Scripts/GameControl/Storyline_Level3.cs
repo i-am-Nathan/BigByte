@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-<<<<<<< HEAD
 /// <summary>   A storyline level 3. </summary>
 ///
 /// <remarks>    . </remarks>
@@ -17,14 +16,6 @@ public class Storyline_Level3 : Storyline
 
 
     /// <summary>   The first player. </summary>
-=======
-/// <summary>
-/// Storyline class for the third level
-/// </summary>
-public class Storyline_Level3 : Storyline
-{
-	// Cutscenes and other game objects to be used as part of the storyline
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public PlayerController Player1;
     /// <summary>   The second player. </summary>
     public Player2Controller Player2;
@@ -58,16 +49,10 @@ public class Storyline_Level3 : Storyline
     /// <summary>   The block. </summary>
     public GameObject Block;
 
-<<<<<<< HEAD
     /// <summary>   Dialogues the complete. </summary>
     ///
  
 
-=======
-	/// <summary>
-	/// Dialogues the complete
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void DialogueComplete()
     {
         _currentStep++;
@@ -181,7 +166,6 @@ public class Storyline_Level3 : Storyline
             DestroyObject(Block);
         }else if (_currentStep == 4)
         {
-			// Cutscene and camera movement
             TorchController.IsDisabled = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
@@ -206,18 +190,12 @@ public class Storyline_Level3 : Storyline
 
     }
 
-<<<<<<< HEAD
     /// <summary>   Character damage enabled. </summary>
     ///
  
     ///
     /// <param name="enabled">  True to enable, false to disable. </param>
 
-=======
-	/// <summary>
-	/// Enabling the character damage (as it is disabled during cutscenes)
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void CharacterDamageEnabled(bool enabled)
     {
         Player1.CanTakeDamage = enabled;

@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-<<<<<<< HEAD
 /// <summary>   A storyline level 2. </summary>
 ///
 /// <remarks>    . </remarks>
@@ -17,14 +16,6 @@ public class Storyline_Level2 : Storyline
 
 
     /// <summary>   The first player. </summary>
-=======
-/// <summary>
-/// Storyline class for the second level
-/// </summary>
-public class Storyline_Level2 : Storyline
-{
-	// Cutscenes and other game objects to be used as part of the storyline
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public PlayerController Player1;
     /// <summary>   The second player. </summary>
     public Player2Controller Player2;
@@ -54,16 +45,10 @@ public class Storyline_Level2 : Storyline
     /// <summary>   The start display. </summary>
     private float _startDisplay;
 
-<<<<<<< HEAD
     /// <summary>   Dialogues the complete. </summary>
     ///
  
 
-=======
-	/// <summary>
-	/// Called when dialogue is complete
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void DialogueComplete()
     {
         if (_currentStep == 1)
@@ -79,31 +64,19 @@ public class Storyline_Level2 : Storyline
         // throw new NotImplementedException();
     }
 
-<<<<<<< HEAD
     /// <summary>   Enables the mole man. </summary>
     ///
  
 
-=======
-	/// <summary>
-	/// Activating the moleman
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void EnableMoleMan()
     {
         //throw new NotImplementedException();
     }
 
-<<<<<<< HEAD
     /// <summary>   Nexts this instance. </summary>
     ///
  
 
-=======
-	/// <summary>
-	/// Moving to the next lines in the dialogue
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void Next()
     {
         if(_currentStep == 4)
@@ -114,16 +87,10 @@ public class Storyline_Level2 : Storyline
        
     }
 
-<<<<<<< HEAD
     /// <summary>   Deletes the first mole man from list. </summary>
     ///
  
 
-=======
-	/// <summary>
-	/// Activating the next moleman in the scene
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void NextMoleMan()
     {
         if (_currentStep == 5)
@@ -134,16 +101,10 @@ public class Storyline_Level2 : Storyline
         //throw new NotImplementedException();
     }
 
-<<<<<<< HEAD
     /// <summary>   Disables the mole man. </summary>
     ///
  
 
-=======
-	/// <summary>
-	/// Called near the start of the level
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void StartText()
     {
         if (_currentStep == 0)
@@ -157,7 +118,6 @@ public class Storyline_Level2 : Storyline
             _currentStep++;
         }
     }
-<<<<<<< HEAD
 
     // Use this for initialization
 
@@ -175,19 +135,12 @@ public class Storyline_Level2 : Storyline
     ///
  
 
-=======
-	
-	/// <summary>
-	/// Used to make the moleman walk and also to enable cutscenes based on the current steps
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
 	void Update () {
         if (_done)
         {
             return;
         }
 
-		// 0 means the start of the dialog (near the start of the level)
         if (_currentStep == 0)
         {
             TorchController.SwapPlayers();
@@ -196,7 +149,6 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 1)
         {
-			// Moving camera
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[0];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[0];
             TorchController.IsDisabled = true;
@@ -204,6 +156,7 @@ public class Storyline_Level2 : Storyline
             _done = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
+            //MoleMen[0].IsDisabled = false;
             MoleMen[1].IsDisabled = true;
             CameraRig.GetComponent<PlayerCam>().CameraState = 1;
             _done = true;
@@ -215,7 +168,6 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 3)
         {
-			// Moving camera and enabling cutscene
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[1];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[1];
             TorchController.IsDisabled = true;
@@ -235,7 +187,6 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 5)
         {
-			// Cutscene
             TorchController.IsDisabled = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
@@ -248,7 +199,6 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 6)
         {
-			// If at end of level
             TorchController.IsDisabled = false;
             Player1.IsDisabled = false;
             Player2.IsDisabled = false;
@@ -258,18 +208,12 @@ public class Storyline_Level2 : Storyline
         }
     }
 
-<<<<<<< HEAD
     /// <summary>   Character damage enabled. </summary>
     ///
  
     ///
     /// <param name="enabled">  True to enable, false to disable. </param>
 
-=======
-	/// <summary>
-	/// Enabling the character damage (as it is disabled during cutscenes)
-	/// </summary>
->>>>>>> 9e4d3f99ec3af3f85a42d04e36c84bfd6c4626e8
     public override void CharacterDamageEnabled(bool enabled)
     {
         Player1.CanTakeDamage = enabled;
