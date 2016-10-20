@@ -130,10 +130,14 @@ public class MoleDoggy : BaseEntity
     /// <summary>
     /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
     /// </summary>
-    private void Taunt_Enter()
+    IEnumerator Taunt_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Taunt");
-        fsm.ChangeState(States.Idle);
+        if (DEBUG) Debug.Log("Entered state: Taunt");       
+        _animator.Play("Idle", PlayMode.StopAll);
+        yield return new WaitForSeconds(4f);
+        _animator.Play("Attack", PlayMode.StopAll);
+        yield return new WaitForSeconds(4f);
+        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>
