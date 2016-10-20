@@ -8,6 +8,8 @@ public class LevelTwoTreasure : MonoBehaviour
     public GameObject[] spearTrap;
     private bool _pulled = false;
 
+    public AudioSource LeverSound;
+
     // Use this for initialization
     void Start()
     {
@@ -21,11 +23,6 @@ public class LevelTwoTreasure : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     /// <summary>
     /// Called when the player is close enough to the lever, and presses T
@@ -36,6 +33,7 @@ public class LevelTwoTreasure : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O) && !_pulled && other.gameObject.tag.Equals("Player"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
+            LeverSound.Play();
             foreach (GameObject obj in hammerTrap)
             {
                 Destroy(obj);
@@ -51,6 +49,7 @@ public class LevelTwoTreasure : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && !_pulled && other.gameObject.tag.Equals("Player2"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
+            LeverSound.Play();
             foreach (GameObject obj in hammerTrap)
             {
                 Destroy(obj);
