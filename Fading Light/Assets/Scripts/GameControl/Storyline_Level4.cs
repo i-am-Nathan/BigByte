@@ -17,6 +17,8 @@ public class Storyline_Level4 : Storyline
     public List<GameObject> CutScenePositions;
     public List<GameObject> CustSceneTargets;
 
+    public MolemanBoss Boss;
+
     public int _currentStep = 0;
     private bool _done = false;
     private ToolTips _tips;
@@ -37,7 +39,7 @@ public class Storyline_Level4 : Storyline
 
     public override void Next()
     {
-        if(_currentStep == 4)
+        if(_currentStep == 0)
         {
             _currentStep++;
             _done = false;
@@ -69,6 +71,7 @@ public class Storyline_Level4 : Storyline
     {
         if (_done)
         {
+            
             return;
         }
 
@@ -82,18 +85,28 @@ public class Storyline_Level4 : Storyline
             CameraRig.GetComponent<PlayerCam>().CameraState = 1;
             TorchController.IsDisabled = true;
             //Moleman walking to players
-            _done = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
             _done = true;
+           
+            
         }
         else if (_currentStep == 1)
         {
+
+            Boss.gameObject.SetActive(true);
+            Debug.Log("TALKING DONE G");
+            MoleManContoller moleman = GameObject.FindGameObjectWithTag("Moleman").GetComponent<MoleManContoller>();
+            GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(true);
+            moleman.Sink();
             //Talking done
+            Boss.BeginCutscene(this);
+            Boss.gameObject.GetComponent<Animation>().Play();
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             Player1.IsDisabled = false;
             Player2.IsDisabled = false;
             _done = true;
+           
         }
         else if (_currentStep == 2)
         {

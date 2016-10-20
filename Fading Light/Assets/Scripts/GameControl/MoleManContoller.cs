@@ -58,6 +58,20 @@ public class MoleManContoller : MonoBehaviour {
         }
     }
 
+    public void Sink()
+    {
+        StartCoroutine(Sinking());
+    }
+
+    IEnumerator Sinking()
+    {
+        while (transform.position.y > -40f)
+        {
+            transform.Translate(Vector3.down * 10f * Time.deltaTime);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
     /// <summary>
     /// Moves the moleman to the next position
     /// </summary>
