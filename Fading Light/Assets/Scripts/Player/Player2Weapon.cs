@@ -22,13 +22,13 @@ public class Player2Weapon : MonoBehaviour {
     {        
         Player weaponHolder = this.transform.root.GetComponent<Player>();
         Player2Controller player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player2Controller>();     
+		if(player2.isAttacking() && other.name.Equals("Breakable_Wall")){
+			Breakable_Wall breakableWall = (Breakable_Wall)other.gameObject.GetComponent(typeof(Breakable_Wall));
+			breakableWall.Fade ();
+		}
 
         if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
 
-		if(player2.isAttacking()&&other.name.StartsWith("Breakable Wall")){
-			FadeObjectInOut fade = (FadeObjectInOut)other.GetComponent (typeof(FadeObjectInOut));
-			fade.FadeOut (2f);
-		}
 		if (player2.isAttacking () && other.tag == "Enemy") {
 			// Updating player 2's accuracy
 			_gameDataScript.UpdatePlayerNumHitsAchieved (false);
