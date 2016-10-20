@@ -196,7 +196,7 @@ public class MoleDoggy : BaseEntity
 
             while (true)
             {
-                float step = 3f * Time.deltaTime;
+                float step = 2f * Time.deltaTime;
                 Vector3 targetDir = target.transform.position - transform.position;
                 Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
                 transform.rotation = Quaternion.LookRotation(newDir);
