@@ -17,7 +17,7 @@ public class MenuScript : MonoBehaviour {
 
     public AudioSource ButtonClickSound;
 
-    //public static string[] LevelNames = { "Level1", "Level2", "Level3", "Level4" };
+    public static string[] LevelNames = { "Level1", "Level2", "Level3", "Level4" };
 
 	// Use this for initialization
 	void Start () {
@@ -79,7 +79,7 @@ public class MenuScript : MonoBehaviour {
 
     public void StartLevel(int levelIndex)
     {
-        //Application.LoadLevel(LevelNames[levelIndex]);
+        Application.LoadLevel(LevelNames[levelIndex]);
     }
 
 
