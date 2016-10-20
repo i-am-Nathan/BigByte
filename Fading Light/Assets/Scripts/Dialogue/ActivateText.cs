@@ -33,7 +33,7 @@ public class ActivateText : MonoBehaviour
 	/// </summary>
 	void Update () {
         //This will detect whether a keypress is required and execute when the condition is fulfilled. 
-        if (_waitForPress && Input.GetKeyDown(KeyCode.T) && TextBox.Talking == false) {
+		if (_waitForPress && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.O)) && TextBox.Talking == false) {
 			//This will check if the character can only talk once or not and check if it has talked.
 			if ((TalkOnce == true && _talked == false) || (TalkOnce == false)) {
 				//This will execute the functions in TextBoxManager class and load the new dialogue.

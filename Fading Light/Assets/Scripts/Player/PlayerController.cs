@@ -235,13 +235,13 @@ public class PlayerController : Player
             // ... it should die.
             Killed();
         }
-	/*else
+	    else
         {
             if (!HurtSounds.isPlaying)
             {
                 HurtSounds.Play();
             }
-        }*/
+        }
     }
 
     /// <summary>

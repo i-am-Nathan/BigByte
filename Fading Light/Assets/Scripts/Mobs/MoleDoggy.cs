@@ -192,18 +192,25 @@ public class MoleDoggy : BaseEntity
                 target = GameObject.FindGameObjectWithTag("Player2").transform.GetComponent<Player>().transform;
             }
 
+            _animator.Play("WalkFixed", PlayMode.StopAll);
+
             while (true)
             {
-                float step = 10f * Time.deltaTime;
+                float step = 2f * Time.deltaTime;
                 Vector3 targetDir = target.transform.position - transform.position;
                 Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
                 transform.rotation = Quaternion.LookRotation(newDir);
 
-                if (targetDir == transform.forward)
+                Vector3 myDir = transform.forward;
+                Vector3 yourDir = target.forward;
+
+                float myAngle = Vector3.Angle(transform.forward, targetDir);
+
+                if (myAngle < 8.0f)
                 {
                     break;
-                }
-                yield return new WaitForSeconds(0.05f);
+                }                
+                yield return new WaitForSeconds(0.04f);
             }
             
             //RotateTowards(target, false);
