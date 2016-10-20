@@ -17,6 +17,7 @@ public class MolemanMob : BaseEntity
 		Chase,
         Attack,
         Wake,
+        Falling,
         Sleep, 
         Death
 	}
@@ -61,7 +62,7 @@ public class MolemanMob : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
 	private AchievementManager _achievementManager;
 
@@ -101,7 +102,7 @@ public class MolemanMob : BaseEntity
     private void Init_Enter()
     {
         if (DEBUG) Debug.Log("moleman mob state machine initilized.");    
-        fsm.ChangeState(States.Chase);
+        fsm.ChangeState(States.Falling);
     }
       
     /// <summary>
@@ -242,11 +243,29 @@ public class MolemanMob : BaseEntity
         }
     }
 
-    /// <summary>
-    /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
-    /// if transitions to the chase state to chase them down.
-    /// </summary>
-    /// <returns></returns>
+    IEnumerator Falling_Enter()
+    {
+        //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, transform.position.y-4, transform.position.z),0.5f);
+        yield return new WaitForSeconds(2f);
+        pathfinder.enabled = false;
+        _animator.Play("Falling", PlayMode.StopAll);
+
+        while (transform.position.y > -17.7f)
+        {            
+            transform.Translate(Vector3.down * 50f * Time.deltaTime);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        _animator.Play("Land", PlayMode.StopAll);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        pathfinder.enabled = true;
+        fsm.ChangeState(States.Chase);
+    }
+
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");

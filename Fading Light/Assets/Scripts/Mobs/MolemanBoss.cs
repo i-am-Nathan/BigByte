@@ -152,7 +152,6 @@ public class MolemanBoss : BaseEntity
 
 
         pathfinder.enabled = true;
-
         fsm.ChangeState(States.Chase);
     }
 
@@ -352,7 +351,7 @@ public class MolemanBoss : BaseEntity
     {
         if (_canTakeDamage && other.tag.Equals("LightningCollision"))
         {
-            Debug.Log("Kevin");
+            //Debug.Log("Kevin");
             Damage(10f, null);
             _canTakeDamage = false;
         }

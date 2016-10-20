@@ -60,7 +60,7 @@ public class MoleDoggy : BaseEntity
     private int _walkCount;
     private bool _active = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
 
