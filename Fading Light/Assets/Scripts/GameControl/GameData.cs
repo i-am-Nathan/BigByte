@@ -15,10 +15,12 @@ public class Achievement
     public string Reward;
     public float TargetProgress;
     public bool Secret;
+ 
 
     [HideInInspector]
     public bool Earned = false;
     private float currentProgress = 0.0f;
+
 
     /// <summary>
     /// Returns true if this progress added results in the Achievement being earned.
@@ -83,8 +85,13 @@ public class GameData : MonoBehaviour {
 	private float _chestsMissed;
     //private float _playerTwoTotalDamageTaken;
 
-    private float _playerOneAccuracy;
-    private float _playerTwoAccuracy;
+	private float _playerOneAccuracy = 0f;
+	private float _playerTwoAccuracy = 0f;
+
+	private float _playerOneNumHitsMissed = 0f;
+	private float _playerOneNumHitsAchieved = 0f; 
+	private float _playerTwoNumHitsMissed = 0f;
+	private float _playerTwoNumHitsAchieved = 0f; 
 
 	private InGameUiManager _inGameUiManager;
 	private bool _firstLevel = true;
@@ -98,6 +105,8 @@ public class GameData : MonoBehaviour {
     //public AudioClip EarnedSound;
     private Text achievementText;
     private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
+
+    public bool isMainMenu = false;
 
 
     /// <summary>
@@ -135,9 +144,12 @@ public class GameData : MonoBehaviour {
     }
 
 	void Start() {
-		// Getting the game data object which shows the total lives left
-		GameObject go = GameObject.Find("InGameUiManager");
-		_inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));	
+        if (!isMainMenu)
+        {
+            // Getting the game data object which shows the total lives left
+            GameObject go = GameObject.Find("InGameUiManager");
+            _inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));
+        }
 	}
 
     /// <summary>
@@ -255,6 +267,10 @@ public class GameData : MonoBehaviour {
 	}
 
 	public float GetPlayer1Accuracy() {
+		float totalSwings = _playerOneNumHitsAchieved + _playerOneNumHitsMissed;
+		if (totalSwings != 0) {
+			_playerOneAccuracy = _playerOneNumHitsAchieved / totalSwings;
+		}
 		return _playerOneAccuracy;
 	}
 
@@ -263,19 +279,24 @@ public class GameData : MonoBehaviour {
 	}
 
 	public float GetPlayer2Accuracy() {
+		float totalSwings = _playerTwoNumHitsAchieved + _playerTwoNumHitsMissed;
+
+		if (totalSwings != 0) {
+			_playerTwoAccuracy = _playerTwoNumHitsAchieved / totalSwings;
+		}
 		return _playerTwoAccuracy;
 	}
 
-	public void SetChestsMissed(float amount) {
-		_chestsMissed = amount;
+	public void UpdateChestsMissed() {
+		_chestsMissed++;
 	}
 
 	public float GetChestsMissed() {
 		return _chestsMissed;
 	}
 
-	public void SetTimesKilled(float amount) {
-		_timesKilled = amount;
+	public void UpdateTimesKilled() {
+		_timesKilled++;
 	}
 
 	public float GetTimesKilled() {
@@ -304,5 +325,21 @@ public class GameData : MonoBehaviour {
 
 	public void SetPlayer2ItemQuantityDictionary(string item, int num) {
 		_player2ItemQuantityDictionary [item] = num;
+	}
+
+	public void UpdatePlayerNumHitsMissed (bool isPlayer1) {
+		if (isPlayer1) {
+			_playerOneNumHitsMissed++;
+		} else {
+			_playerTwoNumHitsMissed++;
+		}
+	}
+
+	public void UpdatePlayerNumHitsAchieved (bool isPlayer1) {
+		if (isPlayer1) {
+			_playerOneNumHitsAchieved++;
+		} else {
+			_playerTwoNumHitsAchieved++;
+		}
 	}
 }

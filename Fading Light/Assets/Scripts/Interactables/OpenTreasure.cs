@@ -38,24 +38,9 @@ public class OpenTreasure : MonoBehaviour {
 	/// When players press T when they are collding with the chest, it will open it.
 	/// </summary>
 	/// <param name="other">Other.</param>
-	void OnTriggerEnter(Collider other){
-		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.T)) {
-				if (!_open) {
-					StartCoroutine (Open ());
-					_open = true;
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// When players press T when they are collding with the chest, it will open it.
-	/// </summary>
-	/// <param name="other">Other.</param>
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.T)) {
+			if (Input.GetKeyDown (KeyCode.Q) || Input.GetKeyDown(KeyCode.O)) {
 				if (!_open) {
 					StartCoroutine (Open ());
 					_open = true;
@@ -112,6 +97,11 @@ public class OpenTreasure : MonoBehaviour {
 			_source.PlayOneShot (TreasureSound);
 		}
 		_source.Stop ();
+
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		GameData gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+		gameDataScript.UpdateChestsMissed ();
+
 		Destroy(this.transform.FindChild ("Eternal Light").gameObject);
 	}
 

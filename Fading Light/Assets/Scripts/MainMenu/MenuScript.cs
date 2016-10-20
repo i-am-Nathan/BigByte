@@ -11,6 +11,7 @@ public class MenuScript : MonoBehaviour {
 	public GameObject AchievementMenu;
 	public GameObject HighscoreMenu;
     public GameObject LevelSelectMenu;
+    public GameData GameData;
 
 
     public AudioSource ButtonClickSound;
@@ -19,12 +20,13 @@ public class MenuScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         HideAllMenus();
     }
 
     private void PlayButtonSound()
     {
-        //ButtonClickSound.Play();
+        ButtonClickSound.Play();
     }
 
     private void HideAllMenus()
@@ -38,12 +40,14 @@ public class MenuScript : MonoBehaviour {
     public void StartLevel()
     {
         //Loading level
+        GameData.isMainMenu = false;
         StartLevel(0);
     }
 
 	//Highscore should pop up when it is pressed, to be implemented.
     public void highScorePress()
     {
+		PlayButtonSound();
         HideAllMenus();
         HighscoreMenu.SetActive(true);
         HighscoreMenu.transform.Find("Scrollbar").GetComponent<Scrollbar>().value = 1;
