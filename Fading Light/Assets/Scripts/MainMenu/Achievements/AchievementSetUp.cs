@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AchievementSetUp : MonoBehaviour {
-    private Achievement[] _achievements;
+    private List<string> _achievements;
     public GameObject MenuAchievement;
     public GameObject Grid;
 
@@ -11,22 +12,23 @@ public class AchievementSetUp : MonoBehaviour {
 	void Start () {
         //Getting the achievement list from achievement manager
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
-        GameData am = (GameData)go.GetComponent<GameData>();
-        _achievements = am.Achievements;
+        GameData am = go.GetComponent<GameData>();
+        _achievements = am.GetGameAchievements();
 
-        foreach(Achievement achievement in am.Achievements)
+        Debug.Log("Achivements" + _achievements.Count);
+
+        foreach(var achievement in _achievements)
         {
-            Debug.Log(achievement.Name);
-            GameObject newAchievement = Instantiate(MenuAchievement) as GameObject;
-            AchievementPanel controller = (AchievementPanel)newAchievement.GetComponent(typeof(AchievementPanel));
-            if (controller != null)
+            Debug.Log("LALALALALALALA");
+            var listItem = Instantiate(MenuAchievement) as GameObject;
+            var panel = (HighScorePanel)listItem.GetComponent(typeof(HighScorePanel));
+
+            if (panel != null && achievement != null)
             {
-                controller.Icon.sprite = achievement.IconComplete;
-                controller.Name.text = achievement.Name;
-                controller.Description.text = achievement.Description;
-                controller.Reward.text = achievement.Reward;
-                newAchievement.transform.parent = Grid.transform;
-                newAchievement.transform.localScale = Vector3.one;
+                panel.Name.text = achievement;
+                panel.transform.parent = Grid.transform;
+                panel.transform.localScale = Vector3.one;
+
             }
         }
     }
