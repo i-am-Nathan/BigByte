@@ -69,6 +69,9 @@ public class MolemanBoss : BaseEntity
 
     private AchievementManager _achievementManager;
 
+
+    Storyline _storyline;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
@@ -115,16 +118,35 @@ public class MolemanBoss : BaseEntity
     private void Init_Enter()
     {
         if (DEBUG) Debug.Log("moleman state machine initilized.");
-        fsm.ChangeState(States.Idle);
+    }
+
+    public void BeginCutscene(Storyline storyline)
+    {
+        _storyline = storyline;
+        fsm.ChangeState(States.Taunt);
     }
 
     /// <summary>
     /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
     /// </summary>
-    private void Taunt_Enter()
+    IEnumerator Taunt_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");
-        fsm.ChangeState(States.Idle);
+        _animator.Play("Spawn", PlayMode.StopAll);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        _animator.Play("creature1roar", PlayMode.StopAll);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return new WaitForSeconds(1f);
+        _storyline.NextMoleMan();
+        yield return new WaitForSeconds(2f);
+        GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(true);
+        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>

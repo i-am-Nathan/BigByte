@@ -16,7 +16,7 @@ public class MenuScript : MonoBehaviour {
 
     public AudioSource ButtonClickSound;
 
-    public static string[] LevelNames = { "ammar_ui_v2", "ammar_ui_v2", "ammar_ui_v2" };
+    public static string[] LevelNames = { "Level1", "Level2", "Level3", "Level4" };
 
 	// Use this for initialization
 	void Start () {
