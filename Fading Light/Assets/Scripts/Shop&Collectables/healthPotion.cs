@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Health potions which players can pick up and purchase items through the shop.
+/// </summary>
 public class HealthPotion : MonoBehaviour {
 
 	// Audio source
