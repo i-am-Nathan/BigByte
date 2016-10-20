@@ -112,11 +112,9 @@ public class LifeManager : MonoBehaviour
         Time.timeScale = 1;
         // Gets the active scene and reloads it
         Scene scene = SceneManager.GetActiveScene();
-
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////// Need to make start of level script that records stuff
-        _gameDataScript.SetNumberOfLives(3);
+		if (scene.name == "Level 1") {
+			_gameDataScript.SetNumberOfLives(3);
+		}
         SceneManager.LoadScene(scene.name);
     }
 
