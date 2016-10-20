@@ -1,11 +1,29 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\RootMotionOff.cs
+//
+// summary:	Implements the root motion off class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A root motion off. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class RootMotionOff : StateMachineBehaviour 
 {
+    /// <summary>   The collider test time. </summary>
 	public float ColliderTestTime;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+
+    /// <summary>   Executes the state enter action. </summary>
+    ///
+ 
+    ///
+    /// <param name="animator">     The animator. </param>
+    /// <param name="stateInfo">    Information describing the state. </param>
+    /// <param name="layerIndex">   Zero-based index of the layer. </param>
+
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
 	{
 		animator.applyRootMotion = false;
@@ -17,6 +35,15 @@ public class RootMotionOff : StateMachineBehaviour
 	//}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+
+    /// <summary>   Executes the state exit action. </summary>
+    ///
+ 
+    ///
+    /// <param name="animator">     The animator. </param>
+    /// <param name="stateInfo">    Information describing the state. </param>
+    /// <param name="layerIndex">   Zero-based index of the layer. </param>
+
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
 	{
 		animator.applyRootMotion = true;

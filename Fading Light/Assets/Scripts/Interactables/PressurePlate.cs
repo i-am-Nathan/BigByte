@@ -1,18 +1,29 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\PressurePlate.cs
+//
+// summary:	Implements the pressure plate class
+
+using UnityEngine;
 using System.Collections;
 
-
 /// <summary>
-/// This script controls the pressure plate and falling wall's trigger animations
+/// This script controls the pressure plate and falling wall's trigger animations.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class PressurePlate : MonoBehaviour {
 
+    /// <summary>   The things on top. </summary>
     private int _thingsOnTop = 0;
+    /// <summary>   True if pressed. </summary>
     private bool _pressed = false;
 
-    /// <summary>
-    /// Called when an object enters on top of the plate
-    /// </summary>
+    /// <summary>   Called when an object enters on top of the plate. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnTriggerEnter(Collider other) {
         
         // the crate has a weight of 2
@@ -39,10 +50,12 @@ public class PressurePlate : MonoBehaviour {
         
     }
 
+    /// <summary>   Called when an object leaves the plate. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
-    /// <summary>
-    /// Called when an object leaves the plate
-    /// </summary>
     void OnTriggerExit(Collider other) {
         //same as the method above, but for the upward motion.
         if (other.tag.Equals("Crate"))

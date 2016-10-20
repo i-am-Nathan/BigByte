@@ -1,31 +1,43 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Shop&Collectables\HeartPickUp.cs
+//
+// summary:	Implements the heart pick up class
+
+using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Extra lives which players can pick up
-/// </summary>
+/// <summary>   Extra lives which players can pick up. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class HeartPickUp : MonoBehaviour {
 
 	// Audio source
+    /// <summary>   Source for the. </summary>
 	private AudioSource _source;
+    /// <summary>   The pick up sound. </summary>
 	public AudioClip PickUpSound;
 
+    /// <summary>   True to not picked up. </summary>
 	private bool _notPickedUp;
+    /// <summary>   The game data script. </summary>
 	private GameData _gameDataScript;
+    /// <summary>   The life manager script. </summary>
 	private LifeManager _lifeManagerScript;
 
-	/// <summary>
-	/// Called to obtain the audio source
-	/// </summary>
+    /// <summary>   Called to obtain the audio source. </summary>
+    ///
+ 
+
 	void Awake()
 	{
 		_source = GetComponent<AudioSource>();
 		_notPickedUp = true;
 	}
-		
-	/// <summary>
-	/// Obtaining scripts required
-	/// </summary>
+
+    /// <summary>   Obtaining scripts required. </summary>
+    ///
+ 
+
 	void Start()
 	{
 		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
@@ -35,10 +47,14 @@ public class HeartPickUp : MonoBehaviour {
 		_lifeManagerScript = (LifeManager)go1.GetComponent(typeof(LifeManager));
 	}
 
-	/// <summary>
-	/// When player collides with the heart, they will increment the shared lives between players
-	/// </summary>
-	/// <param name="other">Other.</param>
+    /// <summary>
+    /// When player collides with the heart, they will increment the shared lives between players.
+    /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
+
 	void OnTriggerEnter(Collider other)
 	{
 		if (_notPickedUp && (other.tag == "Player" || other.tag == "Player2"))

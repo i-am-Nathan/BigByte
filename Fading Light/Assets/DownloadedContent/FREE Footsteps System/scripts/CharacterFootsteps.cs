@@ -10,58 +10,120 @@ using UnityEngine;
 
 namespace Footsteps {
 
+    /// <summary>   Values that represent triggered bies. </summary>
+    ///
+ 
+
 	public enum TriggeredBy {
-		COLLISION_DETECTION,	// The footstep sound will be played when the physical foot collides with the ground.
-		TRAVELED_DISTANCE		// The footstep sound will be played after the character has traveled a certain distance
+        /// <summary>
+        /// The footstep sound will be played when the physical foot collides with the ground.
+        /// </summary>
+		COLLISION_DETECTION,
+        /// <summary>
+        /// The footstep sound will be played after the character has traveled a certain distance.
+        /// </summary>
+		TRAVELED_DISTANCE
 	}
 
+    /// <summary>   Values that represent controller types. </summary>
+    ///
+ 
+
 	public enum ControllerType {
+        /// <summary>   An enum constant representing the rigidbody option. </summary>
 		RIGIDBODY,
+        /// <summary>   An enum constant representing the character controller option. </summary>
 		CHARACTER_CONTROLLER
 	}
 
+    /// <summary>   A character footsteps. </summary>
+    ///
+ 
+
 	public class CharacterFootsteps : MonoBehaviour {
+
+        /// <summary>   Gets the amount to triggered by. </summary>
+        ///
+        /// <value> Amount to triggered by. </value>
 
 		[Tooltip("The method of triggering footsteps.")]
 		[SerializeField] TriggeredBy triggeredBy;
 
+        /// <summary>   The distance between steps. </summary>
 		[Tooltip("This is used to determine what distance has to be traveled in order to play the footstep sound.")]
 		[SerializeField] float distanceBetweenSteps = 1.8f;
 
+        /// <summary>   Gets the type of the controller. </summary>
+        ///
+        /// <value> The type of the controller. </value>
+
 		[Tooltip("To know how much the character moved, a reference to a rigidbody / character controller is needed.")]
 		[SerializeField] ControllerType controllerType;
+
+        /// <summary>   Gets the character rigidbody. </summary>
+        ///
+        /// <value> The character rigidbody. </value>
+
 		[SerializeField] Rigidbody characterRigidbody;
+
+        /// <summary>   Gets the character controller. </summary>
+        ///
+        /// <value> The character controller. </value>
+
 		[SerializeField] CharacterController characterController;
+
+        /// <summary>   Gets the audio source. </summary>
+        ///
+        /// <value> The audio source. </value>
 
 		[Tooltip("You need an audio source to play a footstep sound.")]
 		[SerializeField] AudioSource audioSource;
 
 		// Random volume between this limits
+        /// <summary>   The minimum volume. </summary>
 		[SerializeField] float minVolume = 0.3f;
+        /// <summary>   The maximum volume. </summary>
 		[SerializeField] float maxVolume = 0.5f;
 
+        /// <summary>   The debug mode. </summary>
 		[Tooltip("If this is enabled, you can see how far the script will check for ground, and the radius of the check.")]
 		[SerializeField] bool debugMode = true;
 
+        /// <summary>   Height of the ground check. </summary>
 		[Tooltip("How high, relative to the character's pivot point the start of the ray is.")]
 		[SerializeField] float groundCheckHeight = 0.5f;
 
+        /// <summary>   The ground check radius. </summary>
 		[Tooltip("What is the radius of the ray.")]
 		[SerializeField] float groundCheckRadius = 0.5f;
 
+        /// <summary>   The ground check distance. </summary>
 		[Tooltip("How far the ray is casted.")]
 		[SerializeField] float groundCheckDistance = 0.3f;
+
+        /// <summary>   Gets the ground layers. </summary>
+        ///
+        /// <value> The ground layers. </value>
 
 		[Tooltip("What are the layers that should be taken into account when checking for ground.")]
 		[SerializeField] LayerMask groundLayers;
 
+        /// <summary>   this transform. </summary>
 		Transform thisTransform;
+        /// <summary>   Information describing the current ground. </summary>
 		RaycastHit currentGroundInfo;
+        /// <summary>   The step cycle progress. </summary>
 		float stepCycleProgress;
+        /// <summary>   The last play time. </summary>
 		float lastPlayTime;
+        /// <summary>   True if previously grounded. </summary>
 		bool previouslyGrounded;
+        /// <summary>   True if this object is grounded. </summary>
 		bool isGrounded;
 
+        /// <summary>   Starts this object. </summary>
+        ///
+     
 
 		void Start() {
 			if(groundLayers.value == 0) {
@@ -82,6 +144,10 @@ namespace Footsteps {
 			}
 		}
 
+        /// <summary>   Updates this object. </summary>
+        ///
+     
+
 		void Update() {
 			CheckGround();
 
@@ -95,15 +161,29 @@ namespace Footsteps {
 			}
 		}
 
+        /// <summary>   Try play footstep. </summary>
+        ///
+     
+
 		public void TryPlayFootstep() {
 			if(isGrounded) {
 				PlayFootstep();
 			}
 		}
 
+        /// <summary>   Play land sound. </summary>
+        ///
+     
+
 		void PlayLandSound() {
 			audioSource.PlayOneShot(SurfaceManager.singleton.GetFootstep(currentGroundInfo.collider, currentGroundInfo.point));
 		}
+
+        /// <summary>   Advance step cycle. </summary>
+        ///
+     
+        ///
+        /// <param name="increment">    Amount to increment by. </param>
 
 		void AdvanceStepCycle(float increment) {
 			stepCycleProgress += increment;
@@ -114,6 +194,10 @@ namespace Footsteps {
 			}
 		}
 
+        /// <summary>   Play footstep. </summary>
+        ///
+     
+
 		void PlayFootstep() {
 			AudioClip randomFootstep = SurfaceManager.singleton.GetFootstep(currentGroundInfo.collider, currentGroundInfo.point);
 			float randomVolume = Random.Range(minVolume, maxVolume);
@@ -123,6 +207,10 @@ namespace Footsteps {
 			}
 		}
 
+        /// <summary>   Executes the draw gizmos action. </summary>
+        ///
+     
+
 		void OnDrawGizmos() {
 			if(debugMode) {
 				Gizmos.DrawWireSphere(transform.position + Vector3.up * groundCheckHeight, groundCheckRadius);
@@ -130,6 +218,10 @@ namespace Footsteps {
 				Gizmos.DrawRay(transform.position + Vector3.up * groundCheckHeight, Vector3.down * (groundCheckDistance + groundCheckRadius));
 			}
 		}
+
+        /// <summary>   Check ground. </summary>
+        ///
+     
 
 		void CheckGround() {
 			previouslyGrounded = isGrounded;

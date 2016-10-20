@@ -1,25 +1,45 @@
+// file:	Assets\Standard Assets\ParticleSystems\Scripts\AfterburnerPhysicsForce.cs
+//
+// summary:	Implements the afterburner physics force class
+
 using System;
 using UnityEngine;
 
 namespace UnityStandardAssets.Effects
 {
+    /// <summary>   An afterburner physics force. </summary>
+    ///
+ 
+
     [RequireComponent(typeof (SphereCollider))]
     public class AfterburnerPhysicsForce : MonoBehaviour
     {
+        /// <summary>   The effect angle. </summary>
         public float effectAngle = 15;
+        /// <summary>   Width of the effect. </summary>
         public float effectWidth = 1;
+        /// <summary>   The effect distance. </summary>
         public float effectDistance = 10;
+        /// <summary>   The force. </summary>
         public float force = 10;
 
+        /// <summary>   The cols. </summary>
         private Collider[] m_Cols;
+        /// <summary>   The sphere. </summary>
         private SphereCollider m_Sphere;
 
+        /// <summary>   Executes the enable action. </summary>
+        ///
+     
 
         private void OnEnable()
         {
             m_Sphere = (GetComponent<Collider>() as SphereCollider);
         }
 
+        /// <summary>   Fixed update. </summary>
+        ///
+     
 
         private void FixedUpdate()
         {
@@ -42,6 +62,9 @@ namespace UnityStandardAssets.Effects
             }
         }
 
+        /// <summary>   Executes the draw gizmos selected action. </summary>
+        ///
+     
 
         private void OnDrawGizmosSelected()
         {

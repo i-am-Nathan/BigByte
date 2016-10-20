@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Common\Editor\ResultWriter\XmlResultWriter.cs
+//
+// summary:	Implements the XML result writer class
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,13 +12,30 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   An XML result writer. </summary>
+    ///
+ 
+
     public class XmlResultWriter
     {
+        /// <summary>   The result writer. </summary>
         private readonly StringBuilder m_ResultWriter = new StringBuilder();
+        /// <summary>   The indend. </summary>
         private int m_Indend;
+        /// <summary>   Name of the suite. </summary>
         private readonly string m_SuiteName;
+        /// <summary>   The results. </summary>
         private readonly ITestResult[] m_Results;
+        /// <summary>   The platform. </summary>
         string m_Platform;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <param name="suiteName">    Name of the suite. </param>
+        /// <param name="platform">     The platform. </param>
+        /// <param name="results">      The results. </param>
 
         public XmlResultWriter(string suiteName, string platform, ITestResult[] results)
         {
@@ -23,7 +44,14 @@ namespace UnityTest
             m_Platform = platform;
         }
 
+        /// <summary>   The unit version. </summary>
         private const string k_NUnitVersion = "2.6.2-Unity";
+
+        /// <summary>   Gets test result. </summary>
+        ///
+     
+        ///
+        /// <returns>   The test result. </returns>
 
         public string GetTestResult()
         {
@@ -35,6 +63,13 @@ namespace UnityTest
             TerminateXmlFile();
             return m_ResultWriter.ToString();
         }
+
+        /// <summary>   Initializes the XML file. </summary>
+        ///
+     
+        ///
+        /// <param name="resultsName">      Name of the results. </param>
+        /// <param name="summaryResults">   The summary results. </param>
 
         private void InitializeXmlFile(string resultsName, ResultSummarizer summaryResults)
         {
@@ -64,16 +99,36 @@ namespace UnityTest
             WriteOpeningElement("results");
         }
 
+        /// <summary>   Writes an opening element. </summary>
+        ///
+     
+        ///
+        /// <param name="elementName">  Name of the element. </param>
+
         private void WriteOpeningElement(string elementName)
         {
             WriteOpeningElement(elementName, new Dictionary<string, string>());
         }
+
+        /// <summary>   Writes an opening element. </summary>
+        ///
+     
+        ///
+        /// <param name="elementName">  Name of the element. </param>
+        /// <param name="attributes">   The attributes. </param>
 
         private void WriteOpeningElement(string elementName, Dictionary<string, string> attributes)
         {
             WriteOpeningElement(elementName, attributes, false);
         }
 
+        /// <summary>   Writes an opening element. </summary>
+        ///
+     
+        ///
+        /// <param name="elementName">          Name of the element. </param>
+        /// <param name="attributes">           The attributes. </param>
+        /// <param name="closeImmediatelly">    True to close immediatelly. </param>
 
         private void WriteOpeningElement(string elementName, Dictionary<string, string> attributes, bool closeImmediatelly)
         {
@@ -93,6 +148,10 @@ namespace UnityTest
             m_ResultWriter.AppendLine(">");
         }
 
+        /// <summary>   Writes the indend. </summary>
+        ///
+     
+
         private void WriteIndend()
         {
             for (int i = 0; i < m_Indend; i++)
@@ -101,6 +160,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Writes a closing element. </summary>
+        ///
+     
+        ///
+        /// <param name="elementName">  Name of the element. </param>
+
         private void WriteClosingElement(string elementName)
         {
             m_Indend--;
@@ -108,46 +173,98 @@ namespace UnityTest
             m_ResultWriter.AppendLine("</" + elementName + ">");
         }
 
+        /// <summary>   Writes the header. </summary>
+        ///
+     
+
         private void WriteHeader()
         {
             m_ResultWriter.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             m_ResultWriter.AppendLine("<!--This file represents the results of running a test suite-->");
         }
 
+        /// <summary>   Gets environment user name. </summary>
+        ///
+     
+        ///
+        /// <returns>   The environment user name. </returns>
+
         static string GetEnvironmentUserName()
         {
             return Environment.UserName;
         }
+
+        /// <summary>   Gets environment machine name. </summary>
+        ///
+     
+        ///
+        /// <returns>   The environment machine name. </returns>
 
         static string GetEnvironmentMachineName()
         {
             return Environment.MachineName;
         }
 
+        /// <summary>   Gets environment user domain name. </summary>
+        ///
+     
+        ///
+        /// <returns>   The environment user domain name. </returns>
+
         static string GetEnvironmentUserDomainName()
         {
             return Environment.UserDomainName;
         }
+
+        /// <summary>   Gets environment version. </summary>
+        ///
+     
+        ///
+        /// <returns>   The environment version. </returns>
 
         static string GetEnvironmentVersion()
         {
             return Environment.Version.ToString();
         }
 
+        /// <summary>   Gets environment operating system version. </summary>
+        ///
+     
+        ///
+        /// <returns>   The environment operating system version. </returns>
+
         static string GetEnvironmentOSVersion()
         {
             return Environment.OSVersion.ToString();
         }
+
+        /// <summary>   Gets environment operating system version platform. </summary>
+        ///
+     
+        ///
+        /// <returns>   The environment operating system version platform. </returns>
 
         static string GetEnvironmentOSVersionPlatform()
         {
             return Environment.OSVersion.Platform.ToString();
         }
 
+        /// <summary>   Environment get current directory. </summary>
+        ///
+     
+        ///
+        /// <returns>   A string. </returns>
+
         static string EnvironmentGetCurrentDirectory()
         {
             return Environment.CurrentDirectory;
         }
+
+        /// <summary>   Writes an environment. </summary>
+        ///
+     
+        ///
+        /// <param name="targetPlatform">   Target platform. </param>
 
         private void WriteEnvironment( string targetPlatform )
         {
@@ -167,6 +284,10 @@ namespace UnityTest
             WriteOpeningElement("environment", attributes, true);
         }
 
+        /// <summary>   Writes the culture information. </summary>
+        ///
+     
+
         private void WriteCultureInfo()
         {
             var attributes = new Dictionary<string, string>
@@ -176,6 +297,13 @@ namespace UnityTest
             };
             WriteOpeningElement("culture-info", attributes, true);
         }
+
+        /// <summary>   Writes a test suite. </summary>
+        ///
+     
+        ///
+        /// <param name="resultsName">      Name of the results. </param>
+        /// <param name="summaryResults">   The summary results. </param>
 
         private void WriteTestSuite(string resultsName, ResultSummarizer summaryResults)
         {
@@ -190,6 +318,12 @@ namespace UnityTest
             };
             WriteOpeningElement("test-suite", attributes);
         }
+
+        /// <summary>   Writes a result element. </summary>
+        ///
+     
+        ///
+        /// <param name="result">   The result. </param>
 
         private void WriteResultElement(ITestResult result)
         {
@@ -218,6 +352,10 @@ namespace UnityTest
             WriteClosingElement("test-case");
         }
 
+        /// <summary>   Terminate XML file. </summary>
+        ///
+     
+
         private void TerminateXmlFile()
         {
             WriteClosingElement("results");
@@ -226,6 +364,12 @@ namespace UnityTest
         }
 
         #region Element Creation Helpers
+
+        /// <summary>   Starts test element. </summary>
+        ///
+     
+        ///
+        /// <param name="result">   The result. </param>
 
         private void StartTestElement(ITestResult result)
         {
@@ -253,6 +397,12 @@ namespace UnityTest
             WriteOpeningElement("test-case", attributes);
         }
 
+        /// <summary>   Writes a reason element. </summary>
+        ///
+     
+        ///
+        /// <param name="result">   The result. </param>
+
         private void WriteReasonElement(ITestResult result)
         {
             WriteOpeningElement("reason");
@@ -261,6 +411,12 @@ namespace UnityTest
             WriteClosingElement("message");
             WriteClosingElement("reason");
         }
+
+        /// <summary>   Writes a failure element. </summary>
+        ///
+     
+        ///
+        /// <param name="result">   The result. </param>
 
         private void WriteFailureElement(ITestResult result)
         {
@@ -277,6 +433,12 @@ namespace UnityTest
 
         #endregion
 
+        /// <summary>   Writes a c data. </summary>
+        ///
+     
+        ///
+        /// <param name="text"> The text. </param>
+
         private void WriteCData(string text)
         {
             if (string.IsNullOrEmpty(text)) 
@@ -284,6 +446,13 @@ namespace UnityTest
             m_ResultWriter.AppendFormat("<![CDATA[{0}]]>", text);
             m_ResultWriter.AppendLine();
         }
+
+        /// <summary>   Writes to file. </summary>
+        ///
+     
+        ///
+        /// <param name="resultDestiantion">    The result destiantion. </param>
+        /// <param name="resultFileName">       Filename of the result file. </param>
 
         public void WriteToFile(string resultDestiantion, string resultFileName)
         {

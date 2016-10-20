@@ -1,31 +1,74 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\FREE Footsteps System\scripts\SurfaceManager.cs
+//
+// summary:	Implements the surface manager class
+
+using UnityEngine;
+
+/// <summary>   A surface definition. </summary>
+///
+/// <remarks>    . </remarks>
 
 [System.Serializable]
 public struct SurfaceDefinition {
+    /// <summary>   The name. </summary>
 	public string name;
+    /// <summary>   The footsteps. </summary>
 	public AudioClip[] footsteps;
 }
 
+/// <summary>   A registered material. </summary>
+///
+/// <remarks>    . </remarks>
+
 [System.Serializable]
 public struct RegisteredMaterial {
+    /// <summary>   The texture. </summary>
 	public Texture texture;
+    /// <summary>   Zero-based index of the surface. </summary>
 	public int surfaceIndex;
 }
 
+/// <summary>   Manager for surfaces. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class SurfaceManager : MonoBehaviour {
 
+    /// <summary>   The singleton. </summary>
 	public static SurfaceManager singleton;
 
+    /// <summary>   Gets the defined surfaces. </summary>
+    ///
+    /// <value> The defined surfaces. </value>
+
 	[SerializeField] SurfaceDefinition[] definedSurfaces;
+
+    /// <summary>   Gets the registered textures. </summary>
+    ///
+    /// <value> The registered textures. </value>
+
 	[SerializeField] RegisteredMaterial[] registeredTextures;
 
+    /// <summary>   The int to process. </summary>
 	int n;
 
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
 
 	void Start() {
 		if(!singleton) singleton = this;
 		else if(singleton != this) Destroy(gameObject);
 	}
+
+    /// <summary>   Gets a footstep. </summary>
+    ///
+ 
+    ///
+    /// <param name="groundCollider">   The ground collider. </param>
+    /// <param name="worldPosition">    The world position. </param>
+    ///
+    /// <returns>   The footstep. </returns>
 
 	public AudioClip GetFootstep(Collider groundCollider, Vector3 worldPosition) {
 		int surfaceIndex = GetSurfaceIndex(groundCollider, worldPosition);
@@ -46,6 +89,12 @@ public class SurfaceManager : MonoBehaviour {
 		return temp;
 	}
 
+    /// <summary>   Gets all surface names. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An array of string. </returns>
+
 	public string[] GetAllSurfaceNames() {
 		string[] names = new string[definedSurfaces.Length];
 
@@ -55,6 +104,17 @@ public class SurfaceManager : MonoBehaviour {
 	}
 
 	// This is for bullet hit particles
+
+    /// <summary>   Gets surface index. </summary>
+    ///
+ 
+    ///
+    /// <param name="ray">      The ray. </param>
+    /// <param name="col">      The col. </param>
+    /// <param name="worldPos"> The world position. </param>
+    ///
+    /// <returns>   The surface index. </returns>
+
 	int GetSurfaceIndex(Ray ray, Collider col, Vector3 worldPos) {
 		string textureName = "";
 
@@ -81,6 +141,16 @@ public class SurfaceManager : MonoBehaviour {
 	}
 
 	// This is for footsteps
+
+    /// <summary>   Gets surface index. </summary>
+    ///
+ 
+    ///
+    /// <param name="col">      The col. </param>
+    /// <param name="worldPos"> The world position. </param>
+    ///
+    /// <returns>   The surface index. </returns>
+
 	int GetSurfaceIndex(Collider col, Vector3 worldPos) {
 		string textureName = "";
 
@@ -105,6 +175,15 @@ public class SurfaceManager : MonoBehaviour {
 
 		return -1;
 	}
+
+    /// <summary>   Gets mesh material at point. </summary>
+    ///
+ 
+    ///
+    /// <param name="worldPosition">    The world position. </param>
+    /// <param name="ray">              The ray. </param>
+    ///
+    /// <returns>   The mesh material at point. </returns>
 
 	string GetMeshMaterialAtPoint(Vector3 worldPosition, Ray ray) {
 		if(ray.direction == Vector3.zero) {
@@ -154,6 +233,16 @@ public class SurfaceManager : MonoBehaviour {
 		return textureName;
 	}
 
+    /// <summary>   Gets terrain texture mix. </summary>
+    ///
+ 
+    ///
+    /// <param name="worldPos">     The world position. </param>
+    /// <param name="terrainData">  Information describing the terrain. </param>
+    /// <param name="terrainPos">   The terrain position. </param>
+    ///
+    /// <returns>   An array of float. </returns>
+
 	float[] GetTerrainTextureMix(Vector3 worldPos, TerrainData terrainData, Vector3 terrainPos) {
 		// returns an array containing the relative mix of textures
 		// on the main terrain at this world position.
@@ -177,6 +266,15 @@ public class SurfaceManager : MonoBehaviour {
 
 		return cellMix;
 	}
+
+    /// <summary>   Gets texture index. </summary>
+    ///
+ 
+    ///
+    /// <param name="worldPos">     The world position. </param>
+    /// <param name="textureMix">   The texture mix. </param>
+    ///
+    /// <returns>   The texture index. </returns>
 
 	int GetTextureIndex(Vector3 worldPos, float[] textureMix) {
 		// returns the zero-based index of the most dominant texture

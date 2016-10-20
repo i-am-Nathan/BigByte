@@ -1,14 +1,30 @@
-﻿using System;
+﻿// file:	Assets\DownloadedContent\PyroParticles\Prefab\Editor\PyroParticlesEditor.cs
+//
+// summary:	Implements the pyro particles editor class
+
+using System;
 
 using UnityEngine;
 using UnityEditor;
 
 namespace DigitalRuby.PyroParticles
 {
+    /// <summary>   Editor for lightning bolt. </summary>
+    ///
+ 
+
     [CustomEditor(typeof(FireBaseScript))]
     public class LightningBoltEditor : Editor
     {
+        /// <summary>   The logo. </summary>
         private Texture2D logo;
+
+        /// <summary>
+        /// <para>
+        /// Implement this function to make a custom inspector.</para>
+        /// </summary>
+        ///
+     
 
         public override void OnInspectorGUI()
         {

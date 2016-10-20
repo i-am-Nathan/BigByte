@@ -1,32 +1,48 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\GameControl\DatabaseScores.cs
+//
+// summary:	Implements the database scores class
+
+using UnityEngine;
 using System.Collections;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 
-/// <summary>
-/// Used to manage database scores.
-/// </summary>
+/// <summary>   Used to manage database scores. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class DatabaseScores : MonoBehaviour
 {
-    private string SecretKey = "2W_0Yc:p_~oU}(P1?]P98)1]0894J0"; // Edit this value and make sure it's the same as the one stored on the server
-    private string AddScoreURL = "http://jackbarker.co/306/API/AddScores.php?"; //be sure to add a ? to your url
+    /// <summary>
+    /// Edit this value and make sure it's the same as the one stored on the server.
+    /// </summary>
+
+    private string SecretKey = "2W_0Yc:p_~oU}(P1?]P98)1]0894J0";
+    /// <summary>   be sure to add a ? to your url. </summary>
+    private string AddScoreURL = "http://jackbarker.co/306/API/AddScores.php?";
+    /// <summary>   . </summary>
     private string HighscoreURL = "http://jackbarker.co/306/API/GetScores.php";
+    /// <summary>   The results. </summary>
     List<HighScore> _results = new List<HighScore>();
+    /// <summary>   True if this object is done. </summary>
     public bool IsDone = false;
 
-    /// <summary>
-    /// Posts the scores to the webserver.
-    /// </summary>
-    /// <param name="name">The name.</param>
-    /// <param name="gold">The gold.</param>
-    /// <param name="Player1DamageGiven">The player1 damage given.</param>
-    /// <param name="Player2DamageGiven">The player2 damage given.</param>
-    /// <param name="Player1DamageTaken">The player1 damage taken.</param>
-    /// <param name="Player2DamageTaken">The player2 damage taken.</param>
-    /// <param name="Player1Accuracy">The player1 accuracy.</param>
-    /// <param name="Player2Accuracy">The player2 accuracy.</param>
-    /// <returns></returns>
-    /// Example: StartCoroutine(PostScores("jack", 100, 99, 99, 99, 99, 99, 99));
+    /// <summary>   Posts the scores to the webserver. </summary>
+    ///
+ 
+    ///
+    /// <param name="name">             The name. </param>
+    /// <param name="gold">             The gold. </param>
+    /// <param name="player1Accuracy">  The player1 damage given. </param>
+    /// <param name="player2Accuracy">  The player2 damage given. </param>
+    /// <param name="minutes">          The player1 damage taken. </param>
+    /// <param name="seconds">          The player2 damage taken. </param>
+    /// <param name="monsterskilled">   The player1 accuracy. </param>
+    /// <param name="timeskilled">      The player2 accuracy. </param>
+    /// <param name="chestsmissed">     The chestsmissed. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     public IEnumerator PostScores(string name, int gold, float player1Accuracy, float player2Accuracy, float minutes, float seconds, float monsterskilled, float timeskilled, float chestsmissed)
     {
 		Debug.Log("LOL");
@@ -50,12 +66,12 @@ public class DatabaseScores : MonoBehaviour
 		Debug.Log ("aay");
     }
 
+    /// <summary>   Gets the scores. </summary>
+    ///
+ 
+    ///
+    /// <returns>   The scores. </returns>
 
-    /// <summary>
-    /// Gets the scores.
-    /// </summary>
-    /// <returns></returns>
-    /// Example: Example: StartCoroutine(GetScores());
     public IEnumerator GetScores()
     {
         WWW hs_get = new WWW(HighscoreURL);
@@ -80,6 +96,12 @@ public class DatabaseScores : MonoBehaviour
         IsDone = true;
 
     }
+
+    /// <summary>   Gets the results. </summary>
+    ///
+ 
+    ///
+    /// <returns>   The results. </returns>
 
     public List<HighScore> GetResults()
     {

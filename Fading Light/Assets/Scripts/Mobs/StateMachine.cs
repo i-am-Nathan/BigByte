@@ -31,39 +31,92 @@ using Object = System.Object;
 
 namespace MonsterLove.StateMachine
 {
+    /// <summary>   Values that represent state transitions. </summary>
+    ///
+ 
+
 	public enum StateTransition
 	{
+        /// <summary>   An enum constant representing the safe option. </summary>
 		Safe,
+        /// <summary>   An enum constant representing the overwrite option. </summary>
 		Overwrite,
 	}
 
+    /// <summary>   Interface for state machine. </summary>
+    ///
+ 
+
 	public interface IStateMachine
 	{
+        /// <summary>   Gets the component. </summary>
+        ///
+        /// <value> The component. </value>
+
 		MonoBehaviour Component { get; }
+
+        /// <summary>   Gets the current state map. </summary>
+        ///
+        /// <value> The current state map. </value>
+
 		StateMapping CurrentStateMap { get; }
+
+        /// <summary>   Gets a value indicating whether this object is in transition. </summary>
+        ///
+        /// <value> True if this object is in transition, false if not. </value>
+
 		bool IsInTransition { get; }
 	}
 
+    /// <summary>   A state machine. </summary>
+    ///
+ 
+    ///
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+
 	public class StateMachine<T> : IStateMachine where T : struct, IConvertible, IComparable
 	{
+        /// <summary>   Event queue for all listeners interested in Changed events. </summary>
 		public event Action<T> Changed;
 
+        /// <summary>   The engine. </summary>
 		private StateMachineRunner engine;
+        /// <summary>   The component. </summary>
 		private MonoBehaviour component;
 
+        /// <summary>   State of the last. </summary>
 		private StateMapping lastState;
+        /// <summary>   The current state. </summary>
 		private StateMapping currentState;
+        /// <summary>   State of the destination. </summary>
 		private StateMapping destinationState;
 
+        /// <summary>   The state lookup. </summary>
 		private Dictionary<object, StateMapping> stateLookup;
 
+        /// <summary>   List of names of the ignored. </summary>
 		private readonly string[] ignoredNames = new[] { "add", "remove", "get", "set" };
 
+        /// <summary>   True if this object is in transition. </summary>
 		private bool isInTransition = false;
+        /// <summary>   The current transition. </summary>
 		private IEnumerator currentTransition;
+        /// <summary>   The exit routine. </summary>
 		private IEnumerator exitRoutine;
+        /// <summary>   The enter routine. </summary>
 		private IEnumerator enterRoutine;
+        /// <summary>   The queued change. </summary>
 		private IEnumerator queuedChange;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <exception cref="ArgumentException">    Thrown when one or more arguments have unsupported or
+        ///                                         illegal values. </exception>
+        ///
+        /// <param name="engine">       The engine. </param>
+        /// <param name="component">    The component with defined state methods. </param>
 
 		public StateMachine(StateMachineRunner engine, MonoBehaviour component)
 		{
@@ -163,6 +216,19 @@ namespace MonsterLove.StateMachine
 			currentState = new StateMapping(null);
 		}
 
+        /// <summary>   Creates a delegate. </summary>
+        ///
+     
+        ///
+        /// <exception cref="ArgumentException">    Thrown when one or more arguments have unsupported or
+        ///                                         illegal values. </exception>
+        ///
+        /// <typeparam name="V">    Generic type parameter. </typeparam>
+        /// <param name="method">   The method. </param>
+        /// <param name="target">   Target for the. </param>
+        ///
+        /// <returns>   The new delegate. </returns>
+
 		private V CreateDelegate<V>(MethodInfo method, Object target) where V : class
 		{
 			var ret = (Delegate.CreateDelegate(typeof(V), target, method) as V);
@@ -175,10 +241,25 @@ namespace MonsterLove.StateMachine
 
 		}
 
+        /// <summary>   Change state. </summary>
+        ///
+     
+        ///
+        /// <param name="newState"> State of the new. </param>
+
 		public void ChangeState(T newState)
 		{
 			ChangeState(newState, StateTransition.Safe);
 		}
+
+        /// <summary>   Change state. </summary>
+        ///
+     
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <param name="newState">     State of the new. </param>
+        /// <param name="transition">   The transition. </param>
 
 		public void ChangeState(T newState, StateTransition transition)
 		{
@@ -277,6 +358,15 @@ namespace MonsterLove.StateMachine
 			}
 		}
 
+        /// <summary>   Change to new state routine. </summary>
+        ///
+     
+        ///
+        /// <param name="newState">     State of the new. </param>
+        /// <param name="transition">   The transition. </param>
+        ///
+        /// <returns>   An IEnumerator. </returns>
+
 		private IEnumerator ChangeToNewStateRoutine(StateMapping newState, StateTransition transition)
 		{
 			destinationState = newState; //Chache this so that we can overwrite it and hijack a transition
@@ -333,6 +423,14 @@ namespace MonsterLove.StateMachine
 			isInTransition = false;
 		}
 
+        /// <summary>   Wait for previous transition. </summary>
+        ///
+     
+        ///
+        /// <param name="nextState">    State of the next. </param>
+        ///
+        /// <returns>   An IEnumerator. </returns>
+
 		IEnumerator WaitForPreviousTransition(StateMapping nextState)
 		{
 			while (isInTransition)
@@ -342,6 +440,10 @@ namespace MonsterLove.StateMachine
 
 			ChangeState((T) nextState.state);
 		}
+
+        /// <summary>   Gets the state of the last. </summary>
+        ///
+        /// <value> The last state. </value>
 
 		public T LastState
 		{
@@ -353,20 +455,36 @@ namespace MonsterLove.StateMachine
 			}
 		}
 
+        /// <summary>   Gets the state. </summary>
+        ///
+        /// <value> The state. </value>
+
 		public T State
 		{
 			get { return (T) currentState.state; }
 		}
+
+        /// <summary>   Gets a value indicating whether this object is in transition. </summary>
+        ///
+        /// <value> True if this object is in transition, false if not. </value>
 
 		public bool IsInTransition
 		{
 			get { return isInTransition; }
 		}
 
+        /// <summary>   Gets the current state map. </summary>
+        ///
+        /// <value> The current state map. </value>
+
 		public StateMapping CurrentStateMap
 		{
 			get { return currentState; }
 		}
+
+        /// <summary>   Gets the component. </summary>
+        ///
+        /// <value> The component. </value>
 
 		public MonoBehaviour Component
 		{
@@ -375,11 +493,17 @@ namespace MonsterLove.StateMachine
 
 		//Static Methods
 
-		/// <summary>
-		/// Inspects a MonoBehaviour for state methods as definied by the supplied Enum, and returns a stateMachine instance used to trasition states.
-		/// </summary>
-		/// <param name="component">The component with defined state methods</param>
-		/// <returns>A valid stateMachine instance to manage MonoBehaviour state transitions</returns>
+        /// <summary>
+        /// Inspects a MonoBehaviour for state methods as definied by the supplied Enum, and returns a
+        /// stateMachine instance used to trasition states.
+        /// </summary>
+        ///
+     
+        ///
+        /// <param name="component">    The component with defined state methods. </param>
+        ///
+        /// <returns>   A valid stateMachine instance to manage MonoBehaviour state transitions. </returns>
+
 		public static StateMachine<T> Initialize(MonoBehaviour component)
 		{
 			var engine = component.GetComponent<StateMachineRunner>();
@@ -388,12 +512,18 @@ namespace MonsterLove.StateMachine
 			return engine.Initialize<T>(component);
 		}
 
-		/// <summary>
-		/// Inspects a MonoBehaviour for state methods as definied by the supplied Enum, and returns a stateMachine instance used to trasition states. 
-		/// </summary>
-		/// <param name="component">The component with defined state methods</param>
-		/// <param name="startState">The default starting state</param>
-		/// <returns>A valid stateMachine instance to manage MonoBehaviour state transitions</returns>
+        /// <summary>
+        /// Inspects a MonoBehaviour for state methods as definied by the supplied Enum, and returns a
+        /// stateMachine instance used to trasition states.
+        /// </summary>
+        ///
+     
+        ///
+        /// <param name="component">    The component with defined state methods. </param>
+        /// <param name="startState">   The default starting state. </param>
+        ///
+        /// <returns>   A valid stateMachine instance to manage MonoBehaviour state transitions. </returns>
+
 		public static StateMachine<T> Initialize(MonoBehaviour component, T startState)
 		{
 			var engine = component.GetComponent<StateMachineRunner>();

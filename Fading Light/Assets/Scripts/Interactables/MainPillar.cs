@@ -1,13 +1,28 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\MainPillar.cs
+//
+// summary:	Implements the main pillar class
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>   A main pillar. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class MainPillar : MonoBehaviour {
 
+    /// <summary>   The active pillars. </summary>
     private List<PillarPressurePlate> _activePillars = new List<PillarPressurePlate>(2);
+    /// <summary>   Group the arc belongs to. </summary>
     public GameObject arcGroup;
+    /// <summary>   The prefab. </summary>
     public GameObject prefab;
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
 
     void Update()
     {
@@ -17,17 +32,33 @@ public class MainPillar : MonoBehaviour {
         }
     }
 
+    /// <summary>   Activates the pillar described by pillar. </summary>
+    ///
+ 
+    ///
+    /// <param name="pillar">   The pillar. </param>
+
     public void activatePillar(PillarPressurePlate pillar)
     {
         _activePillars.Add(pillar);
 
     }
-    
+
+    /// <summary>   Deactivate pillar. </summary>
+    ///
+ 
+    ///
+    /// <param name="pillar">   The pillar. </param>
+
     public void deactivatePillar(PillarPressurePlate pillar)
     {
         _activePillars.Remove(pillar);
 
     }
+
+    /// <summary>   Arcs this object. </summary>
+    ///
+ 
 
     public void arc()
     {
@@ -45,6 +76,15 @@ public class MainPillar : MonoBehaviour {
         }   
 
     }
+
+    /// <summary>   Angle between pillars. </summary>
+    ///
+ 
+    ///
+    /// <param name="pillar1">  The first pillar. </param>
+    /// <param name="pillar2">  The second pillar. </param>
+    ///
+    /// <returns>   A Quaternion. </returns>
 
     private Quaternion angleBetweenPillars(Vector3 pillar1, Vector3 pillar2)
     {

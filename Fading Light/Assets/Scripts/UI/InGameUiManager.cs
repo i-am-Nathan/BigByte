@@ -1,31 +1,50 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\UI\InGameUiManager.cs
+//
+// summary:	Implements the in game user interface manager class
+
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 /// <summary>
-/// This class is used to handle button and canvas behaviour of the in game UI
+/// This class is used to handle button and canvas behaviour of the in game UI.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class InGameUiManager : MonoBehaviour {
 
 	// UI items used to present information to the players
+    /// <summary>   The level finished menu. </summary>
     public Canvas LevelFinishedMenu;
+    /// <summary>   The exit menu. </summary>
     public Canvas ExitMenu;
+    /// <summary>   The controls menu. </summary>
 	public Canvas ControlsMenu;
+    /// <summary>   The restart level control. </summary>
     public Button RestartLevelButton;
+    /// <summary>   The quit to menu control. </summary>
     public Button QuitToMenuButton;
+    /// <summary>   The continue control. </summary>
     public Button ContinueButton;
 
+    /// <summary>   The total time. </summary>
 	private float _totalTime;
+    /// <summary>   The total time text. </summary>
 	private Text _totalTimeText;
+    /// <summary>   The shared gold. </summary>
 	private int _sharedGold;
+    /// <summary>   The shared gold text. </summary>
 	private Text _sharedGoldText;
 
+    /// <summary>   The game data script. </summary>
 	private GameData _gameDataScript;
 
-	/// <summary>
-	/// Used for initialisation 
-	/// </summary>
+    /// <summary>   Used for initialisation. </summary>
+    ///
+ 
+
     void Start () {
 		
 		// Hiding menus which are not meant to be shown yet
@@ -55,9 +74,10 @@ public class InGameUiManager : MonoBehaviour {
 		SetTime ();
     }
 
-	/// <summary>
-	/// Used every frame
-	/// </summary>
+    /// <summary>   Used every frame. </summary>
+    ///
+ 
+
 	void Update () {
         // Used to show and hide the exit menu allowing users to exit/quit/continue
         // This will not pause the game as high score is based on time, and users may take advantage of the pause
@@ -72,9 +92,10 @@ public class InGameUiManager : MonoBehaviour {
 		SetTime();
     }
 
-	/// <summary>
-	/// Used to continue the game (called by Continue button)
-	/// </summary>
+    /// <summary>   Used to continue the game (called by Continue button) </summary>
+    ///
+ 
+
     public void Continue ()
     {
 		// Unpausing the game and hiding the exit menu which is being shown
@@ -82,9 +103,10 @@ public class InGameUiManager : MonoBehaviour {
         ExitMenu.enabled = false;
     }
 
-	/// <summary>
-	/// Used to load the next level
-	/// </summary>
+    /// <summary>   Used to load the next level. </summary>
+    ///
+ 
+
 	public void NextLevel ()
 	{
 		// Unpausing the game and hiding the exit menu which is being shown
@@ -102,11 +124,13 @@ public class InGameUiManager : MonoBehaviour {
 			SceneManager.LoadScene("Level4");
 		}
 	}
-		
-	/// <summary>
-	/// Called when quit to main menu button is clicked
-	/// Loads the main menu screen
-	/// </summary>
+
+    /// <summary>
+    /// Called when quit to main menu button is clicked Loads the main menu screen.
+    /// </summary>
+    ///
+ 
+
     public void QuitToMenu ()
     {
 		// Unpausing the game and loading the main menu scene
@@ -128,9 +152,10 @@ public class InGameUiManager : MonoBehaviour {
         SceneManager.LoadScene("MainMenu");
     }
 
-	/// <summary>
-	/// Called when the restart button is clicked
-	/// </summary>
+    /// <summary>   Called when the restart button is clicked. </summary>
+    ///
+ 
+
     public void RestartLevel ()
     {
 		// Unpaused the game and gets the active scene and reloads it
@@ -144,9 +169,10 @@ public class InGameUiManager : MonoBehaviour {
         SceneManager.LoadScene(scene.name);
     }
 
-	/// <summary>
-	/// Used to set the total time taken for the players
-	/// </summary>
+    /// <summary>   Used to set the total time taken for the players. </summary>
+    ///
+ 
+
 	private void SetTime()
 	{
         //return;
@@ -180,9 +206,12 @@ public class InGameUiManager : MonoBehaviour {
 
 	}
 
-	/// <summary>
-	/// Updates the gold on the UI
-	/// </summary>
+    /// <summary>   Updates the gold on the UI. </summary>
+    ///
+ 
+    ///
+    /// <param name="gold"> The gold. </param>
+
 	public void UpdateGold(int gold) {
 		_sharedGold = gold;
 		_sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();

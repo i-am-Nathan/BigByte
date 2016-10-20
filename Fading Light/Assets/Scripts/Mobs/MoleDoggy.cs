@@ -1,85 +1,148 @@
-﻿using UnityEngine;
+﻿// file:	assets\scripts\mobs\moledoggy.cs
+//
+// summary:	Implements the moledoggy class
+
+using UnityEngine;
 using System.Collections;
 using MonsterLove.StateMachine;
 using UnityEngine.UI;
 using Assets.Scripts.Mobs;
 
 /// <summary>
-/// Controls the AI (using FSM) of the large molemans dog bosses (e.i. the one found in the tutorial level)
+/// Controls the AI (using FSM) of the large molemans dog bosses (e.i. the one found in the
+/// tutorial level)
 /// </summary>
+///
+/// <remarks>   Jack, 21/10/2016. </remarks>
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class MoleDoggy : BaseEntity
 {
 	//molemans dog states
+
+    /// <summary>   Values that represent states. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+
 	public enum States
 	{
+        /// <summary>   An enum constant representing the init option. </summary>
 		Init,
+        /// <summary>   An enum constant representing the idle option. </summary>
 		Idle,
+        /// <summary>   An enum constant representing the chase option. </summary>
 		Chase,
+        /// <summary>   An enum constant representing the attack option. </summary>
         Attack,
+        /// <summary>   An enum constant representing the taunt option. </summary>
         Taunt,
+        /// <summary>   An enum constant representing the fireball spawning option. </summary>
         FireballSpawning,
+        /// <summary>   An enum constant representing the death option. </summary>
         Death
 	}
 
     //molemans dog stats
+    /// <summary>   The hard activation distance. </summary>
     public float HardActivationDistance = 50;
+    /// <summary>   The loose activation distance. </summary>
     public float LooseActivationDistance = 120;
+    /// <summary>   The attack speed. </summary>
     public float AttackSpeed = 1;
+    /// <summary>   The attack damage. </summary>
     public float AttackDamage = 5;
+    /// <summary>   The health. </summary>
     public float Health = 5000;
+    /// <summary>   The attack range. </summary>
     public float AttackRange = 24;
+    /// <summary>   The range. </summary>
     public float Range = .1f;
+    /// <summary>   The walk speed. </summary>
     public float WalkSpeed = 9f;
+    /// <summary>   The run speed. </summary>
     public float RunSpeed = 15f;
+    /// <summary>   The sprint speed. </summary>
     public float SprintSpeed = 35f;
+    /// <summary>   The attack cooldown. </summary>
     public float AttackCooldown = 0.5f;
+    /// <summary>   The rotation speed. </summary>
     public float RotationSpeed = 10f;
 
 
+    /// <summary>   The health slider. </summary>
 	public Slider HealthSlider;
+    /// <summary>   Name of the boss. </summary>
 	public Text BossName;
+    /// <summary>   The boss panel. </summary>
 	public GameObject BossPanel;
 
     //Target and navigation variables
+    /// <summary>   The pathfinder. </summary>
     NavMeshAgent pathfinder;
+    /// <summary>   Target for the. </summary>
     Transform target;
+    /// <summary>   Target base entity. </summary>
     BaseEntity targetBaseEntity;
+    /// <summary>   The skin material. </summary>
     Material skinMaterial;
+    /// <summary>   The original colour. </summary>
     Color originalColour;
+    /// <summary>   The animator. </summary>
     Animation _animator;
+    /// <summary>   The spawn location. </summary>
     Vector3 spawnLocation;
 
+    /// <summary>   The fsm. </summary>
     private StateMachine<States> fsm;
 
+    /// <summary>   The next attack time. </summary>
     private float _nextAttackTime; 
+    /// <summary>   The collision range. </summary>
     private float _collisionRange;
+    /// <summary>   Target collision range. </summary>
     private float _targetCollisionRange;
+    /// <summary>   True to enable, false to disable the locked. </summary>
     private bool _lockedOn = false;
+    /// <summary>   True to in attack range. </summary>
     private bool _inAttackRange;
+    /// <summary>   True if this object is sprinting. </summary>
     private bool _isSprinting;
+    /// <summary>   True if this object is moving. </summary>
     private bool _isMoving;
+    /// <summary>   Number of walks. </summary>
     private int _walkCount;
+    /// <summary>   True to active. </summary>
     private bool _active = false;
 
+    /// <summary>   True to debug. </summary>
     private bool DEBUG = false;
 
+    /// <summary>   Manager for achievement. </summary>
 	private AchievementManager _achievementManager;
 
+    /// <summary>   The cloud. </summary>
     private GameObject _cloud;
+    /// <summary>   The shield. </summary>
     private GameObject _shield;
 
+    /// <summary>   The hit. </summary>
     public AudioClip Hit;
+    /// <summary>   The death. </summary>
     public AudioClip Death;
+    /// <summary>   The attack. </summary>
     public AudioClip Attack;
+    /// <summary>   The aoe. </summary>
     public AudioClip AOE;
+    /// <summary>   Source for the. </summary>
     private AudioSource _source;
 
+    /// <summary>   The end of level trigger script. </summary>
 	public EndOfLevelTrigger EndOfLevelTriggerScript;
 
-    /// <summary>
-    /// Initilized montser location, pathfinding, animation and the AI FSM
-    /// </summary>
+    /// <summary>   Initilized montser location, pathfinding, animation and the AI FSM. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+
     private void Awake()
 	{
         _cloud = GameObject.Find("AOE");
@@ -105,10 +168,18 @@ public class MoleDoggy : BaseEntity
         fsm.ChangeState(States.Init);
     }
 
+    /// <summary>   Mock up. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+
     public void MockUp()
     {
         base.Start();
     }
+
+    /// <summary>   Starts this object. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
@@ -125,13 +196,23 @@ public class MoleDoggy : BaseEntity
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+
     private void Init_Enter()
     {
         if (DEBUG) Debug.Log("molemans dog state machine initilized. Waiting for cutscene");
         //fsm.ChangeState(States.Idle);
     }
 
+    /// <summary>   The storyline. </summary>
     Storyline _storyline;
+
+    /// <summary>   Begins a cutscene. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <param name="storyline">    The storyline. </param>
 
     public void BeginCutscene(Storyline storyline)
     {
@@ -140,8 +221,14 @@ public class MoleDoggy : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
+    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to
+    /// idle.
     /// </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Taunt_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");       
@@ -159,9 +246,14 @@ public class MoleDoggy : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the attack state. Plays the attack animation once, and deals damage once, before transitioning back to the chase state.
+    /// Entry method for the attack state. Plays the attack animation once, and deals damage once,
+    /// before transitioning back to the chase state.
     /// </summary>
-    /// <returns></returns>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Attack_Enter()
     {
         if (!isDead)
@@ -194,9 +286,20 @@ public class MoleDoggy : BaseEntity
         }        
     }
 
+    /// <summary>   True if this object is rotating. </summary>
     private bool _isRotating = false;
 
     //http://gamedev.stackexchange.com/questions/102126/unable-to-stop-navmeshagent-for-rotation-before-moving
+
+    /// <summary>   Rotate agent. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <param name="currentRotation">  The current rotation. </param>
+    /// <param name="targetRotation">   Target rotation. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator RotateAgent(Quaternion currentRotation, Quaternion targetRotation)
     {
         _isRotating = true;
@@ -206,6 +309,12 @@ public class MoleDoggy : BaseEntity
         }
         _isRotating = false;
     }
+
+    /// <summary>   Fireball spawning enter. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
 
     IEnumerator FireballSpawning_Enter()
     {        
@@ -278,14 +387,25 @@ public class MoleDoggy : BaseEntity
     }
 
     //values that will be set in the Inspector
+    /// <summary>   Target for the. </summary>
     public Transform Target;
+    /// <summary>   The fireball rotation speed. </summary>
     public float FireballRotationSpeed = 10f;
 
     //values for internal use
+    /// <summary>   The look rotation. </summary>
     private Quaternion _lookRotation;
+    /// <summary>   The direction. </summary>
     private Vector3 _direction;
 
     // Update is called once per frame
+
+    /// <summary>   Rotate towards player. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator RotateTowardsPlayer()
     {
         if (DEBUG) Debug.Log("Begin rotating");
@@ -305,10 +425,14 @@ public class MoleDoggy : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// molemans dogs alert area, or comes into attack range.
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks
+    /// if the player leaves the molemans dogs alert area, or comes into attack range.
     /// </summary>
-    /// <returns></returns>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
@@ -387,10 +511,15 @@ public class MoleDoggy : BaseEntity
     }
 
     /// <summary>
-    /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
-    /// if transitions to the chase state to chase them down.
+    /// Entry state for the idle state. Waits in place and constantly checks to see if any players
+    /// have entered its alert area. If a player enters the area if transitions to the chase state to
+    /// chase them down.
     /// </summary>
-    /// <returns></returns>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
@@ -422,6 +551,13 @@ public class MoleDoggy : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
+    /// <summary>   Rotate towards. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <param name="target">   Target for the. </param>
+    /// <param name="navMesh">  True to navigation mesh. </param>
+
     private void RotateTowards(Transform target, bool navMesh)
     {
         if (!navMesh)
@@ -435,6 +571,10 @@ public class MoleDoggy : BaseEntity
         }        
     }
 
+    /// <summary>   Death enter. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+
     private void Death_Enter()
     {
         _source.PlayOneShot(Death);
@@ -444,8 +584,17 @@ public class MoleDoggy : BaseEntity
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
+    /// <summary>   True to fireballed once. </summary>
     private bool _fireballedOnce = false;
+    /// <summary>   True to fireballed twice. </summary>
     private bool _fireballedTwice = false;
+
+    /// <summary>   Damages. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <param name="amount">   The damage. </param>
+    /// <param name="attacker"> The attacker. </param>
 
     public override void Damage(float amount, Transform attacker)
     {
@@ -490,11 +639,21 @@ public class MoleDoggy : BaseEntity
         }        
     }
 
+    /// <summary>   Boss dead wait. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	public IEnumerator BossDeadWait () 
 	{
 		yield return new WaitForSeconds(1f);
 		EndOfLevelTriggerScript.TriggerEndOfLevel ();
 	}
+
+    /// <summary>   Killed this object. </summary>
+    ///
+    /// <remarks>   Jack, 21/10/2016. </remarks>
 
     public override void Killed()
     {

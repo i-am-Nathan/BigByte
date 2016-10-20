@@ -1,43 +1,66 @@
-﻿using UnityEngine;
+﻿// file:	assets\scripts\interactables\opentreasure.cs
+//
+// summary:	Implements the opentreasure class
+
+using UnityEngine;
 using System.Collections;
-/// <summary>
-/// Script which is used when players interact with Treasure chests.
-/// </summary>
+
+/// <summary>   Script which is used when players interact with Treasure chests. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class OpenTreasure : MonoBehaviour {
+    /// <summary>   True if destroy when activated. </summary>
 	public bool DestroyWhenActivated;
+    /// <summary>   True to open. </summary>
 	private bool _open; 
+    /// <summary>   The speed. </summary>
 	private float _speed;
+    /// <summary>   The minimum. </summary>
 	public float Minimum;
+    /// <summary>   The maximum. </summary>
 	public float Maximum;
+    /// <summary>   List of drops. </summary>
 	public GameObject[] DropList;
+    /// <summary>   The drop chance. </summary>
 	public int[] DropChance;
+    /// <summary>   The prefab. </summary>
 	private GameObject _prefab;
 
+    /// <summary>   The treasure sound. </summary>
 	public AudioClip TreasureSound;
+    /// <summary>   The treasure opening. </summary>
 	public AudioClip TreasureOpening;
+    /// <summary>   Source for the. </summary>
 	private AudioSource _source;
 
-	/// <summary>
-	/// This will get the Audio source compoenent to enable the treasure opening sound.
-	/// </summary>
+    /// <summary>
+    /// This will get the Audio source compoenent to enable the treasure opening sound.
+    /// </summary>
+    ///
+ 
+
 	void Awake(){
 		_source = GetComponent<AudioSource>();
 	}
 
+    /// <summary>   Indicates chest is unopen and speed of chest opening. </summary>
+    ///
+ 
 
-	/// <summary>
-	/// Indicates chest is unopen and speed of chest opening
-	/// </summary>
 	void Start () {
 		_open = false;
 		_speed = 60;
 	}
 
+    /// <summary>
+    /// When players press T when they are collding with the chest, it will open it.
+    /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
 
-	/// <summary>
-	/// When players press T when they are collding with the chest, it will open it.
-	/// </summary>
-	/// <param name="other">Other.</param>
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (Input.GetKeyDown (KeyCode.Q) || Input.GetKeyDown(KeyCode.O)) {
@@ -48,13 +71,13 @@ public class OpenTreasure : MonoBehaviour {
 			}
 		}
 	}
-		
 
-		
+    /// <summary>   Function used to open the treasure chest. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
 
-	/// <summary>
-	/// Function used to open the treasure chest
-	/// </summary>
 	IEnumerator Open()
 	{
         var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));

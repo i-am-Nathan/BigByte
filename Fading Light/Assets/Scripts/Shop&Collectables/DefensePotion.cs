@@ -1,31 +1,46 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Shop&Collectables\DefensePotion.cs
+//
+// summary:	Implements the defense potion class
+
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
 /// Defense potions which players can pick up and purchase items through the shop.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class DefensePotion : MonoBehaviour
 {
 	// Audio source
+    /// <summary>   Source for the. </summary>
     private AudioSource _source;
+    /// <summary>   The pick up sound. </summary>
     public AudioClip PickUpSound;
     
+    /// <summary>   True to not picked up. </summary>
     private bool _notPickedUp;
+    /// <summary>   The game data script. </summary>
     private GameData _gameDataScript;
 
-	/// <summary>
-	/// Called to obtain the audio source
-	/// </summary>
+    /// <summary>   Called to obtain the audio source. </summary>
+    ///
+ 
+
     void Awake()
     {
         _source = GetComponent<AudioSource>();
         _notPickedUp = true;
     }
 
-
     /// <summary>
-    /// This will load up the player objects so that when potions are picked up, they will go to the respective player.
+    /// This will load up the player objects so that when potions are picked up, they will go to the
+    /// respective player.
     /// </summary>
+    ///
+ 
+
     void Start()
     {
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
@@ -33,8 +48,14 @@ public class DefensePotion : MonoBehaviour
     }
 
     /// <summary>
-    /// When player collides with the potion, they will increment the player's number of potions and play a sound when picked up.
+    /// When player collides with the potion, they will increment the player's number of potions and
+    /// play a sound when picked up.
     /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnTriggerEnter(Collider other)
     {
 		// Checking if a player has picked up the potion

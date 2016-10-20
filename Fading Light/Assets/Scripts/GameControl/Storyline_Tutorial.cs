@@ -1,43 +1,61 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\GameControl\Storyline_Tutorial.cs
+//
+// summary:	Implements the storyline tutorial class
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
-/// <summary>
-/// Used to control the storyline for the tutorial level
-/// </summary>
+/// <summary>   Used to control the storyline for the tutorial level. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class Storyline_Tutorial : Storyline {
 
+    /// <summary>   The first player. </summary>
     public PlayerController Player1;
+    /// <summary>   The second player. </summary>
     public Player2Controller Player2;
+    /// <summary>   The mole men. </summary>
     public List<MoleManContoller> MoleMen;
+    /// <summary>   The torch controller. </summary>
     public TorchFuelController TorchController;
+    /// <summary>   The reference points. </summary>
     public List<GameObject> ReferencePoints;
+    /// <summary>   The camera rig. </summary>
     public GameObject CameraRig;
 
+    /// <summary>   The cut scene positions. </summary>
     public List<GameObject> CutScenePositions;
+    /// <summary>   The customer scene targets. </summary>
     public List<GameObject> CustSceneTargets;
 
+    /// <summary>   The current step. </summary>
     public int _currentStep = 0;
+    /// <summary>   True to done. </summary>
     private bool _done = false;
+    /// <summary>   The tips. </summary>
     private ToolTips _tips;
+    /// <summary>   True to tips done. </summary>
     private bool _tipsDone = false;
+    /// <summary>   The start display. </summary>
     private float _startDisplay;
 
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
     void Start () {
         _tips = new ToolTips();
         _tips.DisableToolTips();
       
 	}
 
+    /// <summary>   Updates this instance. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Updates this instance.
-    /// </summary>
     void Update() {
 
         if(Time.time - _startDisplay > 5 && !_tipsDone)
@@ -101,17 +119,19 @@ public class Storyline_Tutorial : Storyline {
 
     }
 
-    /// <summary>
-    /// Nexts this instance.
-    /// </summary>
+    /// <summary>   Nexts this instance. </summary>
+    ///
+ 
+
     public override void Next()
     {
 
     }
 
-    /// <summary>
-    /// Dialogues the complete.
-    /// </summary>
+    /// <summary>   Dialogues the complete. </summary>
+    ///
+ 
+
     public override void DialogueComplete()
     {
         Debug.Log("COMPLETE");
@@ -137,9 +157,10 @@ public class Storyline_Tutorial : Storyline {
         }
     }
 
-    /// <summary>
-    /// Moles the man in position.
-    /// </summary>
+    /// <summary>   Moles the man in position. </summary>
+    ///
+ 
+
     public override void NextMoleMan()
     {
         if(_currentStep == 1)
@@ -153,9 +174,10 @@ public class Storyline_Tutorial : Storyline {
         }
     }
 
-    /// <summary>
-    /// Disables the mole man.
-    /// </summary>
+    /// <summary>   Disables the mole man. </summary>
+    ///
+ 
+
     public override void StartText()
     {
         if(_currentStep == 1)
@@ -167,13 +189,20 @@ public class Storyline_Tutorial : Storyline {
         MoleMen[0].IsDisabled = true;
     }
 
-    /// <summary>
-    /// Enables the mole man.
-    /// </summary>
+    /// <summary>   Enables the mole man. </summary>
+    ///
+ 
+
     public override void EnableMoleMan()
     {
         MoleMen[0].IsDisabled = false;
     }
+
+    /// <summary>   Character damage enabled. </summary>
+    ///
+ 
+    ///
+    /// <param name="enabled">  True to enable, false to disable. </param>
 
     public override void CharacterDamageEnabled(bool enabled)
     {

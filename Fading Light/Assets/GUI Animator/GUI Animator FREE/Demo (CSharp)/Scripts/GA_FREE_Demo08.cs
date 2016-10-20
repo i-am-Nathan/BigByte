@@ -26,6 +26,10 @@ using System.Collections;
 // Note this class is attached with "-SceneController-" object in "GA FREE - Demo08 (960x600px)" scene.
 // ######################################################################
 
+/// <summary>   A ga free demo 08. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_Demo08 : MonoBehaviour
 {
 
@@ -36,35 +40,53 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	#region Variables
 
 	// Canvas
+    /// <summary>   The canvas. </summary>
 	public Canvas m_Canvas;
 	
 	// GUIAnimFREE objects of title text
+    /// <summary>   The first m title. </summary>
 	public GUIAnimFREE m_Title1;
+    /// <summary>   The second m title. </summary>
 	public GUIAnimFREE m_Title2;
 	
 	// GUIAnimFREE objects of top and bottom bars
+    /// <summary>   The top bar. </summary>
 	public GUIAnimFREE m_TopBar;
+    /// <summary>   The bottom bar. </summary>
 	public GUIAnimFREE m_BottomBar;
 	
 	// GUIAnimFREE objects of 4 primary buttons
+    /// <summary>   The center buttons. </summary>
 	public GUIAnimFREE m_CenterButtons;
 	
 	// GUIAnimFREE objects of buttons
+    /// <summary>   The first m button. </summary>
 	public GUIAnimFREE m_Button1;
+    /// <summary>   The second m button. </summary>
 	public GUIAnimFREE m_Button2;
+    /// <summary>   The third m button. </summary>
 	public GUIAnimFREE m_Button3;
+    /// <summary>   The fourth m button. </summary>
 	public GUIAnimFREE m_Button4;
 
 	// GUIAnimFREE objects of top, left, right and bottom bars
+    /// <summary>   The first m bar. </summary>
 	public GUIAnimFREE m_Bar1;
+    /// <summary>   The second m bar. </summary>
 	public GUIAnimFREE m_Bar2;
+    /// <summary>   The third m bar. </summary>
 	public GUIAnimFREE m_Bar3;
+    /// <summary>   The fourth m bar. </summary>
 	public GUIAnimFREE m_Bar4;
 	
 	// Toggle state of top, left, right and bottom bars
+    /// <summary>   True if bar 1 is on. </summary>
 	bool m_Bar1_IsOn = false;
+    /// <summary>   True if bar 2 is on. </summary>
 	bool m_Bar2_IsOn = false;
+    /// <summary>   True if bar 3 is on. </summary>
 	bool m_Bar3_IsOn = false;
+    /// <summary>   True if bar 4 is on. </summary>
 	bool m_Bar4_IsOn = false;
 	
 	#endregion // Variables
@@ -78,6 +100,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	
 	// Awake is called when the script instance is being loaded.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
+
 	void Awake ()
 	{
 		if(enabled)
@@ -89,6 +116,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		// MoveIn m_TopBar and m_BottomBar
@@ -105,6 +137,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update ()
 	{		
 	}
@@ -118,6 +155,13 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	#region MoveIn/MoveOut
 	
 	// MoveIn m_Title1 and m_Title2
+
+    /// <summary>   Move in title game objects. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInTitleGameObjects()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -131,6 +175,13 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// MoveIn all primary buttons
+
+    /// <summary>   Move in primary buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInPrimaryButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -143,6 +194,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// MoveOut all primary buttons
+
+    /// <summary>   Hides all gu is. </summary>
+    ///
+ 
+
 	public void HideAllGUIs()
 	{
 		// MoveOut all primary buttons
@@ -163,6 +219,13 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// MoveOut m_Title1 and m_Title2
+
+    /// <summary>   Hides the title text meshes. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator HideTitleTextMeshes()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -185,6 +248,13 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	#region Enable/Disable buttons
 	
 	// Enable/Disable all scene switch Coroutine
+
+    /// <summary>   Enables all demo buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator EnableAllDemoButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -195,6 +265,16 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// Disable all buttons for a few seconds
+
+    /// <summary>   Disables the button for seconds. </summary>
+    ///
+ 
+    ///
+    /// <param name="GO">           The go. </param>
+    /// <param name="DisableTime">  The disable time. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator DisableButtonForSeconds(GameObject GO, float DisableTime)
 	{
 		// Disable all buttons
@@ -213,7 +293,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	// ########################################
 	
 	#region UI Responder
-	
+
+    /// <summary>   Executes the button 1 action. </summary>
+    ///
+ 
+
 	public void OnButton_1()
 	{
 		// Toggle m_Bar1
@@ -239,7 +323,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 		StartCoroutine(DisableButtonForSeconds(m_Button3.gameObject, 0.75f));
 		StartCoroutine(DisableButtonForSeconds(m_Button4.gameObject, 0.75f));
 	}
-	
+
+    /// <summary>   Executes the button 2 action. </summary>
+    ///
+ 
+
 	public void OnButton_2()
 	{
 		// Toggle m_Bar2
@@ -265,7 +353,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 		StartCoroutine(DisableButtonForSeconds(m_Button3.gameObject, 0.75f));
 		StartCoroutine(DisableButtonForSeconds(m_Button4.gameObject, 0.75f));
 	}
-	
+
+    /// <summary>   Executes the button 3 action. </summary>
+    ///
+ 
+
 	public void OnButton_3()
 	{
 		// Toggle m_Bar3
@@ -291,7 +383,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 		StartCoroutine(DisableButtonForSeconds(m_Button3.gameObject, 0.75f));
 		StartCoroutine(DisableButtonForSeconds(m_Button4.gameObject, 0.75f));
 	}
-	
+
+    /// <summary>   Executes the button 4 action. </summary>
+    ///
+ 
+
 	public void OnButton_4()
 	{
 		// Toggle m_Bar4
@@ -327,6 +423,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	#region Toggle Button
 	
 	// Toggle m_Bar1
+
+    /// <summary>   Toggle bar 1. </summary>
+    ///
+ 
+
 	void ToggleBar1()
 	{
 		m_Bar1_IsOn = !m_Bar1_IsOn;
@@ -343,6 +444,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// Toggle m_Bar2
+
+    /// <summary>   Toggle bar 2. </summary>
+    ///
+ 
+
 	void ToggleBar2()
 	{
 		m_Bar2_IsOn = !m_Bar2_IsOn;
@@ -359,6 +465,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// Toggle m_Bar3
+
+    /// <summary>   Toggle bar 3. </summary>
+    ///
+ 
+
 	void ToggleBar3()
 	{
 		m_Bar3_IsOn = !m_Bar3_IsOn;
@@ -375,6 +486,11 @@ public class GA_FREE_Demo08 : MonoBehaviour
 	}
 	
 	// Toggle m_Bar4
+
+    /// <summary>   Toggle bar 4. </summary>
+    ///
+ 
+
 	void ToggleBar4()
 	{
 		m_Bar4_IsOn = !m_Bar4_IsOn;

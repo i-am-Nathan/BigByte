@@ -1,27 +1,54 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\MainMenu\PopulateHighScores.cs
+//
+// summary:	Implements the populate high scores class
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>   A populate high scores. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class PopulateHighScores : MonoBehaviour
 {
+    /// <summary>   The grid. </summary>
     public GameObject Grid;
+    /// <summary>   The GameObject to process. </summary>
     public GameObject B;
+    /// <summary>   The list item. </summary>
     public GameObject ListItem;
+    /// <summary>   The database interacter. </summary>
     private DatabaseScores databaseInteracter = new DatabaseScores();
+    /// <summary>   True if this object is done. </summary>
     private bool isDone = false;
+    /// <summary>   The scores. </summary>
     List<HighScore> _scores = new List<HighScore>();
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
 
     void Start()
     {
         StartCoroutine(databaseInteracter.GetScores());
     }
 
+    /// <summary>   The time direction multiplier. </summary>
     private int _timeDirectionMultiplier = -1;
+    /// <summary>   The gold direction multiplier. </summary>
     private int _goldDirectionMultiplier = 1;
+    /// <summary>   The accuracy direction multiplier. </summary>
     private int _accuracyDirectionMultiplier = 1;
+    /// <summary>   The deaths direction multiplier. </summary>
     private int _deathsDirectionMultiplier = 1;
 
+    /// <summary>   Sort list. </summary>
+    ///
+ 
+    ///
+    /// <param name="buttonName">   Name of the button. </param>
 
     public void SortList(string buttonName)
     {
@@ -58,6 +85,10 @@ public class PopulateHighScores : MonoBehaviour
         }
     }
 
+    /// <summary>   Reload data. </summary>
+    ///
+ 
+
     void ReloadData()
     {
         var count = 0;
@@ -87,6 +118,10 @@ public class PopulateHighScores : MonoBehaviour
             }
         }
     }
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
 
     void Update()
     {

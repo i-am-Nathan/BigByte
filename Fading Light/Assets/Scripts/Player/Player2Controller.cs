@@ -1,53 +1,84 @@
-﻿using UnityEngine;
+﻿// file:	assets\scripts\player\player2controller.cs
+//
+// summary:	Implements the player 2controller class
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-/// <summary>
-/// Used to control player 2
-/// </summary>
+/// <summary>   Used to control player 2. </summary>
+///
+/// <remarks>    . </remarks>
+
 [RequireComponent(typeof(CharacterController))]
 public class Player2Controller : Player
 {
     // Health image on floor
-    public Image healthCircle;                                 // Reference to the UI's health circle.
+    /// <summary>   Reference to the UI's health circle. </summary>
+    public Image healthCircle;
 
 
+    /// <summary>   Manager for achievement. </summary>
     public AchievementManager AchievementManager;
 
     // Handling
+    /// <summary>   The rotation speed. </summary>
     public float RotationSpeed;
+    /// <summary>   The walk speed. </summary>
 	public float WalkSpeed;
+    /// <summary>   The push power. </summary>
     public int PushPower = 20;
-    public int WeaponState;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
+    /// <summary>   unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield) </summary>
+    public int WeaponState;
+    /// <summary>   True if this object is disabled. </summary>
     public bool IsDisabled;
    
+    /// <summary>   Target rotation. </summary>
     private Quaternion targetRotation;
 
     //Animation
+    /// <summary>   True if this object is playing jump. </summary>
     private bool _isPlayingJump = false;
+    /// <summary>   True if this object is playing attack. </summary>
     private bool _isPlayingAttack = false;
-    private bool damaged;                                               // True when the player gets damaged.
+    /// <summary>   True when the player gets damaged. </summary>
+    private bool damaged;
+    /// <summary>   The animator. </summary>
     private Animator _animator;
+    /// <summary>   The torch. </summary>
     private GameObject _torch;
+    /// <summary>   The controller. </summary>
     private CharacterController controller;
 
     // UI
+    /// <summary>   The health slider. </summary>
     private Slider _healthSlider;
+    /// <summary>   The life manager script. </summary>
     private LifeManager _lifeManagerScript;
+    /// <summary>   The last jump time. </summary>
     private float _lastJumpTime;
+    /// <summary>   The torch fuel script. </summary>
     private TorchFuelController _torchFuelScript;
 
+    /// <summary>   The last attack. </summary>
 	private float _lastAttack;
     //audio
+    /// <summary>   The walk sounds. </summary>
     public AudioSource WalkSounds;
+    /// <summary>   The hit sounds. </summary>
     public AudioSource HitSounds;
+    /// <summary>   The hurt sounds. </summary>
     public AudioSource HurtSounds;
+    /// <summary>   The death sound. </summary>
     public AudioSource DeathSound;
 
+    /// <summary>   True if this object is main menu. </summary>
     public bool IsMainMenu = false;
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
+
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
+
     void Start()
 	{
         base.Start();
@@ -69,9 +100,10 @@ public class Player2Controller : Player
 
     }
 
-    /// <summary>
-    /// Updates this instance.
-    /// </summary>
+    /// <summary>   Updates this instance. </summary>
+    ///
+ 
+
     void Update()
 	{
         if (IsDisabled || isDead)
@@ -93,9 +125,10 @@ public class Player2Controller : Player
 		UpdateEffects ();
     }
 
-    /// <summary>
-    /// Controls the character using the keys
-    /// </summary>
+    /// <summary>   Controls the character using the keys. </summary>
+    ///
+ 
+
     void ControlWASD()
 	{
         //Find the direction the character should be moving toward
@@ -143,6 +176,13 @@ public class Player2Controller : Player
     // Obtained from Unity Documentation
     /// </summary>
     /// <param name="hit">The hit.</param>
+
+    /// <summary>   Executes the controller collider hit action. </summary>
+    ///
+ 
+    ///
+    /// <param name="hit">  The hit. </param>
+
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         var body = hit.collider.attachedRigidbody;
@@ -162,11 +202,13 @@ public class Player2Controller : Player
         body.velocity = pushDir * PushPower;
     }
 
-    /// <summary>
-    /// Applied a specified amount of damage to the character
-    /// </summary>
-    /// <param name="amount">The amount.</param>
-    /// <param name="attacker">The attacker.</param>
+    /// <summary>   Applied a specified amount of damage to the character. </summary>
+    ///
+ 
+    ///
+    /// <param name="amount">   The amount. </param>
+    /// <param name="attacker"> The attacker. </param>
+
     public override void Damage(float amount, Transform attacker)
     {
         if (!CanTakeDamage)
@@ -201,9 +243,10 @@ public class Player2Controller : Player
         }
     }
 
-    /// <summary>
-    /// Runs when the character dies
-    /// </summary>
+    /// <summary>   Runs when the character dies. </summary>
+    ///
+ 
+
     public override void Killed()
     {
         // Set the death flag so this function won't be called again.
@@ -214,13 +257,21 @@ public class Player2Controller : Player
         DeathSound.Play();
     }
 
-    /// <summary>
-    /// Hides the health.
-    /// </summary>
+    /// <summary>   Hides the health. </summary>
+    ///
+ 
+
     public void HideHealth()
     {
         healthCircle.enabled = false;
     }
+
+    /// <summary>   Executes the particle collision action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnParticleCollision(GameObject other)
     {
 		if(other.name.Equals("Afterburner")) {

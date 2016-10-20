@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Common\Editor\ProjectSettingsBase.cs
+//
+// summary:	Implements the project settings base class
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,15 +11,33 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   A project settings base. </summary>
+    ///
+ 
+
     public abstract class ProjectSettingsBase : ScriptableObject
     {
+        /// <summary>   Full pathname of the settings file. </summary>
         private static readonly string k_SettingsPath = Path.Combine("UnityTestTools", "Common");
+        /// <summary>   Pathname of the settings folder. </summary>
         const string k_SettingsFolder = "Settings";
+
+        /// <summary>   Saves this object. </summary>
+        ///
+     
 
         public virtual void Save()
         {
             EditorUtility.SetDirty(this);
         }
+
+        /// <summary>   Gets the load. </summary>
+        ///
+     
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        ///
+        /// <returns>   A T. </returns>
 
         public static T Load<T>() where T : ProjectSettingsBase, new ()
         {

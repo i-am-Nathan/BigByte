@@ -1,20 +1,28 @@
-﻿using UnityEngine;
+﻿// file:	assets\scripts\shop&collectables\torchfuel.cs
+//
+// summary:	Implements the torchfuel class
+
+using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Used to turn an object into torch fuel collectable
-/// </summary>
+/// <summary>   Used to turn an object into torch fuel collectable. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class TorchFuel : MonoBehaviour
 {
+    /// <summary>   The fuel amount. </summary>
     public float FuelAmount = 10;
     
+    /// <summary>   The torch fuel controller script. </summary>
     private TorchFuelController TorchFuelControllerScript;
+    /// <summary>   Manager for achievement. </summary>
 	private AchievementManager _achievementManager;
 
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
     void Start()
     {
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
@@ -34,19 +42,21 @@ public class TorchFuel : MonoBehaviour
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
     }
 
+    /// <summary>   Update is called once per frame. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
     void Update()
     {
 
     }
 
-    /// <summary>
-    /// When collision occurs between two objects
-    /// </summary>
-    /// <param name="other">The other.</param>
+    /// <summary>   When collision occurs between two objects. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnTriggerStay(Collider other)
     {
         // Checking if players are next to each other

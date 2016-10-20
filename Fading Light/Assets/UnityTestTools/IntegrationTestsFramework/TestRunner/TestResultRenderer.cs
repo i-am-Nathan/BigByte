@@ -1,15 +1,34 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResultRenderer.cs
+//
+// summary:	Implements the test result renderer class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>   A test result renderer. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class TestResultRenderer
 {
+    /// <summary>   A styles. </summary>
+    ///
+ 
+
     private static class Styles
     {
+        /// <summary>   The succeed label style. </summary>
         public static readonly GUIStyle SucceedLabelStyle;
+        /// <summary>   The failed label style. </summary>
         public static readonly GUIStyle FailedLabelStyle;
+        /// <summary>   The failed messages style. </summary>
         public static readonly GUIStyle FailedMessagesStyle;
+
+        /// <summary>   Static constructor. </summary>
+        ///
+     
 
         static Styles()
         {
@@ -26,17 +45,32 @@ public class TestResultRenderer
             FailedMessagesStyle.richText = true;
         }
     }
+    /// <summary>   Collection of tests. </summary>
     private readonly Dictionary<string, List<ITestResult>> m_TestCollection = new Dictionary<string, List<ITestResult>>();
 
+    /// <summary>   True to show, false to hide the results. </summary>
     private bool m_ShowResults;
+    /// <summary>   The scroll position. </summary>
     Vector2 m_ScrollPosition;
+    /// <summary>   Number of failures. </summary>
     private int m_FailureCount;
+
+    /// <summary>   Shows the results. </summary>
+    ///
+ 
 
     public void ShowResults()
     {
         m_ShowResults = true;
         Cursor.visible = true;
     }
+
+    /// <summary>   Adds the results to 'result'. </summary>
+    ///
+ 
+    ///
+    /// <param name="sceneName">    Name of the scene. </param>
+    /// <param name="result">       The result. </param>
 
     public void AddResults(string sceneName, ITestResult result)
     {
@@ -46,6 +80,10 @@ public class TestResultRenderer
         if (result.Executed && !result.IsSuccess)
             m_FailureCount++;
     }
+
+    /// <summary>   Draws this object. </summary>
+    ///
+ 
 
     public void Draw()
     {
@@ -75,6 +113,12 @@ public class TestResultRenderer
         if (GUILayout.Button("Close"))
             Application.Quit();
     }
+
+    /// <summary>   Failure count. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An int. </returns>
 
     public int FailureCount()
     {

@@ -20,6 +20,10 @@ using UnityEngine.UI;
 // Handles mouse and touch inputs for orbiting the camera around the target object.
 // ######################################################################
 
+/// <summary>   A ge orbit camera user interface. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GE_OrbitCameraUI : MonoBehaviour
 {
 
@@ -30,21 +34,34 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	#region Variables
 
 	// Unity UI elements
+    /// <summary>   The toggle yaw. </summary>
 	Toggle m_ToggleYaw = null;
+    /// <summary>   The toggle pitch. </summary>
 	Toggle m_TogglePitch = null;
+    /// <summary>   The toggle zoom. </summary>
 	Toggle m_ToggleZoom = null;
+    /// <summary>   The toggle help. </summary>
 	Toggle m_ToggleHelp = null;
+    /// <summary>   The toggle details. </summary>
 	Toggle m_ToggleDetails = null;
+    /// <summary>   The pinch zoom control. </summary>
 	Button m_PinchZoom = null;
+    /// <summary>   The scroll zoom control. </summary>
 	Button m_VScrollZoom = null;
 
+    /// <summary>   The panel settings. </summary>
 	GUIAnimFREE m_PanelSettings = null;
+    /// <summary>   The button settings. </summary>
 	GUIAnimFREE m_ButtonSettings = null;
 
+    /// <summary>   The first m panel help. </summary>
 	GUIAnimFREE m_PanelHelp1 = null;
+    /// <summary>   The second m panel help. </summary>
 	GUIAnimFREE m_PanelHelp2 = null;
+    /// <summary>   The panel details. </summary>
 	GUIAnimFREE m_PanelDetails = null;
 
+    /// <summary>   The ge orbit camera. </summary>
 	GE_OrbitCamera m_GE_OrbitCamera = null;
 
 	#endregion // Variables
@@ -58,6 +75,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start()
 	{
 
@@ -161,6 +183,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update()
 	{
 	}
@@ -174,6 +201,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	#region UI Responder
 
 	// Toggle Invert X axis
+
+    /// <summary>   Executes the toggle invert x coordinate action. </summary>
+    ///
+ 
+
 	public void OnToggle_InvertX()
 	{
 		if (m_ToggleYaw != null && m_GE_OrbitCamera != null)
@@ -183,6 +215,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// Toggle Invert Y axis
+
+    /// <summary>   Executes the toggle invert y coordinate action. </summary>
+    ///
+ 
+
 	public void OnToggle_InvertY()
 	{
 		if (m_TogglePitch != null && m_GE_OrbitCamera != null)
@@ -192,6 +229,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// Toggle Invert Zoom
+
+    /// <summary>   Executes the toggle invert zoom action. </summary>
+    ///
+ 
+
 	public void OnToggle_InvertZoom()
 	{
 		if (m_ToggleZoom != null && m_GE_OrbitCamera != null)
@@ -201,6 +243,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// Toggle show/hide Help panel
+
+    /// <summary>   Executes the toggle help action. </summary>
+    ///
+ 
+
 	public void OnToggle_Help()
 	{
 		if (m_ToggleHelp != null)
@@ -231,6 +278,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// Toggle show/hide Details panel
+
+    /// <summary>   Executes the toggle details action. </summary>
+    ///
+ 
+
 	public void OnToggle_Details()
 	{
 		if (m_ToggleDetails != null && m_PanelDetails != null)
@@ -247,6 +299,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// Use pinch to zoom
+
+    /// <summary>   Executes the button pinch zoom action. </summary>
+    ///
+ 
+
 	public void OnButton_PinchZoom()
 	{
 		if (m_PinchZoom != null)
@@ -260,6 +317,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// Use Two fingers verticle-scroll to zoom
+
+    /// <summary>   Executes the button v scroll zoom action. </summary>
+    ///
+ 
+
 	public void OnButton_VScrollZoom()
 	{
 		if (m_PinchZoom != null)
@@ -273,6 +335,11 @@ public class GE_OrbitCameraUI : MonoBehaviour
 	}
 
 	// User clicks on Settings button
+
+    /// <summary>   Executes the button settings action. </summary>
+    ///
+ 
+
 	public void OnButton_Settings()
 	{
 		if (m_PanelSettings != null)

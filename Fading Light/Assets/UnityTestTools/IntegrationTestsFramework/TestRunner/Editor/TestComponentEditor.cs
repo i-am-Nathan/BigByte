@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\TestComponentEditor.cs
+//
+// summary:	Implements the test component editor class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +12,51 @@ using UnityEditor.SceneManagement;
 
 namespace UnityTest
 {
+    /// <summary>   Editor for test component. </summary>
+    ///
+ 
+
     [CanEditMultipleObjects]
     [CustomEditor(typeof(TestComponent))]
     public class TestComponentEditor : Editor
     {
+        /// <summary>   The expect exception. </summary>
         private SerializedProperty m_ExpectException;
+        /// <summary>   List of expected exceptions. </summary>
         private SerializedProperty m_ExpectedExceptionList;
+        /// <summary>   The ignored. </summary>
         private SerializedProperty m_Ignored;
+        /// <summary>   The succeed assertions. </summary>
         private SerializedProperty m_SucceedAssertions;
+        /// <summary>   The succeed when exception is thrown. </summary>
         private SerializedProperty m_SucceedWhenExceptionIsThrown;
+        /// <summary>   The timeout. </summary>
         private SerializedProperty m_Timeout;
 
         #region GUI Contens
 
+        /// <summary>   The graphical user interface expect exception. </summary>
         private readonly GUIContent m_GUIExpectException = new GUIContent("Expect exception", "Should the test expect an exception");
+        /// <summary>   List of graphical user interface expect exceptions. </summary>
         private readonly GUIContent m_GUIExpectExceptionList = new GUIContent("Expected exception list", "A comma separated list of exception types which will not fail the test when thrown");
+        /// <summary>   The graphical user interface ignore. </summary>
         private readonly GUIContent m_GUIIgnore = new GUIContent("Ignore", "Ignore the tests in runs");
+        /// <summary>   The graphical user interface include platforms. </summary>
         private readonly GUIContent m_GUIIncludePlatforms = new GUIContent("Included platforms", "Platform on which the test should run");
+        /// <summary>   The graphical user interface succed on assertions. </summary>
         private readonly GUIContent m_GUISuccedOnAssertions = new GUIContent("Succeed on assertions", "Succeed after all assertions are executed");
+        /// <summary>   The graphical user interface succeed when exception is thrown. </summary>
         private readonly GUIContent m_GUISucceedWhenExceptionIsThrown = new GUIContent("Succeed when exception is thrown", "Should the test succeed when an expected exception is thrown");
+        /// <summary>   Name of the graphical user interface test. </summary>
         private readonly GUIContent m_GUITestName = new GUIContent("Test name", "Name of the test (is equal to the GameObject name)");
+        /// <summary>   The graphical user interface timeout. </summary>
         private readonly GUIContent m_GUITimeout = new GUIContent("Timeout", "Number of seconds after which the test will timeout");
 
         #endregion
+
+        /// <summary>   Executes the enable action. </summary>
+        ///
+     
 
         public void OnEnable()
         {
@@ -41,6 +67,13 @@ namespace UnityTest
             m_ExpectedExceptionList = serializedObject.FindProperty("expectedExceptionList");
             m_SucceedWhenExceptionIsThrown = serializedObject.FindProperty("succeedWhenExceptionIsThrown");
         }
+
+        /// <summary>
+        /// <para>
+        /// Implement this function to make a custom inspector.</para>
+        /// </summary>
+        ///
+     
 
         public override void OnInspectorGUI()
         {
@@ -106,6 +139,15 @@ namespace UnityTest
                 EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
+        /// <summary>   Gets list of ignored platforms. </summary>
+        ///
+     
+        ///
+        /// <param name="enumList"> List of enums. </param>
+        /// <param name="flags">    The flags. </param>
+        ///
+        /// <returns>   An array of string. </returns>
+
         private string[] GetListOfIgnoredPlatforms(string[] enumList, int flags)
         {
             var notSelectedPlatforms = new List<string>();
@@ -116,6 +158,15 @@ namespace UnityTest
             }
             return notSelectedPlatforms.ToArray();
         }
+
+        /// <summary>   Gets flag list. </summary>
+        ///
+     
+        ///
+        /// <param name="enumList">             List of enums. </param>
+        /// <param name="platformsToIgnore">    The platforms to ignore. </param>
+        ///
+        /// <returns>   The flag list. </returns>
 
         private int GetFlagList(string[] enumList, string[] platformsToIgnore)
         {

@@ -1,23 +1,33 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\UI\LifeManager.cs
+//
+// summary:	Implements the life manager class
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-/// <summary>
-/// Used to manage the shared lives between the two players
-/// </summary>
+/// <summary>   Used to manage the shared lives between the two players. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class LifeManager : MonoBehaviour
 {
 	// Handling
+    /// <summary>   The lives. </summary>
 	public GameObject[] Lives;
+    /// <summary>   Number of lives lefts. </summary>
     private int _numberOfLivesLeft;
+    /// <summary>   The game data script. </summary>
     private GameData _gameDataScript;
 
 	// UI element
+    /// <summary>   The death screen. </summary>
     public Canvas DeathScreen;
 
-	/// <summary>
-	/// Called when instance initialised
-	/// </summary>
+    /// <summary>   Called when instance initialised. </summary>
+    ///
+ 
+
     void Start()
     {
         // Getting the game data object which shows the total lives left
@@ -31,6 +41,10 @@ public class LifeManager : MonoBehaviour
         // Hiding the game over screen
         DeathScreen.enabled = false;
     }
+
+    /// <summary>   Updates the hearts on user interface. </summary>
+    ///
+ 
 
 	public void UpdateHeartsOnUI () {
 		_numberOfLivesLeft = _gameDataScript.GetNumberOfLives ();
@@ -51,9 +65,10 @@ public class LifeManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Called whenever a player dies
-	/// </summary>
+    /// <summary>   Called whenever a player dies. </summary>
+    ///
+ 
+
     public void LoseLife()
     {
 		// Decrementing the number of shared lives left
@@ -78,9 +93,12 @@ public class LifeManager : MonoBehaviour
         }
     }
 
-	/// <summary>
-	/// Called when a delay of 3 seconds is required before reloading the level
-	/// </summary>
+    /// <summary>   Called when a delay of 3 seconds is required before reloading the level. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     private IEnumerator Wait()
     {
 		// Waiting for 3 seconds
@@ -89,11 +107,13 @@ public class LifeManager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
-		
-	/// <summary>
-	/// Called when quit to main menu button is clicked
-	/// Loads the main menu screen
-	/// </summary>
+
+    /// <summary>
+    /// Called when quit to main menu button is clicked Loads the main menu screen.
+    /// </summary>
+    ///
+ 
+
     public void QuitToMenu()
     {
 		// Unpausing the game and loading the main menu
@@ -102,10 +122,11 @@ public class LifeManager : MonoBehaviour
         _gameDataScript.SetNumberOfLives(3);
         SceneManager.LoadScene("MainMenu");
     }
-		
-	/// <summary>
-	/// Called when restart level button is clicked
-	/// </summary>
+
+    /// <summary>   Called when restart level button is clicked. </summary>
+    ///
+ 
+
     public void RestartLevel()
     {
 		// Unpausing the game

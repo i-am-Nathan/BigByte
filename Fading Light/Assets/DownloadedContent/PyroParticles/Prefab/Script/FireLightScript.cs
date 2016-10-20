@@ -1,27 +1,47 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\PyroParticles\Prefab\Script\FireLightScript.cs
+//
+// summary:	Implements the fire light script class
+
+using UnityEngine;
 using System.Collections;
 
 namespace DigitalRuby.PyroParticles
 {
     /// <summary>
-    /// Simple script to fade in and out a light for an effect, as well as randomize movement for constant effects
+    /// Simple script to fade in and out a light for an effect, as well as randomize movement for
+    /// constant effects.
     /// </summary>
+    ///
+ 
+
     public class FireLightScript : MonoBehaviour
     {
+        /// <summary>   The seed. </summary>
         [Tooltip("Random seed for movement, 0 for no movement.")]
         public float Seed = 100.0f;
 
+        /// <summary>   The intensity modifier. </summary>
         [Tooltip("Multiplier for light intensity.")]
         public float IntensityModifier = 2.0f;
 
+        /// <summary>   The intensity maximum range. </summary>
         [SingleLine("Min and max intensity range.")]
         public RangeOfFloats IntensityMaxRange = new RangeOfFloats { Minimum = 0.0f, Maximum = 8.0f };
 
+        /// <summary>   The fire point light. </summary>
         private Light firePointLight;
+        /// <summary>   The light intensity. </summary>
         private float lightIntensity;
+        /// <summary>   The seed. </summary>
         private float seed;
+        /// <summary>   The fire base script. </summary>
         private FireBaseScript fireBaseScript;
+        /// <summary>   The base y coordinate. </summary>
         private float baseY;
+
+        /// <summary>   Awakes this object. </summary>
+        ///
+     
 
         private void Awake()
         {
@@ -37,6 +57,10 @@ namespace DigitalRuby.PyroParticles
             seed = UnityEngine.Random.value * Seed;
             fireBaseScript = gameObject.GetComponent<FireBaseScript>();
         }
+
+        /// <summary>   Updates this object. </summary>
+        ///
+     
 
         private void Update()
         {

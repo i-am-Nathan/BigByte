@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Assertions\Editor\AssertionComponentEditor.cs
+//
+// summary:	Implements the assertion component editor class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +12,60 @@ using UnityEditor.SceneManagement;
 
 namespace UnityTest
 {
+    /// <summary>   Editor for assertion component. </summary>
+    ///
+ 
+
     [CustomEditor(typeof(AssertionComponent))]
     public class AssertionComponentEditor : Editor
     {
+        /// <summary>   The comparer drop down. </summary>
         private readonly DropDownControl<Type> m_ComparerDropDown = new DropDownControl<Type>();
 
+        /// <summary>   this path selector. </summary>
         private readonly PropertyPathSelector m_ThisPathSelector = new PropertyPathSelector("Compare");
+        /// <summary>   The other path selector. </summary>
         private readonly PropertyPathSelector m_OtherPathSelector = new PropertyPathSelector("Compare to");
 
         #region GUI Contents
+
+        /// <summary>
+        /// The graphical user interface check after time graphical user interface content.
+        /// </summary>
+
         private readonly GUIContent m_GUICheckAfterTimeGuiContent = new GUIContent("Check after (seconds)", "After how many seconds the assertion should be checked");
+
+        /// <summary>
+        /// The graphical user interface repeat check time graphical user interface content.
+        /// </summary>
+
         private readonly GUIContent m_GUIRepeatCheckTimeGuiContent = new GUIContent("Repeat check", "Should the check be repeated.");
+
+        /// <summary>
+        /// The graphical user interface repeat every time graphical user interface content.
+        /// </summary>
+
         private readonly GUIContent m_GUIRepeatEveryTimeGuiContent = new GUIContent("Frequency of repetitions", "How often should the check be done");
+
+        /// <summary>
+        /// The graphical user interface check after frames graphical user interface content.
+        /// </summary>
+
         private readonly GUIContent m_GUICheckAfterFramesGuiContent = new GUIContent("Check after (frames)", "After how many frames the assertion should be checked");
+
+        /// <summary>
+        /// The graphical user interface repeat check frame graphical user interface content.
+        /// </summary>
+
         private readonly GUIContent m_GUIRepeatCheckFrameGuiContent = new GUIContent("Repeat check", "Should the check be repeated.");
         #endregion
 
+        /// <summary>   List of all comparers. </summary>
 		private static List<Type> allComparersList = null;
+
+        /// <summary>   Default constructor. </summary>
+        ///
+     
 
         public AssertionComponentEditor()
         {
@@ -33,6 +74,13 @@ namespace UnityTest
             m_ComparerDropDown.ignoreConvertForGUIContent = types => false;
             m_ComparerDropDown.tooltip = "Comparer that will be used to compare values and determine the result of assertion.";
         }
+
+        /// <summary>
+        /// <para>
+        /// Implement this function to make a custom inspector.</para>
+        /// </summary>
+        ///
+     
 
         public override void OnInspectorGUI()
         {
@@ -86,6 +134,12 @@ namespace UnityTest
                 EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
+        /// <summary>   Draw options for after period of time. </summary>
+        ///
+     
+        ///
+        /// <param name="script">   The script. </param>
+
         private void DrawOptionsForAfterPeriodOfTime(AssertionComponent script)
         {
             EditorGUILayout.Space();
@@ -104,6 +158,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Draw options for on update. </summary>
+        ///
+     
+        ///
+        /// <param name="script">   The script. </param>
+
         private void DrawOptionsForOnUpdate(AssertionComponent script)
         {
             EditorGUILayout.Space();
@@ -121,6 +181,12 @@ namespace UnityTest
                     script.repeatEveryFrame = 1;
             }
         }
+
+        /// <summary>   Draw compare to type. </summary>
+        ///
+     
+        ///
+        /// <param name="comparer"> The comparer. </param>
 
         private void DrawCompareToType(ComparerBase comparer)
         {
@@ -146,6 +212,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Draw object compare field. </summary>
+        ///
+     
+        ///
+        /// <param name="comparer"> The comparer. </param>
+
         private void DrawObjectCompareField(ComparerBase comparer)
         {
             m_OtherPathSelector.Draw(comparer.other, comparer,
@@ -163,6 +235,12 @@ namespace UnityTest
                                      );
         }
 
+        /// <summary>   Draw constant compare field. </summary>
+        ///
+     
+        ///
+        /// <param name="comparer"> The comparer. </param>
+
         private void DrawConstCompareField(ComparerBase comparer)
         {
             if (comparer.ConstValue == null)
@@ -178,6 +256,14 @@ namespace UnityTest
                 so.ApplyModifiedProperties();
             }
         }
+
+        /// <summary>   Draw comparer selection. </summary>
+        ///
+     
+        ///
+        /// <param name="script">   The script. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
 
         private bool DrawComparerSelection(AssertionComponent script)
         {
@@ -208,6 +294,12 @@ namespace UnityTest
 
             return script.Action != null;
         }
+
+        /// <summary>   Draw custom fields. </summary>
+        ///
+     
+        ///
+        /// <param name="script">   The script. </param>
 
         private void DrawCustomFields(AssertionComponent script)
         {

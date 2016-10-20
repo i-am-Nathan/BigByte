@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\NetworkResultSender.cs
+//
+// summary:	Implements the network result sender class
+
 #if !UNITY_METRO && (UNITY_PRO_LICENSE || !(UNITY_ANDROID || UNITY_IPHONE))
 #define UTT_SOCKETS_SUPPORTED
 #endif
@@ -13,15 +17,30 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace UnityTest
 {
+    /// <summary>   A network result sender. </summary>
+    ///
+ 
+
     public class NetworkResultSender : ITestRunnerCallback
     {
 #if UTT_SOCKETS_SUPPORTED
+        /// <summary>   The connection timeout. </summary>
         private readonly TimeSpan m_ConnectionTimeout = TimeSpan.FromSeconds(5);
 
+        /// <summary>   The IP. </summary>
         private readonly string m_Ip;
+        /// <summary>   The port. </summary>
         private readonly int m_Port;
 #endif
+        /// <summary>   True to lost connection. </summary>
         private bool m_LostConnection;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <param name="ip">   The IP. </param>
+        /// <param name="port"> The port. </param>
 
         public NetworkResultSender(string ip, int port)
         {
@@ -30,6 +49,14 @@ namespace UnityTest
             m_Port = port;
 #endif
         }
+
+        /// <summary>   Sends a dto. </summary>
+        ///
+     
+        ///
+        /// <param name="dto">  The dto. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
 
         private bool SendDTO(ResultDTO dto)
         {
@@ -72,6 +99,12 @@ namespace UnityTest
             return true;
         }
 
+        /// <summary>   Pings this object. </summary>
+        ///
+     
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+
         public bool Ping()
         {
             var result = SendDTO(ResultDTO.CreatePing());
@@ -79,30 +112,65 @@ namespace UnityTest
             return result;
         }
 
+        /// <summary>   Executes the started operation. </summary>
+        ///
+     
+        ///
+        /// <param name="platform">     The platform. </param>
+        /// <param name="testsToRun">   The tests to run. </param>
+
         public void RunStarted(string platform, List<TestComponent> testsToRun)
         {
             SendDTO(ResultDTO.CreateRunStarted());
         }
+
+        /// <summary>   Executes the finished operation. </summary>
+        ///
+     
+        ///
+        /// <param name="testResults">  The test results. </param>
 
         public void RunFinished(List<TestResult> testResults)
         {
             SendDTO(ResultDTO.CreateRunFinished(testResults));
         }
 
+        /// <summary>   Tests started. </summary>
+        ///
+     
+        ///
+        /// <param name="test"> The test. </param>
+
         public void TestStarted(TestResult test)
         {
             SendDTO(ResultDTO.CreateTestStarted(test));
         }
+
+        /// <summary>   Tests finished. </summary>
+        ///
+     
+        ///
+        /// <param name="test"> The test. </param>
 
         public void TestFinished(TestResult test)
         {
             SendDTO(ResultDTO.CreateTestFinished(test));
         }
 
+        /// <summary>   All scenes finished. </summary>
+        ///
+     
+
         public void AllScenesFinished()
         {
             SendDTO (ResultDTO.CreateAllScenesFinished ());
         }
+
+        /// <summary>   Tests run interrupted. </summary>
+        ///
+     
+        ///
+        /// <param name="testsNotRun">  The tests not run. </param>
 
         public void TestRunInterrupted(List<ITestComponent> testsNotRun)
         {
