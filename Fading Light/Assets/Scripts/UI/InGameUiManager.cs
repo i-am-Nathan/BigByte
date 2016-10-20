@@ -91,12 +91,12 @@ public class InGameUiManager : MonoBehaviour {
 		ExitMenu.enabled = false;
 		Scene scene = SceneManager.GetActiveScene();
 
-		if (scene.name == "Level 1") {
-			SceneManager.LoadScene("Level 2");
-		} else if (scene.name == "Level 2") {
-			SceneManager.LoadScene("Level 3");
-		} else if (scene.name == "Level 3") {
-			SceneManager.LoadScene("Level 4");
+		if (scene.name == "Level1") {
+			SceneManager.LoadScene("Level2");
+		} else if (scene.name == "Level2") {
+			SceneManager.LoadScene("Level3");
+		} else if (scene.name == "Level3") {
+			SceneManager.LoadScene("Level4");
 		}
 	}
 		
