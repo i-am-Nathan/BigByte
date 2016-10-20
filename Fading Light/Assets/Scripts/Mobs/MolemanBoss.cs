@@ -97,12 +97,13 @@ public class MolemanBoss : BaseEntity
     private void Start()
     {
         _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
-		HealthSlider = HealthSlider.GetComponent<Slider>();
+        CurrentHealth = Health;
+        HealthSlider = HealthSlider.GetComponent<Slider>();
 		HealthSlider.value = CurrentHealth;
 		BossName = BossName.GetComponent<Text>();
 		BossName.text = "Moleman";
 		BossPanel.SetActive(false);
-        CurrentHealth = Health;
+        
     }
 
     /// <summary>
@@ -138,6 +139,7 @@ public class MolemanBoss : BaseEntity
             pathfinder.enabled = false;
 
             _animator.Play("creature1Attack1", PlayMode.StopAll);
+            yield return new WaitForSeconds(0.4f);
             target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
 
             while (_animator.isPlaying)
@@ -179,7 +181,7 @@ public class MolemanBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
         if (isBoss) BossPanel.SetActive(true);
-        float refreshRate = !_isSprinting ? 0.3f : 0.05f;
+        float refreshRate = !_isSprinting ? 0.03f : 0.03f;
         _lockedOn = true;
 
         //Find closet player
