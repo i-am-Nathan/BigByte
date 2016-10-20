@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98465d2d237406140af2b3ea74cb0bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuAchievement: {fileID: 180688, guid: 40c90fba9dc64a447a3b48809419e9e7, type: 2}
+  MenuAchievement: {fileID: 149262, guid: 2bb12722fa93c5c4194990375081e45d, type: 2}
   Grid: {fileID: 1549046847}
 --- !u!1 &230874025
 GameObject:
@@ -512,7 +512,7 @@ RectTransform:
   m_Father: {fileID: 1322882787}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1846,7 +1846,7 @@ RectTransform:
   m_Father: {fileID: 1595513193}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2349,7 +2349,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 296246352}
   m_HandleRect: {fileID: 296246351}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2764,7 +2764,7 @@ GameObject:
   - 114: {fileID: 1022049284}
   m_Layer: 0
   m_Name: GameData
-  m_TagString: Game Data
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2780,6 +2780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6527f59d81ce86946acb28b4aa44d500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameAchievements: []
   Achievements:
   - Name: Killed First Spider
     Description: Killed a spider
@@ -2933,7 +2934,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_Name
@@ -3201,7 +3202,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 290.1, y: -0.000015258789}
-  m_SizeDelta: {x: 580.2, y: 0}
+  m_SizeDelta: {x: 580.2, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1175452454
 MonoBehaviour:
@@ -3567,10 +3568,10 @@ RectTransform:
   - {fileID: 953166829}
   m_Father: {fileID: 1175452453}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 290.1, y: -30}
+  m_SizeDelta: {x: 580.2, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1298677355
 MonoBehaviour:
@@ -5574,7 +5575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2086104953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5671,7 +5672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2106066887
 MonoBehaviour:
   m_ObjectHideFlags: 0
