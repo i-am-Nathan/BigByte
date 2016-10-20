@@ -5,6 +5,9 @@ public class FallingFenceLeverLeft : MonoBehaviour {
 
 	private bool _pulled = false;
 	private bool _leftWall = false;
+    public AudioClip LeverSound;
+    private AudioSource _source;
+    
 
 	/// <summary>
 	/// Called when the player is close enough to the lever, and presses T
@@ -15,7 +18,7 @@ public class FallingFenceLeverLeft : MonoBehaviour {
 		if (((other.name.Equals("Player 1") && Input.GetKeyDown(KeyCode.O)) || (other.name.Equals("Player2") && Input.GetKeyDown(KeyCode.Q))) && !_pulled)	
 		{
 			this.GetComponent<Animation>().Play("Armature|LeverDown");
-
+            _source.PlayOneShot(LeverSound);
 			_pulled = true;
 			GameObject go = GameObject.Find("Falling Fence Passage");
 			FallingFencePassage fallingFencePassage = (FallingFencePassage)go.GetComponent(typeof(FallingFencePassage));

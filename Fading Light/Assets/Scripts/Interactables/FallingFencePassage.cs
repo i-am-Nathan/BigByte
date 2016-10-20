@@ -6,7 +6,14 @@ public class FallingFencePassage : MonoBehaviour {
 	private bool _leftWall = false;
 	private bool _rightWall = false;
 	private bool _wallsDown = false;
+    public AudioSource LeverSound;
 
+    private GameObject leftFence;
+    private GameObject rightFence;
+    void Start()
+    {
+         LeverSound.loop = true;
+    }
 	public void SetLeftWall() {
 		_leftWall = true;
 	}
@@ -18,13 +25,18 @@ public class FallingFencePassage : MonoBehaviour {
 	void Update () {
 		if (_leftWall && _rightWall && !_wallsDown) {
 			Debug.Log ("Playing final animation");
-			GameObject rightFence = GameObject.Find("Falling Fence Right");
+			rightFence = GameObject.Find("Falling Fence Right");
 			rightFence.GetComponent<Animation>().Play("FallingWallFall");
 
-			GameObject leftFence = GameObject.Find("Falling Fence Left");
+			leftFence = GameObject.Find("Falling Fence Left");
 			leftFence.GetComponent<Animation>().Play("FallingWallFall");
+            LeverSound.Play();
 
 			_wallsDown = true;
 		}
+        else if(!(leftFence.GetComponent<Animation>().isPlaying || rightFence.GetComponent<Animation>().isPlaying))
+        {
+            LeverSound.Stop();
+        }
 	}
 }
