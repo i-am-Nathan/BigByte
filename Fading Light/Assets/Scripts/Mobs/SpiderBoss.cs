@@ -130,12 +130,12 @@ public class SpiderBoss : BaseEntity
         {
             if (DEBUG) Debug.Log("Entered state: Attack");
             if (isBoss) BossPanel.SetActive(true);
-
+            pathfinder.enabled = false;
             _animator.Play("run", PlayMode.StopAll);
 
             while (true)
             {
-                float step = 3f * Time.deltaTime;
+                float step = 8f * Time.deltaTime;
                 Vector3 targetDir = target.transform.position - transform.position;
                 Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
                 transform.rotation = Quaternion.LookRotation(newDir);
@@ -145,14 +145,12 @@ public class SpiderBoss : BaseEntity
 
                 float myAngle = Vector3.Angle(transform.forward, targetDir);
 
-                if (myAngle < 8.0f)
+                if (myAngle < 30f)
                 {
                     break;
                 }
                 yield return new WaitForSeconds(0.04f);
-            }
-
-            pathfinder.enabled = false;
+            }            
 
             _animator.Play("attack2", PlayMode.StopAll);
             target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
@@ -302,6 +300,7 @@ public class SpiderBoss : BaseEntity
 
     private void Death_Enter()
     {
+        this.transform.GetComponent<CapsuleCollider>().gameObject.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
         if (isBoss) BossPanel.SetActive(false);
     }
