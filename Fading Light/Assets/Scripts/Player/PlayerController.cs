@@ -203,6 +203,11 @@ public class PlayerController : Player
     /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
+        if (!CanTakeDamage)
+        {
+            return;
+        }
+
         Debug.Log("Player damaged");
 
 		if (isDefensePotActive ()) {
