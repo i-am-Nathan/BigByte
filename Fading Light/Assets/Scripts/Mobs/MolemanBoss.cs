@@ -97,12 +97,13 @@ public class MolemanBoss : BaseEntity
     private void Start()
     {
         _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
-		HealthSlider = HealthSlider.GetComponent<Slider>();
+        CurrentHealth = Health;
+        HealthSlider = HealthSlider.GetComponent<Slider>();
 		HealthSlider.value = CurrentHealth;
 		BossName = BossName.GetComponent<Text>();
 		BossName.text = "Moleman";
 		BossPanel.SetActive(false);
-        CurrentHealth = Health;
+        
     }
 
     /// <summary>
