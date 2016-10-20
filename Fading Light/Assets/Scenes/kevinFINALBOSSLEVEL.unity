@@ -849,6 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19c7aa21f77fe647a489d592ab9f2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activePillars: []
   arcGroup: {fileID: 486969112}
   prefab: {fileID: 160776, guid: 979f85fde09d447458f13fefff15315d, type: 2}
 --- !u!1001 &243979258
@@ -1218,7 +1219,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78479fb0073753e4182f24a6b1e3cf8b, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78479fb0073753e4182f24a6b1e3cf8b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1308,7 +1309,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1001 &609527934
 Prefab:
   m_ObjectHideFlags: 0
@@ -2606,8 +2607,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 3
+  _cooldownStartTime: 0
 --- !u!4 &832054513 stripped
 Transform:
   m_PrefabParentObject: {fileID: 476144, guid: bf10ca8cfcd4e414db60ca22cb63b953, type: 2}
@@ -2649,7 +2653,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 436266, guid: b672c83bd8876e44b8d7220a48051bc0, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 19534532, guid: b672c83bd8876e44b8d7220a48051bc0, type: 2}
       propertyPath: m_Radius
@@ -2722,7 +2726,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437762, guid: 1354f96a0aef3034e8b4f5a654ae4e13, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1354f96a0aef3034e8b4f5a654ae4e13, type: 2}
@@ -3409,7 +3413,7 @@ Transform:
   - {fileID: 1029781743}
   - {fileID: 832054513}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1001 &1041252631
 Prefab:
   m_ObjectHideFlags: 0
@@ -3651,8 +3655,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 2
+  _cooldownStartTime: 0
 --- !u!1001 &1065748929
 Prefab:
   m_ObjectHideFlags: 0
@@ -3902,8 +3909,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 5
+  _cooldownStartTime: 0
 --- !u!1001 &1105453515
 Prefab:
   m_ObjectHideFlags: 0
@@ -4473,8 +4483,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 1
+  _cooldownStartTime: 0
 --- !u!1001 &1188259592
 Prefab:
   m_ObjectHideFlags: 0
@@ -4733,10 +4746,14 @@ MonoBehaviour:
   Dialogue: {fileID: 0}
   TextFile: {fileID: 0}
   TextLines: []
+  _splitText: []
   CharacterImage: {fileID: 0}
   Talking: 0
   CharacterName: {fileID: 0}
   Images: []
+  _gameUI: {fileID: 0}
+  _dialogueSounds: []
+  _currentClip: 0
   CurrentLine: 0
   EndLine: 0
   Player1: {fileID: 0}
@@ -4744,10 +4761,14 @@ MonoBehaviour:
   MoleMan: {fileID: 0}
   ThisStoryline: {fileID: 0}
   TorchController: {fileID: 0}
+  NotifyStoryline: 1
   StopMovement: 0
   IsActive: 0
   FirstLine: 0
+  _isTyping: 0
+  _cancelTyping: 0
   TypeSound: {fileID: 0}
+  _source: {fileID: 0}
   TypeSpeed: 0
 --- !u!82 &1275513154
 AudioSource:
@@ -4835,7 +4856,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!4 &1304526684 stripped
 Transform:
   m_PrefabParentObject: {fileID: 476144, guid: bf10ca8cfcd4e414db60ca22cb63b953, type: 2}
@@ -4855,8 +4876,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 6
+  _cooldownStartTime: 0
 --- !u!1001 &1360625342
 Prefab:
   m_ObjectHideFlags: 0
@@ -5171,7 +5195,7 @@ RectTransform:
   - {fileID: 249485966}
   - {fileID: 12713444}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -5991,7 +6015,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1001 &1615340657
 Prefab:
   m_ObjectHideFlags: 0
@@ -6311,8 +6335,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 4
+  _cooldownStartTime: 0
 --- !u!1001 &1697318566
 Prefab:
   m_ObjectHideFlags: 0
@@ -6796,8 +6823,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6527f59d81ce86946acb28b4aa44d500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfLivesLeft: 0
+  _totalTime: 0
+  _sharedGold: 0
+  _torchFuel: 0
+  _torchFuelSlider: {fileID: 0}
+  _timesKilled: 0
+  _monstersKilled: 0
+  _chestsMissed: 0
+  _playerOneAccuracy: 0
+  _playerTwoAccuracy: 0
+  _playerOneNumHitsMissed: 0
+  _playerOneNumHitsAchieved: 0
+  _playerTwoNumHitsMissed: 0
+  _playerTwoNumHitsAchieved: 0
+  _inGameUiManager: {fileID: 0}
+  _firstLevel: 1
   Achievements: []
   AchievementPopup: {fileID: 0}
+  achievementText: {fileID: 0}
+  currentTime: 0
+  executedTime: 0
+  timeToWait: 3
+  isMainMenu: 0
 --- !u!4 &1737645111
 Transform:
   m_ObjectHideFlags: 0
@@ -6810,7 +6858,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 12
 --- !u!1 &1751763838
 GameObject:
   m_ObjectHideFlags: 0
@@ -6957,6 +7005,48 @@ CanvasRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 450910, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
   m_PrefabInternal: {fileID: 946694540}
+--- !u!1001 &1853445638
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 38.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 17.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 42.791428
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 475116, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 905eac67a8ad99943a3a32325f71775e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1884678297
 Prefab:
   m_ObjectHideFlags: 0
@@ -8240,8 +8330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af2f3bf60d890418a644ce7b17796e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
   _onCooldown: 0
   pillarNumber: 7
+  _cooldownStartTime: 0
 --- !u!1001 &2110201757
 Prefab:
   m_ObjectHideFlags: 0

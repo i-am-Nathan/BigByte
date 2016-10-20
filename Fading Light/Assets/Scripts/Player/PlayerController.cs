@@ -175,7 +175,7 @@ public class PlayerController : Player
             else if (Input.GetButtonUp("SwapTorch"))
             {
                 _lastPressed = false;
-            }
+            } 
         }
     }
 
@@ -283,4 +283,5 @@ public class PlayerController : Player
 		healthCircle.fillAmount += 30f;
 		_healthSlider.value += 30f;
 	}
+
 }
