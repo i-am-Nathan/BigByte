@@ -473,7 +473,7 @@ public class MoleDoggy : BaseEntity
             // Set the health bar's value to the current health.
             try
             {
-				HealthSlider.value -= amount/base.IntialHealth;
+				HealthSlider.value -= amount;
             }
             catch { }
 
