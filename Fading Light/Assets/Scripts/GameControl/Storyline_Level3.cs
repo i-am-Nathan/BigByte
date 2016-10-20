@@ -117,7 +117,7 @@ public class Storyline_Level3 : Storyline
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[1];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[1];
             CameraRig.GetComponent<PlayerCam>().CameraState = 1;
-            //Boss.BeginCutscene(this);
+            Boss.BeginCutscene(this);
             CharacterDamageEnabled(false);
             _done = true;
             _done = true;

@@ -141,8 +141,7 @@ public class SkeleBoss : BaseEntity
         pathfinder.enabled = false;
         yield return new WaitForSeconds(4f);
         pathfinder.enabled = true;
-
-        fsm.ChangeState(States.Idle);
+        _animator.Play("Idle", PlayMode.StopAll);
     }
 
     public void BeginCutscene(Storyline storyline)
@@ -157,13 +156,15 @@ public class SkeleBoss : BaseEntity
     IEnumerator Taunt_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");
-        _animator.Play("Roar", PlayMode.StopAll);
+        yield return new WaitForSeconds(4f);
+        _animator["Scream"].speed = 0.75f;
+        _animator.Play("Scream", PlayMode.StopAll);
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.2f);
         }
         _storyline.NextMoleMan();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.8f);
         fsm.ChangeState(States.Chase);
     }
 
