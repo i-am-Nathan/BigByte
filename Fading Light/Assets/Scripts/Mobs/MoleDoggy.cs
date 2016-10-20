@@ -148,7 +148,7 @@ public class MoleDoggy : BaseEntity
         {
             yield return new WaitForSeconds(0.2f);
         }
-        _storyline.Next();
+        _storyline.NextMoleMan();
         _animator.Play("Idle", PlayMode.StopAll);
         yield return new WaitForSeconds(1f);
         fsm.ChangeState(States.Chase);
