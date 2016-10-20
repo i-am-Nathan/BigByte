@@ -17,6 +17,8 @@ public class Storyline_Level4 : Storyline
     public List<GameObject> CutScenePositions;
     public List<GameObject> CustSceneTargets;
 
+    public MolemanBoss Boss;
+
     public int _currentStep = 0;
     private bool _done = false;
     private ToolTips _tips;
@@ -86,6 +88,10 @@ public class Storyline_Level4 : Storyline
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
             _done = true;
+            MoleManContoller moleman = GameObject.FindGameObjectWithTag("Moleman").GetComponent<MoleManContoller>();
+            GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(true);
+            moleman.Sink();
+            Boss.BeginCutscene(this);
         }
         else if (_currentStep == 1)
         {
@@ -94,6 +100,7 @@ public class Storyline_Level4 : Storyline
             Player1.IsDisabled = false;
             Player2.IsDisabled = false;
             _done = true;
+           
         }
         else if (_currentStep == 2)
         {
