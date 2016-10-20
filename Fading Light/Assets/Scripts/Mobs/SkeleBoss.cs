@@ -490,12 +490,16 @@ public class SkeleBoss : BaseEntity
 	public IEnumerator BossDeadWait () 
 	{
 		yield return new WaitForSeconds(1f);
+        
 		EndOfLevelTriggerScript.TriggerEndOfLevel ();
 	}
 
     public override void Killed()
     {
         base.Killed();
+
+        var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+        _achievementManager.AchievementObtained("Skeleton King.");
 
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
