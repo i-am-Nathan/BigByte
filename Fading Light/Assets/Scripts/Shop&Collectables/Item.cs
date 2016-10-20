@@ -9,6 +9,9 @@ public class Item : MonoBehaviour {
 	public string Lore;
 	public string Effect;
 
+	/// <summary>
+	/// Get method to obtain the name
+	/// </summary>
 	public string GetName() {
 		return Name;
 	}

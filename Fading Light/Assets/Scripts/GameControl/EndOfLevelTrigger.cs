@@ -36,6 +36,9 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Obtaining the correct informationa and sending it to the database
+	/// </summary>
 	public void SendToDatabase () {
 		Player1Name = Player1Name.GetComponent<Text>();
 		Player2Name = Player2Name.GetComponent<Text>();
@@ -66,19 +69,12 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		_gameDataScript = GameObject.Find("GameData").GetComponent<GameData>();
     }
 		
+	/// <summary>
+	/// Submits the highscore to the online database
+	/// </summary>
 	public void SubmitHighScore () {
 		SendToDatabase ();
 		SubmitHighScoreMenu.enabled = false;
 		SceneManager.LoadScene("MainMenu");
 	}
-
-//	/// <summary>
-//	/// Called when a player enters the box collider placed at the end of the level
-//	/// </summary>
-//    void OnTriggerEnter(Collider c)
-//    {
-//		if (c.gameObject.tag == "Player2" || c.gameObject.tag == "Player1") {
-//			TriggerEndOfLevel ();
-//		}
-//    }
 }
