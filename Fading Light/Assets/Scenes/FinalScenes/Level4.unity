@@ -15269,6 +15269,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11453486, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: AchievementManager
+      value: 
+      objectReference: {fileID: 1890223601}
+    - target: {fileID: 11455872, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: AchievementManager
+      value: 
+      objectReference: {fileID: 1890223601}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1673822d2508371498ef1be030ada982, type: 2}
   m_IsPrefabParent: 0
@@ -19475,6 +19483,18 @@ Prefab:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2334072, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 13644832, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322300, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11498912, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e42df557aca37be45a5311538ec54b1b, type: 2}
@@ -22534,7 +22554,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: Achievements.Array.size
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 492574, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: m_LocalPosition.x
@@ -22582,7 +22602,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: Achievements.Array.data[2].Description
-      value: Opened your first chest woo
+      value: Opened your first chest!
       objectReference: {fileID: 0}
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: Achievements.Array.data[2].IconIncomplete
@@ -22610,7 +22630,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: Achievements.Array.data[1].Description
-      value: Get your first light fuel
+      value: Stocked up on fuel!
       objectReference: {fileID: 0}
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: Achievements.Array.data[1].TargetProgress
@@ -22623,6 +22643,106 @@ Prefab:
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: Achievements.Array.data[2].RewardPoints
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[3].Name
+      value: First Swing
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[3].Description
+      value: Swung your sword!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[3].IconIncomplete
+      value: 
+      objectReference: {fileID: 2800000, guid: ea616afd23403a7449d7505d4de4be1b, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[3].IconComplete
+      value: 
+      objectReference: {fileID: 2800000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[3].TargetProgress
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[4].Name
+      value: Shopping Spree!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[4].Description
+      value: Opened the shop.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[4].IconIncomplete
+      value: 
+      objectReference: {fileID: 2800000, guid: ea616afd23403a7449d7505d4de4be1b, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[4].IconComplete
+      value: 
+      objectReference: {fileID: 2800000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[4].TargetProgress
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[5].Name
+      value: Dog House.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[5].Description
+      value: Killed the MoleMans dog.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[5].IconIncomplete
+      value: 
+      objectReference: {fileID: 2800000, guid: ea616afd23403a7449d7505d4de4be1b, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[5].IconComplete
+      value: 
+      objectReference: {fileID: 2800000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[5].TargetProgress
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[6].Name
+      value: Thirsty.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[6].Description
+      value: Used your first potion.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[6].IconIncomplete
+      value: 
+      objectReference: {fileID: 2800000, guid: ea616afd23403a7449d7505d4de4be1b, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[6].IconComplete
+      value: 
+      objectReference: {fileID: 2800000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[6].TargetProgress
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[7].Name
+      value: Skeleton King.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[7].Description
+      value: Killed the king of the skeletons.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[7].IconIncomplete
+      value: 
+      objectReference: {fileID: 2800000, guid: ea616afd23403a7449d7505d4de4be1b, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[7].IconComplete
+      value: 
+      objectReference: {fileID: 2800000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
+    - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
+      propertyPath: Achievements.Array.data[7].TargetProgress
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5886c84415a11b644936e5421144876e, type: 2}
@@ -36839,6 +36959,12 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 137386, guid: 1673822d2508371498ef1be030ada982, type: 2}
   m_PrefabInternal: {fileID: 766405322}
+--- !u!114 &1890223601 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1147063569}
+  m_Script: {fileID: 11500000, guid: 37f7979be969b594c821d20b9e91f4c2, type: 3}
 --- !u!1001 &1912653853
 Prefab:
   m_ObjectHideFlags: 0
@@ -39044,7 +39170,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22433478, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 22433478, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
       propertyPath: m_AnchorMax.y
@@ -39057,6 +39183,38 @@ Prefab:
     - target: {fileID: 22440508, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11460102, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_MaxValue
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 11460102, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_Value
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 401998, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 478512, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 22471484, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22471484, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22471484, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474486, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_Value
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}

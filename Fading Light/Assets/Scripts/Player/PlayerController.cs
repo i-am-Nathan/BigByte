@@ -126,7 +126,7 @@ public class PlayerController : Player
             _lastAttack = Time.time;
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AchievementObtained("First Hits");
+            AchievementManager.AchievementObtained("First Swing");
             HitSounds.Play();
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
@@ -226,21 +226,22 @@ public class PlayerController : Player
             _healthSlider.value -= amount;
             Debug.Log(healthCircle.fillAmount);
             Invoke("HideHealth", 3);
-        } catch {}
 
-        // If the player has lost all it's health and the death flag hasn't been set yet...
-        if (CurrentHealth <= 0 && !isDead)
-        {
-            // ... it should die.
-            Killed();
-        }
-	    else
-        {
-            if (!HurtSounds.isPlaying)
+            // If the player has lost all it's health and the death flag hasn't been set yet...
+            if (CurrentHealth <= 0 && !isDead)
             {
-                HurtSounds.Play();
+                // ... it should die.
+                Killed();
+            }
+            else
+            {
+                if (!HurtSounds.isPlaying)
+                {
+                    HurtSounds.Play();
+                }
             }
         }
+        catch { }
     }
 
     /// <summary>
@@ -250,10 +251,13 @@ public class PlayerController : Player
     {
         // Set the death flag so this function won't be called again.
         base.Killed();
-        _lifeManagerScript.LoseLife();
-        Debug.Log("Dead");
-	    DeathSound.Play();
-	
+        try
+        {
+            _lifeManagerScript.LoseLife();
+            Debug.Log("Dead");
+            DeathSound.Play();
+        }
+        catch { }
     }
 
     /// <summary>

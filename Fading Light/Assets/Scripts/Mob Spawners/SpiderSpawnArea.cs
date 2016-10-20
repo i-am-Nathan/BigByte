@@ -48,25 +48,5 @@ public class SpiderSpawnArea : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// When collision occurs between two objects
-    /// </summary>
-    /// <param name="other">The other.</param>
-    void OnTriggerStay(Collider other)
-    {
-        // Checking if players are next to each other
-        if (other.gameObject.tag.Equals("Player2") && !TorchFuelControllerScript.TorchInPlayer1)
-        {
-            TorchFuelControllerScript.AddFuel(FuelAmount);
-            TorchFuelControllerScript.RemoveFuelAmount();
-			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
-            Destroy(this.gameObject);
-        }else if(other.gameObject.tag.Equals("Player") && TorchFuelControllerScript.TorchInPlayer1)
-        {
-            TorchFuelControllerScript.AddFuel(FuelAmount);
-            TorchFuelControllerScript.RemoveFuelAmount();
-			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
-            Destroy(this.gameObject);
-        }
-    }
+   
 }

@@ -112,9 +112,19 @@ public class InGameUiManager : MonoBehaviour {
 		// Unpausing the game and loading the main menu scene
         Time.timeScale = 1;
 
-		// Destroying game data to reset all data
-		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
-		Destroy (go);
+        // Destroying game data to reset all data
+        _gameDataScript.SetAmountOfGold(0);
+        _gameDataScript.SetNumberOfLives(3);
+        _gameDataScript.SetPlayer1Accuracy(0);
+        _gameDataScript.SetPlayer2Accuracy(0);
+        _gameDataScript.SetPlayer1ItemQuantityDictionary("Health Potion", 0);
+        _gameDataScript.SetPlayer1ItemQuantityDictionary("Attack Potion", 0);
+        _gameDataScript.SetPlayer1ItemQuantityDictionary("Defense Potion", 0);
+
+        _gameDataScript.SetPlayer2ItemQuantityDictionary("Health Potion", 0);
+        _gameDataScript.SetPlayer2ItemQuantityDictionary("Attack Potion", 0);
+        _gameDataScript.SetPlayer2ItemQuantityDictionary("Defense Potion", 0);
+
         SceneManager.LoadScene("MainMenu");
     }
 

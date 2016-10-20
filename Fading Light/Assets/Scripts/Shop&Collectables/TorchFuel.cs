@@ -54,13 +54,13 @@ public class TorchFuel : MonoBehaviour
         {
             TorchFuelControllerScript.AddFuel(FuelAmount);
             TorchFuelControllerScript.RemoveFuelAmount();
-			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
+            _achievementManager.AchievementObtained("Let there be light!");
             Destroy(this.gameObject);
         }else if(other.gameObject.tag.Equals("Player") && TorchFuelControllerScript.TorchInPlayer1)
         {
             TorchFuelControllerScript.AddFuel(FuelAmount);
             TorchFuelControllerScript.RemoveFuelAmount();
-			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
+            _achievementManager.AchievementObtained("Let there be light!");
             Destroy(this.gameObject);
         }
     }

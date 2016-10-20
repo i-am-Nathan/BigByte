@@ -490,6 +490,7 @@ public class SkeleBoss : BaseEntity
 	public IEnumerator BossDeadWait () 
 	{
 		yield return new WaitForSeconds(1f);
+        
 		EndOfLevelTriggerScript.TriggerEndOfLevel ();
 	}
 
@@ -497,16 +498,19 @@ public class SkeleBoss : BaseEntity
     {
         base.Killed();
 
+        var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+        _achievementManager.AchievementObtained("Skeleton King.");
+
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
         {
 			DeathSound.Play();
             _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
 
-			// Triggering end of level 1 second after boss is defeated
-			StartCoroutine(BossDeadWait());
+            // Triggering end of level 1 second after boss is defeated
+            StartCoroutine(BossDeadWait());
 
         } catch { }        
     }

@@ -138,7 +138,11 @@ public class SubInventoryManager : MonoBehaviour {
 	///  through their items
 	/// </summary>
 	public void UseItem (bool player1) {
-		if (player1) {
+
+        var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+        _achievementManager.AchievementObtained("Thirsty.");
+
+        if (player1) {
 			if (_player1ItemQuantityDictionary [_player1ItemName.text] != 0) {
 				_player1ItemQuantityDictionary[_player1ItemName.text] -= 1;
 

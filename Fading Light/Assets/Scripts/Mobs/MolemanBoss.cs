@@ -145,7 +145,7 @@ public class MolemanBoss : BaseEntity
         yield return new WaitForSeconds(1f);
         _storyline.NextMoleMan();
         yield return new WaitForSeconds(2f);
-        GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(false);
         fsm.ChangeState(States.Chase);
     }
 
@@ -424,10 +424,10 @@ public class MolemanBoss : BaseEntity
             pathfinder.Stop();
             _animator.Play("creature1Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
 
-			// Triggering end of level 1 second after boss is defeated
-			StartCoroutine(BossDeadWait());
+            // Triggering end of level 1 second after boss is defeated
+            StartCoroutine(BossDeadWait());
         }
         catch { }
     }
