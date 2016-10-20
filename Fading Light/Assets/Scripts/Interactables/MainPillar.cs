@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -30,7 +31,7 @@ public class MainPillar : MonoBehaviour {
 
     public void arc()
     {
-        Debug.Log("arc: " + _activePillars[0].pillarNumber + " " + _activePillars[1].pillarNumber);
+
         Transform arc = arcGroup.transform.Find(_activePillars[0].pillarNumber.ToString() + _activePillars[1].pillarNumber.ToString());
         if (arc != null)
         {
@@ -47,10 +48,17 @@ public class MainPillar : MonoBehaviour {
 
     private Quaternion angleBetweenPillars(Vector3 pillar1, Vector3 pillar2)
     {
-        //Vector2 difference = new Vector2(pillar1.x, pillar1.z) - new Vector2(pillar2.x, pillar2.z);
-        
-        float sign = (pillar1.x < pillar2.x) ? 1.0f : -1.0f;
-        return Quaternion.Euler(new Vector3(0, 0, Vector2.Angle(new Vector2(pillar1.x, pillar1.z), new Vector2(pillar2.x, pillar2.z)) * sign));
+        int offset = 0;
+        if (pillar1.z> pillar2.z)
+        {
+            offset = 180;
+        }
+
+        double angle = (Math.Atan((pillar2.x - pillar1.x) / (pillar2.z - pillar1.z)))*180/Math.PI;
+        angle = angle + offset;
+
+
+        return Quaternion.Euler(new Vector3(0, (float)angle, 0));
     }
 
 }
