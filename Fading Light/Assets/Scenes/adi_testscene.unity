@@ -1733,7 +1733,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 202536215}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 438.9, y: 10.8, z: 149.9}
+  m_LocalPosition: {x: 438.9, y: 10.8, z: 176}
   m_LocalScale: {x: 68.96843, y: 50.665337, z: 5.0000024}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_Children: []
@@ -7855,7 +7855,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 407470, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.2
+      value: 421
       objectReference: {fileID: 0}
     - target: {fileID: 407470, guid: 1673822d2508371498ef1be030ada982, type: 2}
       propertyPath: m_LocalPosition.y
@@ -9998,7 +9998,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 811790101}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 363, y: 19.7, z: 136}
+  m_LocalPosition: {x: 339, y: 19.7, z: 136}
   m_LocalScale: {x: 99.26813, y: 50.665337, z: 40.00002}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_Children: []
@@ -11574,7 +11574,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 935474489}
   m_LocalRotation: {x: -0.00000014901161, y: -0.7071068, z: -0.000000029802322, w: 0.7071067}
-  m_LocalPosition: {x: -22.95, y: 1.18, z: -5.965}
+  m_LocalPosition: {x: -24.64, y: 1.18, z: -5.97}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_Children:
@@ -16843,6 +16843,10 @@ Canvas:
 Transform:
   m_PrefabParentObject: {fileID: 476144, guid: bf10ca8cfcd4e414db60ca22cb63b953, type: 2}
   m_PrefabInternal: {fileID: 1394540634}
+--- !u!1 &1330538949 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 148300, guid: 04c11f75ea6385a4eb9f4f260aba0402, type: 2}
+  m_PrefabInternal: {fileID: 1167152685}
 --- !u!1 &1352661866
 GameObject:
   m_ObjectHideFlags: 0
@@ -18151,12 +18155,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba795bf954865c7429ca4cefdc62a941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue: {fileID: 0}
+  Dialogue: {fileID: 4900000, guid: 208e211aeec878f4c990cc95376fd68f, type: 3}
   StartLine: 0
   EndLine: 0
-  TextBox: {fileID: 0}
+  TextBox: {fileID: 1275513153}
   RequireButtonPress: 0
-  DestroyWhenActivated: 0
+  DestroyWhenActivated: 1
   DialogueSpeech: []
   TalkOnce: 0
   Notify: 0
@@ -24391,8 +24395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sawTrap:
+  - {fileID: 1330538949}
   - {fileID: 266769447}
-  - {fileID: 0}
   - {fileID: 653893883}
   axeTrap:
   - {fileID: 99273029}
