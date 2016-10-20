@@ -34,9 +34,9 @@ public class FallingFencePassage : MonoBehaviour {
 
 			_wallsDown = true;
 		}
-        else if(!(leftFence.GetComponent<Animation>().isPlaying || rightFence.GetComponent<Animation>().isPlaying))
-        {
-            LeverSound.Stop();
-        }
+//		else if(!(leftFence.GetComponent<Animation>().isPlaying || rightFence.GetComponent<Animation>().isPlaying))
+//        {
+//            LeverSound.Stop();
+//        }
 	}
 }

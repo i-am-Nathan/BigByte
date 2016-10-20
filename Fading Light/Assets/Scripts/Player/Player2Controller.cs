@@ -87,6 +87,8 @@ public class Player2Controller : Player
         {
             ControlWASD();
         }
+
+		UpdateEffects ();
     }
 
     /// <summary>
