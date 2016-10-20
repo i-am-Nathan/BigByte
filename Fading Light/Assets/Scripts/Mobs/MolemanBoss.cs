@@ -62,7 +62,9 @@ public class MolemanBoss : BaseEntity
 
     private bool DEBUG = false;
     public bool isBoss = true;
-
+    
+    private bool _summonedOnce;
+    private bool _summonedTwice;
 	public EndOfLevelTrigger EndOfLevelTriggerScript;
 
     private AchievementManager _achievementManager;
@@ -104,8 +106,7 @@ public class MolemanBoss : BaseEntity
 		HealthSlider.value = CurrentHealth;
 		BossName = BossName.GetComponent<Text>();
 		BossName.text = "Moleman";
-		BossPanel.SetActive(false);
-        
+		BossPanel.SetActive(false);        
     }
 
     /// <summary>
@@ -261,6 +262,28 @@ public class MolemanBoss : BaseEntity
         return _summoning;
     }
 
+    public bool isSummoningFirstWave()
+    {
+        if (_summoning && !_summonedTwice)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public bool isSummoningSecondWave()
+    {
+        if (_summoning && _summonedTwice)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
     /// <summary>
     /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
     /// if transitions to the chase state to chase them down.
@@ -310,8 +333,6 @@ public class MolemanBoss : BaseEntity
         if (isBoss) BossPanel.SetActive(false);
     }
 
-    private bool _summonedOnce;
-    private bool _summonedTwice;
 
     public override void Damage(float amount, Transform attacker)
     {
