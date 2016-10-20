@@ -17,6 +17,7 @@ public class MolemanBoss : BaseEntity
         Chase,
         Attack,
         Taunt,
+        RoarSummon,
         Death
     }
 
@@ -131,35 +132,52 @@ public class MolemanBoss : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Attack");
-        //if (isBoss) BossPanel.SetActive(true);
-        RotateTowards(target);
+        if (!isDead)
+        {
+            if (DEBUG) Debug.Log("Entered state: Attack");
+            //if (isBoss) BossPanel.SetActive(true);
+            RotateTowards(target);
 
+            pathfinder.enabled = false;
+
+            _animator.Play("creature1Attack1", PlayMode.StopAll);
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+
+            if (_isSprinting) _isSprinting = false;
+
+            yield return new WaitForSeconds(AttackCooldown);
+
+
+            pathfinder.enabled = true;
+            fsm.ChangeState(States.Chase);
+        }
+    }
+
+    private bool _summoning = false;
+
+    IEnumerator RoarSummon_Enter()
+    {
+        _summoning = true;
         pathfinder.enabled = false;
 
-        _animator.Play("creature1Attack1", PlayMode.StopAll);
-        target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        
+        _animator.Play("creature1roar", PlayMode.StopAll);
+
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.25f);
-            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
         }
 
-        if (_isSprinting) _isSprinting = false;
-
-        yield return new WaitForSeconds(AttackCooldown);
-
-
-        pathfinder.enabled = true;
         fsm.ChangeState(States.Chase);
+        pathfinder.enabled = true;
+        _summoning = true;
     }
 
-    /// <summary>
-    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// molemans alert area, or comes into attack range.
-    /// </summary>
-    /// <returns></returns>
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
@@ -171,7 +189,7 @@ public class MolemanBoss : BaseEntity
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
 
-        while (_lockedOn)
+        while (_lockedOn && !isDead)
         {
 
             if (!_isMoving)
@@ -237,6 +255,11 @@ public class MolemanBoss : BaseEntity
         }
     }
 
+    public bool isSummoning()
+    {
+        return _summoning;
+    }
+
     /// <summary>
     /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
     /// if transitions to the chase state to chase them down.
@@ -286,9 +309,30 @@ public class MolemanBoss : BaseEntity
         //if (isBoss) BossPanel.SetActive(false);
     }
 
+    private bool _summonedOnce;
+    private bool _summonedTwice;
+
     public override void Damage(float amount, Transform attacker)
     {
+        if (isDead) return;
+        if (_summoning) return;
         base.Damage(amount, attacker);
+
+        if (CurrentHealth < 150 && !_summonedOnce)
+        {
+            _summonedOnce = true;
+            Debug.Log("Health reduced to first summoning level");
+            fsm.ChangeState(States.RoarSummon, StateTransition.Overwrite);
+            return;
+        }
+
+        if (CurrentHealth < 40 && !_summonedTwice)
+        {
+            _summonedTwice = true;
+            Debug.Log("Health reduced to first summoning level");
+            fsm.ChangeState(States.RoarSummon, StateTransition.Overwrite);
+            return;
+        }
 
         // Set the health bar's value to the current health.
         try
