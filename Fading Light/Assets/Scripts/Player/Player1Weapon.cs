@@ -26,7 +26,7 @@ public class Player1Weapon : MonoBehaviour
         Player weaponHolder = this.transform.root.GetComponent<Player>();
         PlayerController player1 = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
         if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
-		if(player2.isAttacking()&&other.name.StartsWith("Breakable Wall")){
+		if(player1.isAttacking()&&other.name.StartsWith("Breakable Wall")){
 			FadeObjectInOut fade = (FadeObjectInOut)other.GetComponent (typeof(FadeObjectInOut));
 			fade.FadeOut ();
 		}
