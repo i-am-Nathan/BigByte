@@ -67,6 +67,7 @@ public class SkeleBoss : BaseEntity
 
 	private AchievementManager _achievementManager;
     private GameObject _cloud;
+    Storyline _storyline;
 
     private bool _isAttacking;
 
@@ -144,13 +145,26 @@ public class SkeleBoss : BaseEntity
         fsm.ChangeState(States.Idle);
     }
 
+    public void BeginCutscene(Storyline storyline)
+    {
+        _storyline = storyline;
+        fsm.ChangeState(States.Taunt);
+    }
+
     /// <summary>
     /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
     /// </summary>
-    private void Taunt_Enter()
+    IEnumerator Taunt_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");
-        fsm.ChangeState(States.Idle);
+        _animator.Play("Roar", PlayMode.StopAll);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        _storyline.NextMoleMan();
+        yield return new WaitForSeconds(2f);
+        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>
@@ -454,6 +468,12 @@ public class SkeleBoss : BaseEntity
         }
     }
 
+	public IEnumerator BossDeadWait () 
+	{
+		yield return new WaitForSeconds(1f);
+		EndOfLevelTriggerScript.TriggerEndOfLevel ();
+	}
+
     public override void Killed()
     {
         base.Killed();
@@ -466,8 +486,8 @@ public class SkeleBoss : BaseEntity
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
 
 			// Triggering end of level 1 second after boss is defeated
-			yield return new WaitForSeconds(1f);
-			EndOfLevelTriggerScript.TriggerEndOfLevel ();
+			StartCoroutine(BossDeadWait());
+
         } catch { }        
     }
 }
