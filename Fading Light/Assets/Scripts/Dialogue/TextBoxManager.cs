@@ -210,6 +210,7 @@ public class TextBoxManager : MonoBehaviour {
 		IsActive = false;
 		Player1.IsDisabled = false;
 		Player2.IsDisabled = false;
+
         MoleMan.IsDisabled = false;
 
         if (NotifyStoryline)

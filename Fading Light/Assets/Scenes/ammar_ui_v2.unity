@@ -2574,7 +2574,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 356088136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.20431519, y: 1.18, z: -3.2112427}
+  m_LocalPosition: {x: 0.20431519, y: 1.18, z: 4.2}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -2590,8 +2590,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.74725, y: 9.532024, z: 95.55388}
-  m_Center: {x: 4.373657, y: 4.2660284, z: -13.844788}
+  m_Size: {x: 9.74725, y: 9.532024, z: 101.57184}
+  m_Center: {x: 4.373657, y: 4.2660294, z: -16.853731}
 --- !u!114 &356088139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2603,9 +2603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba795bf954865c7429ca4cefdc62a941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue: {fileID: 0}
+  Dialogue: {fileID: 4900000, guid: aab1af0321fe8b641802dd3e0b24b53d, type: 3}
   StartLine: 0
-  EndLine: 0
+  EndLine: 1
   TextBox: {fileID: 1275513153}
   RequireButtonPress: 0
   DestroyWhenActivated: 1
@@ -7553,7 +7553,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 408334, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 365.4
+      value: 370.6
       objectReference: {fileID: 0}
     - target: {fileID: 408334, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7561,7 +7561,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408334, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -278
+      value: -301
       objectReference: {fileID: 0}
     - target: {fileID: 408334, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7626,6 +7626,34 @@ Prefab:
     - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
       propertyPath: Notify
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: Dialogue
+      value: 
+      objectReference: {fileID: 4900000, guid: aab1af0321fe8b641802dd3e0b24b53d, type: 3}
+    - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: EndLine
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555698, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555698, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: m_Size.x
+      value: 3.5720387
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555698, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: m_Center.x
+      value: 1.4860128
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555698, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: m_Size.z
+      value: 4.6307364
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555698, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: m_Center.z
+      value: -0.008148193
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
@@ -8256,7 +8284,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
       propertyPath: m_Name
@@ -9406,7 +9434,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 492574, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 11466770, guid: 5886c84415a11b644936e5421144876e, type: 2}
       propertyPath: AchievementPopup
@@ -13591,7 +13619,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 420500, guid: a843a0b99acf9f140aa551a17de4b6ce, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11439254, guid: a843a0b99acf9f140aa551a17de4b6ce, type: 2}
       propertyPath: HealthCircle

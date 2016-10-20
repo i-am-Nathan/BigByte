@@ -88,11 +88,11 @@ public class OpenTreasure : MonoBehaviour {
 
 			}
 			_prefab = Instantiate (DropList[itemIndex], transform.position + new Vector3(0,4,0), Quaternion.identity)as GameObject;
-			float[] randomValues = new float[6] {-20,-30, -25, 20,30,25};
+			float[] randomValues = new float[6] {-90,-60, -50, 90 , 60,50};
 
 			float randomX = Random.Range (0,6);
 			float randomZ = Random.Range (0,6);
-			_prefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 7f, randomValues[(int)randomZ]);
+			_prefab.GetComponent<Rigidbody>().velocity = new Vector3 ( randomValues[(int)randomX], 10f, randomValues[(int)randomZ]);
 			//Plays the sound of treasure coming out.
 			_source.PlayOneShot (TreasureSound);
 		}
