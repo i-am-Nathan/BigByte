@@ -27,8 +27,8 @@ public class InGameUiManager : MonoBehaviour {
 	/// Used for initialisation 
 	/// </summary>
     void Start () {
+		
 		// Hiding menus which are not meant to be shown yet
-
 		Time.timeScale = 1;
         LevelFinishedMenu.enabled = false;
         ExitMenu.enabled = false;
@@ -37,12 +37,11 @@ public class InGameUiManager : MonoBehaviour {
             ControlsMenu.enabled = false;
         }
 	
-
         RestartLevelButton = RestartLevelButton.GetComponent<Button>();
         QuitToMenuButton = QuitToMenuButton.GetComponent<Button>();
         ContinueButton = ContinueButton.GetComponent<Button>();
 
-		// Getting the game data object which shows the total lives left
+		// Getting the game data object
 		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
 		_gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
@@ -84,7 +83,7 @@ public class InGameUiManager : MonoBehaviour {
     }
 
 	/// <summary>
-	/// Used to continue the game (called by Continue button)
+	/// Used to load the next level
 	/// </summary>
 	public void NextLevel ()
 	{
@@ -94,16 +93,12 @@ public class InGameUiManager : MonoBehaviour {
 		Scene scene = SceneManager.GetActiveScene();
 
 		if (scene.name == "Level1") {
-			Debug.Log ("Loading level 2");
-			//Destroy(GameObject.Find ("Characters-Camera-Torch"));
 			SceneManager.LoadScene("Level2");
 
 		} else if (scene.name == "Level2") {
-			Debug.Log ("Loading level 3");
 			SceneManager.LoadScene("Level3");
 
 		} else if (scene.name == "Level3") {
-			Debug.Log ("Loading level 4");
 			SceneManager.LoadScene("Level4");
 		}
 	}
@@ -175,6 +170,9 @@ public class InGameUiManager : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Updates the gold on the UI
+	/// </summary>
 	public void UpdateGold(int gold) {
 		_sharedGold = gold;
 		_sharedGoldText = GameObject.FindWithTag("Shared Gold").GetComponent<Text>();
