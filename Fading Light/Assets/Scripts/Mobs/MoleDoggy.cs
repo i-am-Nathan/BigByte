@@ -438,9 +438,6 @@ public class MoleDoggy : BaseEntity
             // Set the health bar's value to the current health.
             try
             {
-                healthCircle.enabled = true;
-                healthCircle.fillAmount -= amount / base.IntialHealth;
-                Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
                 Invoke("HideHealth", 3);
             }
             catch { }
