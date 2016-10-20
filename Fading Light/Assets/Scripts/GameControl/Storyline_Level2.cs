@@ -89,7 +89,6 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 1)
         {
-
             Debug.Log("Step 2");
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[0];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[0];
@@ -128,15 +127,23 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 5)
         {
+            TorchController.IsDisabled = true;
+            Player1.IsDisabled = true;
+            Player2.IsDisabled = true;
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[2];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[2];
             CameraRig.GetComponent<PlayerCam>().CameraState = 1;
-
+            Boss.BeginCutscene(this);
+            CharacterDamageEnabled(false);
             _done = true;
         }
         else if (_currentStep == 6)
         {
+            TorchController.IsDisabled = false;
+            Player1.IsDisabled = false;
+            Player2.IsDisabled = false;
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
+            CharacterDamageEnabled(true);
             _done = true;
         }
     }
