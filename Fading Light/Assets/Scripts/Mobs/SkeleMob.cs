@@ -64,6 +64,12 @@ public class SkeleMob : BaseEntity
 
 	private AchievementManager _achievementManager;
 
+	public AudioSource WalkSound;
+	public AudioSource AttackSound;
+	public AudioSource DeathSound;
+	public AudioSource HurtSound;
+	public AudioSource RiseSound;
+
     private GameObject _cloud;
 
     /// <summary>
@@ -73,6 +79,8 @@ public class SkeleMob : BaseEntity
 	{
         _cloud = GameObject.Find("ReviveLight");
         _cloud.SetActive(false);
+
+		WalkSound.loop = true;
 
         if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
@@ -119,6 +127,7 @@ public class SkeleMob : BaseEntity
 
         _animator["SwingNormal"].speed = 1.5f;
         _animator.Play("SwingNormal", PlayMode.StopAll);
+		AttackSound.Play ();
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
         
 
@@ -160,6 +169,7 @@ public class SkeleMob : BaseEntity
             if (!_isMoving)
             {
                 //_animator["Run"].speed = _isSprinting ? 1.5f : 1.0f;
+				WalkSound.Play();
                 _animator.Play("Walk02", PlayMode.StopAll);
                 _isMoving = true;
             }
@@ -177,6 +187,7 @@ public class SkeleMob : BaseEntity
             }           
             else
             {
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Idle);
             }
 
@@ -188,6 +199,7 @@ public class SkeleMob : BaseEntity
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Idle);
             }
 
@@ -197,6 +209,7 @@ public class SkeleMob : BaseEntity
                 if (DEBUG) Debug.Log("In attack range");
                 _isMoving = false;
                 _lockedOn = false;
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Attack);
             }
 
@@ -259,6 +272,7 @@ public class SkeleMob : BaseEntity
     {
         _animator.Play("Death", PlayMode.StopAll);
         float refreshRate = 0.5f;
+		DeathSound.Play();
         if (DEBUG) Debug.Log("Entered state: Death");
         //Check to see if either player is within activation range
         while (isDead)
@@ -268,6 +282,7 @@ public class SkeleMob : BaseEntity
         }
         this.gameObject.GetComponent<CapsuleCollider>().enabled = true;
         fsm.ChangeState(States.Revival);
+		RiseSound.Play ();
     }
 
     private IEnumerator Revival_Enter()
@@ -296,7 +311,7 @@ public class SkeleMob : BaseEntity
         
         if (DEBUG) Debug.Log("skeleton damaged");
         base.Damage(amount, attacker);
-
+		HurtSound.Play ();
         if (amount >= CurrentHealth)
         {
             if (DEBUG) Debug.Log("skeleton killed");
@@ -318,6 +333,7 @@ public class SkeleMob : BaseEntity
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
         {
+			DeathSound.Play();
             pathfinder.Stop();
             this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
@@ -330,7 +346,6 @@ public class SkeleMob : BaseEntity
     /// </summary>
     public void HideHealth()
     {
-        Debug.Log("aaa");
         healthCircle.enabled = false;
     }
 }
