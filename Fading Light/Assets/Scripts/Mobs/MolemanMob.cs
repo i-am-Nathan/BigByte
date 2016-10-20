@@ -253,7 +253,12 @@ public class MolemanMob : BaseEntity
         
         yield return new WaitForSeconds(2f);
         pathfinder.enabled = false;
-        
+
+        Storyline_Level4 story = GameObject.FindGameObjectWithTag("Story").GetComponent<Storyline_Level4>();
+        while (!story.IsDone())
+        {            
+            yield return new WaitForSeconds(0.25f);
+        }      
 
         MolemanBoss moley = GameObject.FindGameObjectWithTag("MolemanBoss").GetComponent<MolemanBoss>();
 
