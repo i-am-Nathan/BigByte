@@ -314,10 +314,10 @@ public class SpiderBoss : BaseEntity
         try
         {
             HealthCircle.enabled = true;
-            HealthCircle.fillAmount -= amount / 100.0f;
+			HealthCircle.fillAmount -= amount / base.IntialHealth;
             if (isBoss)
             {
-                HealthSlider.value -= amount / 100.0f;
+				HealthSlider.value -= amount / base.IntialHealth;
             }
 
             Invoke("HideHealth", 3);
