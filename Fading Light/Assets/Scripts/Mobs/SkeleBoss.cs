@@ -36,8 +36,6 @@ public class SkeleBoss : BaseEntity
     public float AttackCooldown = 0.5f;
     public float RotationSpeed = 10f;
 
-
-	public Image HealthCircle;                                 // Reference to the UI's health circle.
 	public Slider HealthSlider;
 	public Text BossName;
 	public GameObject BossPanel;
@@ -121,7 +119,6 @@ public class SkeleBoss : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        HealthCircle.enabled = false;
         CurrentHealth = Health;
 
 		HealthSlider = HealthSlider.GetComponent<Slider>();
@@ -437,7 +434,6 @@ public class SkeleBoss : BaseEntity
             try
             {
 				HealthSlider.value -= amount/base.IntialHealth;
-                Invoke("HideHealth", 3);
             }
             catch { }
 
