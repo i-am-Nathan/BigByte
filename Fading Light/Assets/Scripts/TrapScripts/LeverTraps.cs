@@ -26,7 +26,7 @@ public class LeverTraps : MonoBehaviour {
     void OnTriggerStay(Collider other)
     {
         //if T is pressed to interact with the lever, the walls move
-        if (Input.GetKeyDown(KeyCode.T))
+		if ((other.name.Equals("Player 1") && Input.GetKeyDown(KeyCode.O)) || (other.name.Equals("Player2") && Input.GetKeyDown(KeyCode.Q)))
         {
             foreach (GameObject obj in gameObjects)
             {

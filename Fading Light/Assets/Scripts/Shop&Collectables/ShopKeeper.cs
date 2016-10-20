@@ -17,6 +17,8 @@ public class ShopKeeper : MonoBehaviour {
 	private bool _hasPlayed;
     private Animator _animator;
 
+	public SubInventoryManager SubInventoryManager;
+
     void Awake(){
 		ShopKeeperCamera.enabled = false;
 		_transition = ShopKeeperCamera.GetComponent<Animation> ();
@@ -27,29 +29,6 @@ public class ShopKeeper : MonoBehaviour {
 		_hasPlayed = false;
 		ItemStand.SetActive (false);
     }
-	void OnTriggerEnter(Collider other){
-		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.T) && !_shopping) {
-				Player1.IsDisabled = true;
-				Player2.IsDisabled = true;
-				MainCamera.enabled = false;
-				ShopKeeperCamera.enabled = true;
-				_transition.Play ();
-				_shopping = true;
-				_hasPlayed = true;
-
-			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
-				_hasPlayed = false;
-				_transition.Stop ();
-				_shopping = false;
-				MainCamera.enabled = true;
-				ShopKeeperCamera.enabled = false;
-				Player1.IsDisabled = false;
-				Player2.IsDisabled = false;
-				ItemStand.SetActive (false);
-			}
-		}
-	}
 
 	void Update(){
 		if (!_transition.isPlaying && _hasPlayed) {
@@ -77,31 +56,63 @@ public class ShopKeeper : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// When players press T when they are collding with the chest, it will open it.
+	/// When players press Q or O when they are collding with the shopkeeper, it will open the shop.
 	/// </summary>
 	/// <param name="other">Other.</param>
 	void OnTriggerStay(Collider other){
-		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.T) && !_shopping) {
-				Player1.IsDisabled = true;
-				Player2.IsDisabled = true;
-				MainCamera.enabled = false;
-				ShopKeeperCamera.enabled = true;
-				_transition.Play ();
-				_shopping = true;
-				_hasPlayed = true;
+        if (other.name == "Player 1")
+        {
+            if (Input.GetKeyDown(KeyCode.O) && !_shopping)
+            {
+                _shopping = true;
+                SubInventoryManager.ToggleInShop();
+                Player1.IsDisabled = true;
+                Player2.IsDisabled = true;
+                MainCamera.enabled = false;
+                ShopKeeperCamera.enabled = true;
+                _transition.Play();
+                _hasPlayed = true;
 
+            }
+            else if (Input.GetKeyDown(KeyCode.O) && _shopping)
+            {
+                _shopping = false;
+                SubInventoryManager.ToggleInShop();
+                _hasPlayed = false;
+                _transition.Stop();
+                MainCamera.enabled = true;
+                ShopKeeperCamera.enabled = false;
+                Player1.IsDisabled = false;
+                Player2.IsDisabled = false;
+                ItemStand.SetActive(false);
+            }
+        }
+        else if (other.name == "Player2")
+        {
+            if (Input.GetKeyDown(KeyCode.Q) && !_shopping)
+            {
+                _shopping = true;
+                SubInventoryManager.ToggleInShop();
+                Player1.IsDisabled = true;
+                Player2.IsDisabled = true;
+                MainCamera.enabled = false;
+                ShopKeeperCamera.enabled = true;
+                _transition.Play();
+                _hasPlayed = true;
 
-			}else if (Input.GetKeyDown (KeyCode.T) && _shopping) {
-				_hasPlayed = false;
-				_transition.Stop ();
-				_shopping = false;
-				MainCamera.enabled = true;
-				ShopKeeperCamera.enabled = false;
-				Player1.IsDisabled = false;
-				Player2.IsDisabled = false;
-				ItemStand.SetActive (false);
-			}
-		}
+            }
+            else if (Input.GetKeyDown(KeyCode.Q) && _shopping)
+            {
+                _shopping = false;
+                SubInventoryManager.ToggleInShop();
+                _hasPlayed = false;
+                _transition.Stop();
+                MainCamera.enabled = true;
+                ShopKeeperCamera.enabled = false;
+                Player1.IsDisabled = false;
+                Player2.IsDisabled = false;
+                ItemStand.SetActive(false);
+            }
+        }
 	}
 }

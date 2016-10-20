@@ -10,6 +10,7 @@ public class SubInventoryManager : MonoBehaviour {
 	public Sprite BerserkImage;
 
 	private int _totalNumItems = 3;
+	private bool _inShop = false;
 
 	private int _player1CurrentItemIndex = 0;
 	private int _player2CurrentItemIndex = 0;
@@ -27,12 +28,21 @@ public class SubInventoryManager : MonoBehaviour {
 	private PlayerController _player1ControllerScript;
 	private Player2Controller _player2ControllerScript;
 
-	private Dictionary<string,int> _player1ItemQuantityDictionary = new Dictionary<string,int>();
-	private Dictionary<string,int> _player2ItemQuantityDictionary = new Dictionary<string,int>();
+	private Dictionary<string,int> _player1ItemQuantityDictionary;
+	private Dictionary<string,int> _player2ItemQuantityDictionary;
+
 	private Dictionary<string,Sprite> _itemImageDictionary = new Dictionary<string,Sprite>();
 	private Dictionary<int,string> _itemIndexNameDictionary = new Dictionary<int,string>();
 
+	private GameData _gameDataScript;
+
 	void Start() {
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		_gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+
+		_player1ItemQuantityDictionary = _gameDataScript.GetPlayer1ItemQuantityDictionary ();
+		_player2ItemQuantityDictionary = _gameDataScript.GetPlayer2ItemQuantityDictionary ();
+
 		GameObject player1 = GameObject.FindGameObjectWithTag("Player");
 		_player1ControllerScript = (PlayerController)player1.GetComponent(typeof(PlayerController));
 
@@ -48,63 +58,38 @@ public class SubInventoryManager : MonoBehaviour {
 		_player1CurrentItem = GameObject.FindWithTag("Player 1 SubInventory").GetComponent<Image>();
 		_player2CurrentItem = GameObject.FindWithTag("Player 2 SubInventory").GetComponent<Image>();
 
-		_itemIndexNameDictionary.Add (0, "Health Pot");
-		_itemIndexNameDictionary.Add (1, "Attack Pot");
-		_itemIndexNameDictionary.Add (2, "Defense Pot");
+		_itemIndexNameDictionary.Add (0, "Health Potion");
+		_itemIndexNameDictionary.Add (1, "Attack Potion");
+		_itemIndexNameDictionary.Add (2, "Defense Potion");
 
-		_itemImageDictionary.Add ("Health Pot", HealthImage);
-		_itemImageDictionary.Add ("Attack Pot", BerserkImage);
-		_itemImageDictionary.Add ("Defense Pot", DefenseImage);
+		_itemImageDictionary.Add ("Health Potion", HealthImage);
+		_itemImageDictionary.Add ("Attack Potion", BerserkImage);
+		_itemImageDictionary.Add ("Defense Potion", DefenseImage);
 
-		_player1ItemQuantityDictionary.Add ("Health Pot", 0);
-		_player1ItemQuantityDictionary.Add ("Attack Pot", 0);
-		_player1ItemQuantityDictionary.Add ("Defense Pot",0);
-		_player2ItemQuantityDictionary.Add ("Health Pot", 0);
-		_player2ItemQuantityDictionary.Add ("Attack Pot", 0);
-		_player2ItemQuantityDictionary.Add ("Defense Pot", 0);
-
-		SetItemOnScreen ("Health Pot", true);
-		SetItemOnScreen ("Health Pot", false);
-
-//		GameObject.Find ("Player1AttackParticles").SetActive(false);
-//		GameObject.Find ("Player2AttackParticles").SetActive(false);
-//		GameObject.Find ("Player1DefenseParticles").SetActive(false);
-//		GameObject.Find ("Player2DefenseParticles").SetActive(false);
+		SetItemOnScreen ("Health Potion", true);
+		SetItemOnScreen ("Health Potion", false);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		// Player 1 cycling through
-		if (Input.GetKeyDown (KeyCode.O)) {
+		if (Input.GetKeyDown (KeyCode.K)) {
 			CycleItems (true);
 		}
 
 		// Player 2 cycling through
-		if (Input.GetKeyDown (KeyCode.P)) {
+		if (Input.GetKeyDown (KeyCode.X)) {
 			CycleItems (false);
 		}
 
-		if (Input.GetKeyDown (KeyCode.L)) {
+		if (Input.GetKeyDown (KeyCode.L) && !_inShop) {
 			UseItem (true);
 
 		}
 
-		if (Input.GetKeyDown (KeyCode.Q)) {
+		if (Input.GetKeyDown (KeyCode.C) && !_inShop) {
 			UseItem (false);
 		}
-
-//		if (!_player2ControllerScript.isAttackPotActive ()) {
-//			GameObject.Find ("Player2AttackParticles").SetActive(false);
-//		}
-//		if (!_player1ControllerScript.isAttackPotActive ()) {
-//			GameObject.Find ("Player1AttackParticles").SetActive(false);
-//		}
-//		if (!_player2ControllerScript.isDefensePotActive ()) {
-//			GameObject.Find ("Player2DefenseParticles").SetActive(false);
-//		}
-//		if (!_player1ControllerScript.isDefensePotActive ()) {
-//			GameObject.Find ("Player1DefenseParticles").SetActive(false);
-//		}
 	}
 		
 	void CycleItems (bool cyclePlayer1) {
@@ -131,19 +116,23 @@ public class SubInventoryManager : MonoBehaviour {
 		if (player1) {
 			if (_player1ItemQuantityDictionary [_player1ItemName.text] != 0) {
 				_player1ItemQuantityDictionary[_player1ItemName.text] -= 1;
+
+				// Updating in persistent game data
+				_gameDataScript.SetPlayer1ItemQuantityDictionary (_player1ItemName.text, _player1ItemQuantityDictionary[_player1ItemName.text]);
+
 				SetItemOnScreen (_player1ItemName.text, true);
 				//HealthPotActivated
-        	    if (_player1ItemName.text == "Health Pot")
+        	    if (_player1ItemName.text == "Health Potion")
         	    {
         	        _player1ControllerScript.HealthPotActivated();
         	    }
         	    //AttackPotActivated
-        	    if (_player1ItemName.text == "Attack Pot")
+        	    if (_player1ItemName.text == "Attack Potion")
         	    {
         	        _player1ControllerScript.AttackPotActivated();
         	    }
         	    //DefensePotActivated
-        	    if (_player1ItemName.text == "Defense Pot")
+        	    if (_player1ItemName.text == "Defense Potion")
         	    {
         	        _player1ControllerScript.DefensePotActivated();
         		}
@@ -153,18 +142,21 @@ public class SubInventoryManager : MonoBehaviour {
 				_player2ItemQuantityDictionary[_player2ItemName.text] -= 1;
 				SetItemOnScreen (_player2ItemName.text, false);
 
+				// Updating in persistent game data
+				_gameDataScript.SetPlayer2ItemQuantityDictionary (_player2ItemName.text, _player2ItemQuantityDictionary[_player2ItemName.text]);
+
 	            //HealthPotActivated
-	            if (_player2ItemName.text == "Health Pot")
+	            if (_player2ItemName.text == "Health Potion")
 	            {
 	                _player2ControllerScript.HealthPotActivated();
 	            }
 	            //AttackPotActivated
-	            if (_player2ItemName.text == "Attack Pot")
+	            if (_player2ItemName.text == "Attack Potion")
 	            {
 	                _player2ControllerScript.AttackPotActivated();
 	            }
 	            //DefensePotActivated
-	            if (_player2ItemName.text == "Defense Pot")
+	            if (_player2ItemName.text == "Defense Potion")
 	            {
 	                _player2ControllerScript.DefensePotActivated();
 	            }
@@ -175,9 +167,17 @@ public class SubInventoryManager : MonoBehaviour {
 	public void AddItemQuantity (string itemName, bool player1) {
 		if (player1) {
 			_player1ItemQuantityDictionary [itemName] += 1;
+			Debug.Log ("item updated 1 " + _player1ItemQuantityDictionary[itemName]);
+			// Updating in persistent game data
+			_gameDataScript.SetPlayer1ItemQuantityDictionary (itemName, _player1ItemQuantityDictionary[itemName]);
+
 			SetItemOnScreen (_player1ItemName.text, true);
 		} else {
 			_player2ItemQuantityDictionary [itemName] += 1;	
+			Debug.Log ("item updated 2 " + _player1ItemQuantityDictionary[itemName]);
+			// Updating in persistent game data
+			_gameDataScript.SetPlayer2ItemQuantityDictionary (itemName, _player2ItemQuantityDictionary[itemName]);
+
 			SetItemOnScreen (_player2ItemName.text, false);
 		}
 	}
@@ -186,11 +186,22 @@ public class SubInventoryManager : MonoBehaviour {
 		if (player1) {
 			_player1CurrentItem.sprite = _itemImageDictionary [itemName];
 			_player1ItemName.text = itemName;
+
+			// Updating local player 1 item quantities
+			_player1ItemQuantityDictionary = _gameDataScript.GetPlayer1ItemQuantityDictionary ();
 			_player1ItemQuantity.text = "" + _player1ItemQuantityDictionary [itemName];
 		} else {
 			_player2CurrentItem.sprite = _itemImageDictionary[itemName];
 			_player2ItemName.text = itemName;
+
+			// Updating local player 2 item quantities
+			_player2ItemQuantityDictionary = _gameDataScript.GetPlayer2ItemQuantityDictionary ();
+
 			_player2ItemQuantity.text = "" + _player2ItemQuantityDictionary [itemName];
 		}
+	}
+
+	public void ToggleInShop () {
+		_inShop = !_inShop;
 	}
 }

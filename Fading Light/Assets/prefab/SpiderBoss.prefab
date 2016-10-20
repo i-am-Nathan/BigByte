@@ -1295,7 +1295,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 60.9, y: 1.3, z: -178.2}
+  m_LocalPosition: {x: 103.62912, y: 0.5, z: -308.90756}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -2146,7 +2146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26946366, g: 0.6544118, b: 0.39954963, a: 1}
+  m_Color: {r: 1, g: 0.21176471, b: 0.21176471, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2195,14 +2195,18 @@ MonoBehaviour:
   AttackSpeed: 1
   AttackDamage: 10
   Health: 100
-  AttackRange: 22
+  AttackRange: 24
   Range: 0.1
   WalkSpeed: 9
   RunSpeed: 15
   SprintSpeed: 24
   AttackCooldown: 0.25
   RotationSpeed: 10
-  healthCircle: {fileID: 11420380}
+  HealthCircle: {fileID: 11420380}
+  HealthSlider: {fileID: 0}
+  BossName: {fileID: 0}
+  BossPanel: {fileID: 0}
+  isBoss: 1
 --- !u!114 &11496208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2234,7 +2238,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.8
-  m_Height: 1.5
+  m_Height: 9
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &13756492
@@ -2333,7 +2337,7 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188272}
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

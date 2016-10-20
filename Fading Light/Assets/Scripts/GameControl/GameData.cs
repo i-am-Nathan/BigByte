@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
@@ -14,10 +15,12 @@ public class Achievement
     public string Reward;
     public float TargetProgress;
     public bool Secret;
+ 
 
     [HideInInspector]
     public bool Earned = false;
     private float currentProgress = 0.0f;
+
 
     /// <summary>
     /// Returns true if this progress added results in the Achievement being earned.
@@ -77,28 +80,33 @@ public class GameData : MonoBehaviour {
     private int _torchFuel;
     private Slider _torchFuelSlider;
 
-    private float _playerOneTotalDamageGiven;
-    private float _playerTwoTotalDamageGiven;
+    private float _timesKilled;
+	private float _monstersKilled;
+	private float _chestsMissed;
+    //private float _playerTwoTotalDamageTaken;
 
-    private float _playerOneTotalDamageTaken;
-    private float _playerTwoTotalDamageTaken;
+	private float _playerOneAccuracy = 0f;
+	private float _playerTwoAccuracy = 0f;
 
-    private float _playerOneAccuracy;
-    private float _playerTwoAccuracy;
+	private float _playerOneNumHitsMissed = 0f;
+	private float _playerOneNumHitsAchieved = 0f; 
+	private float _playerTwoNumHitsMissed = 0f;
+	private float _playerTwoNumHitsAchieved = 0f; 
 
 	private InGameUiManager _inGameUiManager;
 	private bool _firstLevel = true;
 
-    // Inventory
-    //private Item[] _p1Items;
-    //private Item[] _p2Items;
+	private Dictionary<string,int> _player1ItemQuantityDictionary = new Dictionary<string,int>();
+	private Dictionary<string,int> _player2ItemQuantityDictionary = new Dictionary<string,int>();
 
     //Achievements
     public Achievement[] Achievements;
     public Canvas AchievementPopup;
-    public AudioClip EarnedSound;
+    //public AudioClip EarnedSound;
     private Text achievementText;
     private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
+
+    public bool isMainMenu = false;
 
 
     /// <summary>
@@ -113,20 +121,35 @@ public class GameData : MonoBehaviour {
 		if (!(objects.Length > 0))
         {
             achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
+
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
             _numberOfLivesLeft = 3;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
             _sharedGold = 0;
+			_timesKilled = 0;
+			_monstersKilled = 0;
+			_chestsMissed = 0;
+			_playerOneAccuracy = 0;
+			_playerTwoAccuracy = 0;
+			_player1ItemQuantityDictionary.Add ("Health Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Attack Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Defense Potion",0);
+			_player2ItemQuantityDictionary.Add ("Health Potion", 0);
+			_player2ItemQuantityDictionary.Add ("Attack Potion", 0);
+			_player2ItemQuantityDictionary.Add ("Defense Potion", 0);
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }
-		
+
 	void Start() {
-		// Getting the game data object which shows the total lives left
-		GameObject go = GameObject.Find("InGameUiManager");
-		_inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));	
+        if (!isMainMenu)
+        {
+            // Getting the game data object which shows the total lives left
+            GameObject go = GameObject.Find("InGameUiManager");
+            _inGameUiManager = (InGameUiManager)go.GetComponent(typeof(InGameUiManager));
+        }
 	}
 
     /// <summary>
@@ -153,6 +176,13 @@ public class GameData : MonoBehaviour {
     {
         _numberOfLivesLeft = lives;
     }
+
+	public void UpdateNumberOfLives() {
+		// Cannot get more than 3 lives
+		if (_numberOfLivesLeft != 3) {
+			_numberOfLivesLeft++;
+		}
+	}
 
     /// <summary>
     /// Used to get the amount of shared gold
@@ -200,7 +230,7 @@ public class GameData : MonoBehaviour {
     private void AchievementEarned()
     {
         //  UpdateRewardPointTotals();
-        AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
+        //AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
     void ClosePopUpTimer()
     {
@@ -231,4 +261,85 @@ public class GameData : MonoBehaviour {
             achievementText.text = achievement.Name;
         }
     }
+
+	public void SetPlayer1Accuracy(float acc) {
+		_playerOneAccuracy = acc;
+	}
+
+	public float GetPlayer1Accuracy() {
+		float totalSwings = _playerOneNumHitsAchieved + _playerOneNumHitsMissed;
+		if (totalSwings != 0) {
+			_playerOneAccuracy = _playerOneNumHitsAchieved / totalSwings;
+		}
+		return _playerOneAccuracy;
+	}
+
+	public void SetPlayer2Accuracy(float acc) {
+		_playerTwoAccuracy = acc;
+	}
+
+	public float GetPlayer2Accuracy() {
+		float totalSwings = _playerTwoNumHitsAchieved + _playerTwoNumHitsMissed;
+
+		if (totalSwings != 0) {
+			_playerTwoAccuracy = _playerTwoNumHitsAchieved / totalSwings;
+		}
+		return _playerTwoAccuracy;
+	}
+
+	public void UpdateChestsMissed() {
+		_chestsMissed++;
+	}
+
+	public float GetChestsMissed() {
+		return _chestsMissed;
+	}
+
+	public void UpdateTimesKilled() {
+		_timesKilled++;
+	}
+
+	public float GetTimesKilled() {
+		return _timesKilled;
+	}
+
+	public void UpdateMonstersKilled() {
+		_monstersKilled++;
+	}
+
+	public float GetMonstersKilled() {
+		return _monstersKilled;
+	}
+
+	public Dictionary<string,int> GetPlayer1ItemQuantityDictionary() {
+		return _player1ItemQuantityDictionary;
+	}
+
+	public Dictionary<string,int> GetPlayer2ItemQuantityDictionary() {
+		return _player2ItemQuantityDictionary;
+	}
+
+	public void SetPlayer1ItemQuantityDictionary(string item, int num) {
+		_player1ItemQuantityDictionary [item] = num;
+	}
+
+	public void SetPlayer2ItemQuantityDictionary(string item, int num) {
+		_player2ItemQuantityDictionary [item] = num;
+	}
+
+	public void UpdatePlayerNumHitsMissed (bool isPlayer1) {
+		if (isPlayer1) {
+			_playerOneNumHitsMissed++;
+		} else {
+			_playerTwoNumHitsMissed++;
+		}
+	}
+
+	public void UpdatePlayerNumHitsAchieved (bool isPlayer1) {
+		if (isPlayer1) {
+			_playerOneNumHitsAchieved++;
+		} else {
+			_playerTwoNumHitsAchieved++;
+		}
+	}
 }

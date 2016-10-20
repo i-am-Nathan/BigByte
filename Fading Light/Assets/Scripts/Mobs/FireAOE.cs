@@ -3,26 +3,16 @@ using System.Collections;
 
 public class FireAOE : MonoBehaviour {
 
-    public float damage = 20f;
+    public float DamagePerFrame = 2f;
     private bool DEBUG = false;
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (DEBUG) Debug.Log("Collison detected");
-        //Destroy(gameObject, lifetime);
-     
         if (other.tag == "Player" || other.tag == "Player2")
         {
-            if (DEBUG) Debug.Log("Fireball collision: Player");
-            //other.Damage(damage, this.transform.root);
-
-            //_isExploded = true;
-
-            if (DEBUG) Debug.Log("Creating fireball explosion");
-            GameObject newFireball = (GameObject)Instantiate(Resources.Load("Explosion"));
-            Vector3 newPos = new Vector3(this.transform.position.x, 6, this.transform.position.z);
-            newFireball.transform.position = newPos;
-            GameObject.Destroy(gameObject);
+            if (DEBUG) Debug.Log("Moledog AOE collision: Player");
+            other.GetComponent<Player>().Damage(DamagePerFrame, this.transform.root);             
         }
     }
 }

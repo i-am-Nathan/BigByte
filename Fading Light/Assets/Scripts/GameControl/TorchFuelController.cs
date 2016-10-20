@@ -38,6 +38,10 @@ public class TorchFuelController : MonoBehaviour {
     private Image _player1InventoryImage;
     private Image _player2InventoryImage;
     public bool IsDisabled;
+	
+    //Audio
+    public AudioSource AddFuelSound;
+    public AudioSource FlameSound;
 
     public bool IsMainMenu = false;
     /// <summary>
@@ -45,6 +49,10 @@ public class TorchFuelController : MonoBehaviour {
     /// </summary>
     void Start ()
     {
+	    
+	    FlameSound.loop = true;
+        FlameSound.volume = 0.2f;
+	    FlameSound.Play();
         TorchP2.SetActive(false);
         Player2TorchLight.gameObject.SetActive(false);
         InvokeRepeating("RemoveFuelAmount", 0, 0.1f);
@@ -65,6 +73,7 @@ public class TorchFuelController : MonoBehaviour {
     /// <param name="fuelAmount">The fuel amount.</param>
     internal void AddFuel(float fuelAmount)
     {
+	    AddFuelSound.Play();
         TotalFuelPercentage += fuelAmount;
         TotalFuelPercentage = Math.Min(100, TotalFuelPercentage);
         _torchFuelSlider.value = TotalFuelPercentage;
@@ -96,21 +105,20 @@ public class TorchFuelController : MonoBehaviour {
     {
         var currentTorch = TorchP2;
         var currentTorchLight = Player2TorchLight;
+
         if (TorchInPlayer1)
         {
             currentTorch = TorchP1;
             currentTorchLight = Player1TorchLight;
         }
 
-        var torchPosition = currentTorch.gameObject.transform.position;
+        var torchPosition = currentTorch.gameObject.transform.parent.position;
 
         var distanceToTorch = Math.Sqrt(Math.Abs((torchPosition.x - x) * (torchPosition.x - x)) + Math.Abs((torchPosition.z - z) * (torchPosition.z - z)));
 
         var torchRadius = GetTorchRadius();
         torchRadius = Math.Abs(torchRadius);
 
-        //Debug.Log("a " + torchRadius);
-        //Debug.Log("b " + distanceToTorch);
 
         if (distanceToTorch < torchRadius)
         {
@@ -146,7 +154,7 @@ public class TorchFuelController : MonoBehaviour {
 
         var torchPosition = currentTorch.gameObject.transform.position;
         
-        var torchRadius = torchPosition.y * Math.Tan((currentTorchLight.spotAngle / 2) * (Math.PI / 180));
+        var torchRadius = torchPosition.y * 1.2 * Math.Tan((currentTorchLight.spotAngle / 2) * (Math.PI / 180));
         torchRadius = Math.Abs(torchRadius);
         return torchRadius;
     }
@@ -155,6 +163,11 @@ public class TorchFuelController : MonoBehaviour {
     /// Updates this instance.
     /// </summary>
     void Update () {
+	        
+	    if(TotalFuelPercentage == 0)
+        {
+            FlameSound.Stop();
+        }
         return;
         //Flicker the torch
         if(_flickerCount == _flckerAmount)

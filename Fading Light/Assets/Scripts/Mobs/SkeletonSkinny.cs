@@ -35,6 +35,8 @@ public class SkeletonSkinny : BaseEntity
     public float AttackCooldown = 0.5f;
     public float AngularSpeed = 10f;
 
+    public bool IsActive = true;
+
     //Reference to the UI's health circle.
     public Image healthCircle;                                 
 
@@ -68,6 +70,7 @@ public class SkeletonSkinny : BaseEntity
     /// </summary>
     private void Awake()
 	{
+              
         if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
@@ -79,7 +82,16 @@ public class SkeletonSkinny : BaseEntity
 
         //Create the FSM controller
         fsm = StateMachine<States>.Initialize(this);
-        fsm.ChangeState(States.Init);
+        
+        float randomNumber = Random.Range(1, 10);
+        if (randomNumber < 5)
+        {
+            isDead = true;
+            fsm.ChangeState(States.Death);
+        } else
+        {
+            fsm.ChangeState(States.Init);
+        }
     }
 
     public void MockUp()
@@ -98,7 +110,7 @@ public class SkeletonSkinny : BaseEntity
     /// </summary>
     private void Init_Enter()
     {
-        if (DEBUG) Debug.Log("skeleton state machine initilized.");
+        if (DEBUG) Debug.Log("skeleton state machine initilized.");    
         fsm.ChangeState(States.Sleep);
     }
 
@@ -107,6 +119,11 @@ public class SkeletonSkinny : BaseEntity
     /// </summary>
     private IEnumerator Sleep_Enter()
     {
+        if (IsActive)
+        {
+            fsm.ChangeState(States.Death);
+        }
+
         if (DEBUG) Debug.Log("Entered state: Sleep");
         float refreshRate = 0.8f;
         _sleeping = true;
@@ -305,7 +322,8 @@ public class SkeletonSkinny : BaseEntity
     }
 
     public override void Damage(float amount, Transform attacker)
-    {        
+    {
+        if (isDead) return;
         base.Damage(amount, attacker);
 
         // Set the health bar's value to the current health.
@@ -343,7 +361,7 @@ public class SkeletonSkinny : BaseEntity
         {
             pathfinder.Stop();
             _animator.Play("Death", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
     }

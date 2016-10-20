@@ -36,8 +36,9 @@ public class SkeleBoss : BaseEntity
     public float AttackCooldown = 0.5f;
     public float RotationSpeed = 10f;
 
-
-    public Image healthCircle;                                 // Reference to the UI's health circle.
+	public Slider HealthSlider;
+	public Text BossName;
+	public GameObject BossPanel;
 
     //Target and navigation variables
     NavMeshAgent pathfinder;
@@ -62,9 +63,10 @@ public class SkeleBoss : BaseEntity
     private bool _summonedOnce = false;
     private bool _summonedTwice = false;
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
+    private GameObject _cloud;
 
     private bool _isAttacking;
 
@@ -95,7 +97,10 @@ public class SkeleBoss : BaseEntity
 	{
         if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
-        spawnLocation = this.gameObject.transform.position;       
+        spawnLocation = this.gameObject.transform.position;
+
+        _cloud = GameObject.Find("Holy Shine");
+        _cloud.SetActive(false);
 
         //Initlize the pathfinder, collision range and animator 
         pathfinder = GetComponent<NavMeshAgent>();
@@ -114,16 +119,26 @@ public class SkeleBoss : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        //healthCircle.enabled = false;
         CurrentHealth = Health;
+
+		HealthSlider = HealthSlider.GetComponent<Slider>();
+		HealthSlider.value = CurrentHealth;
+		BossName = BossName.GetComponent<Text>();
+		BossName.text = "Skeleton Boss";
+		BossPanel.SetActive(false);
 	}
 
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
-    private void Init_Enter()
+    IEnumerator Init_Enter()
     {
         if (DEBUG) Debug.Log("skeleton state machine initilized.");
+
+        pathfinder.enabled = false;
+        yield return new WaitForSeconds(4f);
+        pathfinder.enabled = true;
+
         fsm.ChangeState(States.Idle);
     }
 
@@ -144,7 +159,7 @@ public class SkeleBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
         _isAttacking = true;
-
+		BossPanel.SetActive(true);
         RotateTowards(target);
 
         pathfinder.enabled = false;
@@ -177,14 +192,24 @@ public class SkeleBoss : BaseEntity
     /// skeletons alert area, or comes into attack range.
     /// </summary>
     /// <returns></returns>
-    private void Summoning_Enter()
+    IEnumerator Summoning_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
-        //_animator["Skill 1"].speed = 0.3f;
-        _animator.Play("Skill", PlayMode.StopAll);
+        pathfinder.enabled = false;
 
-        float refreshRate = !_isSprinting ? 0.3f : 0.05f;
+        _animator.Play("Roar", PlayMode.StopAll);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        _cloud.SetActive(true);
         _summoning = true;
+
+        _animator["Summon2"].speed = 0.2f;
+        _animator.Play("Summon2", PlayMode.StopAll);
+
+        float refreshRate = !_isSprinting ? 0.3f : 0.05f;        
        
         //Check too see if all minion mobs have been killed
         GameObject[] mobs = GameObject.FindGameObjectsWithTag("Enemy");
@@ -240,6 +265,10 @@ public class SkeleBoss : BaseEntity
 
             yield return new WaitForSeconds(refreshRate);
         }
+
+        _cloud.SetActive(false);
+        _summoning = false;
+        pathfinder.enabled = true;
         fsm.ChangeState(States.Chase, StateTransition.Overwrite);
     }
 
@@ -251,7 +280,7 @@ public class SkeleBoss : BaseEntity
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
-
+		BossPanel.SetActive(true);
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _lockedOn = true;
 
@@ -338,7 +367,7 @@ public class SkeleBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
         float refreshRate = 0.8f;        
-
+		BossPanel.SetActive(false);
         //Check to see if either player is within activation range
         while (!_lockedOn)
         {
@@ -373,6 +402,7 @@ public class SkeleBoss : BaseEntity
 
     private void Death_Enter()
     {
+		BossPanel.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
@@ -380,7 +410,7 @@ public class SkeleBoss : BaseEntity
     {
         if (isDead) return;
 
-        if (fsm.State != States.Summoning || fsm.State != States.Sheilding)
+        if (!_summoning)
         {
             base.Damage(amount, attacker);
 
@@ -403,10 +433,7 @@ public class SkeleBoss : BaseEntity
             // Set the health bar's value to the current health.
             try
             {
-                //healthCircle.enabled = true;
-                //healthCircle.fillAmount -= amount / 100.0f;
-                Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
-                Invoke("HideHealth", 3);
+				HealthSlider.value -= amount/base.IntialHealth;
             }
             catch { }
 
@@ -443,15 +470,6 @@ public class SkeleBoss : BaseEntity
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
-    }
-
-    /// <summary>
-    /// Hides the health.
-    /// </summary>
-    public void HideHealth()
-    {
-        Debug.Log("aaa");
-        //healthCircle.enabled = false;
     }
 }
 

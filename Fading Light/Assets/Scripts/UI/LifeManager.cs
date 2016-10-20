@@ -26,24 +26,30 @@ public class LifeManager : MonoBehaviour
 
         _numberOfLivesLeft = _gameDataScript.GetNumberOfLives();
 
-        // Setting the appropriate hearts to show
-        for (int i = 0; i < _numberOfLivesLeft; i++)
-        {
-			Lives[i].SetActive(true);
-        }
-
-        // Setting the appropriate hearts to hide
-        if (_numberOfLivesLeft != 3)
-        {
-            for (int i = 2; i > _numberOfLivesLeft - 1; i--)
-            { 
-				Lives[i].SetActive(false);
-            }
-        }
+		UpdateHeartsOnUI ();
 
         // Hiding the game over screen
         DeathScreen.enabled = false;
     }
+
+	public void UpdateHeartsOnUI () {
+		_numberOfLivesLeft = _gameDataScript.GetNumberOfLives ();
+
+		// Setting the appropriate hearts to show
+		for (int i = 0; i < _numberOfLivesLeft; i++)
+		{
+			Lives[i].SetActive(true);
+		}
+
+		// Setting the appropriate hearts to hide
+		if (_numberOfLivesLeft != 3)
+		{
+			for (int i = 2; i > _numberOfLivesLeft - 1; i--)
+			{ 
+				Lives[i].SetActive(false);
+			}
+		}
+	}
 
 	/// <summary>
 	/// Called whenever a player dies
@@ -53,6 +59,7 @@ public class LifeManager : MonoBehaviour
 		// Decrementing the number of shared lives left
         _numberOfLivesLeft = _numberOfLivesLeft - 1;
         _gameDataScript.SetNumberOfLives(_numberOfLivesLeft);
+		_gameDataScript.UpdateTimesKilled ();
 
 		// Removing a heart from the UI
 		Lives[_numberOfLivesLeft].SetActive(false);

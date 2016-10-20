@@ -33,8 +33,14 @@ public class PlayerController : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     
+    //audio
+    public AudioSource WalkingSounds;
+    public AudioSource DeathSound;
+    public AudioSource HurtSounds;
+    public AudioSource HitSounds;
+    
     public bool IsMainMenu = false;
-
+    
     /// <summary>
     /// Starts this instance.
     /// </summary>
@@ -84,6 +90,13 @@ public class PlayerController : Player
         {
             ControlWASD();
         }
+
+		if (isHealthPotActive ()) {
+			UpdateHealthUI ();
+			SetHealthPotActive ();
+		}
+
+		UpdateEffects ();
     }
 
     /// <summary>
@@ -107,22 +120,35 @@ public class PlayerController : Player
 
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
-        if (Input.GetKeyDown(KeyCode.RightControl) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.P) && !_torch.activeInHierarchy)
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+	        if(!HitSounds.isPlaying)
+            {
+                HitSounds.Play();
+            }
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {
             _animator.SetBool("Idling", false);
         }
-      
+
         else
         {
             _animator.SetBool("Idling", true);
         }
+	
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right"))
+        {
+            WalkingSounds.Play();
+        }
 
+        else if ((Input.GetKeyUp("up") || Input.GetKeyUp("down") || Input.GetKeyUp("left") || Input.GetKeyUp("right"))&&!(Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right")))
+        {
+            WalkingSounds.Stop();
+        }
         //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
     }
@@ -149,7 +175,7 @@ public class PlayerController : Player
             else if (Input.GetButtonUp("SwapTorch"))
             {
                 _lastPressed = false;
-            }
+            } 
         }
     }
 
@@ -177,7 +203,17 @@ public class PlayerController : Player
     /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
+        if (!CanTakeDamage)
+        {
+            return;
+        }
+
         Debug.Log("Player damaged");
+
+		if (isDefensePotActive ()) {
+			amount = amount / 2;
+			Debug.Log ("Damage taken p1 " + amount);
+		}
 
         base.Damage(amount, attacker);
         // Set the damaged flag so the screen will flash.
@@ -199,6 +235,13 @@ public class PlayerController : Player
             // ... it should die.
             Killed();
         }
+	    else
+        {
+            if (!HurtSounds.isPlaying)
+            {
+                HurtSounds.Play();
+            }
+        }
     }
 
     /// <summary>
@@ -210,6 +253,8 @@ public class PlayerController : Player
         base.Killed();
         _lifeManagerScript.LoseLife();
         Debug.Log("Dead");
+	    DeathSound.Play();
+	
     }
 
     /// <summary>
@@ -221,11 +266,22 @@ public class PlayerController : Player
     }
     void OnParticleCollision(GameObject other)
     {
-        if (TorchFuelControllerScript.TorchInPlayer1)
+		if(other.name.Equals("Afterburner")){
+			Damage(0.6f, transform);
+		}
+			
+		if (TorchFuelControllerScript.TorchInPlayer1 && other.name.Equals("Wind"))
         {
-            Debug.Log("OH BABY THE WIND");
             TorchFuelControllerScript.RemoveFuelWithAmount(1);
         }
     }
+
+	/// <summary>
+	/// Increases health sliders when health pot is activated
+	/// </summary>
+	public void UpdateHealthUI () {
+		healthCircle.fillAmount += 30f;
+		_healthSlider.value += 30f;
+	}
 
 }

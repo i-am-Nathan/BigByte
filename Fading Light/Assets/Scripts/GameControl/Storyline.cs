@@ -28,4 +28,6 @@ public abstract class Storyline : MonoBehaviour {
     /// </summary>
     public abstract void NextMoleMan();
 
+    public abstract void CharacterDamageEnabled(bool enabled);
+
 }

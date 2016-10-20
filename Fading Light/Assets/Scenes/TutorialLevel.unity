@@ -1865,6 +1865,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IntialHealth: 100
   isDead: 0
+  DEBUG: 1
+  <CurrentHealth>k__BackingField: 0
   HardActivationDistance: 50
   LooseActivationDistance: 120
   AttackSpeed: 1
@@ -1877,7 +1879,32 @@ MonoBehaviour:
   SprintSpeed: 24
   AttackCooldown: 0.25
   RotationSpeed: 10
-  healthCircle: {fileID: 960590617}
+  HealthCircle: {fileID: 0}
+  HealthSlider: {fileID: 0}
+  BossName: {fileID: 0}
+  BossPanel: {fileID: 0}
+  pathfinder: {fileID: 0}
+  target: {fileID: 0}
+  targetBaseEntity: {fileID: 0}
+  skinMaterial: {fileID: 0}
+  originalColour:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  _animator: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
+  _nextAttackTime: 0
+  _collisionRange: 0
+  _targetCollisionRange: 0
+  _lockedOn: 0
+  _inAttackRange: 0
+  _isSprinting: 0
+  _isMoving: 0
+  _walkCount: 0
+  DEBUG: 0
+  isBoss: 1
+  _achievementManager: {fileID: 0}
 --- !u!143 &265806829
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2353,6 +2380,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FuelAmount: 10
+  LowerBound: 0
+  UpperBound: 0
+  TorchFuelControllerScript: {fileID: 0}
+  _achievementManager: {fileID: 0}
+  DEBUG: 0
 --- !u!1 &320769334
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,11 +2969,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee95255498b349438981a586b8725b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
   targets:
   - {fileID: 1044716765}
   Speed: 20
   IsDisabled: 1
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
+  _storylineNotified: 0
 --- !u!136 &502107819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3005,9 +3039,11 @@ MonoBehaviour:
   EndLine: 7
   TextBox: {fileID: 1275513153}
   RequireButtonPress: 0
+  _waitForPress: 0
   DestroyWhenActivated: 1
   DialogueSpeech: []
   TalkOnce: 1
+  _talked: 0
 --- !u!65 &513255730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3214,12 +3250,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee95255498b349438981a586b8725b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
   targets:
   - {fileID: 1465067646}
   - {fileID: 2078111483}
   Speed: 8
   IsDisabled: 0
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
+  _storylineNotified: 0
 --- !u!4 &539050580 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400092, guid: d8e6116652f17784087610025c66ec2e, type: 3}
@@ -3559,6 +3597,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FuelAmount: 10
+  LowerBound: 0
+  UpperBound: 0
+  TorchFuelControllerScript: {fileID: 0}
+  _achievementManager: {fileID: 0}
+  DEBUG: 0
 --- !u!4 &662159432 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 7aa6cb432038d7c48a82b9395843536a, type: 2}
@@ -3596,9 +3639,11 @@ MonoBehaviour:
   EndLine: 4
   TextBox: {fileID: 1275513153}
   RequireButtonPress: 0
+  _waitForPress: 0
   DestroyWhenActivated: 1
   DialogueSpeech: []
   TalkOnce: 1
+  _talked: 0
 --- !u!65 &675987989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5488,6 +5533,14 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 22433478, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22433478, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4daa759874fccf4ba63bb67f4d9c220, type: 2}
   m_IsPrefabParent: 0
@@ -5764,6 +5817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c70407f0a4bba6408662a7e2283716d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &846007909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7059,6 +7113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa7110beb21038408ad0edbdee73b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pulled: 0
+  leverPulled: {fileID: 8300000, guid: f1978a7c2f864e046b8f6581bf19731b, type: 3}
+  _source: {fileID: 0}
 --- !u!111 &1016661497
 Animation:
   m_ObjectHideFlags: 0
@@ -7090,6 +7147,80 @@ BoxCollider:
 Transform:
   m_PrefabParentObject: {fileID: 400014, guid: a1243ef1db4df5849a2f7ec3ddc9c0e5, type: 3}
   m_PrefabInternal: {fileID: 1016661494}
+--- !u!82 &1016661500
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1016661495}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1001 &1020896934
 Prefab:
   m_ObjectHideFlags: 0
@@ -7524,6 +7655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponDamage: 30
+  DEBUG: 0
 --- !u!65 &1131872506
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8230,6 +8362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b0217877d955a4789293306362e3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thingsOnTop: 0
+  _pressed: 0
 --- !u!23 &1259020694
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8379,24 +8513,32 @@ MonoBehaviour:
   Dialogue: {fileID: 1822397510}
   TextFile: {fileID: 0}
   TextLines: []
+  _splitText: []
   CharacterImage: {fileID: 1751763840}
+  Talking: 0
   CharacterName: {fileID: 1395011772}
   Images:
   - {fileID: 21300000, guid: 72f3ddb4e9c4f52438d2e4a7af4f9ee8, type: 3}
   - {fileID: 21300000, guid: 4f6d24a9471be5241a6b2f2287a28e42, type: 3}
   - {fileID: 21300000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
   - {fileID: 21300000, guid: f3008e3d7cbf1484c931737ee2cef76f, type: 3}
+  _gameUI: {fileID: 0}
+  _dialogueSounds: []
+  _currentClip: 0
   CurrentLine: 0
   EndLine: 0
   Player1: {fileID: 1842113497}
   Player2: {fileID: 465268860}
   MoleMan: {fileID: 539050578}
-  ThisStoryline: {fileID: 1389205619}
+  ThisStoryline: {fileID: 0}
   TorchController: {fileID: 1329372291}
   StopMovement: 0
   IsActive: 0
   FirstLine: 0
+  _isTyping: 0
+  _cancelTyping: 0
   TypeSound: {fileID: 8300000, guid: 284c5d72fed0df24782807decd3e384f, type: 3}
+  _source: {fileID: 0}
   TypeSpeed: 0.05
 --- !u!82 &1275513154
 AudioSource:
@@ -8944,6 +9086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponDamage: 30
+  DEBUG: 0
 --- !u!65 &1390355309
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10885,7 +11028,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c8369119aa2d83499e038d91b1d467f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player1Entered: 0
+  _player2Entered: 0
+  _endOfGame: 0
+  _gameDataScript: {fileID: 0}
   LevelFinishedMenu: {fileID: 2088847913}
+  SubmitHighScoreMenu: {fileID: 0}
+  SubmitHighScoreButton: {fileID: 0}
+  Player1Name: {fileID: 0}
+  Player2Name: {fileID: 0}
 --- !u!1 &1465067646 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 173824, guid: 1673822d2508371498ef1be030ada982, type: 2}
@@ -12313,6 +12464,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6527f59d81ce86946acb28b4aa44d500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfLivesLeft: 0
+  _totalTime: 0
+  _sharedGold: 0
+  _torchFuel: 0
+  _torchFuelSlider: {fileID: 0}
+  _timesKilled: 0
+  _monstersKilled: 0
+  _chestsMissed: 0
+  _playerOneAccuracy: 0
+  _playerTwoAccuracy: 0
+  _inGameUiManager: {fileID: 0}
+  _firstLevel: 1
+  Achievements: []
+  AchievementPopup: {fileID: 0}
+  achievementText: {fileID: 0}
+  currentTime: 0
+  executedTime: 0
+  timeToWait: 3
 --- !u!4 &1737645111
 Transform:
   m_ObjectHideFlags: 0
@@ -17386,6 +17555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c70407f0a4bba6408662a7e2283716d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &2127574731
 MonoBehaviour:
   m_ObjectHideFlags: 0

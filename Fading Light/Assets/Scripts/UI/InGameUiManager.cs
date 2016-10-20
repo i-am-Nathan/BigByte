@@ -89,6 +89,10 @@ public class InGameUiManager : MonoBehaviour {
     {
 		// Unpausing the game and loading the main menu scene
         Time.timeScale = 1;
+
+		// Destroying game data to reset all data
+		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+		Destroy (go);
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -99,6 +103,11 @@ public class InGameUiManager : MonoBehaviour {
     {
 		// Unpaused the game and gets the active scene and reloads it
         Time.timeScale = 1;
+
+		GameObject go = GameObject.FindGameObjectWithTag("Life Manager");
+		LifeManager lifeManagerScript = (LifeManager)go.GetComponent(typeof(LifeManager));
+		lifeManagerScript.LoseLife ();
+
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
