@@ -175,7 +175,7 @@ public class PlayerController : Player
             else if (Input.GetButtonUp("SwapTorch"))
             {
                 _lastPressed = false;
-            }
+            } 
         }
     }
 
@@ -267,7 +267,7 @@ public class PlayerController : Player
     void OnParticleCollision(GameObject other)
     {
 		if(other.name.Equals("Afterburner")){
-			Damage(0.8f, transform);
+			Damage(0.6f, transform);
 		}
 			
 		if (TorchFuelControllerScript.TorchInPlayer1 && other.name.Equals("Wind"))
@@ -283,4 +283,5 @@ public class PlayerController : Player
 		healthCircle.fillAmount += 30f;
 		_healthSlider.value += 30f;
 	}
+
 }

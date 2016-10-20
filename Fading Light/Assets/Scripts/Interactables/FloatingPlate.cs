@@ -15,6 +15,7 @@ public class FloatingPlate : MonoBehaviour {
 	public Collider EndBoundary;
 	private int _direction =1 ;
 	public bool Pressed;
+	private bool locked;
 
 	/// <summary>
 	/// Sets an initial direction.
