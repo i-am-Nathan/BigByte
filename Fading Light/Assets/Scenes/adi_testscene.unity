@@ -11061,6 +11061,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11447240, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
+      propertyPath: Notify
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e76709831d00c6a4eacfb084eb5639e2, type: 2}
   m_IsPrefabParent: 0
@@ -12901,6 +12905,7 @@ MonoBehaviour:
   TorchController: {fileID: 386464788}
   ReferencePoints: []
   CameraRig: {fileID: 447098264}
+  Boss: {fileID: 0}
   CutScenePositions:
   - {fileID: 1919909580}
   - {fileID: 882438570}
@@ -17247,10 +17252,10 @@ MonoBehaviour:
   Talking: 0
   CharacterName: {fileID: 1395011772}
   Images:
-  - {fileID: 21300000, guid: 72f3ddb4e9c4f52438d2e4a7af4f9ee8, type: 3}
-  - {fileID: 21300000, guid: 4f6d24a9471be5241a6b2f2287a28e42, type: 3}
-  - {fileID: 21300000, guid: 8d3973708156a934f9e22bc155b75442, type: 3}
-  - {fileID: 21300000, guid: f3008e3d7cbf1484c931737ee2cef76f, type: 3}
+  - {fileID: 21300000, guid: 09778fcd1101d1f4380600c02f6a9871, type: 3}
+  - {fileID: 21300000, guid: 36b686dff1cdafa45acf374d36b6f6d4, type: 3}
+  - {fileID: 21300000, guid: 19a66772343ac1d49a768dd73b00db1d, type: 3}
+  - {fileID: 21300000, guid: 65c05872e5b60554f8d66d5cc3c399ea, type: 3}
   CurrentLine: 0
   EndLine: 0
   Player1: {fileID: 1644279757}
@@ -23582,6 +23587,7 @@ MonoBehaviour:
   - {fileID: 99441407}
   - {fileID: 1863500029}
   - {fileID: 603158652}
+  LeverSound: {fileID: 0}
 --- !u!65 &1637475049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23758,7 +23764,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 476144, guid: bf10ca8cfcd4e414db60ca22cb63b953, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.2
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 476144, guid: bf10ca8cfcd4e414db60ca22cb63b953, type: 2}
       propertyPath: m_LocalPosition.z
@@ -25540,6 +25546,7 @@ MonoBehaviour:
   - {fileID: 1689134434}
   - {fileID: 43821955}
   door: {fileID: 1752883696}
+  LeverSound: {fileID: 0}
 --- !u!111 &1759281006
 Animation:
   m_ObjectHideFlags: 0
@@ -25600,8 +25607,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1780693515}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: 684.9, y: 20, z: 54.6}
-  m_LocalScale: {x: 95.19099, y: 50.665337, z: 5}
+  m_LocalPosition: {x: 682.9, y: 20, z: 54.6}
+  m_LocalScale: {x: 99.225494, y: 50.665337, z: 5}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children: []
   m_Father: {fileID: 531942486}
