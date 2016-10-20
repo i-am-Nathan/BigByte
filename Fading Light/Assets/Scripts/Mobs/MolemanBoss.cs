@@ -35,9 +35,7 @@ public class MolemanBoss : BaseEntity
     public float AttackCooldown = 2f;
     public float RotationSpeed = 10f;
 
-
-    public Image HealthCircle;                                 // Reference to the UI's health circle.
-    public Slider HealthSlider;
+	public Slider HealthSlider;
     public Text BossName;
     public GameObject BossPanel;
 
@@ -99,12 +97,11 @@ public class MolemanBoss : BaseEntity
     private void Start()
     {
         _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
-        //HealthCircle.enabled = false;
-        //HealthSlider = HealthSlider.GetComponent<Slider>();
-        //BossName = BossName.GetComponent<Text>();
-        //BossName.text = "moleman Boss";
-        //Debug.Log("name " + BossName.text);
-        //BossPanel.SetActive(false);
+		HealthSlider = HealthSlider.GetComponent<Slider>();
+		HealthSlider.value = CurrentHealth;
+		BossName = BossName.GetComponent<Text>();
+		BossName.text = "Moleman";
+		BossPanel.SetActive(false);
         CurrentHealth = Health;
     }
 
@@ -135,7 +132,7 @@ public class MolemanBoss : BaseEntity
         if (!isDead)
         {
             if (DEBUG) Debug.Log("Entered state: Attack");
-            //if (isBoss) BossPanel.SetActive(true);
+            if (isBoss) BossPanel.SetActive(true);
             RotateTowards(target);
 
             pathfinder.enabled = false;
@@ -181,7 +178,7 @@ public class MolemanBoss : BaseEntity
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
-        //if (isBoss) BossPanel.SetActive(true);
+        if (isBoss) BossPanel.SetActive(true);
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _lockedOn = true;
 
@@ -269,7 +266,7 @@ public class MolemanBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
         float refreshRate = 0.8f;
-        //if (isBoss) BossPanel.SetActive(false);
+        if (isBoss) BossPanel.SetActive(false);
         //Check to see if either player is within activation range
         while (!_lockedOn)
         {
@@ -306,7 +303,7 @@ public class MolemanBoss : BaseEntity
     private void Death_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Death");
-        //if (isBoss) BossPanel.SetActive(false);
+        if (isBoss) BossPanel.SetActive(false);
     }
 
     private bool _summonedOnce;
@@ -337,14 +334,11 @@ public class MolemanBoss : BaseEntity
         // Set the health bar's value to the current health.
         try
         {
-            HealthCircle.enabled = true;
-            HealthCircle.fillAmount -= amount / 100.0f;
             if (isBoss)
             {
-                HealthSlider.value -= amount / 100.0f;
+				HealthSlider.value -= amount/base.IntialHealth;
             }
 
-            Invoke("HideHealth", 3);
         }
         catch { }
 
@@ -382,20 +376,11 @@ public class MolemanBoss : BaseEntity
         catch { }
     }
 
-    /// <summary>
-    /// Hides the health.
-    /// </summary>
-    public void HideHealth()
-    {
-        HealthCircle.enabled = false;
-    }
-
 
     void OnTriggerStay(Collider other)
     {
         if (_canTakeDamage && other.tag.Equals("LightningCollision"))
         {
-            //Debug.Log("Kevin");
             Damage(10f, null);
             _canTakeDamage = false;
         }
