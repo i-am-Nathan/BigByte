@@ -13,7 +13,7 @@ public class Storyline_Level2 : Storyline
     public TorchFuelController TorchController;
     public List<GameObject> ReferencePoints;
     public GameObject CameraRig;
-    public MoleDoggy Boss;
+
     public List<GameObject> CutScenePositions;
     public List<GameObject> CustSceneTargets;
 
@@ -37,21 +37,13 @@ public class Storyline_Level2 : Storyline
 
     public override void Next()
     {
-        if(_currentStep == 4)
-        {
-            _currentStep++;
-            _done = false;
-        }
        
+
+        //throw new NotImplementedException();
     }
 
     public override void NextMoleMan()
     {
-        if (_currentStep == 5)
-        {
-            _currentStep++;
-            _done = false;
-        }
         //throw new NotImplementedException();
     }
 
@@ -105,7 +97,6 @@ public class Storyline_Level2 : Storyline
         else if(_currentStep == 2)
         {
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
-            _done = true;
         }
         else if (_currentStep == 3)
         {
@@ -124,19 +115,6 @@ public class Storyline_Level2 : Storyline
         else if (_currentStep == 4)
         {
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
-            _done = true;
-        }
-        else if (_currentStep == 5)
-        {
-            CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[2];
-            CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[2];
-            CameraRig.GetComponent<PlayerCam>().CameraState = 1;
-            _done = true;
-        }
-        else if (_currentStep == 6)
-        {
-            CameraRig.GetComponent<PlayerCam>().CameraState = 0;
-            _done = true;
         }
     }
 
