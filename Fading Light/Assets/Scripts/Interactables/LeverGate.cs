@@ -21,9 +21,10 @@ public class LeverGate : MonoBehaviour
 
             Transform spearWall = transform.parent.transform.Find("spear_wall");
 
-            foreach (Transform spearBlock in spearWall)
-                spearBlock.transform.Find("Spear").GetComponent<Animation>().Play("Spear_Fall");
-
+			foreach (Transform spearBlock in spearWall) {
+				spearBlock.transform.Find ("Spear").GetComponent<Animation> ().Play ("Spear_Fall");
+				if(spearBlock.name.Equals("spear_block (4)")) spearBlock.GetComponent<AudioSource>().Play();				
+			}
             _pulled = true;
         }
     }

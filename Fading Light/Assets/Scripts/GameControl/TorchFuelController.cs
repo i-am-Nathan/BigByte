@@ -51,7 +51,6 @@ public class TorchFuelController : MonoBehaviour {
     {
 	    
 	    FlameSound.loop = true;
-        FlameSound.volume = 0.2f;
 	    FlameSound.Play();
         TorchP2.SetActive(false);
         Player2TorchLight.gameObject.SetActive(false);

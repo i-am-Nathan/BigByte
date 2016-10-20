@@ -10,10 +10,12 @@ public class FireTrap : MonoBehaviour {
 	}
 
 	void StartEmitting(){
+		GetComponent<AudioSource> ().Play ();
 		gameObject.GetComponent<ParticleSystem> ().Play();
 		transform.Find ("Point light").gameObject.SetActive(true);
 	}		
 	void StopLight(){
+		GetComponent<AudioSource> ().Stop ();
 		transform.Find ("Point light").gameObject.SetActive (false);
 	}
 }
