@@ -70,6 +70,8 @@ public class SkeleBoss : BaseEntity
 
     private bool _isAttacking;
 
+	public EndOfLevelTrigger EndOfLevelTriggerScript;
+
     /// <summary>
     /// Determines whether this instance is attacking.
     /// </summary>
@@ -413,6 +415,7 @@ public class SkeleBoss : BaseEntity
         if (!_summoning)
         {
             base.Damage(amount, attacker);
+			HealthSlider.value -= amount;
 
             if (CurrentHealth < 150 && !_summonedOnce)
             {
@@ -429,15 +432,7 @@ public class SkeleBoss : BaseEntity
                 fsm.ChangeState(States.Summoning, StateTransition.Overwrite);
                 return;
             }
-
-            // Set the health bar's value to the current health.
-            try
-            {
-				HealthSlider.value -= amount/base.IntialHealth;
-            }
-            catch { }
-
-
+				
             if (true) Debug.Log("skeleton damaged");
 
             if (amount >= CurrentHealth)
@@ -469,6 +464,10 @@ public class SkeleBoss : BaseEntity
             _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+
+			// Triggering end of level 1 second after boss is defeated
+			yield return new WaitForSeconds(1f);
+			EndOfLevelTriggerScript.TriggerEndOfLevel ();
         } catch { }        
     }
 }
