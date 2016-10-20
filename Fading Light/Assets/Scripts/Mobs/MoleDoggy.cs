@@ -439,7 +439,7 @@ public class MoleDoggy : BaseEntity
         _source.PlayOneShot(Death);
         _cloud.SetActive(false);
 		BossPanel.SetActive(false);
-		EndOfLevelTriggerScript.TriggerEndOfLevel ();
+
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
@@ -453,6 +453,7 @@ public class MoleDoggy : BaseEntity
         {
             base.Damage(amount, attacker);
             _source.PlayOneShot(Hit);
+			HealthSlider.value -= amount;
 
             if (CurrentHealth < 150 && !_fireballedOnce)
             {
@@ -469,15 +470,7 @@ public class MoleDoggy : BaseEntity
                 fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
                 return;
             }
-
-            // Set the health bar's value to the current health.
-            try
-            {
-				HealthSlider.value -= amount;
-            }
-            catch { }
-
-
+				
             if (DEBUG) Debug.Log("molemans dog damaged");
 
             if (amount >= CurrentHealth)
@@ -507,6 +500,11 @@ public class MoleDoggy : BaseEntity
             _animator.Play("Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+
+			// Triggering end of level 1 second after boss is defeated
+			yield return new WaitForSeconds(1f);
+			EndOfLevelTriggerScript.TriggerEndOfLevel ();
+
         } catch { }        
     }
 }

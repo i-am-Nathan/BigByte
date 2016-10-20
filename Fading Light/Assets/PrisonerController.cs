@@ -35,7 +35,7 @@ public class PrisonerController : MonoBehaviour {
         if (!IsDisabled && targets.Count != 0)
         {
 
-            _animator.CrossFade("sprint");
+            _animator.Play();
             //Transform the moleman
             float step = Speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, targets[0].transform.position, step);
