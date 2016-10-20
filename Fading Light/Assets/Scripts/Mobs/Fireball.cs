@@ -57,7 +57,8 @@ namespace Assets.Scripts.Mobs
             if (other.tag == "Player" || other.tag == "Player2")
             {
                 if (DEBUG) Debug.Log("Fireball collision: Player");
-                target.Damage(damage, this.transform.root);
+
+                other.GetComponent<Player>().Damage(damage, this.transform.root);
 
                 _source.PlayOneShot(FireballExplodes);
 
