@@ -40,7 +40,7 @@ public class OpenTreasure : MonoBehaviour {
 	/// <param name="other">Other.</param>
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
-			if (Input.GetKeyDown (KeyCode.T)) {
+			if (Input.GetKeyDown (KeyCode.Q) || Input.GetKeyDown(KeyCode.O)) {
 				if (!_open) {
 					StartCoroutine (Open ());
 					_open = true;
