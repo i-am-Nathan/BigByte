@@ -267,7 +267,7 @@ public class PlayerController : Player
     void OnParticleCollision(GameObject other)
     {
 		if(other.name.Equals("Afterburner")){
-			Damage(0.8f, transform);
+			Damage(0.6f, transform);
 		}
 			
 		if (TorchFuelControllerScript.TorchInPlayer1 && other.name.Equals("Wind"))

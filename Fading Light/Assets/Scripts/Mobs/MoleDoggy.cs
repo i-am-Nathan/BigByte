@@ -83,7 +83,10 @@ public class MoleDoggy : BaseEntity
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
         //base.Start();
-        spawnLocation = this.gameObject.transform.position;       
+        spawnLocation = this.gameObject.transform.position;
+
+        Transform collider = this.transform.Find("AOECollider");
+        collider.gameObject.SetActive(false);
 
         //Initlize the pathfinder, collision range and animator 
         pathfinder = GetComponent<NavMeshAgent>();
@@ -176,6 +179,8 @@ public class MoleDoggy : BaseEntity
     {        
         _cloud.SetActive(true);
         pathfinder.enabled = false;
+        Transform collider = this.transform.Find("AOECollider");
+        collider.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(3f);
 
@@ -233,6 +238,7 @@ public class MoleDoggy : BaseEntity
 
         _cloud.SetActive(false);
         pathfinder.enabled = true;
+        collider.gameObject.SetActive(false);
 
         fsm.ChangeState(States.Chase);
     }
