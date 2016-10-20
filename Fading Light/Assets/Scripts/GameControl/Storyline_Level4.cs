@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class Storyline_Level3 : Storyline
+public class Storyline_Level4 : Storyline
 {
 
 
@@ -13,8 +13,7 @@ public class Storyline_Level3 : Storyline
     public TorchFuelController TorchController;
     public List<GameObject> ReferencePoints;
     public GameObject CameraRig;
-    public PrisonerController Prisoner;
-    public SkeleBoss Boss;
+    public MoleManContoller SmallMoleMan;
     public List<GameObject> CutScenePositions;
     public List<GameObject> CustSceneTargets;
 
@@ -23,7 +22,6 @@ public class Storyline_Level3 : Storyline
     private ToolTips _tips;
     private bool _tipsDone = false;
     private float _startDisplay;
-    public GameObject Block;
 
     public override void DialogueComplete()
     {
@@ -34,106 +32,75 @@ public class Storyline_Level3 : Storyline
 
     public override void EnableMoleMan()
     {
-        
         //throw new NotImplementedException();
     }
 
     public override void Next()
     {
-        if (_currentStep == 3)
+        if(_currentStep == 4)
         {
-            _done = false;
             _currentStep++;
+            _done = false;
         }
-
+       
     }
 
     public override void NextMoleMan()
     {
-        if (_currentStep == 4 || _currentStep == 2)
+        if (_currentStep == 1)
         {
-            _done = false;
             _currentStep++;
+            _done = false;
         }
         //throw new NotImplementedException();
     }
 
     public override void StartText()
     {
-        if(_currentStep == 0)
-        {
-            _currentStep++;
-            _done = false;
-        } 
     }
 
     // Use this for initialization
     void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
+    // Update is called once per frame
+    void Update()
+    {
         if (_done)
         {
             return;
         }
 
-        if(_currentStep == 0)
+        if (_currentStep == 0)
         {
+            SmallMoleMan.IsDisabled = true;
             TorchController.SwapPlayers();
-            _done = true;
-        }
-        else if(_currentStep == 1)
-        {
-            CharacterDamageEnabled(false);
             //zoom in on prisoner
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[0];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[0];
+            CameraRig.GetComponent<PlayerCam>().CameraState = 1;
             TorchController.IsDisabled = true;
             //Moleman walking to players
             _done = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
-            
-            CameraRig.GetComponent<PlayerCam>().CameraState = 1;
+            _done = true;
+        }
+        else if (_currentStep == 1)
+        {
+            //Talking done
+            CameraRig.GetComponent<PlayerCam>().CameraState = 0;
+            Player1.IsDisabled = false;
+            Player2.IsDisabled = false;
+            _done = true;
         }
         else if (_currentStep == 2)
         {
-            //prisoner running away
-            Prisoner.IsDisabled = false;
-        }
-        else if (_currentStep == 3)
-        {
-            //zoom back out
-            CharacterDamageEnabled(true);
+            //Transformation done
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
-            DestroyObject(Block);
-        }else if (_currentStep == 4)
-        {
-            TorchController.IsDisabled = true;
-            Player1.IsDisabled = true;
-            Player2.IsDisabled = true;
-            CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[1];
-            CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[1];
-            CameraRig.GetComponent<PlayerCam>().CameraState = 1;
-            Boss.BeginCutscene(this);
-            CharacterDamageEnabled(false);
-            _done = true;
             _done = true;
         }
-        else if (_currentStep == 5)
-        {
-            //zoom back out
-            CharacterDamageEnabled(true);
-            TorchController.IsDisabled = false;
-            Player1.IsDisabled = false;
-            Player2.IsDisabled = false;
-            CameraRig.GetComponent<PlayerCam>().CameraState = 0;
-        }
-
-
     }
 
     public override void CharacterDamageEnabled(bool enabled)

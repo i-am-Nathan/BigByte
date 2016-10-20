@@ -498,6 +498,7 @@ GameObject:
   - 136: {fileID: 13616656}
   - 114: {fileID: 11446108}
   - 114: {fileID: 11434862}
+  - 82: {fileID: 8276260}
   m_Layer: 0
   m_Name: SkeleBoss
   m_TagString: Enemy
@@ -1031,10 +1032,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182626}
-  m_LocalRotation: {x: 0.000006726488, y: 0.99759036, z: 0.00017047631, w: -0.06937943}
-  m_LocalPosition: {x: 414.6823, y: 5.3100767e-15, z: -294.37994}
-  m_LocalScale: {x: 140, y: 140, z: 140}
-  m_LocalEulerAnglesHint: {x: -0.0195, y: -172.04329, z: -0.00059999997}
+  m_LocalRotation: {x: -0.000060335275, y: 0.45318806, z: 0.00015958404, w: 0.89141494}
+  m_LocalPosition: {x: -0.044, y: -0, z: -4.342}
+  m_LocalScale: {x: 1.2727273, y: 1.2727273, z: 1.2727274}
+  m_LocalEulerAnglesHint: {x: -0.0145, y: -306.10318, z: 0.0132}
   m_Children:
   - {fileID: 493146}
   - {fileID: 414794}
@@ -1200,6 +1201,80 @@ Transform:
   - {fileID: 438030}
   m_Father: {fileID: 436610}
   m_RootOrder: 0
+--- !u!82 &8276260
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182626}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9537296
 Animator:
   serializedVersion: 3
@@ -1236,6 +1311,9 @@ Animation:
   - {fileID: 7400000, guid: 65a1f0346a2cf3c428f1b29ccbc046ad, type: 2}
   - {fileID: 7400000, guid: cf063373f0a0fa04fb06c740816532a6, type: 2}
   - {fileID: 7400000, guid: caba1fa526aa836449ee36a1450183df, type: 2}
+  - {fileID: 7400000, guid: dfd8af20a044d7d408052a62bd35cdc2, type: 2}
+  - {fileID: 7400000, guid: 41be6258115570a458bff3b7d9c5f78f, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_WrapMode: 0
   m_PlayAutomatically: 1
@@ -1280,6 +1358,7 @@ MonoBehaviour:
   HealthSlider: {fileID: 0}
   BossName: {fileID: 0}
   BossPanel: {fileID: 0}
+  EndOfLevelTriggerScript: {fileID: 0}
 --- !u!136 &13616656
 CapsuleCollider:
   m_ObjectHideFlags: 1

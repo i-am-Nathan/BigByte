@@ -31,7 +31,7 @@ public class TextBoxManager : MonoBehaviour {
 	public PlayerController Player1;
 	public Player2Controller Player2;
 
-    public MoleManContoller MoleMan;
+
     public Storyline ThisStoryline;
     public TorchFuelController TorchController;
 
@@ -211,7 +211,6 @@ public class TextBoxManager : MonoBehaviour {
 		Player1.IsDisabled = false;
 		Player2.IsDisabled = false;
 
-        MoleMan.IsDisabled = false;
 
         if (NotifyStoryline)
         {
