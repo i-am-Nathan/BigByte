@@ -1,70 +1,100 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\PyroParticles\Prefab\Script\MeteorSwarmScript.cs
+//
+// summary:	Implements the meteor swarm script class
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace DigitalRuby.PyroParticles
 {
-    /// <summary>
-    /// Meteor collision delegate
-    /// </summary>
-    /// <param name="script">Meteor swarm script</param>
-    /// <param name="meteor">Meteor</param>
+    /// <summary>   Meteor collision delegate. </summary>
+    ///
+ 
+    ///
+    /// <param name="script">   Meteor swarm script. </param>
+    /// <param name="meteor">   Meteor. </param>
+
     public delegate void MeteorSwarmCollisionDelegate(MeteorSwarmScript script, GameObject meteor);
 
-    /// <summary>
-    /// Handles the meteor swarm effect
-    /// </summary>
+    /// <summary>   Handles the meteor swarm effect. </summary>
+    ///
+ 
+
     public class MeteorSwarmScript : FireBaseScript, ICollisionHandler
     {
+        /// <summary>   The meteor prefab. </summary>
         [Tooltip("The game object prefab that represents the meteor.")]
         public GameObject MeteorPrefab;
 
+        /// <summary>   The meteor explosion particle system. </summary>
         [Tooltip("Explosion particle system that should be emitted for each initial collision.")]
         public ParticleSystem MeteorExplosionParticleSystem;
 
+        /// <summary>   The meteor shrapnel particle system. </summary>
         [Tooltip("Shrapnel particle system that should be emitted for each initial collision.")]
         public ParticleSystem MeteorShrapnelParticleSystem;
 
+        /// <summary>   The meteor materials. </summary>
         [Tooltip("A list of materials to use for the meteors. One will be chosen at random for each meteor.")]
         public Material[] MeteorMaterials;
 
+        /// <summary>   The meteor meshes. </summary>
         [Tooltip("A list of meshes to use for the meteors. One will be chosen at random for each meteor.")]
         public Mesh[] MeteorMeshes;
 
+        /// <summary>   Destination radius. </summary>
         [Tooltip("The destination radius")]
         public float DestinationRadius;
 
+        /// <summary>   Source for the. </summary>
         [Tooltip("The source of the meteor swarm (in the sky somewhere usually)")]
         public Vector3 Source;
 
+        /// <summary>   Source radius. </summary>
         [Tooltip("The source radius")]
         public float SourceRadius;
 
+        /// <summary>   The time to impact. </summary>
         [Tooltip("The time it should take the meteors to impact assuming a clear path to destination.")]
         public float TimeToImpact = 1.0f;
 
+        /// <summary>   The meteors per second range. </summary>
         [SingleLine("How many meteors should be emitted per second (min and max)")]
         public RangeOfIntegers MeteorsPerSecondRange = new RangeOfIntegers { Minimum = 5, Maximum = 10 };
 
+        /// <summary>   The scale range. </summary>
         [SingleLine("Scale multiplier for meteors (min and max)")]
         public RangeOfFloats ScaleRange = new RangeOfFloats { Minimum = 0.25f, Maximum = 1.5f };
 
+        /// <summary>   The meteor life time range. </summary>
         [SingleLine("Maximum life time of meteors in seconds (min and max).")]
         public RangeOfFloats MeteorLifeTimeRange = new RangeOfFloats { Minimum = 4.0f, Maximum = 8.0f };
 
+        /// <summary>   The emission sounds. </summary>
         [Tooltip("Array of emission sounds. One will be chosen at random upon meteor creation.")]
         public AudioClip[] EmissionSounds;
 
+        /// <summary>   The explosion sounds. </summary>
         [Tooltip("Array of explosion sounds. One will be chosen at random upon impact.")]
         public AudioClip[] ExplosionSounds;
 
         /// <summary>
-        /// A delegate that can be assigned to listen for collision. Use this to apply damage for meteor impacts or other effects.
+        /// A delegate that can be assigned to listen for collision. Use this to apply damage for meteor
+        /// impacts or other effects.
         /// </summary>
+
         [HideInInspector]
         public event MeteorSwarmCollisionDelegate CollisionDelegate;
 
+        /// <summary>   The elapsed second. </summary>
         private float elapsedSecond = 1.0f;
+
+        /// <summary>   Spawn meteor. </summary>
+        ///
+     
+        ///
+        /// <returns>   An IEnumerator. </returns>
 
         private IEnumerator SpawnMeteor()
         {
@@ -122,6 +152,10 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Spawn meteors. </summary>
+        ///
+     
+
         private void SpawnMeteors()
         {
             int count = (int)UnityEngine.Random.Range(MeteorsPerSecondRange.Minimum, MeteorsPerSecondRange.Maximum);
@@ -130,6 +164,10 @@ namespace DigitalRuby.PyroParticles
                 StartCoroutine(SpawnMeteor());
             }
         }
+
+        /// <summary>   Updates this object. </summary>
+        ///
+     
 
         protected override void Update()
         {
@@ -141,6 +179,12 @@ namespace DigitalRuby.PyroParticles
                 SpawnMeteors();
             }
         }
+
+        /// <summary>   Play collision sound. </summary>
+        ///
+     
+        ///
+        /// <param name="obj">  The object. </param>
 
         private void PlayCollisionSound(GameObject obj)
         {
@@ -160,6 +204,15 @@ namespace DigitalRuby.PyroParticles
             s.PlayOneShot(clip, obj.transform.localScale.x);
         }
 
+        /// <summary>   Cleanup meteor. </summary>
+        ///
+     
+        ///
+        /// <param name="delay">    The delay. </param>
+        /// <param name="obj">      The object. </param>
+        ///
+        /// <returns>   An IEnumerator. </returns>
+
         private IEnumerator CleanupMeteor(float delay, GameObject obj)
         {
             yield return new WaitForSeconds(delay);
@@ -168,6 +221,13 @@ namespace DigitalRuby.PyroParticles
             GameObject.Destroy(obj.GetComponent<Rigidbody>());
             GameObject.Destroy(obj.GetComponent<TrailRenderer>());
         }
+
+        /// <summary>   Handles the collision. </summary>
+        ///
+     
+        ///
+        /// <param name="obj">  The object. </param>
+        /// <param name="col">  The Collision to process. </param>
 
         public void HandleCollision(GameObject obj, Collision col)
         {

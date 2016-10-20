@@ -1,5 +1,13 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Mobs\SpiderBehaviour.cs
+//
+// summary:	Implements the spider behaviour class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A spider behaviour. </summary>
+///
+/// <remarks>    . </remarks>
 
 [RequireComponent (typeof (NavMeshAgent))]
 public class SpiderBehaviour : BaseEntity {

@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\IntegrationTestsRunnerWindow.cs
+//
+// summary:	Implements the integration tests runner Windows Form
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,48 +14,102 @@ using UnityEngine.SceneManagement;
 
 namespace UnityTest
 {
+    /// <summary>   (Serializable) form for viewing the integration tests runner. </summary>
+    ///
+ 
+
     [Serializable]
     public class IntegrationTestsRunnerWindow : EditorWindow, IHasCustomMenu
     {
         #region GUI Contents
+        /// <summary>   The graphical user interface create new test. </summary>
         private readonly GUIContent m_GUICreateNewTest = new GUIContent("Create", "Create new test");
+        /// <summary>   The graphical user interface run selected tests. </summary>
         private readonly GUIContent m_GUIRunSelectedTests = new GUIContent("Run Selected", "Run selected test(s)");
+        /// <summary>   The graphical user interface run all tests. </summary>
         private readonly GUIContent m_GUIRunAllTests = new GUIContent("Run All", "Run all tests");
+        /// <summary>   The graphical user interface block user interface. </summary>
         private readonly GUIContent m_GUIBlockUI = new GUIContent("Block UI when running", "Block UI when running tests");
+        /// <summary>   The graphical user interface pause on failure. </summary>
         private readonly GUIContent m_GUIPauseOnFailure = new GUIContent("Pause on test failure");
         #endregion
 
         #region runner steerign vars
+        /// <summary>   The instance. </summary>
         private static IntegrationTestsRunnerWindow s_Instance;
+
+        /// <summary>   Gets the tests to run. </summary>
+        ///
+        /// <value> The m tests to run. </value>
+
         [SerializeField] private List<GameObject> m_TestsToRun;
+
+        /// <summary>   Gets the dynamic tests to run. </summary>
+        ///
+        /// <value> The m dynamic tests to run. </value>
+
         [SerializeField] private List<string> m_DynamicTestsToRun;
+
+        /// <summary>   Gets a value indicating whether the ready to run. </summary>
+        ///
+        /// <value> True if ready to run, false if not. </value>
+
         [SerializeField] private bool m_ReadyToRun;
+        /// <summary>   True if this object is building. </summary>
         private bool m_IsBuilding;
+        /// <summary>   True to selected in hierarchy. </summary>
         public static bool selectedInHierarchy;
+        /// <summary>   The horizontal split bar position. </summary>
         private float m_HorizontalSplitBarPosition = 200;
+
+        /// <summary>   Gets the test list scroll. </summary>
+        ///
+        /// <value> The m test list scroll. </value>
+
         private Vector2 m_TestInfoScroll, m_TestListScroll;
+        /// <summary>   The test lines. </summary>
         private IntegrationTestRendererBase[] m_TestLines;
+        /// <summary>   Name of the currect scene. </summary>
         private string m_CurrectSceneName;
+        /// <summary>   The filter settings. </summary>
         private TestFilterSettings m_FilterSettings;
         
+        /// <summary>   Size of the result text. </summary>
         Vector2 m_resultTextSize;
+        /// <summary>   The result text. </summary>
         string m_resultText;
+        /// <summary>   The last selected go. </summary>
         GameObject m_lastSelectedGO;
+        /// <summary>   Length of the result test maximum. </summary>
         int m_resultTestMaxLength = 15000;
 
+        /// <summary>   Gets the selected line. </summary>
+        ///
+        /// <value> The m selected line. </value>
+
         [SerializeField] private GameObject m_SelectedLine;
+        /// <summary>   List of results. </summary>
         [SerializeField] private List<TestResult> m_ResultList = new List<TestResult>();
+        /// <summary>   The fold markers. </summary>
         [SerializeField] private List<GameObject> m_FoldMarkers = new List<GameObject>();
 
+        /// <summary>   Options for controlling the operation. </summary>
         private IntegrationTestsRunnerSettings m_Settings;
 
         #endregion
 
+        /// <summary>   Static constructor. </summary>
+        ///
+     
 
         static IntegrationTestsRunnerWindow()
         {
             InitBackgroundRunners();
         }
+
+        /// <summary>   Init background runners. </summary>
+        ///
+     
 
         private static void InitBackgroundRunners()
         {
@@ -65,11 +123,19 @@ namespace UnityTest
             EditorApplication.playmodeStateChanged += OnPlaymodeStateChanged;
         }
 
+        /// <summary>   Executes the playmode state changed action. </summary>
+        ///
+     
+
         private static void OnPlaymodeStateChanged()
         {
             if (s_Instance && EditorApplication.isPlaying  == EditorApplication.isPlayingOrWillChangePlaymode)
                 s_Instance.RebuildTestList();
         }
+
+        /// <summary>   Executes the destroy action. </summary>
+        ///
+     
 
         public void OnDestroy()
         {
@@ -80,6 +146,10 @@ namespace UnityTest
 
             TestComponent.DestroyAllDynamicTests();
         }
+
+        /// <summary>   Background scene change watch. </summary>
+        ///
+     
 
         private static void BackgroundSceneChangeWatch()
         {
@@ -93,6 +163,10 @@ namespace UnityTest
             s_Instance.RebuildTestList();
         }
 
+        /// <summary>   Executes the enable action. </summary>
+        ///
+     
+
         public void OnEnable()
         {
             titleContent = new GUIContent("Integration Tests");
@@ -104,6 +178,10 @@ namespace UnityTest
             InitBackgroundRunners();
             if (!EditorApplication.isPlayingOrWillChangePlaymode && !m_ReadyToRun) RebuildTestList();
         }
+
+        /// <summary>   Executes the selection change action. </summary>
+        ///
+     
 
         public void OnSelectionChange()
         {
@@ -131,6 +209,10 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Executes the hierarchy change update action. </summary>
+        ///
+     
+
         public static void OnHierarchyChangeUpdate()
         {
             if (!s_Instance || s_Instance.m_TestLines == null || EditorApplication.isPlayingOrWillChangePlaymode) return;
@@ -150,12 +232,27 @@ namespace UnityTest
             if (selectedInHierarchy) selectedInHierarchy = false;
             else s_Instance.RebuildTestList();
         }
-        
+
+        /// <summary>   Tests get result for. </summary>
+        ///
+     
+        ///
+        /// <param name="tc">   The tc. </param>
+        ///
+        /// <returns>   The result for test. </returns>
+
         public static TestResult GetResultForTest(TestComponent tc)
         {
             if(!s_Instance) return new TestResult(tc);
             return s_Instance.m_ResultList.FirstOrDefault(r => r.GameObject == tc.gameObject);
         }
+
+        /// <summary>   Executes the hierarchy window item draw action. </summary>
+        ///
+     
+        ///
+        /// <param name="id">   The identifier. </param>
+        /// <param name="rect"> The rectangle. </param>
 
         public static void OnHierarchyWindowItemDraw(int id, Rect rect)
         {
@@ -180,6 +277,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Select in hierarchy. </summary>
+        ///
+     
+        ///
+        /// <param name="gameObject">   The game object. </param>
+
         private static void SelectInHierarchy(GameObject gameObject)
         {
             if (!s_Instance) return;
@@ -201,6 +304,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Executes the tests. </summary>
+        ///
+     
+        ///
+        /// <param name="tests">    The tests. </param>
+
         private void RunTests(IList<ITestComponent> tests)
         {
             if (!tests.Any() || EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode)
@@ -220,6 +329,10 @@ namespace UnityTest
             EditorApplication.isPlaying = true;
         }
 
+        /// <summary>   Updates this object. </summary>
+        ///
+     
+
         public void Update()
         {
             if (m_ReadyToRun && EditorApplication.isPlaying)
@@ -231,7 +344,11 @@ namespace UnityTest
                 testRunner.InitRunner(testComponents, m_DynamicTestsToRun);
             }
         }
-        
+
+        /// <summary>   Rebuild test list. </summary>
+        ///
+     
+
         private void RebuildTestList()
         {
             m_TestLines = null;
@@ -292,6 +409,14 @@ namespace UnityTest
             Repaint();
         }
 
+        /// <summary>   Parse test list. </summary>
+        ///
+     
+        ///
+        /// <param name="testList"> List of tests. </param>
+        /// <param name="results">  The results. </param>
+        ///
+        /// <returns>   An IntegrationTestRendererBase[]. </returns>
 
         private IntegrationTestRendererBase[] ParseTestList(List<TestComponent> testList, List<TestResult> results)
         {
@@ -315,6 +440,10 @@ namespace UnityTest
             tempList.Sort();
             return tempList.ToArray();
         }
+
+        /// <summary>   Executes the graphical user interface action. </summary>
+        ///
+     
 
         public void OnGUI()
         {
@@ -341,6 +470,10 @@ namespace UnityTest
 
             if (repaint) Repaint();
         }
+
+        /// <summary>   Print head panel. </summary>
+        ///
+     
 
         public void PrintHeadPanel()
         {
@@ -376,13 +509,27 @@ namespace UnityTest
             
             EditorGUILayout.EndHorizontal ();
         }
-        
+
+        /// <summary>   Adds the items to menu. </summary>
+        ///
+     
+        ///
+        /// <param name="menu"> The menu. </param>
+
         public void AddItemsToMenu(GenericMenu menu)
         {
             menu.AddItem(m_GUIBlockUI, m_Settings.blockUIWhenRunning, m_Settings.ToggleBlockUIWhenRunning);
             menu.AddItem(m_GUIPauseOnFailure, m_Settings.pauseOnTestFailure, m_Settings.TogglePauseOnTestFailure);
         }
-        
+
+        /// <summary>   Print test list. </summary>
+        ///
+     
+        ///
+        /// <param name="renderedLines">    The rendered lines. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+
         private bool PrintTestList(IntegrationTestRendererBase[] renderedLines)
         {
             if (renderedLines == null) return false;
@@ -396,6 +543,10 @@ namespace UnityTest
             }
             return repaint;
         }
+
+        /// <summary>   Renders the details. </summary>
+        ///
+     
 
         private void RenderDetails()
         {
@@ -440,6 +591,12 @@ namespace UnityTest
             EditorGUILayout.EndScrollView();
         }
 
+        /// <summary>   Updates the result text described by go. </summary>
+        ///
+     
+        ///
+        /// <param name="go">   The go. </param>
+
         private void UpdateResultText(GameObject go)
         {
             if(go == m_lastSelectedGO) return;
@@ -471,10 +628,20 @@ namespace UnityTest
             m_resultTextSize = Styles.info.CalcSize(new GUIContent(m_resultText));
         }
 
+        /// <summary>   Executes the inspector update action. </summary>
+        ///
+     
+
         public void OnInspectorUpdate()
         {
             if (focusedWindow != this) Repaint();
         }
+
+        /// <summary>   Tests set current. </summary>
+        ///
+     
+        ///
+        /// <param name="tc">   The tc. </param>
 
         private void SetCurrentTest(TestComponent tc)
         {
@@ -482,15 +649,31 @@ namespace UnityTest
                 line.SetCurrentTest(tc);
         }
 
+        /// <summary>   (Serializable) a runner callback. </summary>
+        ///
+     
+
         class RunnerCallback : ITestRunnerCallback
         {
+            /// <summary>   The window. </summary>
             private readonly IntegrationTestsRunnerWindow m_Window;
+            /// <summary>   The test number. </summary>
             private int m_TestNumber;
+            /// <summary>   The current test number. </summary>
             private int m_CurrentTestNumber;
 
+            /// <summary>   True to console error on pause value. </summary>
             private readonly bool m_ConsoleErrorOnPauseValue;
+            /// <summary>   True to run in background. </summary>
             private readonly bool m_RunInBackground;
+            /// <summary>   The current test. </summary>
             private TestComponent m_CurrentTest;
+
+            /// <summary>   Constructor. </summary>
+            ///
+         
+            ///
+            /// <param name="window">   The window. </param>
 
             public RunnerCallback(IntegrationTestsRunnerWindow window)
             {
@@ -501,6 +684,13 @@ namespace UnityTest
                 m_RunInBackground = PlayerSettings.runInBackground;
                 PlayerSettings.runInBackground = true;
             }
+
+            /// <summary>   Executes the started operation. </summary>
+            ///
+         
+            ///
+            /// <param name="platform">     The platform. </param>
+            /// <param name="testsToRun">   The tests to run. </param>
 
             public void RunStarted(string platform, List<TestComponent> testsToRun)
             {
@@ -513,6 +703,12 @@ namespace UnityTest
                 }
             }
 
+            /// <summary>   Executes the finished operation. </summary>
+            ///
+         
+            ///
+            /// <param name="testResults">  The test results. </param>
+
             public void RunFinished(List<TestResult> testResults)
             {
                 m_Window.SetCurrentTest(null);
@@ -524,10 +720,20 @@ namespace UnityTest
                 PlayerSettings.runInBackground = m_RunInBackground;
             }
 
+            /// <summary>   All scenes finished. </summary>
+            ///
+         
+
             public void AllScenesFinished()
             {
 
             }
+
+            /// <summary>   Tests started. </summary>
+            ///
+         
+            ///
+            /// <param name="test"> The test. </param>
 
             public void TestStarted(TestResult test)
             {
@@ -535,6 +741,11 @@ namespace UnityTest
                 m_CurrentTest = test.TestComponent;
             }
 
+            /// <summary>   Tests finished. </summary>
+            ///
+         
+            ///
+            /// <param name="test"> The test. </param>
 
             public void TestFinished(TestResult test)
             {
@@ -553,11 +764,21 @@ namespace UnityTest
                 }
             }
 
+            /// <summary>   Tests run interrupted. </summary>
+            ///
+         
+            ///
+            /// <param name="testsNotRun">  The tests not run. </param>
+
             public void TestRunInterrupted(List<ITestComponent> testsNotRun)
             {
                 Debug.Log("Test run interrupted");
                 RunFinished(new List<TestResult>());
             }
+
+            /// <summary>   Executes the editor update action. </summary>
+            ///
+         
 
             private void OnEditorUpdate()
             {
@@ -578,6 +799,12 @@ namespace UnityTest
                 }
             }
         }
+
+        /// <summary>   Shows the window. </summary>
+        ///
+     
+        ///
+        /// <returns>   An IntegrationTestsRunnerWindow. </returns>
 
         [MenuItem("Unity Test Tools/Integration Test Runner %#&t")]
         public static IntegrationTestsRunnerWindow ShowWindow()

@@ -21,6 +21,10 @@ using System.Collections;
 // Handles mouse and touch inputs for orbiting the camera around the target object.
 // ######################################################################
 
+/// <summary>   A ge orbit camera. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GE_OrbitCamera : MonoBehaviour
 {
 
@@ -30,51 +34,81 @@ public class GE_OrbitCamera : MonoBehaviour
 
 	#region Variables
 
+    /// <summary>   Target for the. </summary>
 	public Transform m_Target;
 
 	// Distance
+    /// <summary>   The distance. </summary>
 	private float m_Distance = 10.0f;
+    /// <summary>   The minimum distance. </summary>
 	public float m_MinDistance = 5.0f;
+    /// <summary>   The maximum distance. </summary>
 	public float m_MaxDistance = 25.0f;
 
 	// Orbit speed
+    /// <summary>   The speed. </summary>
 	public float m_XSpeed = 250.0f;
+    /// <summary>   The speed. </summary>
 	public float m_YSpeed = 120.0f;
 
 	// Zoom speed
+    /// <summary>   The zoom speed. </summary>
 	public float m_ZoomSpeed = 5.0f;
 
 	// Orbit inversion
+    /// <summary>   True to invert. </summary>
 	public bool m_XInvert = false;
+    /// <summary>   True to invert. </summary>
 	public bool m_YInvert = false;
 
 	// Zoom inversion
+    /// <summary>   True to zoom invert. </summary>
 	public bool m_ZoomInvert = false;
 
 	// y angle limit
+    /// <summary>   The minimum limit. </summary>
 	public float m_YMinLimit = -20f;
+    /// <summary>   The maximum limit. </summary>
 	public float m_YMaxLimit = 70f;
 
 	// Angles
+    /// <summary>   The x coordinate. </summary>
 	private float m_X = 0.0f;
+    /// <summary>   The y coordinate. </summary>
 	private float m_Y = 0.0f;
 
 	// Orbit Sensitivity
+    /// <summary>   The orbit speed delay time. </summary>
 	private float m_OrbitSpeedDelayTime = 0.0f;
+    /// <summary>   The orbit speed multiplier. </summary>
 	public float m_OrbitSpeedMultiplier = 2.0f;
 
 	// Two fingers touch zoom
+    /// <summary>   The first m curr touch. </summary>
 	private Vector2 m_CurrTouch1 = Vector2.zero;
+    /// <summary>   The first m last touch. </summary>
 	private Vector2 m_LastTouch1 = Vector2.zero;
+    /// <summary>   The second m curr touch. </summary>
 	private Vector2 m_CurrTouch2 = Vector2.zero;
+    /// <summary>   The second m last touch. </summary>
 	private Vector2 m_LastTouch2 = Vector2.zero;
+    /// <summary>   The curr distance. </summary>
 	private float m_CurrDist = 0.0f;
+    /// <summary>   The last distance. </summary>
 	private float m_LastDist = 0.0f;
+
+    /// <summary>   Values that represent zoom methods. </summary>
+    ///
+ 
+
 	public enum ZoomMethod
 	{
+        /// <summary>   An enum constant representing the pinch zoom option. </summary>
 		PinchZoom = 1,
+        /// <summary>   An enum constant representing the slide zoom option. </summary>
 		SlideZoom = 2
 	}
+    /// <summary>   The zoom method. </summary>
 	public ZoomMethod m_ZoomMethod = ZoomMethod.PinchZoom;
 
 	#endregion // Variables
@@ -88,6 +122,11 @@ public class GE_OrbitCamera : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start()
 	{
 		this.gameObject.transform.LookAt(m_Target);
@@ -128,6 +167,11 @@ public class GE_OrbitCamera : MonoBehaviour
 
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update()
 	{
 		if (m_Target)
@@ -386,6 +430,11 @@ public class GE_OrbitCamera : MonoBehaviour
 	#region Utilities
 
 	// Update camera position
+
+    /// <summary>   Updates the position. </summary>
+    ///
+ 
+
 	void UpdatePosition()
 	{
 		m_OrbitSpeedDelayTime += Time.deltaTime * m_OrbitSpeedMultiplier;
@@ -404,6 +453,17 @@ public class GE_OrbitCamera : MonoBehaviour
 	}
 
 	// Clamp angle around 0 to 360 degree
+
+    /// <summary>   Clamp angle. </summary>
+    ///
+ 
+    ///
+    /// <param name="angle">    The angle. </param>
+    /// <param name="min">      The minimum. </param>
+    /// <param name="max">      The maximum. </param>
+    ///
+    /// <returns>   A float. </returns>
+
 	static float ClampAngle(float angle, float min, float max)
 	{
 		if (angle < -360)
@@ -414,6 +474,13 @@ public class GE_OrbitCamera : MonoBehaviour
 	}
 
 	// Set zooming method
+
+    /// <summary>   Sets zoom method. </summary>
+    ///
+ 
+    ///
+    /// <param name="zoomMethod">   The zoom method. </param>
+
 	public void SetZoomMethod(ZoomMethod zoomMethod)
 	{
 		m_ZoomMethod = zoomMethod;

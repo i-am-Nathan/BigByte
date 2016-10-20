@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Assertions\MemberResolver.cs
+//
+// summary:	Implements the member resolver class
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -6,12 +10,27 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   A member resolver. </summary>
+    ///
+ 
+
     public class MemberResolver
     {
+        /// <summary>   The calling object reference. </summary>
         private object m_CallingObjectRef;
+        /// <summary>   The callstack. </summary>
         private MemberInfo[] m_Callstack;
+        /// <summary>   The game object. </summary>
         private readonly GameObject m_GameObject;
+        /// <summary>   Full pathname of the file. </summary>
         private readonly string m_Path;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <param name="gameObject">   The game object. </param>
+        /// <param name="path">         Full pathname of the file. </param>
 
         public MemberResolver(GameObject gameObject, string path)
         {
@@ -21,6 +40,14 @@ namespace UnityTest
             m_GameObject = gameObject;
             m_Path = path.Trim();
         }
+
+        /// <summary>   Gets a value. </summary>
+        ///
+     
+        ///
+        /// <param name="useCache"> True to use cache. </param>
+        ///
+        /// <returns>   The value. </returns>
 
         public object GetValue(bool useCache)
         {
@@ -56,6 +83,12 @@ namespace UnityTest
             return result;
         }
 
+        /// <summary>   Gets member type. </summary>
+        ///
+     
+        ///
+        /// <returns>   The member type. </returns>
+
         public Type GetMemberType()
         {
             var callstack = GetCallstack();
@@ -70,6 +103,17 @@ namespace UnityTest
         }
 
         #region Static wrappers
+
+        /// <summary>   Attempts to get member type from the given data. </summary>
+        ///
+     
+        ///
+        /// <param name="gameObject">   The game object. </param>
+        /// <param name="path">         Full pathname of the file. </param>
+        /// <param name="value">        [out] The value. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+
         public static bool TryGetMemberType(GameObject gameObject, string path, out Type value)
         {
             try
@@ -84,6 +128,16 @@ namespace UnityTest
                 return false;
             }
         }
+
+        /// <summary>   Attempts to get value from the given data. </summary>
+        ///
+     
+        ///
+        /// <param name="gameObject">   The game object. </param>
+        /// <param name="path">         Full pathname of the file. </param>
+        /// <param name="value">        [out] The value. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
 
         public static bool TryGetValue(GameObject gameObject, string path, out object value)
         {
@@ -101,6 +155,17 @@ namespace UnityTest
         }
         #endregion
 
+        /// <summary>   Gets value from member. </summary>
+        ///
+     
+        ///
+        /// <exception cref="InvalidPathException"> Thrown when an Invalid Path error condition occurs. </exception>
+        ///
+        /// <param name="obj">          The object. </param>
+        /// <param name="memberInfo">   Information describing the member. </param>
+        ///
+        /// <returns>   The value from member. </returns>
+
         private object GetValueFromMember(object obj, MemberInfo memberInfo)
         {
             if (memberInfo is FieldInfo)
@@ -109,6 +174,12 @@ namespace UnityTest
                 return (memberInfo as MethodInfo).Invoke(obj, null);
             throw new InvalidPathException(memberInfo.Name);
         }
+
+        /// <summary>   Gets base object. </summary>
+        ///
+     
+        ///
+        /// <returns>   The base object. </returns>
 
         private object GetBaseObject()
         {
@@ -119,6 +190,14 @@ namespace UnityTest
                 return comp;
             return m_GameObject;
         }
+
+        /// <summary>   Gets the callstack. </summary>
+        ///
+     
+        ///
+        /// <exception cref="InvalidPathException"> Thrown when an Invalid Path error condition occurs. </exception>
+        ///
+        /// <returns>   An array of member information. </returns>
 
         private MemberInfo[] GetCallstack()
         {
@@ -155,6 +234,14 @@ namespace UnityTest
             return list.ToArray();
         }
 
+        /// <summary>   Validates the path described by path. </summary>
+        ///
+     
+        ///
+        /// <exception cref="InvalidPathException"> Thrown when an Invalid Path error condition occurs. </exception>
+        ///
+        /// <param name="path"> Full pathname of the file. </param>
+
         private void ValidatePath(string path)
         {
             bool invalid = false;
@@ -169,6 +256,14 @@ namespace UnityTest
                 throw new InvalidPathException(path);
         }
 
+        /// <summary>   Query if 'type' is value type. </summary>
+        ///
+     
+        ///
+        /// <param name="type"> The type. </param>
+        ///
+        /// <returns>   True if value type, false if not. </returns>
+
         private static bool IsValueType(Type type)
         {
             #if !UNITY_METRO
@@ -177,6 +272,15 @@ namespace UnityTest
             return false;
             #endif
         }
+
+        /// <summary>   Gets a field. </summary>
+        ///
+     
+        ///
+        /// <param name="type">         The type. </param>
+        /// <param name="fieldName">    Name of the field. </param>
+        ///
+        /// <returns>   The field. </returns>
 
         private static FieldInfo GetField(Type type, string fieldName)
         {
@@ -187,6 +291,15 @@ namespace UnityTest
             #endif
         }
 
+        /// <summary>   Gets a property. </summary>
+        ///
+     
+        ///
+        /// <param name="type">         The type. </param>
+        /// <param name="propertyName"> Name of the property. </param>
+        ///
+        /// <returns>   The property. </returns>
+
         private static PropertyInfo GetProperty(Type type, string propertyName)
         {
             #if !UNITY_METRO
@@ -195,6 +308,14 @@ namespace UnityTest
             return null;
             #endif
         }
+
+        /// <summary>   Gets method. </summary>
+        ///
+     
+        ///
+        /// <param name="propertyInfo"> Information describing the property. </param>
+        ///
+        /// <returns>   The method. </returns>
 
         private static MethodInfo GetGetMethod(PropertyInfo propertyInfo)
         {

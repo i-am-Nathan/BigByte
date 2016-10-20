@@ -1,14 +1,30 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\MainMenu\Achievements\AchievementSetUp.cs
+//
+// summary:	Implements the achievement set up class
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>   An achievement set up. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class AchievementSetUp : MonoBehaviour {
+    /// <summary>   The achievements. </summary>
     private List<GameAchievement> _achievements;
+    /// <summary>   The menu achievement. </summary>
     public GameObject MenuAchievement;
+    /// <summary>   The grid. </summary>
     public GameObject Grid;
 
 	// Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start () {
         //Getting the achievement list from achievement manager
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");

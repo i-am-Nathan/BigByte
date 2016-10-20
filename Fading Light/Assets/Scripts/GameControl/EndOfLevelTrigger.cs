@@ -1,27 +1,46 @@
-﻿using UnityEngine;
+﻿// file:	assets\scripts\gamecontrol\endofleveltrigger.cs
+//
+// summary:	Implements the endofleveltrigger class
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>   Used to register when players have reached the end of the level. </summary>
+///
+/// <remarks>    . </remarks>
 
-/// <summary>
-/// Used to register when players have reached the end of the level
-/// </summary>
 public class EndOfLevelTrigger : MonoBehaviour {
 
+    /// <summary>   True if player 1 entered. </summary>
 	private bool _player1Entered = false;
+    /// <summary>   True if player 2 entered. </summary>
 	private bool _player2Entered = false;
+    /// <summary>   True to end of game. </summary>
 	private bool _endOfGame = false;
+    /// <summary>   Number of total chests. </summary>
 	private int _numTotalChests = 10;
+    /// <summary>   The database scores script. </summary>
 	private DatabaseScores _dbScoresScript;
+    /// <summary>   The game data script. </summary>
 	private GameData _gameDataScript;
 
 	// Canvas indicating to players they have finished the level
+    /// <summary>   The level finished menu. </summary>
 	public Canvas LevelFinishedMenu;
+    /// <summary>   The submit high score menu. </summary>
 	public Canvas SubmitHighScoreMenu;
+    /// <summary>   The submit high score control. </summary>
 	public Button SubmitHighScoreButton;
+    /// <summary>   Name of the player 1. </summary>
 	public Text Player1Name;
+    /// <summary>   Name of the player 2. </summary>
 	public Text Player2Name;
+
+    /// <summary>   Trigger end of level. </summary>
+    ///
+ 
 
 	public void TriggerEndOfLevel() {
 		// Pauses the game and shows the menu indicating that players have completed the level
@@ -36,9 +55,10 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// Obtaining the correct information and sending it to the database
-	/// </summary>
+    /// <summary>   Obtaining the correct information and sending it to the database. </summary>
+    ///
+ 
+
 	public void SendToDatabase () {
 		Player1Name = Player1Name.GetComponent<Text>();
 		Player2Name = Player2Name.GetComponent<Text>();
@@ -59,9 +79,10 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		StartCoroutine(_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed));
 	}
 
-	/// <summary>
-	/// Used for initialisation
-	/// </summary>
+    /// <summary>   Used for initialisation. </summary>
+    ///
+ 
+
     void Start()
     {
 		// Hiding the menu
@@ -70,10 +91,11 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		_dbScoresScript = GameObject.Find("DatabaseScores").GetComponent<DatabaseScores>();
 		_gameDataScript = GameObject.Find("GameData").GetComponent<GameData>();
     }
-		
-	/// <summary>
-	/// Submits the highscore to the online database
-	/// </summary>
+
+    /// <summary>   Submits the highscore to the online database. </summary>
+    ///
+ 
+
 	public void SubmitHighScore () {
 		SendToDatabase ();
 		SubmitHighScoreMenu.enabled = false;

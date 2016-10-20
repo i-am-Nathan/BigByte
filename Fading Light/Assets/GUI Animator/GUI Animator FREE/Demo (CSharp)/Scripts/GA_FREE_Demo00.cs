@@ -24,6 +24,10 @@ using UnityEngine.SceneManagement;  // Unity 5.3 or higher, see http://docs.unit
 // This class loads "GA FREE - Demo00 (960x600px)" scene.
 // ######################################################################
 
+/// <summary>   A ga free demo 00. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_Demo00 : MonoBehaviour
 {
 	
@@ -35,6 +39,11 @@ public class GA_FREE_Demo00 : MonoBehaviour
 	
 	// Awake is called when the script instance is being loaded.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
+
 	void Awake ()
 	{
 		if(enabled)
@@ -46,6 +55,11 @@ public class GA_FREE_Demo00 : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		StartCoroutine(ShowText(1.0f));
@@ -53,6 +67,11 @@ public class GA_FREE_Demo00 : MonoBehaviour
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update ()
 	{		
 	}
@@ -64,6 +83,14 @@ public class GA_FREE_Demo00 : MonoBehaviour
 	// ########################################
 	
 	#region Delay
+
+    /// <summary>   Shows the text. </summary>
+    ///
+ 
+    ///
+    /// <param name="Delay">    The delay. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
 
 	IEnumerator ShowText(float Delay)
 	{

@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\PlatformRunner\PlatformRunnerSettingsWindow.cs
+//
+// summary:	Implements the platform runner settings Windows Form
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,31 +14,53 @@ using UnityEngine.SceneManagement;
 
 namespace UnityTest.IntegrationTests
 {
+    /// <summary>   (Serializable) form for viewing the platform runner settings. </summary>
+    ///
+ 
+
     [Serializable]
     public class PlatformRunnerSettingsWindow : EditorWindow
     {
+        /// <summary>   The build target. </summary>
         private BuildTarget m_BuildTarget;
 
+        /// <summary>   The integration test scenes. </summary>
         private List<string> m_IntegrationTestScenes;
+        /// <summary>   The other scenes to build. </summary>
         private List<string> m_OtherScenesToBuild;
+        /// <summary>   all scenes in project. </summary>
         private List<string> m_AllScenesInProject;
 
+        /// <summary>   The scroll position. </summary>
         private Vector2 m_ScrollPosition;
+        /// <summary>   The interfaces. </summary>
         private readonly List<string> m_Interfaces = new List<string>();
+        /// <summary>   The selected scenes. </summary>
         private readonly List<string> m_SelectedScenes = new List<string>();
 
+        /// <summary>   The selected interface. </summary>
         private int m_SelectedInterface;
+        /// <summary>   True to advanced networking settings. </summary>
         [SerializeField]
         private bool m_AdvancedNetworkingSettings;
 
+        /// <summary>   Options for controlling the operation. </summary>
         private PlatformRunnerSettings m_Settings;
 
+        /// <summary>   The selected scene in all. </summary>
         private string m_SelectedSceneInAll;
+        /// <summary>   The selected scene in test. </summary>
         private string m_SelectedSceneInTest;
+        /// <summary>   The selected scene in build. </summary>
         private string m_SelectedSceneInBuild;
 
+        /// <summary>   The label. </summary>
         readonly GUIContent m_Label = new GUIContent("Results target directory", "Directory where the results will be saved. If no value is specified, the results will be generated in project's data folder.");
-        
+
+        /// <summary>   Default constructor. </summary>
+        ///
+     
+
         public PlatformRunnerSettingsWindow()
         {
             if (m_OtherScenesToBuild == null)
@@ -59,6 +85,10 @@ namespace UnityTest.IntegrationTests
             LoadFromPrefereneces ();
         }
 
+        /// <summary>   Executes the enable action. </summary>
+        ///
+     
+
         public void OnEnable()
         {
             m_Settings = ProjectSettingsBase.Load<PlatformRunnerSettings>();
@@ -68,6 +98,10 @@ namespace UnityTest.IntegrationTests
             if (m_IntegrationTestScenes.Count == 0)
                 m_IntegrationTestScenes = GetScenesWithTestComponents (m_AllScenesInProject);
         }
+
+        /// <summary>   Executes the graphical user interface action. </summary>
+        ///
+     
 
         public void OnGUI()
         {
@@ -169,6 +203,13 @@ namespace UnityTest.IntegrationTests
             }
         }
 
+        /// <summary>   Draw vertical scene list. </summary>
+        ///
+     
+        ///
+        /// <param name="sourceList">   [in,out] List of sources. </param>
+        /// <param name="selectString"> [in,out] The select string. </param>
+
         private void DrawVerticalSceneList(ref List<string> sourceList, ref string selectString)
         {
             m_ScrollPosition = EditorGUILayout.BeginScrollView(m_ScrollPosition, Styles.testList);
@@ -196,6 +237,14 @@ namespace UnityTest.IntegrationTests
             EditorGUILayout.EndScrollView();
         }
 
+        /// <summary>   Gets scenes with test components. </summary>
+        ///
+     
+        ///
+        /// <param name="allScenes">    all scenes. </param>
+        ///
+        /// <returns>   The scenes with test components. </returns>
+
         public static List<string> GetScenesWithTestComponents(List<string> allScenes)
         {
             List<Object> results = EditorReferencesUtil.FindScenesWhichContainAsset("TestComponent.cs");	
@@ -209,6 +258,10 @@ namespace UnityTest.IntegrationTests
             
             return integrationTestScenes;
         }
+
+        /// <summary>   Draw setting. </summary>
+        ///
+     
 
         private void DrawSetting()
         {
@@ -258,6 +311,10 @@ namespace UnityTest.IntegrationTests
             }
         }
 
+        /// <summary>   Builds and run. </summary>
+        ///
+     
+
         private void BuildAndRun()
         {
             SaveToPreferences ();
@@ -281,20 +338,36 @@ namespace UnityTest.IntegrationTests
             Close ();
         }
 
+        /// <summary>   Executes the lost focus action. </summary>
+        ///
+     
+
         public void OnLostFocus() {
             SaveToPreferences ();
         }
 
+        /// <summary>   Executes the destroy action. </summary>
+        ///
+     
+
         public void OnDestroy() {
             SaveToPreferences ();
         }
+
+        /// <summary>   Saves to preferences. </summary>
+        ///
+     
 
         private void SaveToPreferences()
         {
             EditorPrefs.SetString (Animator.StringToHash (Application.dataPath + "uttTestScenes").ToString (), String.Join (",",m_IntegrationTestScenes.ToArray()));
             EditorPrefs.SetString (Animator.StringToHash (Application.dataPath + "uttBuildScenes").ToString (), String.Join (",",m_OtherScenesToBuild.ToArray()));
         }
-        
+
+        /// <summary>   Loads from prefereneces. </summary>
+        ///
+     
+
         private void LoadFromPrefereneces()
         {
             string storedTestScenes = EditorPrefs.GetString (Animator.StringToHash (Application.dataPath + "uttTestScenes").ToString ());

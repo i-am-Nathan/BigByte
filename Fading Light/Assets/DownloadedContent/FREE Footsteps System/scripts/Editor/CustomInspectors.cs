@@ -1,11 +1,24 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\FREE Footsteps System\scripts\Editor\CustomInspectors.cs
+//
+// summary:	Implements the custom inspectors class
+
+using UnityEngine;
 using UnityEditor;
 
 namespace Footsteps {
 
 	// Custom inspector of type 'CharacterFootsteps'
+
+    /// <summary>   The footsteps inspector. </summary>
+    ///
+ 
+
 	[CustomEditor(typeof(CharacterFootsteps))]
 	public class FootstepsInspector : Editor {
+
+        /// <summary>   Creates surface manager. </summary>
+        ///
+     
 
 		[MenuItem("FootstepsCreator/CreateFootstepsDatabase")]
 		static void CreateSurfaceManager() {
@@ -17,6 +30,13 @@ namespace Footsteps {
 				Debug.Log("A footsteps_database already exists in the current scene.");
 			}
 		}
+
+        /// <summary>
+        /// <para>
+        /// Implement this function to make a custom inspector.</para>
+        /// </summary>
+        ///
+     
 
 		public override void OnInspectorGUI () {
 			serializedObject.Update();
@@ -119,11 +139,27 @@ namespace Footsteps {
 	}
 
 	// Custom property inspector of type 'RegisteredMaterial'
+
+    /// <summary>   A material drawer. </summary>
+    ///
+ 
+
 	[CustomPropertyDrawer(typeof(RegisteredMaterial))]
 	public class MaterialDrawer : PropertyDrawer {
 
+        /// <summary>   The surf manag. </summary>
 		SurfaceManager surfManag = null;
 
+        /// <summary>
+        /// <para>
+        /// Override this method to make your own GUI for the property.</para>
+        /// </summary>
+        ///
+     
+        ///
+        /// <param name="position"> Rectangle on the screen to use for the property GUI. </param>
+        /// <param name="property"> The SerializedProperty to make the custom GUI for. </param>
+        /// <param name="label">    The label of this property. </param>
 
 		public override void OnGUI (Rect position, SerializedProperty property, GUIContent label) {
 			if(!surfManag) {
@@ -153,6 +189,21 @@ namespace Footsteps {
 			position.x = position.xMax;
 			surfaceIndex.intValue = EditorGUI.Popup(position, surfaceIndex.intValue, surfManag.GetAllSurfaceNames());
 		}
+
+        /// <summary>
+        /// <para>
+        /// Override this method to specify how tall the GUI for this field is in pixels.</para>
+        /// </summary>
+        ///
+     
+        ///
+        /// <param name="property"> The SerializedProperty to make the custom GUI for. </param>
+        /// <param name="label">    The label of this property. </param>
+        ///
+        /// <returns>
+        /// <para>
+        /// The height in pixels.</para>
+        /// </returns>
 
 		public override float GetPropertyHeight (SerializedProperty property, GUIContent label) {
 			return 32f;

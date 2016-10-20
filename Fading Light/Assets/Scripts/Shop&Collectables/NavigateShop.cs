@@ -1,32 +1,53 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Shop&Collectables\NavigateShop.cs
+//
+// summary:	Implements the navigate shop class
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-/// <summary>
-/// This is the class used to navigate the user through the shop.
-/// </summary>
+/// <summary>   This is the class used to navigate the user through the shop. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class NavigateShop : MonoBehaviour {
 
+    /// <summary>   List of items. </summary>
 	public List<GameObject> ItemList;
+    /// <summary>   The items. </summary>
 	public GameObject[] Items;
+    /// <summary>   Zero-based index of the. </summary>
 	public int Index = 0;
+    /// <summary>   The price. </summary>
 	private Text _price;
+    /// <summary>   The quantity. </summary>
 	private Text _quantity;
+    /// <summary>   The lore. </summary>
 	private Text _lore;
+    /// <summary>   The effect. </summary>
 	private Text _effect;
+    /// <summary>   Name of the item. </summary>
 	private Text _itemName;
+    /// <summary>   The current gold. </summary>
 	private Text _currentGold;
+    /// <summary>   The item quantity. </summary>
 	public int[] ItemQuantity;
+    /// <summary>   The price. </summary>
 	public int[] Price;
+    /// <summary>   The buy sound. </summary>
 	public AudioClip BuySound;
+    /// <summary>   Source for the. </summary>
 	private AudioSource _source;
+    /// <summary>   Information describing the game. </summary>
 	private GameData _gameData;
+    /// <summary>   Manager for sub inventory. </summary>
 	private SubInventoryManager _subInventoryManager;
 
-	/// <summary>
-	/// This will set the appropriate fields in my class.
-	/// </summary>
+    /// <summary>   This will set the appropriate fields in my class. </summary>
+    ///
+ 
+
 	void Awake(){
 		_price = GameObject.FindGameObjectWithTag ("Price").GetComponent<Text> ();
 		_quantity = GameObject.FindGameObjectWithTag ("Quantity").GetComponent<Text>();
@@ -38,9 +59,10 @@ public class NavigateShop : MonoBehaviour {
 		_currentGold = GameObject.FindGameObjectWithTag ("Current Gold").GetComponent<Text> ();
 	}
 
-	/// <summary>
-	/// Grabs the approrpiate items and sets the shop up.
-	/// </summary>
+    /// <summary>   Grabs the approrpiate items and sets the shop up. </summary>
+    ///
+ 
+
 	void Start () {
 		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
 		_gameData = (GameData)go.GetComponent(typeof(GameData));
@@ -55,11 +77,14 @@ public class NavigateShop : MonoBehaviour {
 		UpdateInfo ();
 	}
 
+    /// <summary>
+    /// This will allow players to navigate the shop and acknowledges the keypress from players.
+    /// Players can navigate with the A/D key for Player 2 and Left Arrow/Right Arrow for Player
+    /// 1.Purchase button is L and C for player 1 and 2 respectivly.
+    /// </summary>
+    ///
+ 
 
-	/// <summary>
-	/// This will allow players to navigate the shop and acknowledges the keypress from players. Players can navigate with the
-	/// A/D key for Player 2 and Left Arrow/Right Arrow for Player 1.Purchase button is L and C for player 1 and 2 respectivly. 
-	/// </summary>
 	void Update(){
 			ItemList [Index].transform.Rotate (0, 0, 0.5f);
 		if (Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
@@ -95,9 +120,11 @@ public class NavigateShop : MonoBehaviour {
 		}
 
 	}
-	/// <summary>
-	/// Move to the next item in the shop i.e. go right
-	/// </summary>
+
+    /// <summary>   Move to the next item in the shop i.e. go right. </summary>
+    ///
+ 
+
 	public void Next(){
 		ItemList [Index].SetActive (false);
 		if (Index == ItemList.Count - 1) {
@@ -108,9 +135,11 @@ public class NavigateShop : MonoBehaviour {
 		UpdateInfo ();
 
 	}
-	/// <summary>
-	/// Move to the previous item in the shop i.e. go left.
-	/// </summary>
+
+    /// <summary>   Move to the previous item in the shop i.e. go left. </summary>
+    ///
+ 
+
 	public void Previous(){
 		ItemList [Index].SetActive (false);
 		if (Index == 0) {
@@ -121,10 +150,13 @@ public class NavigateShop : MonoBehaviour {
 		UpdateInfo ();
 	}
 
-	/// <summary>
-	/// This will update the information according to the current item.
-	/// The information it updates would be its lore, price, effect, name and price.
-	/// </summary>
+    /// <summary>
+    /// This will update the information according to the current item. The information it updates
+    /// would be its lore, price, effect, name and price.
+    /// </summary>
+    ///
+ 
+
 	public void UpdateInfo(){
 		ItemList [Index].SetActive (true);
 		_price.text= Price [Index] + " Coins";

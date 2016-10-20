@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerConfigurator.cs
+//
+// summary:	Implements the test runner configurator class
+
 #if !UNITY_METRO && !UNITY_WEBPLAYER && (UNITY_PRO_LICENSE || !(UNITY_ANDROID || UNITY_IPHONE))
 #define UTT_SOCKETS_SUPPORTED
 #endif
@@ -20,20 +24,40 @@ using UnityEditorInternal;
 
 namespace UnityTest
 {
+    /// <summary>   A test runner configurator. </summary>
+    ///
+ 
+
     public class TestRunnerConfigurator
     {
+        /// <summary>   The integration tests network. </summary>
         public static string integrationTestsNetwork = "networkconfig.txt";
+        /// <summary>   The batch run file marker. </summary>
         public static string batchRunFileMarker = "batchrun.txt";
+        /// <summary>   The test scenes to run. </summary>
         public static string testScenesToRun = "testscenes.txt";
+        /// <summary>   The previous scenes. </summary>
         public static string previousScenes = "previousScenes.txt";
 
+        /// <summary>   Gets or sets a value indicating whether this object is batch run. </summary>
+        ///
+        /// <value> True if this object is batch run, false if not. </value>
+
         public bool isBatchRun { get; private set; }
+
+        /// <summary>   Gets or sets a value indicating whether the send results over network. </summary>
+        ///
+        /// <value> True if send results over network, false if not. </value>
 
         public bool sendResultsOverNetwork { get; private set; }
 
 #if UTT_SOCKETS_SUPPORTED
         private readonly List<IPEndPoint> m_IPEndPointList = new List<IPEndPoint>();
 #endif
+
+        /// <summary>   Default constructor. </summary>
+        ///
+     
 
         public TestRunnerConfigurator()
         {
@@ -42,6 +66,13 @@ namespace UnityTest
         }
 
 #if UNITY_EDITOR
+
+        /// <summary>   Gets the previous scenes to restore. </summary>
+        ///
+     
+        ///
+        /// <returns>   An array of editor build settings scene. </returns>
+
         public UnityEditor.EditorBuildSettingsScene[] GetPreviousScenesToRestore()
         {
             string text = null;
@@ -70,6 +101,14 @@ namespace UnityTest
         }
 #endif
 
+        /// <summary>   Gets integration test scenes. </summary>
+        ///
+     
+        ///
+        /// <param name="testSceneNum"> The test scene number. </param>
+        ///
+        /// <returns>   The integration test scenes. </returns>
+
         public string GetIntegrationTestScenes(int testSceneNum)
         {
             string text;
@@ -89,6 +128,12 @@ namespace UnityTest
             else
                 return null;
         }
+
+        /// <summary>   Check for sending results over network. </summary>
+        ///
+     
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
 
         private void CheckForSendingResultsOverNetwork()
         {
@@ -116,12 +161,28 @@ namespace UnityTest
 #endif  // if UTT_SOCKETS_SUPPORTED
         }
 
+        /// <summary>   Gets text from text asset. </summary>
+        ///
+     
+        ///
+        /// <param name="fileName"> Filename of the file. </param>
+        ///
+        /// <returns>   The text from text asset. </returns>
+
         private static string GetTextFromTextAsset(string fileName)
         {
             var nameWithoutExtension = fileName.Substring(0, fileName.LastIndexOf('.'));
             var resultpathFile = Resources.Load(nameWithoutExtension) as TextAsset;
             return resultpathFile != null ? resultpathFile.text : null;
         }
+
+        /// <summary>   Gets text from temporary file. </summary>
+        ///
+     
+        ///
+        /// <param name="fileName"> Filename of the file. </param>
+        ///
+        /// <returns>   The text from temporary file. </returns>
 
         private static string GetTextFromTempFile(string fileName)
         {
@@ -139,6 +200,10 @@ namespace UnityTest
             return text;
         }
 
+        /// <summary>   Check for batch mode. </summary>
+        ///
+     
+
         private void CheckForBatchMode()
         {
 #if IMITATE_BATCH_MODE
@@ -150,6 +215,12 @@ namespace UnityTest
             if (GetTextFromTextAsset(batchRunFileMarker) != null) isBatchRun = true;
 #endif
         }
+
+        /// <summary>   Gets available network i ps. </summary>
+        ///
+     
+        ///
+        /// <returns>   The available network i ps. </returns>
 
         public static List<string> GetAvailableNetworkIPs()
         {
@@ -192,6 +263,12 @@ namespace UnityTest
             return new List<string>();
 #endif  // if UTT_SOCKETS_SUPPORTED
         }
+
+        /// <summary>   Resolve network connection. </summary>
+        ///
+     
+        ///
+        /// <returns>   An ITestRunnerCallback. </returns>
 
         public ITestRunnerCallback ResolveNetworkConnection()
         {

@@ -1,37 +1,59 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Dialogue\ActivateText.cs
+//
+// summary:	Implements the activate text class
+
+using UnityEngine;
 using System.Collections;
 
-
 /// <summary>
-/// This class will be placed on characters or objects which have dialogue on them. 
-/// Referenced - www.youtube.com/watch?v=ehmBIP5sj0M
+/// This class will be placed on characters or objects which have dialogue on them. Referenced -
+/// www.youtube.com/watch?v=ehmBIP5sj0M.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class ActivateText : MonoBehaviour
 {
+    /// <summary>   The dialogue. </summary>
     public TextAsset Dialogue;
 
+    /// <summary>   The start line. </summary>
     public int StartLine;
+    /// <summary>   The end line. </summary>
     public int EndLine;
 
+    /// <summary>   The text box. </summary>
     public TextBoxManager TextBox;
     // Use this for initialization
 
+    /// <summary>   True to require button press. </summary>
 	public bool RequireButtonPress;
+    /// <summary>   True to wait for press. </summary>
 	private bool _waitForPress;
+    /// <summary>   True if destroy when activated. </summary>
 	public bool DestroyWhenActivated;
+    /// <summary>   The dialogue speech. </summary>
 	public AudioClip[] DialogueSpeech;
+    /// <summary>   True to talk once. </summary>
 	public bool TalkOnce;
+    /// <summary>   True to notify. </summary>
     public bool Notify = true;
+    /// <summary>   True if talked. </summary>
     private bool _talked;
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
 
 	void Start () {
         Debug.Log(Notify);
 		_talked = false;
 	}
-		
-	/// <summary>
-	/// Detects Keypress and activates dialogue when detected.
-	/// </summary>
+
+    /// <summary>   Detects Keypress and activates dialogue when detected. </summary>
+    ///
+ 
+
 	void Update () {
         //This will detect whether a keypress is required and execute when the condition is fulfilled. 
 		if (_waitForPress && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.O)) && TextBox.Talking == false) {
@@ -50,11 +72,14 @@ public class ActivateText : MonoBehaviour
 		}
 	}
 
+    /// <summary>
+    /// This method will execute when the players come close to the character with the dialogue.
+    /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
 
-	/// <summary>
-	/// This method will execute when the players come close to the character with the dialogue.
-	/// </summary>
-	/// <param name="other">Other.</param>
 	void OnTriggerEnter(Collider other)
 	{
 		//Checks if a key press is required to converse with the chracter
@@ -83,10 +108,16 @@ public class ActivateText : MonoBehaviour
 		}
 
 	}
-	/// <summary>
-	/// Ensures that if a player leaves the radius of a NPC, pressing the talk key (T) won't enable dialogue.
-	/// </summary>
-	/// <param name="other">Other.</param>
+
+    /// <summary>
+    /// Ensures that if a player leaves the radius of a NPC, pressing the talk key (T) won't enable
+    /// dialogue.
+    /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
+
 	void OnTriggerExit(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			//print ("EXITING");

@@ -1,35 +1,57 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\FloatingPlate.cs
+//
+// summary:	Implements the floating plate class
+
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
 /// This is used for floating platforms which move back and forth from a start and end point.
 /// Players can get on this platform to navigate to another area.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class FloatingPlate : MonoBehaviour {
 
 
+    /// <summary>   The travel speed. </summary>
 	public float TravelSpeed;
+    /// <summary>   True to going up. </summary>
     private bool _goingUp = true;
+    /// <summary>   The velocity. </summary>
     private float _velocity = 50;
+    /// <summary>   The start boundary. </summary>
 	public Collider StartBoundary;
+    /// <summary>   The end boundary. </summary>
 	public Collider EndBoundary;
+    /// <summary>   The direction. </summary>
 	public int _direction =1 ;
+    /// <summary>   True if pressed. </summary>
 	public bool Pressed;
+    /// <summary>   True to lock, false to unlock. </summary>
 	private bool _locked;
+    /// <summary>   True to require character. </summary>
 	public bool RequireCharacter;
 
-	/// <summary>
-	/// Sets an initial direction.
-	/// </summary>
+    /// <summary>   Sets an initial direction. </summary>
+    ///
+ 
+
 	void Start(){
 		_direction = 1;
 	}
 
-	/// <summary>
-	/// Transform the player's parents to the plates to ensure taht it is in it's worldspace and prevents it from
-	/// sliding off. Will also check when it hits a boundary and if so, it will go in the opposite direction.
-	/// </summary>
-	/// <param name="other">Other.</param>
+    /// <summary>
+    /// Transform the player's parents to the plates to ensure taht it is in it's worldspace and
+    /// prevents it from sliding off. Will also check when it hits a boundary and if so, it will go
+    /// in the opposite direction.
+    /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
+
     void OnTriggerEnter(Collider other)
     {
 		if (other.name == "Player 1" || other.name == "Player2") 
@@ -51,10 +73,12 @@ public class FloatingPlate : MonoBehaviour {
 		} 
     }
 
-	/// <summary>
-	/// Ensures that the player will stay on the platform.
-	/// </summary>
-	/// <param name="other">Other.</param>
+    /// <summary>   Ensures that the player will stay on the platform. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
+
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") 
 		{
@@ -64,27 +88,34 @@ public class FloatingPlate : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// This will be used when players step on a plate that corresponds to the movement of the current 
-	/// floating platform.
-	/// </summary>
+    /// <summary>
+    /// This will be used when players step on a plate that corresponds to the movement of the
+    /// current floating platform.
+    /// </summary>
+    ///
+ 
+
     public void Resume()
     {
 		Pressed = true;
     }
 
-	/// <summary>
-	/// This method will be called when players who were originally stepping on a pressure plate, gets off it
-	/// and pauses the movement of the platform.
-	/// </summary>
+    /// <summary>
+    /// This method will be called when players who were originally stepping on a pressure plate,
+    /// gets off it and pauses the movement of the platform.
+    /// </summary>
+    ///
+ 
+
     public void Stop()
     {
 		Pressed = false;
     }
 
-	/// <summary>
-	/// This will cause the platform to keep going back and forth.
-	/// </summary>
+    /// <summary>   This will cause the platform to keep going back and forth. </summary>
+    ///
+ 
+
 	void FixedUpdate(){
 		if (Pressed) {
 			if (RequireCharacter && _locked || !RequireCharacter) {
@@ -93,11 +124,15 @@ public class FloatingPlate : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// When player's leave the platform, it will ensure that it reassigns the parent thus leaving the
-	/// world space of the platform.
-	/// </summary>
-	/// <param name="other">Other.</param>
+    /// <summary>
+    /// When player's leave the platform, it will ensure that it reassigns the parent thus leaving
+    /// the world space of the platform.
+    /// </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    Other. </param>
+
     void OnTriggerExit(Collider other)
     {
 		if (other.name == "Player 1" || other.name == "Player2") {

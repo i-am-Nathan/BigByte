@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Assertions\Editor\PropertyResolver.cs
+//
+// summary:	Implements the property resolver class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +11,34 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   (Serializable) a property resolver. </summary>
+    ///
+ 
+
     [Serializable]
     public class PropertyResolver
     {
+        /// <summary>   Gets or sets a list of names of the excluded fields. </summary>
+        ///
+        /// <value> A list of names of the excluded fields. </value>
+
         public string[] ExcludedFieldNames { get; set; }
+
+        /// <summary>   Gets or sets a list of types of the excluded. </summary>
+        ///
+        /// <value> A list of types of the excluded. </value>
+
         public Type[] ExcludedTypes { get; set; }
+
+        /// <summary>   Gets or sets a list of types of the allowed. </summary>
+        ///
+        /// <value> A list of types of the allowed. </value>
+
         public Type[] AllowedTypes { get; set; }
+
+        /// <summary>   Default constructor. </summary>
+        ///
+     
 
         public PropertyResolver()
         {
@@ -20,6 +46,18 @@ namespace UnityTest
             ExcludedTypes = new Type[] { };
             AllowedTypes = new Type[] { };
         }
+
+        /// <summary>   Gets fields and properties under path. </summary>
+        ///
+     
+        ///
+        /// <exception cref="ArgumentException">    Thrown when one or more arguments have unsupported or
+        ///                                         illegal values. </exception>
+        ///
+        /// <param name="go">           The go. </param>
+        /// <param name="propertPath">  Full pathname of the propert file. </param>
+        ///
+        /// <returns>   The fields and properties under path. </returns>
 
         public IList<string> GetFieldsAndPropertiesUnderPath(GameObject go, string propertPath)
         {
@@ -77,6 +115,14 @@ namespace UnityTest
             return resultList.ToArray();
         }
 
+        /// <summary>   Property path is valid. </summary>
+        ///
+     
+        ///
+        /// <param name="propertPath">  Full pathname of the propert file. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+
         internal bool PropertyPathIsValid(string propertPath)
         {
             if (propertPath.StartsWith("."))
@@ -87,6 +133,19 @@ namespace UnityTest
                 return false;
             return true;
         }
+
+        /// <summary>   Gets fields and properties from game object. </summary>
+        ///
+     
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">  Thrown when one or more arguments are outside
+        ///                                                 the required range. </exception>
+        ///
+        /// <param name="gameObject">       The game object. </param>
+        /// <param name="depthOfSearch">    Depth of the search. </param>
+        /// <param name="extendPath">       Full pathname of the extend file. </param>
+        ///
+        /// <returns>   The fields and properties from game object. </returns>
 
         public IList<string> GetFieldsAndPropertiesFromGameObject(GameObject gameObject, int depthOfSearch, string extendPath)
         {
@@ -125,6 +184,15 @@ namespace UnityTest
             return result;
         }
 
+        /// <summary>   Gets properties and fields from type. </summary>
+        ///
+     
+        ///
+        /// <param name="type">     The type. </param>
+        /// <param name="level">    The level. </param>
+        ///
+        /// <returns>   An array of string. </returns>
+
         private string[] GetPropertiesAndFieldsFromType(Type type, int level)
         {
             level--;
@@ -156,6 +224,16 @@ namespace UnityTest
             return result.ToArray();
         }
 
+        /// <summary>   Gets member field type. </summary>
+        ///
+     
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <param name="info"> The information. </param>
+        ///
+        /// <returns>   The member field type. </returns>
+
         private Type GetMemberFieldType(MemberInfo info)
         {
             if (info.MemberType == MemberTypes.Property)
@@ -164,6 +242,14 @@ namespace UnityTest
                 return (info as FieldInfo).FieldType;
             throw new Exception("Only properties and fields are allowed");
         }
+
+        /// <summary>   Gets all components. </summary>
+        ///
+     
+        ///
+        /// <param name="gameObject">   The game object. </param>
+        ///
+        /// <returns>   An array of type. </returns>
 
         internal Type[] GetAllComponents(GameObject gameObject)
         {
@@ -179,6 +265,15 @@ namespace UnityTest
             }
             return result.ToArray();
         }
+
+        /// <summary>   Query if 'memberType' is type or name not excluded. </summary>
+        ///
+     
+        ///
+        /// <param name="memberType">       Type of the member. </param>
+        /// <param name="memberTypeName">   Name of the member type. </param>
+        ///
+        /// <returns>   True if type or name not excluded, false if not. </returns>
 
         private bool IsTypeOrNameNotExcluded(Type memberType, string memberTypeName)
         {

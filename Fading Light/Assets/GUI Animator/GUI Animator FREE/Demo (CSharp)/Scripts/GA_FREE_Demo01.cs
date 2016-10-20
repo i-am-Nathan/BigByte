@@ -26,6 +26,10 @@ using System.Collections;
 // Note this class is attached with "-SceneController-" object in "GA FREE - Demo01 (960x600px)" scene.
 // ######################################################################
 
+/// <summary>   A ga free demo 01. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_Demo01 : MonoBehaviour
 {
 
@@ -36,32 +40,47 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	#region Variables
 
 	// Canvas
+    /// <summary>   The canvas. </summary>
 	public Canvas m_Canvas;
 
 	// GUIAnimFREE objects of title text
+    /// <summary>   The first m title. </summary>
 	public GUIAnimFREE m_Title1;
+    /// <summary>   The second m title. </summary>
 	public GUIAnimFREE m_Title2;
 	
 	// GUIAnimFREE objects of top and bottom bars
+    /// <summary>   The top bar. </summary>
 	public GUIAnimFREE m_TopBar;
+    /// <summary>   The bottom bar. </summary>
 	public GUIAnimFREE m_BottomBar;
 	
 	// GUIAnimFREE objects of TopLeft buttons
+    /// <summary>   The top left a. </summary>
 	public GUIAnimFREE m_TopLeft_A;
+    /// <summary>   The top left b. </summary>
 	public GUIAnimFREE m_TopLeft_B;
 	
 	// GUIAnimFREE objects of BottomLeft buttons
+    /// <summary>   The bottom left a. </summary>
 	public GUIAnimFREE m_BottomLeft_A;
+    /// <summary>   The bottom left b. </summary>
 	public GUIAnimFREE m_BottomLeft_B;
 	
 	// GUIAnimFREE objects of RightBar buttons
+    /// <summary>   The right bar a. </summary>
 	public GUIAnimFREE m_RightBar_A;
+    /// <summary>   The right bar b. </summary>
 	public GUIAnimFREE m_RightBar_B;
+    /// <summary>   The right bar c. </summary>
 	public GUIAnimFREE m_RightBar_C;
 
 	// Toggle state of TopLeft, BottomLeft and BottomLeft buttons
+    /// <summary>   True if top left is on. </summary>
 	bool m_TopLeft_IsOn = false;
+    /// <summary>   True if bottom left is on. </summary>
 	bool m_BottomLeft_IsOn = false;
+    /// <summary>   True if right bar is on. </summary>
 	bool m_RightBar_IsOn = false;
 	
 	#endregion // Variables
@@ -75,6 +94,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	
 	// Awake is called when the script instance is being loaded.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
+
 	void Awake ()
 	{
 		if(enabled)
@@ -86,6 +110,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		// MoveIn m_TopBar and m_BottomBar
@@ -103,6 +132,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update ()
 	{
 	}
@@ -116,6 +150,13 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	#region MoveIn/MoveOut
 
 	// MoveIn m_Title1 and m_Title2
+
+    /// <summary>   Move in title game objects. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInTitleGameObjects()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -129,6 +170,13 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	}
 	
 	// MoveIn all primary buttons
+
+    /// <summary>   Move in primary buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInPrimaryButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -143,6 +191,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	}
 
 	// MoveOut all primary buttons
+
+    /// <summary>   Hides all gu is. </summary>
+    ///
+ 
+
 	public void HideAllGUIs()
 	{
 		m_TopLeft_A.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
@@ -161,6 +214,13 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	}
 	
 	// MoveOut m_Title1 and m_Title2
+
+    /// <summary>   Hides the title text meshes. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator HideTitleTextMeshes()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -183,6 +243,13 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	#region Enable/Disable buttons
 
 	// Enable/Disable all scene switch Coroutine
+
+    /// <summary>   Enables all demo buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator EnableAllDemoButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -193,6 +260,16 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	}
 	
 	// Disable all buttons for a few seconds
+
+    /// <summary>   Disables the button for seconds. </summary>
+    ///
+ 
+    ///
+    /// <param name="GO">           The go. </param>
+    /// <param name="DisableTime">  The disable time. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator DisableButtonForSeconds(GameObject GO, float DisableTime)
 	{
 		// Disable all buttons
@@ -211,6 +288,10 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	// ########################################
 	
 	#region UI Responder
+
+    /// <summary>   Executes the button top left action. </summary>
+    ///
+ 
 
 	public void OnButton_TopLeft()
 	{
@@ -234,6 +315,10 @@ public class GA_FREE_Demo01 : MonoBehaviour
 		}
 	}
 
+    /// <summary>   Executes the button bottom left action. </summary>
+    ///
+ 
+
 	public void OnButton_BottomLeft()
 	{
 		// Disable m_TopLeft_A, m_RightBar_A, m_RightBar_C, m_BottomLeft_A for a few seconds
@@ -256,7 +341,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 		}
 		
 	}
-	
+
+    /// <summary>   Executes the button right bar action. </summary>
+    ///
+ 
+
 	public void OnButton_RightBar()
 	{
 		// Disable m_TopLeft_A, m_RightBar_A, m_RightBar_C, m_BottomLeft_A for a few seconds
@@ -289,6 +378,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	#region Toggle Button
 
 	// Toggle TopLeft buttons
+
+    /// <summary>   Toggle top left. </summary>
+    ///
+ 
+
 	void ToggleTopLeft()
 	{
 		m_TopLeft_IsOn = !m_TopLeft_IsOn;
@@ -305,6 +399,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	}
 	
 	// Toggle BottomLeft buttons
+
+    /// <summary>   Toggle bottom left. </summary>
+    ///
+ 
+
 	void ToggleBottomLeft()
 	{
 		m_BottomLeft_IsOn = !m_BottomLeft_IsOn;
@@ -321,6 +420,11 @@ public class GA_FREE_Demo01 : MonoBehaviour
 	}
 	
 	// Toggle RightBar buttons
+
+    /// <summary>   Toggle right bar. </summary>
+    ///
+ 
+
 	void ToggleRightBar()
 	{
 		m_RightBar_IsOn = !m_RightBar_IsOn;

@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Assertions\Editor\AssertionExplorerWindow.cs
+//
+// summary:	Implements the assertion explorer Windows Form
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,40 +14,69 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   (Serializable) form for viewing the assertion explorer. </summary>
+    ///
+ 
+
     [Serializable]
     public class AssertionExplorerWindow : EditorWindow
     {
+        /// <summary>   all assertions. </summary>
         private List<AssertionComponent> m_AllAssertions = new List<AssertionComponent>();
+        /// <summary>   The filter text. </summary>
         [SerializeField]
         private string m_FilterText = "";
+        /// <summary>   Type of the filter. </summary>
         [SerializeField]
         private FilterType m_FilterType;
+        /// <summary>   The fold markers. </summary>
         [SerializeField]
         private List<string> m_FoldMarkers = new List<string>();
+        /// <summary>   Amount to group by. </summary>
         [SerializeField]
         private GroupByType m_GroupBy;
+        /// <summary>   The scroll position. </summary>
         [SerializeField]
         private Vector2 m_ScrollPosition = Vector2.zero;
+        /// <summary>   The next reload Date/Time. </summary>
         private DateTime m_NextReload = DateTime.Now;
+        /// <summary>   True if should reload. </summary>
         [SerializeField]
         private static bool s_ShouldReload;
+        /// <summary>   Type of the show. </summary>
         [SerializeField]
         private ShowType m_ShowType;
+
+        /// <summary>   Default constructor. </summary>
+        ///
+     
 
         public AssertionExplorerWindow()
         {
             titleContent = new GUIContent("Assertion Explorer");
         }
 
+        /// <summary>   Executes the did open scene action. </summary>
+        ///
+     
+
         public void OnDidOpenScene()
         {
             ReloadAssertionList();
         }
 
+        /// <summary>   Executes the focus action. </summary>
+        ///
+     
+
         public void OnFocus()
         {
             ReloadAssertionList();
         }
+
+        /// <summary>   Reload assertion list. </summary>
+        ///
+     
 
         private void ReloadAssertionList()
         {
@@ -51,10 +84,18 @@ namespace UnityTest
             s_ShouldReload = true;
         }
 
+        /// <summary>   Executes the hierarchy change action. </summary>
+        ///
+     
+
         public void OnHierarchyChange()
         {
             ReloadAssertionList();
         }
+
+        /// <summary>   Executes the inspector update action. </summary>
+        ///
+     
 
         public void OnInspectorUpdate()
         {
@@ -66,6 +107,10 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Executes the graphical user interface action. </summary>
+        ///
+     
+
         public void OnGUI()
         {
             DrawMenuPanel();
@@ -75,6 +120,17 @@ namespace UnityTest
                 GetResultRendere().Render(FilterResults(m_AllAssertions, m_FilterText.ToLower()), m_FoldMarkers);
             EditorGUILayout.EndScrollView();
         }
+
+        /// <summary>   Enumerates filter results in this collection. </summary>
+        ///
+     
+        ///
+        /// <param name="assertionComponents">  The assertion components. </param>
+        /// <param name="text">                 The text. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process filter results in this collection.
+        /// </returns>
 
         private IEnumerable<AssertionComponent> FilterResults(List<AssertionComponent> assertionComponents, string text)
         {
@@ -111,11 +167,22 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   The group by comparer renderer. </summary>
         private readonly IListRenderer m_GroupByComparerRenderer = new GroupByComparerRenderer();
+        /// <summary>   The group by execution method renderer. </summary>
         private readonly IListRenderer m_GroupByExecutionMethodRenderer = new GroupByExecutionMethodRenderer();
+        /// <summary>   The group by go renderer. </summary>
         private readonly IListRenderer m_GroupByGoRenderer = new GroupByGoRenderer();
+        /// <summary>   The group by tests renderer. </summary>
         private readonly IListRenderer m_GroupByTestsRenderer = new GroupByTestsRenderer();
+        /// <summary>   The group by nothing renderer. </summary>
         private readonly IListRenderer m_GroupByNothingRenderer = new GroupByNothingRenderer();
+
+        /// <summary>   Gets result rendere. </summary>
+        ///
+     
+        ///
+        /// <returns>   The result rendere. </returns>
 
         private IListRenderer GetResultRendere()
         {
@@ -133,6 +200,10 @@ namespace UnityTest
                     return m_GroupByNothingRenderer;
             }
         }
+
+        /// <summary>   Draw menu panel. </summary>
+        ///
+     
 
         private void DrawMenuPanel()
         {
@@ -152,6 +223,12 @@ namespace UnityTest
             EditorGUILayout.EndHorizontal();
         }
 
+        /// <summary>   Shows the window. </summary>
+        ///
+     
+        ///
+        /// <returns>   An AssertionExplorerWindow. </returns>
+
         [MenuItem("Unity Test Tools/Assertion Explorer")]
         public static AssertionExplorerWindow ShowWindow()
         {
@@ -160,31 +237,61 @@ namespace UnityTest
             return w as AssertionExplorerWindow;
         }
 
+        /// <summary>   Values that represent filter types. </summary>
+        ///
+     
+
         private enum FilterType
         {
+            /// <summary>   An enum constant representing the comparer name option. </summary>
             ComparerName,
+            /// <summary>   An enum constant representing the first compared game object option. </summary>
             FirstComparedGameObject,
+            /// <summary>   An enum constant representing the first compared game object path option. </summary>
             FirstComparedGameObjectPath,
+            /// <summary>   An enum constant representing the second compared game object option. </summary>
             SecondComparedGameObject,
+            /// <summary>   An enum constant representing the second compared game object path option. </summary>
             SecondComparedGameObjectPath,
+            /// <summary>   An enum constant representing the attached game object option. </summary>
             AttachedGameObject
         }
 
+        /// <summary>   Values that represent show types. </summary>
+        ///
+     
+
         private enum ShowType
         {
+            /// <summary>   An enum constant representing the show all option. </summary>
             ShowAll,
+            /// <summary>   An enum constant representing the show enabled option. </summary>
             ShowEnabled,
+            /// <summary>   An enum constant representing the show disabled option. </summary>
             ShowDisabled
         }
 
+        /// <summary>   Values that represent group by types. </summary>
+        ///
+     
+
         private enum GroupByType
         {
+            /// <summary>   An enum constant representing the nothing option. </summary>
             Nothing,
+            /// <summary>   An enum constant representing the comparer option. </summary>
             Comparer,
+            /// <summary>   An enum constant representing the game objects option. </summary>
             GameObjects,
+            /// <summary>   An enum constant representing the execution method option. </summary>
             ExecutionMethod,
+            /// <summary>   An enum constant representing the tests option. </summary>
             Tests
         }
+
+        /// <summary>   Reloads this object. </summary>
+        ///
+     
 
         public static void Reload()
         {

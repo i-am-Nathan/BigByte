@@ -1,33 +1,48 @@
-﻿using UnityEngine;
+﻿// file:	Assets\PrisonerController.cs
+//
+// summary:	Implements the prisoner controller class
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
+/// <summary>   A controller for handling prisoners. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class PrisonerController : MonoBehaviour {
 
 
+    /// <summary>   The animator. </summary>
     Animation _animator;
 
+    /// <summary>   The targets. </summary>
     public List<GameObject> targets;
+    /// <summary>   The speed. </summary>
     public float Speed = 8;
+    /// <summary>   True if this object is disabled. </summary>
     public bool IsDisabled = true;
+    /// <summary>   this storyline. </summary>
     public Storyline ThisStoryline;
     
 
+    /// <summary>   True if storyline notified. </summary>
     private bool _storylineNotified = false;
 
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
+
     void Start()
     {
         _animator = GetComponentInChildren<Animation>();//need this...
 
     }
 
+    /// <summary>   Updates this instance. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Updates this instance.
-    /// </summary>
     void Update()
     {
 
@@ -59,9 +74,10 @@ public class PrisonerController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Moves the moleman to the next position
-    /// </summary>
+    /// <summary>   Moves the moleman to the next position. </summary>
+    ///
+ 
+
     public void Next()
     {
         _storylineNotified = false;
@@ -72,12 +88,15 @@ public class PrisonerController : MonoBehaviour {
 
     }
 
-    /// <summary>
-    /// Finds the 2d distance between two Vector3s
-    /// </summary>
-    /// <param name="target">The target.</param>
-    /// <param name="position">The position.</param>
-    /// <returns></returns>
+    /// <summary>   Finds the 2d distance between two Vector3s. </summary>
+    ///
+ 
+    ///
+    /// <param name="target">   The target. </param>
+    /// <param name="position"> The position. </param>
+    ///
+    /// <returns>   A float. </returns>
+
     private float Distance(Vector3 target, Vector3 position)
     {
         var xDifference = target.x - position.x;
@@ -88,9 +107,10 @@ public class PrisonerController : MonoBehaviour {
         return Mathf.Sqrt(distanceSquared);
     }
 
-    /// <summary>
-    /// Teleports the moleman to its target
-    /// </summary>
+    /// <summary>   Teleports the moleman to its target. </summary>
+    ///
+ 
+
     public void Teleport()
     {
         transform.position = targets[0].transform.position;

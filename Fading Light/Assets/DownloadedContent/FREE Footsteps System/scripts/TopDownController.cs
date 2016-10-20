@@ -1,28 +1,56 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\FREE Footsteps System\scripts\TopDownController.cs
+//
+// summary:	Implements the top down controller class
+
+using UnityEngine;
 using System.Collections;
 
 namespace Footsteps {
 
+    /// <summary>   A controller for handling top downs. </summary>
+    ///
+ 
+
 	[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 	public class TopDownController : MonoBehaviour {
 
+        /// <summary>   Gets the camera pivot. </summary>
+        ///
+        /// <value> The camera pivot. </value>
+
 		[SerializeField] Transform cameraPivot;
+        /// <summary>   The jog speed. </summary>
 		[SerializeField] float jogSpeed = 5f;
+        /// <summary>   The rotation speed. </summary>
 		[SerializeField] float rotationSpeed = 270f;
+        /// <summary>   The turning on spot rotation speed. </summary>
 		[SerializeField] float turningOnSpotRotationSpeed = 360f;
 
+        /// <summary>   this transform. </summary>
 		Transform thisTransform;
+        /// <summary>   this animator. </summary>
 		Animator thisAnimator;
+        /// <summary>   this rigidbody. </summary>
 		Rigidbody thisRigidbody;
 
+        /// <summary>   Information describing the current locomotion. </summary>
 		AnimatorStateInfo currentLocomotionInfo;
+        /// <summary>   Target rotation. </summary>
 		Quaternion targetRotation;
+        /// <summary>   The movement direction. </summary>
 		Vector3 movementDirection;
+        /// <summary>   The directional input. </summary>
 		Vector2 directionalInput;
+        /// <summary>   The move speed. </summary>
 		float moveSpeed;
+        /// <summary>   True to turning on spot. </summary>
 		bool turningOnSpot;
+        /// <summary>   True to move. </summary>
 		bool move;
 
+        /// <summary>   Starts this object. </summary>
+        ///
+     
 
 		void Start() {
 			thisTransform = transform;
@@ -35,12 +63,20 @@ namespace Footsteps {
 			}
 		}
 
+        /// <summary>   Fixed update. </summary>
+        ///
+     
+
 		void FixedUpdate() {
 			UpdateAnimator();
 			RotateCharacter();
 			MoveCharacter();
 			print(directionalInput);
 		}
+
+        /// <summary>   Updates the animator. </summary>
+        ///
+     
 
 		void UpdateAnimator() {
 			currentLocomotionInfo = thisAnimator.GetCurrentAnimatorStateInfo(0);
@@ -57,11 +93,19 @@ namespace Footsteps {
 			thisAnimator.SetBool("move", move);
 		}
 
+        /// <summary>   Move character. </summary>
+        ///
+     
+
 		void MoveCharacter() {
 			Vector3 velocity = thisTransform.forward * moveSpeed * jogSpeed;
 			velocity.y = thisRigidbody.velocity.y;
 			thisRigidbody.velocity = velocity;
 		}
+
+        /// <summary>   Rotate character. </summary>
+        ///
+     
 
 		void RotateCharacter() {
 			movementDirection = cameraPivot.right * directionalInput.x + cameraPivot.forward * directionalInput.y;

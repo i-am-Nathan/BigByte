@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Assertions\Editor\PropertyPathSelector.cs
+//
+// summary:	Implements the property path selector class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +11,29 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   A property path selector. </summary>
+    ///
+ 
+
     public class PropertyPathSelector
     {
+        /// <summary>   this drop down. </summary>
         private readonly DropDownControl<string> m_ThisDropDown = new DropDownControl<string>();
+        /// <summary>   The = to process. </summary>
         private readonly Func<string, string> m_ReplaceDotWithSlashAndAddGoGroup = s => s.Replace('.', '/');
 
+        /// <summary>   The name. </summary>
         private readonly string m_Name;
+        /// <summary>   True to focus back to edit. </summary>
         private bool m_FocusBackToEdit;
+        /// <summary>   The error. </summary>
         private SelectedPathError m_Error;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <param name="name"> The name. </param>
 
         public PropertyPathSelector(string name)
         {
@@ -22,6 +41,17 @@ namespace UnityTest
             m_ThisDropDown.convertForGUIContent = m_ReplaceDotWithSlashAndAddGoGroup;
             m_ThisDropDown.tooltip = "Select the path to the value you want to use for comparison.";
         }
+
+        /// <summary>   Draws. </summary>
+        ///
+     
+        ///
+        /// <param name="go">               The go. </param>
+        /// <param name="comparer">         The comparer. </param>
+        /// <param name="propertPath">      Full pathname of the propert file. </param>
+        /// <param name="accepatbleTypes">  List of types of the accepatbles. </param>
+        /// <param name="onSelectedGo">     The on selected go. </param>
+        /// <param name="onSelectedPath">   Full pathname of the on selected file. </param>
 
         public void Draw(GameObject go, ActionBase comparer, string propertPath, Type[] accepatbleTypes, Action<GameObject> onSelectedGo, Action<string> onSelectedPath)
         {
@@ -37,6 +67,18 @@ namespace UnityTest
                     onSelectedPath(newPath);
             }
         }
+
+        /// <summary>   Draw list of methods. </summary>
+        ///
+     
+        ///
+        /// <param name="go">               The go. </param>
+        /// <param name="comparer">         The comparer. </param>
+        /// <param name="propertPath">      Full pathname of the propert file. </param>
+        /// <param name="accepatbleTypes">  List of types of the accepatbles. </param>
+        /// <param name="dropDown">         The drop down. </param>
+        ///
+        /// <returns>   A string. </returns>
 
         private string DrawListOfMethods(GameObject go, ActionBase comparer, string propertPath, Type[] accepatbleTypes, DropDownControl<string> dropDown)
         {
@@ -84,6 +126,17 @@ namespace UnityTest
             return result;
         }
 
+        /// <summary>   Gets fields and properties. </summary>
+        ///
+     
+        ///
+        /// <param name="go">               The go. </param>
+        /// <param name="comparer">         The comparer. </param>
+        /// <param name="extendPath">       Full pathname of the extend file. </param>
+        /// <param name="accepatbleTypes">  List of types of the accepatbles. </param>
+        ///
+        /// <returns>   The fields and properties. </returns>
+
         private static List<string> GetFieldsAndProperties(GameObject go, ActionBase comparer, string extendPath, Type[] accepatbleTypes)
         {
             var propertyResolver = new PropertyResolver {AllowedTypes = accepatbleTypes, ExcludedFieldNames = comparer.GetExcludedFieldNames()};
@@ -98,6 +151,17 @@ namespace UnityTest
                          });
             return options;
         }
+
+        /// <summary>   Draw manual property edit field. </summary>
+        ///
+     
+        ///
+        /// <param name="go">               The go. </param>
+        /// <param name="propertPath">      Full pathname of the propert file. </param>
+        /// <param name="acceptableTypes">  List of types of the acceptables. </param>
+        /// <param name="dropDown">         The drop down. </param>
+        ///
+        /// <returns>   A string. </returns>
 
         private string DrawManualPropertyEditField(GameObject go, string propertPath, Type[] acceptableTypes, DropDownControl<string> dropDown)
         {
@@ -180,6 +244,18 @@ namespace UnityTest
             return result;
         }
 
+        /// <summary>   Does property exist. </summary>
+        ///
+     
+        ///
+        /// <exception cref="TargetInvocationException">    Thrown when a Target Invocation error
+        ///                                                 condition occurs. </exception>
+        ///
+        /// <param name="go">           The go. </param>
+        /// <param name="propertPath">  Full pathname of the propert file. </param>
+        ///
+        /// <returns>   A SelectedPathError. </returns>
+
         private SelectedPathError DoesPropertyExist(GameObject go, string propertPath)
         {
             try
@@ -197,10 +273,17 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Values that represent selected path errors. </summary>
+        ///
+     
+
         private enum SelectedPathError
         {
+            /// <summary>   An enum constant representing the none option. </summary>
             None,
+            /// <summary>   An enum constant representing the missing component option. </summary>
             MissingComponent,
+            /// <summary>   An enum constant representing the invalid path option. </summary>
             InvalidPath
         }
     }

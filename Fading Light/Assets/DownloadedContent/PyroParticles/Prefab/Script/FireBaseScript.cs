@@ -1,53 +1,91 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\PyroParticles\Prefab\Script\FireBaseScript.cs
+//
+// summary:	Implements the fire base script class
+
+using UnityEngine;
 using System.Collections;
 
 namespace DigitalRuby.PyroParticles
 {
+    /// <summary>   A range of integers. </summary>
+    ///
+ 
+
     [System.Serializable]
     public struct RangeOfIntegers
     {
+        /// <summary>   The minimum. </summary>
         public int Minimum;
+        /// <summary>   The maximum. </summary>
         public int Maximum;
     }
+
+    /// <summary>   A range of floats. </summary>
+    ///
+ 
 
     [System.Serializable]
     public struct RangeOfFloats
     {
+        /// <summary>   The minimum. </summary>
         public float Minimum;
+        /// <summary>   The maximum. </summary>
         public float Maximum;
     }
 
+    /// <summary>   A fire base script. </summary>
+    ///
+ 
+
     public class FireBaseScript : MonoBehaviour
     {
+        /// <summary>   The audio source. </summary>
         [Tooltip("Optional audio source to play once when the script starts.")]
         public AudioSource AudioSource;
 
+        /// <summary>   The start time. </summary>
         [Tooltip("How long the script takes to fully start. This is used to fade in animations and sounds, etc.")]
         public float StartTime = 1.0f;
 
+        /// <summary>   The stop time. </summary>
         [Tooltip("How long the script takes to fully stop. This is used to fade out animations and sounds, etc.")]
         public float StopTime = 3.0f;
 
+        /// <summary>   The duration. </summary>
         [Tooltip("How long the effect lasts. Once the duration ends, the script lives for StopTime and then the object is destroyed.")]
         public float Duration = 2.0f;
 
+        /// <summary>   The force amount. </summary>
         [Tooltip("How much force to create at the center (explosion), 0 for none.")]
         public float ForceAmount;
 
+        /// <summary>   The force radius. </summary>
         [Tooltip("The radius of the force, 0 for none.")]
         public float ForceRadius;
 
+        /// <summary>   True if this object is projectile. </summary>
         [Tooltip("A hint to users of the script that your object is a projectile and is meant to be shot out from a person or trap, etc.")]
         public bool IsProjectile;
 
+        /// <summary>   The manual particle systems. </summary>
         [Tooltip("Particle systems that must be manually started and will not be played on start.")]
         public ParticleSystem[] ManualParticleSystems;
 
+        /// <summary>   The start time multiplier. </summary>
         private float startTimeMultiplier;
+        /// <summary>   The start time increment. </summary>
         private float startTimeIncrement;
 
+        /// <summary>   The stop time multiplier. </summary>
         private float stopTimeMultiplier;
+        /// <summary>   The stop time increment. </summary>
         private float stopTimeIncrement;
+
+        /// <summary>   Cleanup everything co routine. </summary>
+        ///
+     
+        ///
+        /// <returns>   An IEnumerator. </returns>
 
         private IEnumerator CleanupEverythingCoRoutine()
         {
@@ -56,6 +94,10 @@ namespace DigitalRuby.PyroParticles
 
             GameObject.Destroy(gameObject);
         }
+
+        /// <summary>   Starts particle systems. </summary>
+        ///
+     
 
         private void StartParticleSystems()
         {
@@ -74,12 +116,20 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Awakes this object. </summary>
+        ///
+     
+
         protected virtual void Awake()
         {
             Starting = true;
             int fireLayer = UnityEngine.LayerMask.NameToLayer("FireLayer");
             UnityEngine.Physics.IgnoreLayerCollision(fireLayer, fireLayer);
         }
+
+        /// <summary>   Starts this object. </summary>
+        ///
+     
 
         protected virtual void Start()
         {
@@ -110,6 +160,10 @@ namespace DigitalRuby.PyroParticles
                 }
             }
         }
+
+        /// <summary>   Updates this object. </summary>
+        ///
+     
 
         protected virtual void Update()
         {
@@ -144,6 +198,14 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Creates an explosion. </summary>
+        ///
+     
+        ///
+        /// <param name="pos">      The position. </param>
+        /// <param name="radius">   The radius. </param>
+        /// <param name="force">    The force. </param>
+
         public static void CreateExplosion(Vector3 pos, float radius, float force)
         {
             if (force <= 0.0f || radius <= 0.0f)
@@ -163,6 +225,10 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Stops this object. </summary>
+        ///
+     
+
         public virtual void Stop()
         {
             if (Stopping)
@@ -180,11 +246,19 @@ namespace DigitalRuby.PyroParticles
             StartCoroutine(CleanupEverythingCoRoutine());
         }
 
+        /// <summary>   Gets or sets a value indicating whether the starting. </summary>
+        ///
+        /// <value> True if starting, false if not. </value>
+
         public bool Starting
         {
             get;
             private set;
         }
+
+        /// <summary>   Gets or sets the start percent. </summary>
+        ///
+        /// <value> The start percent. </value>
 
         public float StartPercent
         {
@@ -192,11 +266,19 @@ namespace DigitalRuby.PyroParticles
             private set;
         }
 
+        /// <summary>   Gets or sets a value indicating whether the stopping. </summary>
+        ///
+        /// <value> True if stopping, false if not. </value>
+
         public bool Stopping
         {
             get;
             private set;
         }
+
+        /// <summary>   Gets or sets the stop percent. </summary>
+        ///
+        /// <value> The stop percent. </value>
 
         public float StopPercent
         {

@@ -20,6 +20,10 @@ using UnityEngine.UI;
 // Changes Title name and open webpage when user clicks on title name.
 // ######################################################################
 
+/// <summary>   A ge user interface responder. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GE_UIResponder : MonoBehaviour
 {
 
@@ -29,7 +33,9 @@ public class GE_UIResponder : MonoBehaviour
 
 	#region Variables
 
+    /// <summary>   The package title. </summary>
 	public string m_PackageTitle = "-";
+    /// <summary>   URL of the target. </summary>
 	public string m_TargetURL = "www.unity3d.com";
 
 	#endregion // Variables
@@ -43,6 +49,11 @@ public class GE_UIResponder : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start()
 	{
 
@@ -56,6 +67,11 @@ public class GE_UIResponder : MonoBehaviour
 
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update()
 	{
 	}
@@ -69,6 +85,11 @@ public class GE_UIResponder : MonoBehaviour
 	#region UI Responder
 
 	// User click/touch on title name
+
+    /// <summary>   Executes the button asset name action. </summary>
+    ///
+ 
+
 	public void OnButton_AssetName()
 	{
 		// http://docs.unity3d.com/ScriptReference/Application.OpenURL.html
