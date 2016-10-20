@@ -4,73 +4,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 
-/// <summary>
-/// AchievementManager contains Achievements, which players are able to earn through performing various actions
-/// in the game. Each Achievement specifies 
-/// </summary>
-[System.Serializable]
-/*public class Achievement
-{
-    public string Name;
-    public string Description;
-    public Texture2D IconIncomplete;
-    public Sprite IconComplete;
-    public string Reward;
-    public float TargetProgress;
-    public bool Secret;
-
-    [HideInInspector]
-    public bool Earned = false;
-    private float currentProgress = 0.0f;
-
-    /// <summary>
-    /// Returns true if this progress added results in the Achievement being earned.
-    /// </summary>
-    /// <param name="progress">The progress.</param>
-    /// <returns></returns>
-    public bool AddProgress(float progress)
-    {
-        if (Earned)
-        {
-            return false;
-        }
-
-        currentProgress += progress;
-        if (currentProgress >= TargetProgress)
-        {
-            Earned = true;
-            return true;
-        }
-
-        return false;
-    }
-
-
-	
-
-    /// <summary>
-    ///  Returns true if this progress set results in the Achievement being earned.
-    /// </summary>
-    /// <param name="progress">The progress.</param>
-    /// <returns></returns>
-    public bool SetProgress(float progress)
-    {
-        if (Earned)
-        {
-            return false;
-        }
-
-        currentProgress = progress;
-        if (progress >= TargetProgress)
-        {
-            Earned = true;
-            return true;
-        }
-
-        return false;
-    }
-		
-}*/
 
 /// <summary>
 /// 
@@ -94,16 +27,6 @@ public class AchievementManager : MonoBehaviour
 
     private GameData Data;
 
-    /// <summary>
-    ///Making this class into global
-    /// </summary>
-    /// <value>
-    /// The instance.
-    /// </value>
-   /* public static AchievementManager Instance {
-		get;
-		set;
-	}*/
 
     /// <summary>
     ///Call it by using
@@ -135,27 +58,6 @@ public class AchievementManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Make sure some assumptions about achievement data setup are followed.
-    /// </summary>
- /*   private void ValidateAchievements()
-    {
-        ArrayList usedNames = new ArrayList();
-        foreach (Achievement achievement in Achievements)
-        {
-            if (achievement.RewardPoints < 0)
-            {
-                Debug.LogError("AchievementManager::ValidateAchievements() - Achievement with negative RewardPoints! " + achievement.Name + " gives " + achievement.RewardPoints + " points!");
-            }
-
-            if (usedNames.Contains(achievement.Name))
-            {
-                Debug.LogError("AchievementManager::ValidateAchievements() - Duplicate achievement names! " + achievement.Name + " found more than once!");
-            }
-            usedNames.Add(achievement.Name);
-        }
-    }*/
-
     private Achievement GetAchievementByName(string achievementName)
     {
         return Achievements.FirstOrDefault(achievement => achievement.Name == achievementName);
@@ -163,32 +65,12 @@ public class AchievementManager : MonoBehaviour
 
    
     /// <summary>
-    /// Updating the reward points
-    /// </summary>
-   /* private void UpdateRewardPointTotals()
-    {
-        currentRewardPoints = 0;
-        potentialRewardPoints = 0;
-
-        foreach (Achievement achievement in Achievements)
-        {
-            if (achievement.Earned)
-            {
-                currentRewardPoints += achievement.RewardPoints;
-            }
-
-            potentialRewardPoints += achievement.RewardPoints;
-        }
-    }*/
-
-
-    /// <summary>
     ///When an achievement is earned
     /// </summary>
     private void AchievementEarned()
     {
       //  UpdateRewardPointTotals();
-        AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
+       AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
 
 
@@ -196,35 +78,33 @@ public class AchievementManager : MonoBehaviour
     {
        
         Achievement achievement = GetAchievementByName(achievementName);
+
+
+
         if (achievement == null)
         {
             Debug.LogWarning("AchievementManager::AddProgressToAchievement() - Trying to add progress to an achievemnet that doesn't exist: " + achievementName);
             return;
         }
-          
+
+        if (achievement.Earned)
+        {
+            return;
+        }
+
         achievement.Earned = true;
 
-       
 
+        achievement.Earned = true;
         AchievementEarned();
         AchievementPopup.enabled = true;
         executedTime = Time.time;
         achievementText.text = achievement.Name;
         //Debug.Log(Data.GameAchievements.Count);
         Data.AddAchievment(new GameAchievement(achievement.Name, achievement.Description));
-        //Debug.Log("SIZE" + Data.GameAchievements.Count);
-
-        Debug.Log("ACHIEVEMENT OBTAINED");
-    }
-    /// <summary>
-    ///This is the one that will be called by the playerController
-    /// </summary>
-    /// <param name="achievementName">Name of the achievement.</param>
-    /// <param name="progressAmount">The progress amount.</param>
-    public void AddProgressToAchievement(string achievementName, float progressAmount)
-    {
 
     }
+
 
 
     /// <summary>

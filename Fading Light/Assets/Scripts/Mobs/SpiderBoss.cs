@@ -359,7 +359,7 @@ public class SpiderBoss : BaseEntity
             pathfinder.Stop();
             _animator.Play("death1", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
         } catch { }        
     }
 

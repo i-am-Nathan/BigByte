@@ -112,7 +112,7 @@ public class LifeManager : MonoBehaviour
         Time.timeScale = 1;
         // Gets the active scene and reloads it
         Scene scene = SceneManager.GetActiveScene();
-		if (scene.name == "Level 1") {
+		if (scene.name == "Level1") {
 			_gameDataScript.SetNumberOfLives(3);
 		}
         SceneManager.LoadScene(scene.name);

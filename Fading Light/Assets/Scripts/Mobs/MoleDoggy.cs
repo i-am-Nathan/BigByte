@@ -166,6 +166,7 @@ public class MoleDoggy : BaseEntity
     {
         if (!isDead)
         {
+
             if (DEBUG) Debug.Log("Entered state: Attack");
 			BossPanel.SetActive(true);
             RotateTowards(target, false);
@@ -499,16 +500,19 @@ public class MoleDoggy : BaseEntity
     {
         base.Killed();
 
+        var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+        _achievementManager.AchievementObtained("Dog House.");
+
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
         {
             pathfinder.Stop();
             _animator.Play("Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
 
-			// Triggering end of level 1 second after boss is defeated
-			StartCoroutine(BossDeadWait());
+            // Triggering end of level 1 second after boss is defeated
+            StartCoroutine(BossDeadWait());
 
         } catch { }        
     }

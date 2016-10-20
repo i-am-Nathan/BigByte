@@ -78,7 +78,7 @@ public class GameData : MonoBehaviour {
     private float _totalTime;
     private int _sharedGold;
 
-    private List<string> GameAchievements = new List<string>();
+    
 
     private int _torchFuel;
     private Slider _torchFuelSlider;
@@ -101,6 +101,7 @@ public class GameData : MonoBehaviour {
 
     private Dictionary<string, int> _player1ItemQuantityDictionary = new Dictionary<string, int>();
     private Dictionary<string, int> _player2ItemQuantityDictionary = new Dictionary<string, int>();
+    private List<GameAchievement> GameAchievements = new List<GameAchievement>();
 
     //Achievements
     public Achievement[] Achievements;
@@ -113,11 +114,10 @@ public class GameData : MonoBehaviour {
 
     public void AddAchievment(GameAchievement ac)
     {
-        Debug.Log("ACHIEVEMENTS ADDED");
-        GameAchievements.Add(ac.Name);
+        GameAchievements.Add(ac);
     }
 
-    public List<string> GetGameAchievements()
+    public List<GameAchievement> GetGameAchievements()
     {
         return GameAchievements;
     }
