@@ -340,7 +340,7 @@ public class SpiderBoss : BaseEntity
             
         }
     }
-
+		
     public override void Killed()
     {
         base.Killed();

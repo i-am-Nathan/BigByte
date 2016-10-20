@@ -489,6 +489,12 @@ public class MoleDoggy : BaseEntity
         }        
     }
 
+	public IEnumerator BossDeadWait () 
+	{
+		yield return new WaitForSeconds(1f);
+		EndOfLevelTriggerScript.TriggerEndOfLevel ();
+	}
+
     public override void Killed()
     {
         base.Killed();
@@ -502,8 +508,7 @@ public class MoleDoggy : BaseEntity
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
 
 			// Triggering end of level 1 second after boss is defeated
-			yield return new WaitForSeconds(1f);
-			EndOfLevelTriggerScript.TriggerEndOfLevel ();
+			StartCoroutine(BossDeadWait());
 
         } catch { }        
     }
