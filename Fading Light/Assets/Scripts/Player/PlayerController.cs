@@ -120,7 +120,7 @@ public class PlayerController : Player
 
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
-        if (Input.GetKeyDown(KeyCode.RightControl) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.P) && !_torch.activeInHierarchy)
         {
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
@@ -203,6 +203,11 @@ public class PlayerController : Player
     /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
+        if (!CanTakeDamage)
+        {
+            return;
+        }
+
         Debug.Log("Player damaged");
 
 		if (isDefensePotActive ()) {

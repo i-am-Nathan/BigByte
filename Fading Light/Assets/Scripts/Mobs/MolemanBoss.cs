@@ -59,6 +59,7 @@ public class MolemanBoss : BaseEntity
     private bool _isSprinting;
     private bool _isMoving;
     private int _walkCount;
+    private bool _canTakeDamage = true;
 
     private bool DEBUG = false;
     public bool isBoss = true;
@@ -83,6 +84,11 @@ public class MolemanBoss : BaseEntity
         fsm = StateMachine<States>.Initialize(this);
         fsm.ChangeState(States.Init);
     }
+
+    void Update()
+    {
+        _canTakeDamage = true;
+    } 
 
     public void MockUp()
     {
@@ -267,13 +273,6 @@ public class MolemanBoss : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
-    void OnParticleCollision(GameObject other)
-    {
-        if (other)
-        {
-        }
-        Debug.Log("OWOWWWWWOWOWOWOW");
-    }
 
     private void RotateTowards(Transform target)
     {
@@ -346,6 +345,17 @@ public class MolemanBoss : BaseEntity
     public void HideHealth()
     {
         HealthCircle.enabled = false;
+    }
+
+
+    void OnTriggerStay(Collider other)
+    {
+        if (_canTakeDamage && other.tag.Equals("LightningCollision"))
+        {
+            Debug.Log("Kevin");
+            Damage(10f, null);
+            _canTakeDamage = false;
+        }
     }
 }
 

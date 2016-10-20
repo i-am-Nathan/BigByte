@@ -54,7 +54,6 @@ public class Player2Controller : Player
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();
         _lastJumpTime = Time.time;
-		_animator.ApplyBuiltinRootMotion();		
         if (!IsMainMenu)
         {
             _healthSlider = GameObject.FindWithTag("Player 2 Health Slider").GetComponent<Slider>();
@@ -168,6 +167,11 @@ public class Player2Controller : Player
     /// <param name="attacker">The attacker.</param>
     public override void Damage(float amount, Transform attacker)
     {
+        if (!CanTakeDamage)
+        {
+            return;
+        }
+
         Debug.Log("Player damaged");
         healthCircle.enabled = true;
         base.Damage(amount, null);
