@@ -300,7 +300,7 @@ public class SpiderBoss : BaseEntity
 
     private void Death_Enter()
     {
-        this.transform.GetComponent<CapsuleCollider>().gameObject.SetActive(false);
+        //this.transform.GetComponent<CapsuleCollider>().gameObject.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
         if (isBoss) BossPanel.SetActive(false);
     }
