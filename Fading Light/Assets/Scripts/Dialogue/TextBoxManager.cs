@@ -59,13 +59,14 @@ public class TextBoxManager : MonoBehaviour {
 		SpriteDictionary.Add ("BS", Images [1]);
 		SpriteDictionary.Add ("LS", Images [2]);
 		SpriteDictionary.Add ("PB", Images [3]);
-		CharacterNameDictionairy.Add ("MM", "Mole Man");
+        SpriteDictionary.Add("PS", Images[4]);
+        CharacterNameDictionairy.Add ("MM", "Mole Man");
 		CharacterNameDictionairy.Add ("BS", "Big Sibling");
 		CharacterNameDictionairy.Add ("LS", "Little Sibling");
 		CharacterNameDictionairy.Add ("PB", "Post Board");
+        CharacterNameDictionairy.Add("PS", "Prisoner");
 
-
-		if (TextFile != null) {
+        if (TextFile != null) {
 			TextLines = (TextFile.text.Split ('\n'));	
 		}
 
