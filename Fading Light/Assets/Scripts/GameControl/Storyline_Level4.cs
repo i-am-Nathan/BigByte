@@ -5,8 +5,7 @@ using System;
 
 public class Storyline_Level4 : Storyline
 {
-
-
+	// Cutscenes and other game objects to be used as part of the storyline
     public PlayerController Player1;
     public Player2Controller Player2;
     public List<MoleManContoller> MoleMen;
@@ -98,7 +97,6 @@ public class Storyline_Level4 : Storyline
         {
 
             Boss.gameObject.SetActive(true);
-            Debug.Log("TALKING DONE G");
             MoleManContoller moleman = GameObject.FindGameObjectWithTag("Moleman").GetComponent<MoleManContoller>();
             GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(true);
             moleman.Sink();
@@ -125,6 +123,9 @@ public class Storyline_Level4 : Storyline
         return _finished;
     }
 
+	/// <summary>
+	/// Enabling the character damage (as it is disabled during cutscenes)
+	/// </summary>
     public override void CharacterDamageEnabled(bool enabled)
     {
         Player1.CanTakeDamage = enabled;

@@ -18,7 +18,9 @@ public class CrateSoundScript : MonoBehaviour {
         CrateMovementSound.loop = true;
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// Used to check if crate is moving and thus play sound
+	/// </summary>
 	void Update () {
 	    if(rb.velocity.magnitude >=0.1 && !CrateMovementSound.isPlaying)
         {
