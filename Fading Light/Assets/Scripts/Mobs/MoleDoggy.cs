@@ -123,8 +123,16 @@ public class MoleDoggy : BaseEntity
     /// </summary>
     private void Init_Enter()
     {
-        if (DEBUG) Debug.Log("molemans dog state machine initilized.");
-        fsm.ChangeState(States.Idle);
+        if (DEBUG) Debug.Log("molemans dog state machine initilized. Waiting for cutscene");
+        //fsm.ChangeState(States.Idle);
+    }
+
+    Storyline _storyline;
+
+    public void BeginCutscene(Storyline storyline)
+    {
+        _storyline = storyline;
+        fsm.ChangeState(States.Taunt);
     }
 
     /// <summary>
@@ -134,9 +142,15 @@ public class MoleDoggy : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");       
         _animator.Play("Idle", PlayMode.StopAll);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         _animator.Play("Attack", PlayMode.StopAll);
-        yield return new WaitForSeconds(4f);
+        while (_animator.isPlaying)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        _storyline.NextMoleMan();
+        _animator.Play("Idle", PlayMode.StopAll);
+        yield return new WaitForSeconds(1f);
         fsm.ChangeState(States.Chase);
     }
 
