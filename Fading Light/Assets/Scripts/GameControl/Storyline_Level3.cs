@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+/// <summary>
+/// Storyline class for the third level
+/// </summary>
 public class Storyline_Level3 : Storyline
 {
-
-
+	// Cutscenes and other game objects to be used as part of the storyline
     public PlayerController Player1;
     public Player2Controller Player2;
     public List<MoleManContoller> MoleMen;
@@ -25,6 +27,9 @@ public class Storyline_Level3 : Storyline
     private float _startDisplay;
     public GameObject Block;
 
+	/// <summary>
+	/// Dialogues the complete
+	/// </summary>
     public override void DialogueComplete()
     {
         _currentStep++;
@@ -112,6 +117,7 @@ public class Storyline_Level3 : Storyline
             DestroyObject(Block);
         }else if (_currentStep == 4)
         {
+			// Cutscene and camera movement
             TorchController.IsDisabled = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
@@ -136,6 +142,9 @@ public class Storyline_Level3 : Storyline
 
     }
 
+	/// <summary>
+	/// Enabling the character damage (as it is disabled during cutscenes)
+	/// </summary>
     public override void CharacterDamageEnabled(bool enabled)
     {
         Player1.CanTakeDamage = enabled;
