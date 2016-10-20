@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Used to add sound of a crate moving to the crates in the game
+/// </summary>
 public class CrateSoundScript : MonoBehaviour {
 
+	// Audio source
     public AudioSource CrateMovementSound;
     private Rigidbody rb;
-	// Use this for initialization
+
+	/// <summary>
+	/// Initialising crate sounds
+	/// </summary>
 	void Start () {
         rb = gameObject.GetComponent<Rigidbody>();
         CrateMovementSound.loop = true;

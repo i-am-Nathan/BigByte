@@ -12,6 +12,7 @@ public class HighScore
         return JsonUtility.FromJson<HighScore>(jsonString);
     }
 
+	// Attributes which are stored in the database
     public string id = string.Empty;
     public string name = string.Empty;
     public string gold = string.Empty;
@@ -23,6 +24,7 @@ public class HighScore
     public string p1accuracy = string.Empty;
     public string p2accuracy = string.Empty;
 
+	// String shown on the highscore menu
     public string ExpandedString()
     {
         return string.Format("{0} completed in the game in {1} minutes and {2} seconds.  They killed {3} monsters and were killed {4} times.  They missed {5} chests and collected {6} gold coins.",

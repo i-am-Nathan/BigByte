@@ -4,6 +4,7 @@ using System.Collections;
 
 /// <summary>
 /// This class will be placed on characters or objects which have dialogue on them. 
+/// Referenced - www.youtube.com/watch?v=ehmBIP5sj0M
 /// </summary>
 public class ActivateText : MonoBehaviour
 {

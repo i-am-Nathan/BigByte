@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// <summary>
 /// This class will manage the dialogue system and handles the textfiles associated with it. This file handles dialogue through
 /// a specific format : CharacterAbbreviation:Sound(Optional):Dialogue
+/// Referenced - www.youtube.com/watch?v=ehmBIP5sj0M
 /// </summary>
 public class TextBoxManager : MonoBehaviour {
 
