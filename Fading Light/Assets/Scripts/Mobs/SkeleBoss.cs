@@ -232,7 +232,6 @@ public class SkeleBoss : BaseEntity
         {
             yield return new WaitForSeconds(0.25f);
         }
-
         _cloud.SetActive(true);
         _summoning = true;
 
