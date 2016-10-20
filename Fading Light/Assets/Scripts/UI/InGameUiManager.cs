@@ -92,10 +92,15 @@ public class InGameUiManager : MonoBehaviour {
 		Scene scene = SceneManager.GetActiveScene();
 
 		if (scene.name == "Level1") {
-			SceneManager.LoadScene("Level2");
-		} else if (scene.name == "Level2") {
+			Debug.Log ("Loading level 2");
 			SceneManager.LoadScene("Level3");
+
+		} else if (scene.name == "Level2") {
+			Debug.Log ("Loading level 3");
+			SceneManager.LoadScene("Level3");
+
 		} else if (scene.name == "Level3") {
+			Debug.Log ("Loading level 4");
 			SceneManager.LoadScene("Level4");
 		}
 	}
