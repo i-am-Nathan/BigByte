@@ -27,7 +27,7 @@ public class Player2Weapon : MonoBehaviour {
 
 		if(player2.isAttacking()&&other.name.StartsWith("Breakable Wall")){
 			FadeObjectInOut fade = (FadeObjectInOut)other.GetComponent (typeof(FadeObjectInOut));
-			fade.FadeOut ();
+			fade.FadeOut (2f);
 		}
 		if (player2.isAttacking () && other.tag == "Enemy") {
 			// Updating player 2's accuracy

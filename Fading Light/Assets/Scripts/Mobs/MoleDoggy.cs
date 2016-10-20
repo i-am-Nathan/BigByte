@@ -67,6 +67,7 @@ public class MoleDoggy : BaseEntity
 	private AchievementManager _achievementManager;
 
     private GameObject _cloud;
+    private GameObject _shield;
 
     public AudioClip Hit;
     public AudioClip Death;
@@ -81,6 +82,8 @@ public class MoleDoggy : BaseEntity
 	{
         _cloud = GameObject.Find("AOE");
         _cloud.SetActive(false);
+        _shield = GameObject.Find("RedShield");
+        _shield.SetActive(false);
         _source = GetComponent<AudioSource>();
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
@@ -184,6 +187,7 @@ public class MoleDoggy : BaseEntity
     IEnumerator FireballSpawning_Enter()
     {        
         _cloud.SetActive(true);
+        _shield.SetActive(true);
         pathfinder.enabled = false;
         Transform collider = this.transform.Find("AOECollider");
         collider.gameObject.SetActive(true);
@@ -243,6 +247,7 @@ public class MoleDoggy : BaseEntity
         yield return new WaitForSeconds(3f);     
 
         _cloud.SetActive(false);
+        _shield.SetActive(false);
         pathfinder.enabled = true;
         collider.gameObject.SetActive(false);
 
