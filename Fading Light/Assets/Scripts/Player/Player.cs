@@ -21,9 +21,13 @@ public class Player: BaseEntity
     protected override void Start()
     {
         base.Start();
-        _source = GetComponent<AudioSource>();
-		this.transform.FindChild ("AttackParticles").gameObject.SetActive(false);
-		this.transform.FindChild ("DefenseParticles").gameObject.SetActive(false);
+        try
+        {
+            _source = GetComponent<AudioSource>();
+            this.transform.FindChild("AttackParticles").gameObject.SetActive(false);
+            this.transform.FindChild("DefenseParticles").gameObject.SetActive(false);
+        }
+        catch { }
     }
 
     /// <summary>

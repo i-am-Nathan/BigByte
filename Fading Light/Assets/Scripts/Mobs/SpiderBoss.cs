@@ -300,7 +300,7 @@ public class SpiderBoss : BaseEntity
 
     private void Death_Enter()
     {
-        this.transform.GetComponent<CapsuleCollider>().gameObject.SetActive(false);
+        //this.transform.GetComponent<CapsuleCollider>().gameObject.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
         if (isBoss) BossPanel.SetActive(false);
     }
@@ -344,11 +344,14 @@ public class SpiderBoss : BaseEntity
     public override void Killed()
     {
         base.Killed();
+        try
+        {
+            GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+            GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
-		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
-		GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
-
-		_gameDataScript.UpdateMonstersKilled ();
+            _gameDataScript.UpdateMonstersKilled();
+        }
+        catch { }
 
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
@@ -356,7 +359,7 @@ public class SpiderBoss : BaseEntity
             pathfinder.Stop();
             _animator.Play("death1", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
         } catch { }        
     }
 

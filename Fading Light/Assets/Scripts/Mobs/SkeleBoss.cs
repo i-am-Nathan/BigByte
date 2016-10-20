@@ -71,6 +71,12 @@ public class SkeleBoss : BaseEntity
 
     private bool _isAttacking;
 
+	public AudioSource DeathSound;
+	public AudioSource HitSound;
+	public AudioSource NoMercy;
+	public AudioSource WalkSound;
+	public AudioSource HurtSounds;
+
 	public EndOfLevelTrigger EndOfLevelTriggerScript;
 
     /// <summary>
@@ -123,7 +129,7 @@ public class SkeleBoss : BaseEntity
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
         CurrentHealth = Health;
-
+		WalkSound.loop = true;
 		HealthSlider = HealthSlider.GetComponent<Slider>();
 		HealthSlider.value = CurrentHealth;
 		BossName = BossName.GetComponent<Text>();
@@ -155,10 +161,14 @@ public class SkeleBoss : BaseEntity
     /// </summary>
     IEnumerator Taunt_Enter()
     {
+		
         if (DEBUG) Debug.Log("Entered state: Taunt");
-        yield return new WaitForSeconds(4f);
+		NoMercy.Play ();
+        yield return new WaitForSeconds(3f);
+
         _animator["Scream"].speed = 0.75f;
         _animator.Play("Scream", PlayMode.StopAll);
+
         while (_animator.isPlaying)
         {
             yield return new WaitForSeconds(0.2f);
@@ -179,11 +189,14 @@ public class SkeleBoss : BaseEntity
 		BossPanel.SetActive(true);
         RotateTowards(target);
 
+
         pathfinder.enabled = false;
 
         _animator.Play("Attack", PlayMode.StopAll);
+		yield return new WaitForSeconds (1f);
         target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        
+
+		HitSound.Play ();
 
         while (_animator.isPlaying)
         {
@@ -213,7 +226,7 @@ public class SkeleBoss : BaseEntity
     {
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
         pathfinder.enabled = false;
-
+		NoMercy.Play ();
         _animator.Play("Roar", PlayMode.StopAll);
         while (_animator.isPlaying)
         {
@@ -316,6 +329,7 @@ public class SkeleBoss : BaseEntity
                 //_animator["Walk"].speed = _isSprinting ? 1.5f : 1.0f;
                 _animator.Play("Walk", PlayMode.StopAll);
                 _isMoving = true;
+				WalkSound.Play ();
             }
 
             //If player 2 is closer to the skeleton, and is not dead, then chase them Otherwise, player 1 is closer.              
@@ -331,6 +345,7 @@ public class SkeleBoss : BaseEntity
             }           
             else
             {
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Taunt, StateTransition.Overwrite);
             }
 
@@ -342,6 +357,7 @@ public class SkeleBoss : BaseEntity
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Taunt, StateTransition.Overwrite);
             }
 
@@ -351,6 +367,7 @@ public class SkeleBoss : BaseEntity
                 if (DEBUG) Debug.Log("In attack range");
                 _isMoving = false;
                 _lockedOn = false;
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Attack, StateTransition.Overwrite);
             }
 
@@ -459,6 +476,7 @@ public class SkeleBoss : BaseEntity
             {
                 try
                 {
+					HurtSounds.Play();
                     _animator.Play("Damage", PlayMode.StopSameLayer);
                 }
                 catch { }                
@@ -472,6 +490,7 @@ public class SkeleBoss : BaseEntity
 	public IEnumerator BossDeadWait () 
 	{
 		yield return new WaitForSeconds(1f);
+        
 		EndOfLevelTriggerScript.TriggerEndOfLevel ();
 	}
 
@@ -479,15 +498,19 @@ public class SkeleBoss : BaseEntity
     {
         base.Killed();
 
+        var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+        _achievementManager.AchievementObtained("Skeleton King.");
+
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
         {
+			DeathSound.Play();
             _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
 
-			// Triggering end of level 1 second after boss is defeated
-			StartCoroutine(BossDeadWait());
+            // Triggering end of level 1 second after boss is defeated
+            StartCoroutine(BossDeadWait());
 
         } catch { }        
     }

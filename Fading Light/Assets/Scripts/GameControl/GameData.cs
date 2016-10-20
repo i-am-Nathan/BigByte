@@ -15,7 +15,8 @@ public class Achievement
     public string Reward;
     public float TargetProgress;
     public bool Secret;
- 
+
+    
 
     [HideInInspector]
     public bool Earned = false;
@@ -77,27 +78,30 @@ public class GameData : MonoBehaviour {
     private float _totalTime;
     private int _sharedGold;
 
+    
+
     private int _torchFuel;
     private Slider _torchFuelSlider;
 
     private float _timesKilled;
-	private float _monstersKilled;
-	private float _chestsMissed;
+    private float _monstersKilled;
+    private float _chestsMissed;
     //private float _playerTwoTotalDamageTaken;
 
-	private float _playerOneAccuracy = 0f;
-	private float _playerTwoAccuracy = 0f;
+    private float _playerOneAccuracy = 0f;
+    private float _playerTwoAccuracy = 0f;
 
-	private float _playerOneNumHitsMissed = 0f;
-	private float _playerOneNumHitsAchieved = 0f; 
-	private float _playerTwoNumHitsMissed = 0f;
-	private float _playerTwoNumHitsAchieved = 0f; 
+    private float _playerOneNumHitsMissed = 0f;
+    private float _playerOneNumHitsAchieved = 0f;
+    private float _playerTwoNumHitsMissed = 0f;
+    private float _playerTwoNumHitsAchieved = 0f;
 
-	private InGameUiManager _inGameUiManager;
-	private bool _firstLevel = true;
+    private InGameUiManager _inGameUiManager;
+    private bool _firstLevel = true;
 
-	private Dictionary<string,int> _player1ItemQuantityDictionary = new Dictionary<string,int>();
-	private Dictionary<string,int> _player2ItemQuantityDictionary = new Dictionary<string,int>();
+    private Dictionary<string, int> _player1ItemQuantityDictionary = new Dictionary<string, int>();
+    private Dictionary<string, int> _player2ItemQuantityDictionary = new Dictionary<string, int>();
+    private List<GameAchievement> GameAchievements = new List<GameAchievement>();
 
     //Achievements
     public Achievement[] Achievements;
@@ -108,6 +112,15 @@ public class GameData : MonoBehaviour {
 
     public bool isMainMenu = false;
 
+    public void AddAchievment(GameAchievement ac)
+    {
+        GameAchievements.Add(ac);
+    }
+
+    public List<GameAchievement> GetGameAchievements()
+    {
+        return GameAchievements;
+    }
 
     /// <summary>
     /// Called before any Start methods called and is used for initialisation
@@ -120,8 +133,7 @@ public class GameData : MonoBehaviour {
         // Checking if this game data object already exists
 		if (!(objects.Length > 0))
         {
-            achievementText = GameObject.FindWithTag("Achievement").GetComponent<Text>();
-
+            Debug.Log("HELLO AMMAR");
             // Used to initialise this object with 3 lives and a time of 0
             // Assigning a tag and instantiating number of lives
             _numberOfLivesLeft = 3;
@@ -144,6 +156,10 @@ public class GameData : MonoBehaviour {
     }
 
 	void Start() {
+        Debug.Log("STARTING G");
+       // GameAchievements.Add(new GameAchievement("Blank", "DESC"));
+        Debug.Log("SIZE2" + GameAchievements.Count);
+        Debug.Log("BAAAH");
         if (!isMainMenu)
         {
             // Getting the game data object which shows the total lives left

@@ -5,7 +5,7 @@ public class FallingFenceLeverLeft : MonoBehaviour {
 
 	private bool _pulled = false;
 	private bool _leftWall = false;
-    //public AudioSource LeverSound;
+    public AudioSource LeverSound;
     
 
 	/// <summary>
@@ -17,7 +17,7 @@ public class FallingFenceLeverLeft : MonoBehaviour {
 		if (((other.name.Equals("Player 1") && Input.GetKeyDown(KeyCode.O)) || (other.name.Equals("Player2") && Input.GetKeyDown(KeyCode.Q))) && !_pulled)	
 		{
 			this.GetComponent<Animation>().Play("Armature|LeverDown");
-            //LeverSound.Play();
+            LeverSound.Play();
 			_pulled = true;
 			GameObject go = GameObject.Find("Falling Fence Passage");
 			FallingFencePassage fallingFencePassage = (FallingFencePassage)go.GetComponent(typeof(FallingFencePassage));

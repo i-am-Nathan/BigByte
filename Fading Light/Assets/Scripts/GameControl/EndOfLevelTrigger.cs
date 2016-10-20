@@ -12,7 +12,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	private bool _player1Entered = false;
 	private bool _player2Entered = false;
 	private bool _endOfGame = false;
-	private int _numTotalChests = 100;
+	private int _numTotalChests = 10;
 	private DatabaseScores _dbScoresScript;
 	private GameData _gameDataScript;
 
@@ -23,19 +23,13 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	public Text Player1Name;
 	public Text Player2Name;
 
-	void Update () {
-		if (_player1Entered && _player2Entered && !_endOfGame) {
-			TriggerEndOfLevel ();
-		}
-	}
-
 	public void TriggerEndOfLevel() {
 		// Pauses the game and shows the menu indicating that players have completed the level
 		Time.timeScale = 0;
 		LevelFinishedMenu.enabled = true;
 		Scene scene = SceneManager.GetActiveScene();
 
-		if (scene.name == "Level 4") {
+		if (scene.name == "Level4") {
 			LevelFinishedMenu.enabled = false;
 			_endOfGame = true;
 			SubmitHighScoreMenu.enabled = true;
@@ -78,30 +72,13 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		SceneManager.LoadScene("MainMenu");
 	}
 
-	/// <summary>
-	/// Called when a player enters the box collider placed at the end of the level
-	/// </summary>
-    void OnTriggerEnter(Collider c)
-    {
-        if (c.gameObject.tag == "Player")
-        {
-			_player1Entered = true;
-        }
-
-		if (c.gameObject.tag == "Player2") {
-			_player2Entered = true;
-		}
-    }
-
-	void OnTriggerExit(Collider c)
-	{
-		if (c.gameObject.tag == "Player")
-		{
-			_player1Entered = false;
-		}
-
-		if (c.gameObject.tag == "Player2") {
-			_player2Entered = false;
-		}
-	}
+//	/// <summary>
+//	/// Called when a player enters the box collider placed at the end of the level
+//	/// </summary>
+//    void OnTriggerEnter(Collider c)
+//    {
+//		if (c.gameObject.tag == "Player2" || c.gameObject.tag == "Player1") {
+//			TriggerEndOfLevel ();
+//		}
+//    }
 }
