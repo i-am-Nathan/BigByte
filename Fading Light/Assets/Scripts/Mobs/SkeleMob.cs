@@ -321,7 +321,7 @@ public class SkeleMob : BaseEntity
             pathfinder.Stop();
             this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
         } catch { }        
     }
 

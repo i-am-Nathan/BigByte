@@ -64,6 +64,9 @@ public class ShopKeeper : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.O) && !_shopping)
             {
+                var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+                _achievementManager.AchievementObtained("Shopping Spree!");
+
                 _shopping = true;
                 SubInventoryManager.ToggleInShop();
                 Player1.IsDisabled = true;
@@ -91,6 +94,8 @@ public class ShopKeeper : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Q) && !_shopping)
             {
+                var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+                _achievementManager.AchievementObtained("Shopping Spree!");
                 _shopping = true;
                 SubInventoryManager.ToggleInShop();
                 Player1.IsDisabled = true;

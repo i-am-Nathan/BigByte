@@ -116,7 +116,7 @@ public class Player2Controller : Player
             _lastAttack = Time.time;
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
+            AchievementManager.AchievementObtained("First Swing");
             HitSounds.Play();
         }
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))

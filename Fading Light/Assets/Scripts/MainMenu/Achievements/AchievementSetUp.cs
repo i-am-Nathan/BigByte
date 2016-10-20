@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AchievementSetUp : MonoBehaviour {
-    private List<string> _achievements;
+    private List<GameAchievement> _achievements;
     public GameObject MenuAchievement;
     public GameObject Grid;
 
@@ -15,6 +15,7 @@ public class AchievementSetUp : MonoBehaviour {
         GameData am = go.GetComponent<GameData>();
         _achievements = am.GetGameAchievements();
 
+        Debug.Log("GOLD: " + am.GetTotalTime());
         Debug.Log("Achivements" + _achievements.Count);
 
         foreach(var achievement in _achievements)
@@ -25,7 +26,8 @@ public class AchievementSetUp : MonoBehaviour {
 
             if (panel != null && achievement != null)
             {
-                panel.Name.text = achievement;
+                panel.Name.text = achievement.Name;
+                panel.Deaths.text = achievement.Description;
                 panel.transform.parent = Grid.transform;
                 panel.transform.localScale = Vector3.one;
 

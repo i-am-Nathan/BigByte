@@ -57,9 +57,10 @@ public class OpenTreasure : MonoBehaviour {
 	/// </summary>
 	IEnumerator Open()
 	{
-
-		//Plays a sound when treasure is opening.
-		float timePassed = 0;
+        var _achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag("AchievementManager").GetComponent(typeof(AchievementManager));
+        _achievementManager.AchievementObtained("Money Money Money~");
+        //Plays a sound when treasure is opening.
+        float timePassed = 0;
 		_source.PlayOneShot (TreasureOpening);
 		while (timePassed < 2)
 		{

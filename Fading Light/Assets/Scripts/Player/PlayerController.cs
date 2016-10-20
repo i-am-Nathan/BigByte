@@ -126,7 +126,7 @@ public class PlayerController : Player
             _lastAttack = Time.time;
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
-            AchievementManager.AchievementObtained("First Hits");
+            AchievementManager.AchievementObtained("First Swing");
             HitSounds.Play();
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))

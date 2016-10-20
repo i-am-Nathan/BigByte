@@ -503,10 +503,10 @@ public class SkeleBoss : BaseEntity
 			DeathSound.Play();
             _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
 
-			// Triggering end of level 1 second after boss is defeated
-			StartCoroutine(BossDeadWait());
+            // Triggering end of level 1 second after boss is defeated
+            StartCoroutine(BossDeadWait());
 
         } catch { }        
     }

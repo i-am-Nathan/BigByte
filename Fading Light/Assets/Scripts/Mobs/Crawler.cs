@@ -299,7 +299,7 @@ public class Crawler : BaseEntity
             pathfinder.Stop();
             _animator.Play("death1", PlayMode.StopAll);
             fsm.ChangeState(States.Death);
-            _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+            _achievementManager.AchievementObtained("First Blood");
         } catch { }        
     }
 
