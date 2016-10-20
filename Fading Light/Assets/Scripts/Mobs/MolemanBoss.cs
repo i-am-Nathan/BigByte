@@ -63,6 +63,8 @@ public class MolemanBoss : BaseEntity
     private bool DEBUG = false;
     public bool isBoss = true;
 
+	public EndOfLevelTrigger EndOfLevelTriggerScript;
+
     private AchievementManager _achievementManager;
 
     /// <summary>
@@ -338,7 +340,7 @@ public class MolemanBoss : BaseEntity
         {
             if (isBoss)
             {
-				HealthSlider.value -= amount/base.IntialHealth;
+				HealthSlider.value -= amount;
             }
 
         }
@@ -374,6 +376,10 @@ public class MolemanBoss : BaseEntity
             _animator.Play("creature1Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+
+			// Triggering end of level 1 second after boss is defeated
+			yield return new WaitForSeconds(1f);
+			EndOfLevelTriggerScript.TriggerEndOfLevel ();
         }
         catch { }
     }

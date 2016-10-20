@@ -439,7 +439,7 @@ public class MoleDoggy : BaseEntity
         _source.PlayOneShot(Death);
         _cloud.SetActive(false);
 		BossPanel.SetActive(false);
-		EndOfLevelTriggerScript.TriggerEndOfLevel ();
+
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
@@ -500,6 +500,11 @@ public class MoleDoggy : BaseEntity
             _animator.Play("Die", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+
+			// Triggering end of level 1 second after boss is defeated
+			yield return new WaitForSeconds(1f);
+			EndOfLevelTriggerScript.TriggerEndOfLevel ();
+
         } catch { }        
     }
 }
