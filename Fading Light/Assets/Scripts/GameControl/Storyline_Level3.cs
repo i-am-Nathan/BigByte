@@ -14,7 +14,7 @@ public class Storyline_Level3 : Storyline
     public List<GameObject> ReferencePoints;
     public GameObject CameraRig;
     public PrisonerController Prisoner;
-
+    public SkeleBoss Boss;
     public List<GameObject> CutScenePositions;
     public List<GameObject> CustSceneTargets;
 
@@ -40,15 +40,22 @@ public class Storyline_Level3 : Storyline
 
     public override void Next()
     {
-       
+        if (_currentStep == 3)
+        {
+            _done = false;
+            _currentStep++;
+        }
 
         //throw new NotImplementedException();
     }
 
     public override void NextMoleMan()
     {
-        _currentStep++;
-        _done = false;
+        if (_currentStep == 4)
+        {
+            _done = false;
+            _currentStep++;
+        }
         //throw new NotImplementedException();
     }
 
@@ -102,6 +109,23 @@ public class Storyline_Level3 : Storyline
             //zoom back out
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             DestroyObject(Block);
+        }else if (_currentStep == 4)
+        {
+            TorchController.IsDisabled = true;
+            Player1.IsDisabled = true;
+            Player2.IsDisabled = true;
+            CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[1];
+            CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[1];
+            CameraRig.GetComponent<PlayerCam>().CameraState = 1;
+            //Boss.BeginCutscene(this);
+            CharacterDamageEnabled(false);
+            _done = true;
+            _done = true;
+        }
+        else if (_currentStep == 5)
+        {
+            //zoom back out
+            CameraRig.GetComponent<PlayerCam>().CameraState = 0;
         }
 
 

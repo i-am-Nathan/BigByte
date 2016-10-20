@@ -62,7 +62,9 @@ public class MolemanMob : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
-    private bool DEBUG = true;
+    public bool FirstWave;
+
+    private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
 
@@ -73,7 +75,9 @@ public class MolemanMob : BaseEntity
 	{
         if (DEBUG) Debug.Log("The moleman mob wakes.");
         //base.Start();
-        spawnLocation = this.gameObject.transform.position;       
+        spawnLocation = this.gameObject.transform.position;
+
+        this.enabled = false;
 
         //Initlize the pathfinder, collision range and animator 
         pathfinder = GetComponent<NavMeshAgent>();
@@ -244,22 +248,34 @@ public class MolemanMob : BaseEntity
     }
 
     IEnumerator Falling_Enter()
-    {
+    {        
         //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, transform.position.y-4, transform.position.z),0.5f);
+        
         yield return new WaitForSeconds(2f);
         pathfinder.enabled = false;
+        
 
         MolemanBoss moley = GameObject.FindGameObjectWithTag("MolemanBoss").GetComponent<MolemanBoss>();
 
         while (true)
         {
-            if (moley.isSummoning())
+            if (moley.isSummoningFirstWave())
             {
-                break;
+                if (FirstWave)
+                {
+                    break;
+                }
+            } else if (moley.isSummoningSecondWave())
+            {
+                if (!FirstWave)
+                {
+                    break;
+                }               
             }
             yield return new WaitForSeconds(0.25f);
         }
 
+        this.enabled = true;
         _animator.Play("Falling", PlayMode.StopAll);
 
         while (transform.position.y > -17.7f)

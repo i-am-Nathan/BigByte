@@ -63,6 +63,13 @@ public class MolemanBoss : BaseEntity
     private bool DEBUG = false;
     public bool isBoss = true;
 
+<<<<<<< HEAD
+    private bool _summonedOnce;
+    private bool _summonedTwice;
+=======
+	public EndOfLevelTrigger EndOfLevelTriggerScript;
+>>>>>>> 40be75c5eb3734f389077f998732436c8e96b638
+
     private AchievementManager _achievementManager;
 
     /// <summary>
@@ -102,8 +109,7 @@ public class MolemanBoss : BaseEntity
 		HealthSlider.value = CurrentHealth;
 		BossName = BossName.GetComponent<Text>();
 		BossName.text = "Moleman";
-		BossPanel.SetActive(false);
-        
+		BossPanel.SetActive(false);        
     }
 
     /// <summary>
@@ -259,6 +265,28 @@ public class MolemanBoss : BaseEntity
         return _summoning;
     }
 
+    public bool isSummoningFirstWave()
+    {
+        if (_summoning && !_summonedTwice)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public bool isSummoningSecondWave()
+    {
+        if (_summoning && _summonedTwice)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
     /// <summary>
     /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
     /// if transitions to the chase state to chase them down.
@@ -308,8 +336,6 @@ public class MolemanBoss : BaseEntity
         if (isBoss) BossPanel.SetActive(false);
     }
 
-    private bool _summonedOnce;
-    private bool _summonedTwice;
 
     public override void Damage(float amount, Transform attacker)
     {
@@ -317,7 +343,7 @@ public class MolemanBoss : BaseEntity
         if (_summoning) return;
         base.Damage(amount, attacker);
 
-        if (CurrentHealth < 150 && !_summonedOnce)
+        if (CurrentHealth < 3800 && !_summonedOnce)
         {
             _summonedOnce = true;
             Debug.Log("Health reduced to first summoning level");
@@ -325,7 +351,7 @@ public class MolemanBoss : BaseEntity
             return;
         }
 
-        if (CurrentHealth < 40 && !_summonedTwice)
+        if (CurrentHealth < 1200 * 0.25 && !_summonedTwice)
         {
             _summonedTwice = true;
             Debug.Log("Health reduced to first summoning level");
@@ -338,7 +364,7 @@ public class MolemanBoss : BaseEntity
         {
             if (isBoss)
             {
-				HealthSlider.value -= amount/base.IntialHealth;
+				HealthSlider.value -= amount;
             }
 
         }
@@ -372,8 +398,12 @@ public class MolemanBoss : BaseEntity
         {
             pathfinder.Stop();
             _animator.Play("creature1Die", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
+
+			// Triggering end of level 1 second after boss is defeated
+			yield return new WaitForSeconds(1f);
+			EndOfLevelTriggerScript.TriggerEndOfLevel ();
         }
         catch { }
     }
