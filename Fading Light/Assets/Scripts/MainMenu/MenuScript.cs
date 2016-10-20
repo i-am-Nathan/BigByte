@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Logic for the whole Main menu scene
@@ -41,7 +42,8 @@ public class MenuScript : MonoBehaviour {
     {
         //Loading level
         GameData.isMainMenu = false;
-        StartLevel(0);
+		SceneManager.LoadScene ("Level1");
+        //StartLevel(0);
     }
 
 	//Highscore should pop up when it is pressed, to be implemented.

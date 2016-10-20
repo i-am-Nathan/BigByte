@@ -28,6 +28,8 @@ public class InGameUiManager : MonoBehaviour {
 	/// </summary>
     void Start () {
 		// Hiding menus which are not meant to be shown yet
+
+		Time.timeScale = 1;
         LevelFinishedMenu.enabled = false;
         ExitMenu.enabled = false;
         if(ControlsMenu != null)
@@ -93,7 +95,8 @@ public class InGameUiManager : MonoBehaviour {
 
 		if (scene.name == "Level1") {
 			Debug.Log ("Loading level 2");
-			SceneManager.LoadScene("Level3");
+			//Destroy(GameObject.Find ("Characters-Camera-Torch"));
+			SceneManager.LoadScene("Level2");
 
 		} else if (scene.name == "Level2") {
 			Debug.Log ("Loading level 3");

@@ -65,12 +65,18 @@ public class SkeletonSkinny : BaseEntity
 
 	private AchievementManager _achievementManager;
 
+	public AudioSource WalkSound;
+	public AudioSource AttackSound;
+	public AudioSource DeathSound;
+	public AudioSource HurtSound;
+	public AudioSource RiseSound;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
     private void Awake()
 	{
-              
+		WalkSound.loop = true;         
         if (DEBUG) Debug.Log("The skeleton wakes.");
         //base.Start();
         spawnLocation = this.gameObject.transform.position;       
@@ -157,6 +163,7 @@ public class SkeletonSkinny : BaseEntity
     /// </summary>
     private IEnumerator Wake_Enter()
     {
+		RiseSound.Play ();
         if (DEBUG) Debug.Log("Entered state: Wake");
         _animator["NewStandUp01"].speed = 1;
         _animator.Play("NewStandUp01", PlayMode.StopAll);
@@ -179,7 +186,7 @@ public class SkeletonSkinny : BaseEntity
         {
             if (DEBUG) Debug.Log("Entered state: Attack");
             pathfinder.enabled = false;
-
+			AttackSound.Play ();
             _animator["SwingNormal"].speed = 1.5f;
             _animator.Play("SwingNormal", PlayMode.StopAll);
             target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
@@ -223,6 +230,7 @@ public class SkeletonSkinny : BaseEntity
 
             if (!_isMoving)
             {
+				WalkSound.Play ();
                 //_animator["Run"].speed = _isSprinting ? 1.5f : 1.0f;
                 _animator.Play("Walk02", PlayMode.StopAll);
                 _isMoving = true;
@@ -241,6 +249,7 @@ public class SkeletonSkinny : BaseEntity
             }           
             else
             {
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Idle);
             }
 
@@ -252,6 +261,7 @@ public class SkeletonSkinny : BaseEntity
                 if (DEBUG) Debug.Log("Lost player");
                 _lockedOn = false;
                 _isMoving = false;
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Idle);
             }
 
@@ -261,6 +271,7 @@ public class SkeletonSkinny : BaseEntity
                 if (DEBUG) Debug.Log("In attack range");
                 _isMoving = false;
                 _lockedOn = false;
+				WalkSound.Stop ();
                 fsm.ChangeState(States.Attack);
             }
 
@@ -349,6 +360,7 @@ public class SkeletonSkinny : BaseEntity
         {
             try
             {
+				HurtSound.Play();
                 _animator.Play("Hit2", PlayMode.StopSameLayer);
             } catch { }
             
@@ -363,6 +375,7 @@ public class SkeletonSkinny : BaseEntity
         try
         {
             pathfinder.Stop();
+			DeathSound.Play();
             _animator.Play("Death", PlayMode.StopAll);
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AchievementObtained("First Blood");
