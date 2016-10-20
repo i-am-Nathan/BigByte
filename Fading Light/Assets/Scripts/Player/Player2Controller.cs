@@ -36,7 +36,8 @@ public class Player2Controller : Player
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
     private TorchFuelController _torchFuelScript;
-    
+
+    private float _lastAttack = Time.time;
     //audio
     public AudioSource WalkSounds;
     public AudioSource HitSounds;
@@ -109,15 +110,13 @@ public class Player2Controller : Player
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
         //Disable idling animation if we are walking
-        if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.E) && !_torch.activeInHierarchy && Time.time - _lastAttack > 1.4f)
         {
+            _lastAttack = Time.time;
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
-	        if(!HitSounds.isPlaying)
-            {
-                HitSounds.Play();
-            }
+            HitSounds.Play();
         }
         else if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
         {
