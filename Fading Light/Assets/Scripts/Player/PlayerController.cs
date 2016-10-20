@@ -32,7 +32,7 @@ public class PlayerController : Player
     private Slider _healthSlider;
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
-    private float _lastAttack = Time.time;
+	private float _lastAttack;
     //audio
     public AudioSource WalkingSounds;
     public AudioSource DeathSound;
@@ -47,6 +47,7 @@ public class PlayerController : Player
     protected override void Start()
     {
         base.Start();
+		_lastAttack = Time.time;
         _lastJumpTime = Time.time;
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
         TorchFuelControllerScript = (TorchFuelController)go.GetComponent(typeof(TorchFuelController));

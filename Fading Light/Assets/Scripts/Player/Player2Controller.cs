@@ -37,7 +37,7 @@ public class Player2Controller : Player
     private float _lastJumpTime;
     private TorchFuelController _torchFuelScript;
 
-    private float _lastAttack = Time.time;
+	private float _lastAttack;
     //audio
     public AudioSource WalkSounds;
     public AudioSource HitSounds;
@@ -51,6 +51,7 @@ public class Player2Controller : Player
     void Start()
 	{
         base.Start();
+		_lastAttack = Time.time;
         healthCircle.enabled = false;
         _animator = GetComponentInChildren<Animator>();//need this...
         controller = GetComponent<CharacterController>();

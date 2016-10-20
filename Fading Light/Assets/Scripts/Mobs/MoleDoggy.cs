@@ -453,6 +453,7 @@ public class MoleDoggy : BaseEntity
         {
             base.Damage(amount, attacker);
             _source.PlayOneShot(Hit);
+			HealthSlider.value -= amount;
 
             if (CurrentHealth < 150 && !_fireballedOnce)
             {
@@ -469,15 +470,7 @@ public class MoleDoggy : BaseEntity
                 fsm.ChangeState(States.FireballSpawning, StateTransition.Overwrite);
                 return;
             }
-
-            // Set the health bar's value to the current health.
-            try
-            {
-				HealthSlider.value -= amount;
-            }
-            catch { }
-
-
+				
             if (DEBUG) Debug.Log("molemans dog damaged");
 
             if (amount >= CurrentHealth)
