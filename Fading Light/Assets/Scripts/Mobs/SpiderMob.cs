@@ -111,39 +111,31 @@ public class SpiderMob : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Attack");
-
-        //Disable pathfinding to prevent the spider moving during the attack animation
-        pathfinder.enabled = false;
-
-        //Play the attack animation and deal damage to the target entitiy
-        _animator.Play("attack2", PlayMode.StopAll);
-
-        if (target != null)
+        if (isDead)
         {
-            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        }
-        
-        //Wait for the animation to finish before continuing back to the chase state
-        while (_animator.isPlaying)
-        {
-            yield return new WaitForSeconds(0.25f);
-            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
-        }
+            if (DEBUG) Debug.Log("Entered state: Attack");
 
-        int attackCount = 0;
+            //Disable pathfinding to prevent the spider moving during the attack animation
+            pathfinder.enabled = false;
 
-        if (attackCount == 1)
-        {
-            _isRunning = false;
-            attackCount = 0;
-        }
-        
-        attackCount++;
+            //Play the attack animation and deal damage to the target entitiy
+            _animator.Play("attack2", PlayMode.StopAll);
 
-        pathfinder.enabled = true;
+            if (target != null)
+            {
+                target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+            }
 
-        fsm.ChangeState(States.Chase);
+            //Wait for the animation to finish before continuing back to the chase state
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+                       
+            pathfinder.enabled = true;
+            fsm.ChangeState(States.Chase);
+        }       
     }
 
     /// <summary>
@@ -168,7 +160,7 @@ public class SpiderMob : BaseEntity
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
 
-        while (_lockedOn)
+        while (_lockedOn && !isDead)
         {
             //If player 2 is closer to the spider, and is not dead, then chase them Otherwise, player 1 is closer.              
             if (Vector3.Distance(player1.position, this.gameObject.transform.position) >= Vector3.Distance(player2.position, this.gameObject.transform.position) && !player2.GetComponent<BaseEntity>().isDead)
@@ -291,7 +283,6 @@ public class SpiderMob : BaseEntity
         if (DEBUG) Debug.Log("Entered state: Run");
 
         float refreshRate = 0.25f;
-        float fleeDistance = 10f;
         _inTorchLight = true;
 
         if (!_isMoving)
@@ -397,6 +388,7 @@ public class SpiderMob : BaseEntity
     public override void Damage(float amount, Transform attacker)
     {
         if (true) Debug.Log("Spider damaged");
+        if (isDead) return;
         base.Damage(amount, attacker);
 
         if (amount >= CurrentHealth)
