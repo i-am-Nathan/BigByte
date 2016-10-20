@@ -126,30 +126,53 @@ public class SpiderBoss : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Attack");
-        if (isBoss)	BossPanel.SetActive(true);
-        RotateTowards(target);
-
-        pathfinder.enabled = false;
-
-        _animator.Play("attack2", PlayMode.StopAll);
-        target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
-        
-
-        while (_animator.isPlaying)
+        if (!isDead)
         {
-            yield return new WaitForSeconds(0.25f);
-            if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            if (DEBUG) Debug.Log("Entered state: Attack");
+            if (isBoss) BossPanel.SetActive(true);
+
+            _animator.Play("run", PlayMode.StopAll);
+
+            while (true)
+            {
+                float step = 3f * Time.deltaTime;
+                Vector3 targetDir = target.transform.position - transform.position;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+                transform.rotation = Quaternion.LookRotation(newDir);
+
+                Vector3 myDir = transform.forward;
+                Vector3 yourDir = target.forward;
+
+                float myAngle = Vector3.Angle(transform.forward, targetDir);
+
+                if (myAngle < 8.0f)
+                {
+                    break;
+                }
+                yield return new WaitForSeconds(0.04f);
+            }
+
+            pathfinder.enabled = false;
+
+            _animator.Play("attack2", PlayMode.StopAll);
+            target.GetComponent<BaseEntity>().Damage(AttackDamage, this.gameObject.transform);
+
+
+            while (_animator.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                if (DEBUG) Debug.Log("Waiting for attack animation to finish");
+            }
+
+            if (_isSprinting) _isSprinting = false;
+
+            //yield return new WaitForSeconds(AttackCooldown);
+
+
+            pathfinder.enabled = true;
+
+            fsm.ChangeState(States.Chase);
         }        
-        
-        if (_isSprinting) _isSprinting = false;
-
-        //yield return new WaitForSeconds(AttackCooldown);
-        
-
-        pathfinder.enabled = true;
-
-        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>
@@ -168,7 +191,7 @@ public class SpiderBoss : BaseEntity
         Transform player1 = GameObject.FindGameObjectWithTag("Player").transform;
         Transform player2 = GameObject.FindGameObjectWithTag("Player2").transform;
 
-        while (_lockedOn)
+        while (_lockedOn && !isDead)
         {
 
             if (!_isMoving)
@@ -284,7 +307,8 @@ public class SpiderBoss : BaseEntity
     }
 
     public override void Damage(float amount, Transform attacker)
-    {        
+    {
+        if (isDead) return;
         base.Damage(amount, attacker);
 
         // Set the health bar's value to the current health.
@@ -332,7 +356,7 @@ public class SpiderBoss : BaseEntity
         {
             pathfinder.Stop();
             _animator.Play("death1", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
     }
