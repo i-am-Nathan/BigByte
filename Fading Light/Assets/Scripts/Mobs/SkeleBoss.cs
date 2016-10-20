@@ -438,7 +438,7 @@ public class SkeleBoss : BaseEntity
             {
                 HealthCircle.enabled = true;
                 HealthCircle.fillAmount -= amount / 100.0f;
-                Debug.Log("YOYOYOYO " + HealthCircle.fillAmount);
+				HealthSlider.value -= amount/100.0f;
                 Invoke("HideHealth", 3);
             }
             catch { }
