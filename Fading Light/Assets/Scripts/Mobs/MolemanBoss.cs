@@ -317,7 +317,7 @@ public class MolemanBoss : BaseEntity
         if (_summoning) return;
         base.Damage(amount, attacker);
 
-        if (CurrentHealth < IntialHealth*0.75 && !_summonedOnce)
+        if (CurrentHealth < 3800 && !_summonedOnce)
         {
             _summonedOnce = true;
             Debug.Log("Health reduced to first summoning level");
@@ -325,7 +325,7 @@ public class MolemanBoss : BaseEntity
             return;
         }
 
-        if (CurrentHealth < IntialHealth * 0.25 && !_summonedTwice)
+        if (CurrentHealth < 1200 * 0.25 && !_summonedTwice)
         {
             _summonedTwice = true;
             Debug.Log("Health reduced to first summoning level");
