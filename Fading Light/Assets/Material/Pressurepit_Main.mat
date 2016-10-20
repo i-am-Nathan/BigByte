@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TexturesCom_Stone Wall 2_albedo_S
+  m_Name: Pressurepit_Main
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _NORMALMAP
+  m_ShaderKeywords: _NORMALMAP _PARALLAXMAP _SPECGLOSSMAP
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -19,14 +19,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: e622c7f0c0ecf5447894409a2dd5e493, type: 3}
-          m_Scale: {x: 30, y: 35}
+          m_Texture: {fileID: 2800000, guid: f53a5ea3e3220344193a01f72df4bad7, type: 3}
+          m_Scale: {x: 30, y: 30}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: 6293c28c712b42a44b8d35b96b87e8d7, type: 3}
+          m_Texture: {fileID: 2800000, guid: 751e6e52ba776e24394ce18f66099a10, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -40,7 +40,7 @@ Material:
         first:
           name: _ParallaxMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: e3f8d8f838666f54c8c3d67a71c03eb1, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -55,7 +55,7 @@ Material:
           name: _EmissionMap
         second:
           m_Texture: {fileID: 0}
-          m_Scale: {x: 30, y: 35}
+          m_Scale: {x: 30, y: 30}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -78,6 +78,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 7bec0df5dc04e5940bb66fee6f14c844, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -94,7 +101,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: 0.02
+        second: 0.08
       data:
         first:
           name: _ZWrite
@@ -102,7 +109,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0.5
+        second: 0.31
       data:
         first:
           name: _BumpScale
@@ -126,7 +133,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0.3
+        second: 0.5
     m_Colors:
       data:
         first:
@@ -135,4 +142,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 0, g: 0, b: 0, a: 1}
