@@ -133,12 +133,12 @@ public class GameData : MonoBehaviour {
 			_chestsMissed = 0;
 			_playerOneAccuracy = 0;
 			_playerTwoAccuracy = 0;
-			_player1ItemQuantityDictionary.Add ("Health Potion", 0);
-			_player1ItemQuantityDictionary.Add ("Attack Potion", 0);
-			_player1ItemQuantityDictionary.Add ("Defense Potion",0);
-			_player2ItemQuantityDictionary.Add ("Health Potion", 0);
-			_player2ItemQuantityDictionary.Add ("Attack Potion", 0);
-			_player2ItemQuantityDictionary.Add ("Defense Potion", 0);
+			_player1ItemQuantityDictionary.Add ("Health Potion", 10);
+			_player1ItemQuantityDictionary.Add ("Attack Potion", 10);
+			_player1ItemQuantityDictionary.Add ("Defense Potion",10);
+			_player2ItemQuantityDictionary.Add ("Health Potion", 10);
+			_player2ItemQuantityDictionary.Add ("Attack Potion", 10);
+			_player2ItemQuantityDictionary.Add ("Defense Potion", 10);
             DontDestroyOnLoad(GameObject.FindWithTag("Game Data").gameObject);
         }
     }

@@ -32,7 +32,7 @@ public class PlayerController : Player
     private Slider _healthSlider;
     private LifeManager _lifeManagerScript;
     private float _lastJumpTime;
-    
+    private float _lastAttack = Time.time;
     //audio
     public AudioSource WalkingSounds;
     public AudioSource DeathSound;
@@ -120,15 +120,13 @@ public class PlayerController : Player
 
         _animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 
-        if (Input.GetKeyDown(KeyCode.P) && !_torch.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.P) && !_torch.activeInHierarchy && Time.time - _lastAttack > 1.4f)
         {
+            _lastAttack = Time.time;
             this.setAttacking(true);
             _animator.SetTrigger("Use");//tell mecanim to do the attack animation(trigger)
             AchievementManager.AddProgressToAchievement("First Hits", 1.0f);
-	        if(!HitSounds.isPlaying)
-            {
-                HitSounds.Play();
-            }
+            HitSounds.Play();
         }
         else if (Input.GetKey("up") || Input.GetKey("down") || Input.GetKey("left") || Input.GetKey("right"))
         {

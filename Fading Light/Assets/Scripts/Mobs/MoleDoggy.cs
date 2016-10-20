@@ -67,6 +67,7 @@ public class MoleDoggy : BaseEntity
 	private AchievementManager _achievementManager;
 
     private GameObject _cloud;
+    private GameObject _shield;
 
     public AudioClip Hit;
     public AudioClip Death;
@@ -81,6 +82,8 @@ public class MoleDoggy : BaseEntity
 	{
         _cloud = GameObject.Find("AOE");
         _cloud.SetActive(false);
+        _shield = GameObject.Find("RedShield");
+        _shield.SetActive(false);
         _source = GetComponent<AudioSource>();
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
@@ -127,10 +130,14 @@ public class MoleDoggy : BaseEntity
     /// <summary>
     /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
     /// </summary>
-    private void Taunt_Enter()
+    IEnumerator Taunt_Enter()
     {
-        if (DEBUG) Debug.Log("Entered state: Taunt");
-        fsm.ChangeState(States.Idle);
+        if (DEBUG) Debug.Log("Entered state: Taunt");       
+        _animator.Play("Idle", PlayMode.StopAll);
+        yield return new WaitForSeconds(4f);
+        _animator.Play("Attack", PlayMode.StopAll);
+        yield return new WaitForSeconds(4f);
+        fsm.ChangeState(States.Chase);
     }
 
     /// <summary>
@@ -184,6 +191,7 @@ public class MoleDoggy : BaseEntity
     IEnumerator FireballSpawning_Enter()
     {        
         _cloud.SetActive(true);
+        _shield.SetActive(true);
         pathfinder.enabled = false;
         Transform collider = this.transform.Find("AOECollider");
         collider.gameObject.SetActive(true);
@@ -243,6 +251,7 @@ public class MoleDoggy : BaseEntity
         yield return new WaitForSeconds(3f);     
 
         _cloud.SetActive(false);
+        _shield.SetActive(false);
         pathfinder.enabled = true;
         collider.gameObject.SetActive(false);
 
