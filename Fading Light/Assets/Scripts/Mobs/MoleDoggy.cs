@@ -75,6 +75,8 @@ public class MoleDoggy : BaseEntity
     public AudioClip AOE;
     private AudioSource _source;
 
+	public EndOfLevelTrigger EndOfLevelTriggerScript;
+
     /// <summary>
     /// Initilized montser location, pathfinding, animation and the AI FSM
     /// </summary>
@@ -111,6 +113,8 @@ public class MoleDoggy : BaseEntity
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
         CurrentHealth = Health;
+		EndOfLevelTriggerScript.GetComponent<EndOfLevelTrigger> ();
+
 		HealthSlider = HealthSlider.GetComponent<Slider>();
 		HealthSlider.value = CurrentHealth;
 		BossName = BossName.GetComponent<Text>();
@@ -435,6 +439,7 @@ public class MoleDoggy : BaseEntity
         _source.PlayOneShot(Death);
         _cloud.SetActive(false);
 		BossPanel.SetActive(false);
+		EndOfLevelTriggerScript.TriggerEndOfLevel ();
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 

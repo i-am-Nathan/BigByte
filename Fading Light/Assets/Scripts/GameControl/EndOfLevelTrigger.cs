@@ -25,15 +25,20 @@ public class EndOfLevelTrigger : MonoBehaviour {
 
 	void Update () {
 		if (_player1Entered && _player2Entered && !_endOfGame) {
-			// Pauses the game and shows the menu indicating that players have completed the level
-			Time.timeScale = 0;
-			LevelFinishedMenu.enabled = true;
-			Scene scene = SceneManager.GetActiveScene();
+			TriggerEndOfLevel ();
+		}
+	}
 
-			if (scene.name == "ammar_ui_v2") {
-				_endOfGame = true;
-				SubmitHighScoreMenu.enabled = true;
-			}
+	public void TriggerEndOfLevel() {
+		// Pauses the game and shows the menu indicating that players have completed the level
+		Time.timeScale = 0;
+		LevelFinishedMenu.enabled = true;
+		Scene scene = SceneManager.GetActiveScene();
+
+		if (scene.name == "Level 4") {
+			LevelFinishedMenu.enabled = false;
+			_endOfGame = true;
+			SubmitHighScoreMenu.enabled = true;
 		}
 	}
 
