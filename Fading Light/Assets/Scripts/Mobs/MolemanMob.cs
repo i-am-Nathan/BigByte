@@ -248,6 +248,18 @@ public class MolemanMob : BaseEntity
         //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, transform.position.y-4, transform.position.z),0.5f);
         yield return new WaitForSeconds(2f);
         pathfinder.enabled = false;
+
+        MolemanBoss moley = GameObject.FindGameObjectWithTag("MolemanBoss").GetComponent<MolemanBoss>();
+
+        while (true)
+        {
+            if (moley.isSummoning())
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
+
         _animator.Play("Falling", PlayMode.StopAll);
 
         while (transform.position.y > -17.7f)

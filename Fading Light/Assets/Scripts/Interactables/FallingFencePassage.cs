@@ -38,5 +38,6 @@ public class FallingFencePassage : MonoBehaviour {
         {
             LeverSound.Stop();
         }
+
 	}
 }

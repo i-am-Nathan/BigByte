@@ -153,6 +153,7 @@ public class FadeObjectInOut : MonoBehaviour
 	{
 		StopAllCoroutines(); 
 		StartCoroutine("FadeSequence", -newFadeTime); 
+		this.gameObject.SetActive (false);
 	}
 
 

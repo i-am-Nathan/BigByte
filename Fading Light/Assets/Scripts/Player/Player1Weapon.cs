@@ -28,7 +28,7 @@ public class Player1Weapon : MonoBehaviour
         if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
 		if(player1.isAttacking()&&other.name.StartsWith("Breakable Wall")){
 			FadeObjectInOut fade = (FadeObjectInOut)other.GetComponent (typeof(FadeObjectInOut));
-			fade.FadeOut ();
+			fade.FadeOut (2f);
 		}
 
         if (player1.isAttacking() && other.tag == "Enemy")
