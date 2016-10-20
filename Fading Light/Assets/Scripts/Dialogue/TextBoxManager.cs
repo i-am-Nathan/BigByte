@@ -14,7 +14,7 @@ using System.Collections.Generic;
 /// www.youtube.com/watch?v=ehmBIP5sj0M.
 /// </summary>
 ///
-/// <remarks>   Jack, 21/10/2016. </remarks>
+/// <remarks>    . </remarks>
 
 public class TextBoxManager : MonoBehaviour {
 
@@ -88,7 +88,7 @@ public class TextBoxManager : MonoBehaviour {
 
     /// <summary>   Start this instance. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	void Start () {
 		_gameUI = GameObject.FindGameObjectWithTag ("GameUIWrapper");
@@ -121,7 +121,7 @@ public class TextBoxManager : MonoBehaviour {
 
     /// <summary>   Gets the audio source component. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	void Awake(){
 		_source = GetComponent<AudioSource>();
@@ -132,7 +132,7 @@ public class TextBoxManager : MonoBehaviour {
     /// screen. Space is used to navigate through the dialogue.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	void Update () {
 		if (!IsActive) {
@@ -202,7 +202,7 @@ public class TextBoxManager : MonoBehaviour {
 
     /// <summary>   This will make the characters in each dialogue line appear one by one. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <param name="lineOfText">   Line of text. </param>
     ///
@@ -233,7 +233,7 @@ public class TextBoxManager : MonoBehaviour {
     /// This will bring up the chat dialogue and freeze the movements of the characters and moleman.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	public void EnableDialogue(){
 		_gameUI.SetActive (false);
@@ -251,7 +251,7 @@ public class TextBoxManager : MonoBehaviour {
 
     /// <summary>   This will stop the dialogue and allow the players to move again. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	public void DisableDialogue(){
         ThisStoryline.CharacterDamageEnabled(true);
@@ -272,7 +272,7 @@ public class TextBoxManager : MonoBehaviour {
 
     /// <summary>   This will load a new dialogue script. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <param name="thisText">     This text. </param>
     /// <param name="audioClips">   Audio clips. </param>

@@ -9,7 +9,7 @@ using UnityEngine;
 /// https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control.
 /// </summary>
 ///
-/// <remarks>   Jack, 21/10/2016. </remarks>
+/// <remarks>    . </remarks>
 
 public class PlayerCam : MonoBehaviour
 {
@@ -57,7 +57,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Awakes this instance. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Awake ()
 	{
@@ -68,7 +68,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Fixeds the update. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void FixedUpdate ()
 	{
@@ -95,7 +95,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Moves this instance. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Move ()
 	{
@@ -113,7 +113,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Finds the average position. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void FindAveragePosition ()
 	{
@@ -153,7 +153,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Zooms this instance. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Zoom ()
 	{
@@ -165,7 +165,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Finds the size of the required. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   The found required size. </returns>
 
@@ -210,7 +210,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Sets the start size of the position and. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     public void SetStartPositionAndSize ()
 	{
@@ -228,7 +228,7 @@ public class PlayerCam : MonoBehaviour
 
     /// <summary>   Swing down. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     public void SwingDown()
     {
