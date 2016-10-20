@@ -344,11 +344,14 @@ public class SpiderBoss : BaseEntity
     public override void Killed()
     {
         base.Killed();
+        try
+        {
+            GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+            GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
-		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
-		GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
-
-		_gameDataScript.UpdateMonstersKilled ();
+            _gameDataScript.UpdateMonstersKilled();
+        }
+        catch { }
 
         //Stop the pathfinder to prevent the dead entity moving and play the death animation
         try
