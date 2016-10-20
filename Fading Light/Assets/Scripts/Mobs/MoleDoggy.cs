@@ -13,7 +13,7 @@ using Assets.Scripts.Mobs;
 /// tutorial level)
 /// </summary>
 ///
-/// <remarks>   Jack, 21/10/2016. </remarks>
+/// <remarks>    . </remarks>
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class MoleDoggy : BaseEntity
@@ -22,7 +22,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Values that represent states. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	public enum States
 	{
@@ -141,7 +141,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Initilized montser location, pathfinding, animation and the AI FSM. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Awake()
 	{
@@ -170,7 +170,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Mock up. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     public void MockUp()
     {
@@ -179,7 +179,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Starts this object. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
@@ -197,7 +197,7 @@ public class MoleDoggy : BaseEntity
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Init_Enter()
     {
@@ -210,7 +210,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Begins a cutscene. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <param name="storyline">    The storyline. </param>
 
@@ -225,7 +225,7 @@ public class MoleDoggy : BaseEntity
     /// idle.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -250,7 +250,7 @@ public class MoleDoggy : BaseEntity
     /// before transitioning back to the chase state.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -293,7 +293,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Rotate agent. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <param name="currentRotation">  The current rotation. </param>
     /// <param name="targetRotation">   Target rotation. </param>
@@ -312,7 +312,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Fireball spawning enter. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -402,7 +402,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Rotate towards player. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -429,7 +429,7 @@ public class MoleDoggy : BaseEntity
     /// if the player leaves the molemans dogs alert area, or comes into attack range.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -516,7 +516,7 @@ public class MoleDoggy : BaseEntity
     /// chase them down.
     /// </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -553,7 +553,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Rotate towards. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <param name="target">   Target for the. </param>
     /// <param name="navMesh">  True to navigation mesh. </param>
@@ -573,7 +573,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Death enter. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     private void Death_Enter()
     {
@@ -591,7 +591,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Damages. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <param name="amount">   The damage. </param>
     /// <param name="attacker"> The attacker. </param>
@@ -641,7 +641,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Boss dead wait. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
     ///
     /// <returns>   An IEnumerator. </returns>
 
@@ -653,7 +653,7 @@ public class MoleDoggy : BaseEntity
 
     /// <summary>   Killed this object. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
     public override void Killed()
     {

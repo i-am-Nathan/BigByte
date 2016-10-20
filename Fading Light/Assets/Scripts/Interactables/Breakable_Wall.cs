@@ -7,13 +7,13 @@ using System.Collections;
 
 /// <summary>   A breakable wall. </summary>
 ///
-/// <remarks>   Jack, 21/10/2016. </remarks>
+/// <remarks>    . </remarks>
 
 public class Breakable_Wall : MonoBehaviour
 {
     /// <summary>   Fades this object. </summary>
     ///
-    /// <remarks>   Jack, 21/10/2016. </remarks>
+ 
 
 	public void Fade(){
 		Destroy (GetComponent<BoxCollider> ());

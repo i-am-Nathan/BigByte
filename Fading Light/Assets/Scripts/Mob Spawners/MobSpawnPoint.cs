@@ -24,7 +24,7 @@ public class MobSpawnPoint : MonoBehaviour
 
     /// <summary>   Spawn random. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     public void SpawnRandom()
     {
@@ -33,7 +33,7 @@ public class MobSpawnPoint : MonoBehaviour
 
     /// <summary>   Starts this instance. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     void Start()
     {
@@ -57,7 +57,7 @@ public class MobSpawnPoint : MonoBehaviour
 
     /// <summary>   Update is called once per frame. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     void Update()
     {
@@ -66,7 +66,7 @@ public class MobSpawnPoint : MonoBehaviour
 
     /// <summary>   When collision occurs between two objects. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <param name="other">    The other. </param>
 

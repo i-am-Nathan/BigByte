@@ -79,7 +79,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Use this for initialization. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     void Start ()
     {
@@ -101,7 +101,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Adds the fuel. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <param name="fuelAmount">   The fuel amount. </param>
 
@@ -115,7 +115,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Gets the current torch. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <returns>   The current torch. </returns>
 
@@ -131,7 +131,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Determines whether [is in torch range] [the specified x]. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <param name="x">    The x. </param>
     /// <param name="z">    The z. </param>
@@ -170,7 +170,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Gets the torch position. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <returns>   The torch position. </returns>
 
@@ -186,7 +186,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Gets the torch radius. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <returns>   The torch radius. </returns>
 
@@ -204,7 +204,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Updates this instance. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     void Update () {
 	        
@@ -243,7 +243,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Removes the fuel with amount described by amount. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <param name="amount">   The amount. </param>
 
@@ -266,7 +266,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Removes the fuel amount. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     public void RemoveFuelAmount()
     {
@@ -289,7 +289,7 @@ public class TorchFuelController : MonoBehaviour {
     /// projector based on the percentage of fuel left in the torch.
     /// </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     private void UpdateTorch()
     {
@@ -304,7 +304,7 @@ public class TorchFuelController : MonoBehaviour {
     /// the fuel percentage, then converting the radius to an angle using trigonometric functions.
     /// </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <param name="totalFuelPercentage">  The total fuel percentage. </param>
     ///
@@ -322,7 +322,7 @@ public class TorchFuelController : MonoBehaviour {
     /// functions.
     /// </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <param name="totalFuelPercentage">  The total fuel percentage. </param>
     ///
@@ -337,7 +337,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Swaps the players. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
 
     public void SwapPlayers()
     {
@@ -371,7 +371,7 @@ public class TorchFuelController : MonoBehaviour {
 
     /// <summary>   Determines if we can torch with player 1. </summary>
     ///
-    /// <remarks>    . </remarks>
+ 
     ///
     /// <returns>   True if it succeeds, false if it fails. </returns>
 
