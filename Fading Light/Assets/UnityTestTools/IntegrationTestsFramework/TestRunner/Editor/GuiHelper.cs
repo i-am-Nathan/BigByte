@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\GuiHelper.cs
+//
+// summary:	Implements the graphical user interface helper class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +17,18 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   A graphical user interface helper. </summary>
+    ///
+ 
+
     public static class GuiHelper
     {
+        /// <summary>   Gets console error pause. </summary>
+        ///
+     
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+
         public static bool GetConsoleErrorPause()
         {
             Assembly assembly = Assembly.GetAssembly(typeof(SceneView));
@@ -23,6 +37,12 @@ namespace UnityTest
             var result = (int)method.GetValue(new object(), new object[] { });
             return (result & (1 << 2)) != 0;
         }
+
+        /// <summary>   Sets console error pause. </summary>
+        ///
+     
+        ///
+        /// <param name="b">    True to b. </param>
 
         public static void SetConsoleErrorPause(bool b)
         {

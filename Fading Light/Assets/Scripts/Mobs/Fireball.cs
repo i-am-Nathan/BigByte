@@ -1,4 +1,8 @@
-﻿using System;
+﻿// file:	Assets\Scripts\Mobs\Fireball.cs
+//
+// summary:	Implements the fireball class
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,26 +10,50 @@ using UnityEngine;
 
 namespace Assets.Scripts.Mobs
 {
+    /// <summary>   A fireball. </summary>
+    ///
+ 
+
     class Fireball:MonoBehaviour
     {
+        /// <summary>   The speed. </summary>
         float speed = 10;
-        float damage = 1;
+        /// <summary>   The damage. </summary>
+        float damage = 8;
 
+        /// <summary>   The lifetime. </summary>
         float lifetime = 3;
+        /// <summary>   True to debug. </summary>
         private bool DEBUG = false;
+        /// <summary>   True if this object is exploded. </summary>
         private bool _isExploded = false;
 
+        /// <summary>   Target for the. </summary>
         Player target;
+        /// <summary>   The torch controller. </summary>
         TorchFuelController TorchController;
         
+        /// <summary>   The fireball created. </summary>
         public AudioClip FireballCreated;
+        /// <summary>   The fireball explodes. </summary>
         public AudioClip FireballExplodes;
+        /// <summary>   Source for the. </summary>
         private AudioSource _source;
+
+        /// <summary>   Query if this object is exploded. </summary>
+        ///
+     
+        ///
+        /// <returns>   True if exploded, false if not. </returns>
 
         public bool isExploded()
         {
             return _isExploded;
         }
+
+        /// <summary>   Starts this object. </summary>
+        ///
+     
 
         void Start()
         {
@@ -44,6 +72,10 @@ namespace Assets.Scripts.Mobs
             }         
         }      
 
+        /// <summary>   Updates this object. </summary>
+        ///
+     
+
         void Update()
         {
             float moveDistance = speed * Time.deltaTime;
@@ -51,13 +83,20 @@ namespace Assets.Scripts.Mobs
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
         }       
 
+        /// <summary>   Executes the trigger enter action. </summary>
+        ///
+     
+        ///
+        /// <param name="other">    The other. </param>
+
         void OnTriggerEnter(Collider other)
         {
             if (DEBUG) Debug.Log("Collison detected");
             if (other.tag == "Player" || other.tag == "Player2")
             {
                 if (DEBUG) Debug.Log("Fireball collision: Player");
-                target.Damage(damage, this.transform.root);
+
+                other.GetComponent<Player>().Damage(damage, this.transform.root);
 
                 _source.PlayOneShot(FireballExplodes);
 
@@ -70,6 +109,12 @@ namespace Assets.Scripts.Mobs
                 GameObject.Destroy(gameObject);
             }            
         }
+
+        /// <summary>   Sets a speed. </summary>
+        ///
+     
+        ///
+        /// <param name="newSpeed"> The new speed. </param>
 
         public void SetSpeed(float newSpeed)
         {

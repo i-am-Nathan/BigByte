@@ -1,21 +1,47 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\TrapScripts\TrapDamage.cs
+//
+// summary:	Implements the trap damage class
+
+using UnityEngine;
 using System.Collections;
 
+/// <summary>   A trap damage. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class TrapDamage : MonoBehaviour {
+    /// <summary>   The first player. </summary>
     Transform player1;
+    /// <summary>   The second player. </summary>
     Transform player2;
+    /// <summary>   True to hitp 1. </summary>
     private bool _hitp1 = true;
+    /// <summary>   True to hitp 2. </summary>
     private bool _hitp2 = true;
+    /// <summary>   The time till next hit. </summary>
     public float timeTillNextHit = 1f;
+    /// <summary>   The 1 hit time. </summary>
     private float _p1HitTime = 0f;
+    /// <summary>   The 2 hit time. </summary>
     private float _p2HitTime = 0f;
+    /// <summary>   The damage. </summary>
     public float damage = 30f;
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
 
     void Start()
     {
         player1 = GameObject.FindGameObjectWithTag("Player").transform;
         player2 = GameObject.FindGameObjectWithTag("Player2").transform;
     }
+
+    /// <summary>   Executes the trigger enter action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
     void OnTriggerEnter(Collider other)
     {
@@ -39,6 +65,10 @@ public class TrapDamage : MonoBehaviour {
 
         }
     }
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
 
     void Update()
     {

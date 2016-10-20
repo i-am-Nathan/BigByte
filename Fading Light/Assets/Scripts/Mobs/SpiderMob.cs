@@ -1,66 +1,115 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Mobs\SpiderMob.cs
+//
+// summary:	Implements the spider mob class
+
+using UnityEngine;
 using System.Collections;
 using MonsterLove.StateMachine;
 
-/// <summary>
-/// Controls the AI (using a FSM) of the smaller spider mobs
-/// </summary>
+/// <summary>   Controls the AI (using a FSM) of the smaller spider mobs. </summary>
+///
+/// <remarks>    . </remarks>
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class SpiderMob : BaseEntity
 {
     //Spider states
+
+    /// <summary>   Values that represent states. </summary>
+    ///
+ 
+
     public enum States
     {
+        /// <summary>   An enum constant representing the init option. </summary>
         Init,
+        /// <summary>   An enum constant representing the idle option. </summary>
         Idle,
+        /// <summary>   An enum constant representing the chase option. </summary>
         Chase,
+        /// <summary>   An enum constant representing the attack option. </summary>
         Attack,
+        /// <summary>   An enum constant representing the taunt option. </summary>
         Taunt,
+        /// <summary>   An enum constant representing the run option. </summary>
         Run,
+        /// <summary>   An enum constant representing the death option. </summary>
         Death
     }
 
     //Spider stats
+    /// <summary>   The hard activation distance. </summary>
     public float HardActivationDistance = 120;
+    /// <summary>   The loose activation distance. </summary>
     public float LooseActivationDistance = 200;
+    /// <summary>   The attack speed. </summary>
     public float AttackSpeed = 1;
+    /// <summary>   The attack damage. </summary>
     public float AttackDamage = 5;
+    /// <summary>   The health. </summary>
     public float Health = 50;
+    /// <summary>   The attack range. </summary>
     public float AttackRange = 24;
+    /// <summary>   The range. </summary>
     public float Range = .1f;
+    /// <summary>   The walk speed. </summary>
     public float WalkSpeed = 9;
+    /// <summary>   The run speed. </summary>
     public float RunSpeed = 15;
+    /// <summary>   The sprint speed. </summary>
     public float SprintSpeed = 10;
+    /// <summary>   The attack cooldown. </summary>
     public float AttackCooldown = 0.25f;
 
     //Target and navigation variables
+    /// <summary>   The pathfinder. </summary>
     private NavMeshAgent pathfinder;
+    /// <summary>   Target for the. </summary>
     private Transform target;
+    /// <summary>   Target base entity. </summary>
     private BaseEntity targetBaseEntity;
+    /// <summary>   The torch controller. </summary>
     public TorchFuelController TorchController;
+    /// <summary>   The skin material. </summary>
     private Material skinMaterial;
+    /// <summary>   The original colour. </summary>
     private Color originalColour;
+    /// <summary>   The animator. </summary>
     private Animation _animator;
+    /// <summary>   The spawn location. </summary>
     private Vector3 spawnLocation;
 
+    /// <summary>   The fsm. </summary>
     private StateMachine<States> fsm;
 
+    /// <summary>   The next attack time. </summary>
     private float _nextAttackTime;
+    /// <summary>   The collision range. </summary>
     private float _collisionRange;
+    /// <summary>   Target collision range. </summary>
     private float _targetCollisionRange;
+    /// <summary>   True to enable, false to disable the locked. </summary>
     private bool _lockedOn = false;
+    /// <summary>   True to in attack range. </summary>
     private bool _inAttackRange;
+    /// <summary>   True if this object is running. </summary>
     private bool _isRunning;
+    /// <summary>   True if this object is moving. </summary>
     private bool _isMoving;
+    /// <summary>   True to in torch light. </summary>
     private bool _inTorchLight;
+    /// <summary>   True to running away. </summary>
     private bool _runningAway = false;
 
+    /// <summary>   True to debug. </summary>
     private bool DEBUG = false;
+    /// <summary>   The hit. </summary>
     private object hit;
 
-    /// <summary>
-    /// Initilized montser location, pathfinding, animation and the AI FSM
-    /// </summary>
+    /// <summary>   Initilized montser location, pathfinding, animation and the AI FSM. </summary>
+    ///
+ 
+
     private void Awake()
     {
         if (DEBUG) Debug.Log("The spider wakes.");
@@ -79,6 +128,10 @@ public class SpiderMob : BaseEntity
         pathfinder.enabled = true;
     }
 
+    /// <summary>   Mock up. </summary>
+    ///
+ 
+
     public void MockUp()
     {
         base.Start();
@@ -87,6 +140,11 @@ public class SpiderMob : BaseEntity
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Init_Enter()
     {
         if (DEBUG) Debug.Log("Spider state machine initilized.");
@@ -97,8 +155,12 @@ public class SpiderMob : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
+    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to
+    /// idle.
     /// </summary>
+    ///
+ 
+
     private void Taunt_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Taunt");
@@ -106,9 +168,14 @@ public class SpiderMob : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the attack state. Plays the attack animation once, and deals damage once, before transitioning back to the chase state.
+    /// Entry method for the attack state. Plays the attack animation once, and deals damage once,
+    /// before transitioning back to the chase state.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Attack_Enter()
     {
         if (!isDead)
@@ -139,10 +206,14 @@ public class SpiderMob : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// spiders alert area, or comes into attack range.
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks
+    /// if the player leaves the spiders alert area, or comes into attack range.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
@@ -231,6 +302,13 @@ public class SpiderMob : BaseEntity
         }
     }
 
+    /// <summary>   Query if 'transform' is in light. </summary>
+    ///
+ 
+    ///
+    /// <param name="transform">    The transform. </param>
+    ///
+    /// <returns>   True if in light, false if not. </returns>
 
     bool IsInLight(Transform transform)
     {
@@ -269,15 +347,22 @@ public class SpiderMob : BaseEntity
         return false;  
     }
 
+    /// <summary>   True to running from torch. </summary>
     private bool _runningFromTorch;
+    /// <summary>   True to running from candle. </summary>
     private bool _runningFromCandle;
+    /// <summary>   The candle running from. </summary>
     GameObject _candleRunningFrom;
 
     /// <summary>
-    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// spiders alert area, or comes into attack range.
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks
+    /// if the player leaves the spiders alert area, or comes into attack range.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Run_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Run");
@@ -329,10 +414,15 @@ public class SpiderMob : BaseEntity
     }
 
     /// <summary>
-    /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
-    /// if transitions to the chase state to chase them down.
+    /// Entry state for the idle state. Waits in place and constantly checks to see if any players
+    /// have entered its alert area. If a player enters the area if transitions to the chase state to
+    /// chase them down.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
@@ -380,10 +470,21 @@ public class SpiderMob : BaseEntity
         }        
     }
 
+    /// <summary>   Death enter. </summary>
+    ///
+ 
+
     private void Death_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Death");
     }
+
+    /// <summary>   Damages. </summary>
+    ///
+ 
+    ///
+    /// <param name="amount">   The damage. </param>
+    /// <param name="attacker"> The attacker. </param>
 
     public override void Damage(float amount, Transform attacker)
     {
@@ -405,14 +506,22 @@ public class SpiderMob : BaseEntity
         }
     }
 
+    /// <summary>   Killed this object. </summary>
+    ///
+ 
+
     public override void Killed()
     {
         base.Killed();
 
-		GameObject go = GameObject.FindGameObjectWithTag("Game Data");
-		GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
+        try
+        {
+            GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+            GameData _gameDataScript = (GameData)go.GetComponent(typeof(GameData));
 
-		_gameDataScript.UpdateMonstersKilled ();
+            _gameDataScript.UpdateMonstersKilled();
+        }
+        catch { }
 
         try
         {

@@ -9,11 +9,20 @@ using UnityEngine;
 
 namespace UnityTest
 {
-    /// <summary>
-    /// Summary description for StackTraceFilter.
-    /// </summary>
+    /// <summary>   Summary description for StackTraceFilter. </summary>
+    ///
+ 
+
     public class StackTraceFilter
     {
+        /// <summary>   Filters. </summary>
+        ///
+     
+        ///
+        /// <param name="stack">    The stack. </param>
+        ///
+        /// <returns>   A string. </returns>
+
         public static string Filter(string stack)
         {
             if (stack == null) return null;
@@ -35,6 +44,14 @@ namespace UnityTest
             }
             return sw.ToString();
         }
+
+        /// <summary>   Filter line. </summary>
+        ///
+     
+        ///
+        /// <param name="line"> The line. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
 
         static bool FilterLine(string line)
         {

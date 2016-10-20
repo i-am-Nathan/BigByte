@@ -9,12 +9,23 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>   A skinned mesh combiner. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class SkinnedMeshCombiner : MonoBehaviour 
 {
+    /// <summary>   The base matrix. </summary>
  	Material baseMat;
+    /// <summary>   The new skin. </summary>
 	SkinnedMeshRenderer newSkin;
+    /// <summary>   The sm renderers. </summary>
 	List<SkinnedMeshRenderer> smRenderers;
-	
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
     void Start() 
 	{        
 		smRenderers = new List<SkinnedMeshRenderer>();

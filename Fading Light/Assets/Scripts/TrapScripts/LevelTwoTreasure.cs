@@ -1,14 +1,33 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\TrapScripts\LevelTwoTreasure.cs
+//
+// summary:	Implements the level two treasure class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A level two treasure. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class LevelTwoTreasure : MonoBehaviour
 {
 
+    /// <summary>   The hammer trap. </summary>
     public GameObject[] hammerTrap;
+    /// <summary>   The spear trap. </summary>
     public GameObject[] spearTrap;
+    /// <summary>   True if pulled. </summary>
     private bool _pulled = false;
 
+    /// <summary>   The lever sound. </summary>
+    public AudioSource LeverSound;
+
     // Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
     void Start()
     {
         foreach (GameObject obj in hammerTrap)
@@ -21,21 +40,19 @@ public class LevelTwoTreasure : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    /// <summary>   Called when the player is close enough to the lever, and presses T. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
-    }
-
-    /// <summary>
-    /// Called when the player is close enough to the lever, and presses T
-    /// </summary>
     void OnTriggerStay(Collider other)
     {
         //if Q is pressed to interact with the lever, the walls move
         if (Input.GetKeyDown(KeyCode.O) && !_pulled && other.gameObject.tag.Equals("Player"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
+            LeverSound.Play();
             foreach (GameObject obj in hammerTrap)
             {
                 Destroy(obj);
@@ -51,6 +68,7 @@ public class LevelTwoTreasure : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && !_pulled && other.gameObject.tag.Equals("Player2"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
+            LeverSound.Play();
             foreach (GameObject obj in hammerTrap)
             {
                 Destroy(obj);

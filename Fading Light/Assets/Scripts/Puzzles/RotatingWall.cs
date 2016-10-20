@@ -1,23 +1,46 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Puzzles\RotatingWall.cs
+//
+// summary:	Implements the rotating wall class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A rotating wall. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class RotatingWall : MonoBehaviour
 {
 
 
+    /// <summary>   The sliding door. </summary>
     public GameObject SlidingDoor;
+    /// <summary>   True to debug. </summary>
     private bool DEBUG = true;
+    /// <summary>   The people. </summary>
     private int _people = 0;
+    /// <summary>   True to rotating. </summary>
     private bool rotating = true;
 
 
     // Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
     void Start()
     {
         if (DEBUG) Debug.Log("Inside Rotating Wall");
 
 
     }
+
+    /// <summary>   Executes the trigger enter action. </summary>
+    ///
+ 
+    ///
+    /// <param name="collider"> The collider. </param>
 
     void OnTriggerEnter(Collider collider)
     {
@@ -35,6 +58,12 @@ public class RotatingWall : MonoBehaviour
 
     }
 
+    /// <summary>   Executes the trigger exit action. </summary>
+    ///
+ 
+    ///
+    /// <param name="collider"> The collider. </param>
+
     void OnTriggerExit(Collider collider)
     {
         if (collider.tag.Equals("Player"))
@@ -49,6 +78,12 @@ public class RotatingWall : MonoBehaviour
         }
         transform.Rotate(0, 0, 0, 0);
     }
+
+    /// <summary>   Executes the trigger stay action. </summary>
+    ///
+ 
+    ///
+    /// <param name="collider"> The collider. </param>
 
     void OnTriggerStay(Collider collider)
     {

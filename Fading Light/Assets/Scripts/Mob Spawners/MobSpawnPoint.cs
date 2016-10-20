@@ -1,26 +1,40 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Mob Spawners\MobSpawnPoint.cs
+//
+// summary:	Implements the mob spawn point class
+
+using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Used to turn an object into torch fuel collectable
-/// </summary>
+/// <summary>   Used to turn an object into torch fuel collectable. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class MobSpawnPoint : MonoBehaviour
 {
+    /// <summary>   The fuel amount. </summary>
     public float FuelAmount = 10;
     
+    /// <summary>   The torch fuel controller script. </summary>
     private TorchFuelController TorchFuelControllerScript;
+    /// <summary>   Manager for achievement. </summary>
 	private AchievementManager _achievementManager;
 
+    /// <summary>   The objects. </summary>
     public GameObject[] objects;
+
+    /// <summary>   Spawn random. </summary>
+    ///
+ 
 
     public void SpawnRandom()
     {
         Instantiate(objects[UnityEngine.Random.Range(0, objects.Length - 1)]);
     }
 
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
+
     void Start()
     {
         GameObject go = GameObject.FindGameObjectWithTag("TorchFuelController");
@@ -41,19 +55,21 @@ public class MobSpawnPoint : MonoBehaviour
 
     }
 
+    /// <summary>   Update is called once per frame. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
     void Update()
     {
 
     }
 
-    /// <summary>
-    /// When collision occurs between two objects
-    /// </summary>
-    /// <param name="other">The other.</param>
+    /// <summary>   When collision occurs between two objects. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnTriggerStay(Collider other)
     {
         // Checking if players are next to each other
@@ -61,13 +77,13 @@ public class MobSpawnPoint : MonoBehaviour
         {
             TorchFuelControllerScript.AddFuel(FuelAmount);
             TorchFuelControllerScript.RemoveFuelAmount();
-			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
+			_achievementManager.AchievementObtained ("Let there be light!");
             Destroy(this.gameObject);
         }else if(other.gameObject.tag.Equals("Player") && TorchFuelControllerScript.TorchInPlayer1)
         {
             TorchFuelControllerScript.AddFuel(FuelAmount);
             TorchFuelControllerScript.RemoveFuelAmount();
-			_achievementManager.AddProgressToAchievement ("Let there be light!", 1.0f);
+            _achievementManager.AchievementObtained("Let there be light!");
             Destroy(this.gameObject);
         }
     }

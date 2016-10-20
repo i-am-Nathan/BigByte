@@ -12,15 +12,28 @@ using UnityEngine.SceneManagement;
 
 namespace UnityTest
 {
+    /// <summary>   (Serializable) a test runner. </summary>
+    ///
+ 
+
     [Serializable]
     public class TestRunner : MonoBehaviour
     {
+        /// <summary>   The test scene number. </summary>
         static private int TestSceneNumber = 0;
+        /// <summary>   The result renderer. </summary>
         static private readonly TestResultRenderer k_ResultRenderer = new TestResultRenderer();
 
+        /// <summary>   The current test. </summary>
         public TestComponent currentTest;
+        /// <summary>   List of results. </summary>
         private List<TestResult> m_ResultList = new List<TestResult>();
+        /// <summary>   The test components. </summary>
         private List<TestComponent> m_TestComponents;
+
+        /// <summary>   Gets a value indicating whether this object is initialized by runner. </summary>
+        ///
+        /// <value> True if this object is initialized by runner, false if not. </value>
 
         public bool isInitializedByRunner
         {
@@ -34,27 +47,46 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   The start time. </summary>
         private double m_StartTime;
+        /// <summary>   True to ready to run. </summary>
         private bool m_ReadyToRun;
 
+        /// <summary>   The test messages. </summary>
         private string m_TestMessages;
+        /// <summary>   The stacktrace. </summary>
         private string m_Stacktrace;
+        /// <summary>   State of the test. </summary>
         private TestState m_TestState = TestState.Running;
 
+        /// <summary>   The configurator. </summary>
         private TestRunnerConfigurator m_Configurator;
 
+        /// <summary>   The test runner callback. </summary>
         public TestRunnerCallbackList TestRunnerCallback = new TestRunnerCallbackList();
+        /// <summary>   The tests provider. </summary>
         private IntegrationTestsProvider m_TestsProvider;
 
+        /// <summary>   The prefix. </summary>
         private const string k_Prefix = "IntegrationTest";
+        /// <summary>   Message describing the started. </summary>
         private const string k_StartedMessage = k_Prefix + " Started";
+        /// <summary>   Message describing the finished. </summary>
         private const string k_FinishedMessage = k_Prefix + " Finished";
+        /// <summary>   Message describing the timeout. </summary>
         private const string k_TimeoutMessage = k_Prefix + " Timeout";
+        /// <summary>   Message describing the failed. </summary>
         private const string k_FailedMessage = k_Prefix + " Failed";
+        /// <summary>   Message describing the failed exception. </summary>
         private const string k_FailedExceptionMessage = k_Prefix + " Failed with exception";
+        /// <summary>   Message describing the ignored. </summary>
         private const string k_IgnoredMessage = k_Prefix + " Ignored";
+        /// <summary>   Message describing the interrupted. </summary>
         private const string k_InterruptedMessage = k_Prefix + " Run interrupted";
 
+        /// <summary>   Awakes this object. </summary>
+        ///
+     
 
         public void Awake()
         {
@@ -62,6 +94,10 @@ namespace UnityTest
             if (isInitializedByRunner) return;
             TestComponent.DisableAllTests();
         }
+
+        /// <summary>   Starts this object. </summary>
+        ///
+     
 
         public void Start()
         {
@@ -83,6 +119,13 @@ namespace UnityTest
 
             InitRunner(tests, dynamicTestTypes.Select(type => type.AssemblyQualifiedName).ToList());
         }
+
+        /// <summary>   Init runner. </summary>
+        ///
+     
+        ///
+        /// <param name="tests">                The tests. </param>
+        /// <param name="dynamicTestsToRun">    The dynamic tests to run. </param>
 
         public void InitRunner(List<TestComponent> tests, List<string> dynamicTestsToRun)
         {
@@ -111,6 +154,17 @@ namespace UnityTest
             m_ReadyToRun = true;
         }
 
+        /// <summary>   Enumerates parse list for groups in this collection. </summary>
+        ///
+     
+        ///
+        /// <param name="tests">    The tests. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process parse list for groups in this
+        /// collection.
+        /// </returns>
+
         private static IEnumerable<TestComponent> ParseListForGroups(IEnumerable<TestComponent> tests)
         {
             var results = new HashSet<TestComponent>();
@@ -134,6 +188,10 @@ namespace UnityTest
             return results;
         }
 
+        /// <summary>   Updates this object. </summary>
+        ///
+     
+
         public void Update()
         {
             if (m_ReadyToRun  && Time.frameCount > 1)
@@ -142,6 +200,10 @@ namespace UnityTest
                 StartCoroutine("StateMachine");
             }
         }
+
+        /// <summary>   Executes the destroy action. </summary>
+        ///
+     
 
         public void OnDestroy()
         {
@@ -159,6 +221,14 @@ namespace UnityTest
             }
             Application.logMessageReceived -= LogHandler;
         }
+
+        /// <summary>   Handler, called when the log. </summary>
+        ///
+     
+        ///
+        /// <param name="condition">    The condition. </param>
+        /// <param name="stacktrace">   The stacktrace. </param>
+        /// <param name="type">         The type. </param>
 
         private void LogHandler(string condition, string stacktrace, LogType type)
         {
@@ -206,6 +276,12 @@ namespace UnityTest
                     break;
             }
         }
+
+        /// <summary>   State machine. </summary>
+        ///
+     
+        ///
+        /// <returns>   An IEnumerator. </returns>
 
         public IEnumerator StateMachine()
         {
@@ -268,6 +344,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Logs a message. </summary>
+        ///
+     
+        ///
+        /// <param name="message">  The message. </param>
+
         private void LogMessage(string message)
         {
             if (currentTest != null)
@@ -276,12 +358,20 @@ namespace UnityTest
                 Debug.Log(message);
         }
 
+        /// <summary>   Finishes test run. </summary>
+        ///
+     
+
         private void FinishTestRun()
         {
             PrintResultToLog();
             TestRunnerCallback.RunFinished(m_ResultList);
             LoadNextLevelOrQuit();
         }
+
+        /// <summary>   Print result to log. </summary>
+        ///
+     
 
         private void PrintResultToLog()
         {
@@ -300,6 +390,10 @@ namespace UnityTest
             }
             Debug.Log(resultString);
         }
+
+        /// <summary>   Loads next level or quit. </summary>
+        ///
+     
 
         private void LoadNextLevelOrQuit()
         {
@@ -329,10 +423,18 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Executes the graphical user interface action. </summary>
+        ///
+     
+
         public void OnGUI()
         {
             k_ResultRenderer.Draw();
         }
+
+        /// <summary>   Tests start new. </summary>
+        ///
+     
 
         private void StartNewTest()
         {
@@ -361,6 +463,12 @@ namespace UnityTest
             TestRunnerCallback.TestStarted(testResult);
         }
 
+        /// <summary>   Tests finish. </summary>
+        ///
+     
+        ///
+        /// <param name="result">   The result. </param>
+
         private void FinishTest(TestResult.ResultType result)
         {
             m_TestsProvider.FinishTest(currentTest);
@@ -378,6 +486,12 @@ namespace UnityTest
 
         #region Test Runner Helpers
 
+        /// <summary>   Gets test runner. </summary>
+        ///
+     
+        ///
+        /// <returns>   The test runner. </returns>
+
         public static TestRunner GetTestRunner()
         {
             TestRunner testRunnerComponent = null;
@@ -393,6 +507,12 @@ namespace UnityTest
             return testRunnerComponent;
         }
 
+        /// <summary>   Creates a new GameObject. </summary>
+        ///
+     
+        ///
+        /// <returns>   A GameObject. </returns>
+
         private static GameObject Create()
         {
             var runner = new GameObject("TestRunner");
@@ -400,6 +520,12 @@ namespace UnityTest
             Debug.Log("Created Test Runner");
             return runner;
         }
+
+        /// <summary>   Query if this object is batch mode. </summary>
+        ///
+     
+        ///
+        /// <returns>   True if batch mode, false if not. </returns>
 
         private static bool IsBatchMode()
         {
@@ -419,13 +545,23 @@ namespace UnityTest
 
         #endregion
 
+        /// <summary>   Values that represent test states. </summary>
+        ///
+     
+
         enum TestState
         {
+            /// <summary>   An enum constant representing the running option. </summary>
             Running,
+            /// <summary>   An enum constant representing the success option. </summary>
             Success,
+            /// <summary>   An enum constant representing the failure option. </summary>
             Failure,
+            /// <summary>   An enum constant representing the exception option. </summary>
             Exception,
+            /// <summary>   An enum constant representing the timeout option. </summary>
             Timeout,
+            /// <summary>   An enum constant representing the ignored option. </summary>
             Ignored
         }
     }

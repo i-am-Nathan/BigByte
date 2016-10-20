@@ -1,33 +1,58 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\MainMenu\MenuScript.cs
+//
+// summary:	Implements the menu script class
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Logic for the whole Main menu scene
-/// </summary>
+/// <summary>   Logic for the whole Main menu scene. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class MenuScript : MonoBehaviour {
 
 	//Canvas is used to pop up when the specified buttons are pressed
+    /// <summary>   The achievement menu. </summary>
 	public GameObject AchievementMenu;
+    /// <summary>   The highscore menu. </summary>
 	public GameObject HighscoreMenu;
+    /// <summary>   The level select menu. </summary>
     public GameObject LevelSelectMenu;
+    /// <summary>   Information describing the game. </summary>
     public GameData GameData;
 
 
+    /// <summary>   The button click sound. </summary>
     public AudioSource ButtonClickSound;
 
-    public static string[] LevelNames = { "ammar_ui_v2", "ammar_ui_v2", "ammar_ui_v2" };
+    /// <summary>   List of names of the levels. </summary>
+    public static string[] LevelNames = { "Level1", "Level2", "Level3", "Level4" };
 
 	// Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start () {
 
         HideAllMenus();
     }
 
+    /// <summary>   Play button sound. </summary>
+    ///
+ 
+
     private void PlayButtonSound()
     {
         ButtonClickSound.Play();
     }
+
+    /// <summary>   Hides all menus. </summary>
+    ///
+ 
 
     private void HideAllMenus()
     {
@@ -37,14 +62,25 @@ public class MenuScript : MonoBehaviour {
     }
 
 	//Start game when the start text is pressed
+
+    /// <summary>   Starts a level. </summary>
+    ///
+ 
+
     public void StartLevel()
     {
         //Loading level
         GameData.isMainMenu = false;
-        StartLevel(0);
+		SceneManager.LoadScene ("Level1");
+        //StartLevel(0);
     }
 
 	//Highscore should pop up when it is pressed, to be implemented.
+
+    /// <summary>   High score press. </summary>
+    ///
+ 
+
     public void highScorePress()
     {
 		PlayButtonSound();
@@ -54,6 +90,11 @@ public class MenuScript : MonoBehaviour {
     }
 
 	//When the achievements are pressed a pop up of achievements should pop up.
+
+    /// <summary>   Achievement press. </summary>
+    ///
+ 
+
     public void achievementPress()
     {
         PlayButtonSound();
@@ -62,10 +103,19 @@ public class MenuScript : MonoBehaviour {
     }
 
 	//Go back to the main menu when the back button is pressed on the achievement menu.
+
+    /// <summary>   Back press. </summary>
+    ///
+ 
+
 	public void backPress(){
         PlayButtonSound();
         HideAllMenus();
     }
+
+    /// <summary>   Level press. </summary>
+    ///
+ 
 
     public void levelPress()
     {
@@ -74,6 +124,12 @@ public class MenuScript : MonoBehaviour {
         LevelSelectMenu.SetActive(true);
 
     }
+
+    /// <summary>   Starts a level. </summary>
+    ///
+ 
+    ///
+    /// <param name="levelIndex">   Zero-based index of the level. </param>
 
     public void StartLevel(int levelIndex)
     {

@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\Renderer\IntegrationTestLine.cs
+//
+// summary:	Implements the integration test line class
+
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,15 +9,37 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   An integration test line. </summary>
+    ///
+ 
+
     class IntegrationTestLine : IntegrationTestRendererBase
     {
+        /// <summary>   The results. </summary>
         public static List<TestResult> Results;
+        /// <summary>   The result. </summary>
         protected TestResult m_Result;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <param name="gameObject">   The game object. </param>
+        /// <param name="testResult">   The test result. </param>
 
         public IntegrationTestLine(GameObject gameObject, TestResult testResult) : base(gameObject)
         {
             m_Result = testResult;
         }
+
+        /// <summary>   Draw line. </summary>
+        ///
+     
+        ///
+        /// <param name="rect">         The rectangle. </param>
+        /// <param name="label">        The label. </param>
+        /// <param name="isSelected">   True if this object is selected. </param>
+        /// <param name="options">      Options for controlling the operation. </param>
 
         protected internal override void DrawLine(Rect rect, GUIContent label, bool isSelected, RenderingOptions options)
         {
@@ -32,11 +58,25 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Gets the result. </summary>
+        ///
+     
+        ///
+        /// <returns>   The result. </returns>
+
         protected internal override TestResult.ResultType GetResult()
         {
             if (!m_Result.Executed && test.ignored) return TestResult.ResultType.Ignored;
             return m_Result.resultType;
         }
+
+        /// <summary>   Query if 'options' is visible. </summary>
+        ///
+     
+        ///
+        /// <param name="options">  Options for controlling the operation. </param>
+        ///
+        /// <returns>   True if visible, false if not. </returns>
 
         protected internal override bool IsVisible(RenderingOptions options)
         {
@@ -47,6 +87,14 @@ namespace UnityTest
             if (!options.showIgnored && test.ignored) return false;
             return true;
         }
+
+        /// <summary>   Tests set current. </summary>
+        ///
+     
+        ///
+        /// <param name="tc">   The tc. </param>
+        ///
+        /// <returns>   True if the test passes, false if the test fails. </returns>
 
         public override bool SetCurrentTest(TestComponent tc)
         {

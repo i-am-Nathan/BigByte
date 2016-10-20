@@ -1,16 +1,32 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Shop&Collectables\DefensePotion.cs
+//
+// summary:	Implements the defense potion class
+
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Coin objects which players can pick up and purchase items through the shop.
+/// Defense potions which players can pick up and purchase items through the shop.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class DefensePotion : MonoBehaviour
 {
+	// Audio source
+    /// <summary>   Source for the. </summary>
     private AudioSource _source;
+    /// <summary>   The pick up sound. </summary>
     public AudioClip PickUpSound;
     
+    /// <summary>   True to not picked up. </summary>
     private bool _notPickedUp;
+    /// <summary>   The game data script. </summary>
     private GameData _gameDataScript;
+
+    /// <summary>   Called to obtain the audio source. </summary>
+    ///
+ 
 
     void Awake()
     {
@@ -18,10 +34,13 @@ public class DefensePotion : MonoBehaviour
         _notPickedUp = true;
     }
 
-
     /// <summary>
-    /// This will load up the player objects so that when coins are picked up, they will go to the respective player.
+    /// This will load up the player objects so that when potions are picked up, they will go to the
+    /// respective player.
     /// </summary>
+    ///
+ 
+
     void Start()
     {
         GameObject go = GameObject.FindGameObjectWithTag("Game Data");
@@ -29,17 +48,26 @@ public class DefensePotion : MonoBehaviour
     }
 
     /// <summary>
-    /// When player collides with the coin, they will increment the player's gold and play a sound when picked up.
+    /// When player collides with the potion, they will increment the player's number of potions and
+    /// play a sound when picked up.
     /// </summary>
-    /// <param name="other">Other.</param>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnTriggerEnter(Collider other)
     {
+		// Checking if a player has picked up the potion
 		if (_notPickedUp && (other.tag == "Player" || other.tag == "Player2"))
         {
+			// Destroying the potion while playing the sounds
             _notPickedUp = false;
             _source.PlayOneShot(PickUpSound);
             GetComponent<Renderer>().enabled = false;
             Destroy(gameObject, PickUpSound.length + 0.1f);
+
+			// Updating the respective players sub-inventory
             if (other.tag == "Player")
             {
                 SubInventoryManager SubInventoryManager = GameObject.Find("SubInventoryManager").GetComponent<SubInventoryManager>();

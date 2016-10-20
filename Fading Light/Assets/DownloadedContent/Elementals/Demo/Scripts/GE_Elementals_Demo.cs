@@ -23,6 +23,10 @@ using UnityEngine.UI;
 // This script file should be attached with Main Camera in the Demo scene.
 // ######################################################################
 
+/// <summary>   A ge elementals demo. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GE_Elementals_Demo : MonoBehaviour
 {
 	// ########################################
@@ -32,49 +36,75 @@ public class GE_Elementals_Demo : MonoBehaviour
 	#region Variables
 
 	// Colors for category and paritcle Text
+    /// <summary>   The color fire. </summary>
 	public Color m_ColorFire = new Color(1, 1, 1, 1);
+    /// <summary>   The color water. </summary>
 	public Color m_ColorWater = new Color(1, 1, 1, 1);
+    /// <summary>   The color wind. </summary>
 	public Color m_ColorWind = new Color(1, 1, 1, 1);
+    /// <summary>   The color earth. </summary>
 	public Color m_ColorEarth = new Color(1, 1, 1, 1);
+    /// <summary>   The color thunder. </summary>
 	public Color m_ColorThunder = new Color(1, 1, 1, 1);
+    /// <summary>   The color ice. </summary>
 	public Color m_ColorIce = new Color(1, 1, 1, 1);
+    /// <summary>   The color light. </summary>
 	public Color m_ColorLight = new Color(1, 1, 1, 1);
+    /// <summary>   The color darkness. </summary>
 	public Color m_ColorDarkness = new Color(1, 1, 1, 1);
 
 	// Categories to store particles
+    /// <summary>   The prefab list fire. </summary>
 	public GameObject[] m_PrefabListFire;
+    /// <summary>   The prefab list water. </summary>
 	public GameObject[] m_PrefabListWater;
+    /// <summary>   The prefab list wind. </summary>
 	public GameObject[] m_PrefabListWind;
+    /// <summary>   The prefab list earth. </summary>
 	public GameObject[] m_PrefabListEarth;
+    /// <summary>   The prefab list thunder. </summary>
 	public GameObject[] m_PrefabListThunder;
+    /// <summary>   The prefab list ice. </summary>
 	public GameObject[] m_PrefabListIce;
+    /// <summary>   The prefab list light. </summary>
 	public GameObject[] m_PrefabListLight;
+    /// <summary>   The prefab list darkness. </summary>
 	public GameObject[] m_PrefabListDarkness;
 
 	// Index of current category
+    /// <summary>   The current category index. </summary>
 	int m_CurrentCategoryIndex = -1;
 
 	// Index of current particle
+    /// <summary>   The current particle index. </summary>
 	int m_CurrentParticleIndex = -1;
 
 	// Name of current category
+    /// <summary>   Name of the category. </summary>
 	string m_CategoryName = "";
 
 	// Name of current particle
+    /// <summary>   Name of the particle. </summary>
 	string m_ParticleName = "";
 
 	// Current category
+    /// <summary>   The current category. </summary>
 	GameObject[] m_CurrentCategory = null;
 
 	// Current particle
+    /// <summary>   The current particle. </summary>
 	GameObject m_CurrentParticle = null;
 
 	// Unity UI elements
+    /// <summary>   The category. </summary>
 	Text m_Category = null;
+    /// <summary>   The particle. </summary>
 	Text m_Particle = null;
 
 	// Mouse and Touches
+    /// <summary>   The previous mouse position. </summary>
 	Vector3 m_PreviousMousePosition;
+    /// <summary>   True to show, false to hide the particle when touch ended. </summary>
 	bool m_ShowParticleWhenTouchEnded = false;
 
 	#endregion // Variables
@@ -88,6 +118,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start()
 	{
 		// There is any particle in prefab list
@@ -112,6 +147,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update()
 	{
 
@@ -215,6 +255,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 	#region Switch category
 
 	// Switch to previous category then show first particle in its list
+
+    /// <summary>   Previous category. </summary>
+    ///
+ 
+
 	public void PreviousCategory()
 	{
 		m_CurrentCategoryIndex--;
@@ -223,6 +268,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 	}
 
 	// Switch to next category then show first particle in its list
+
+    /// <summary>   Next category. </summary>
+    ///
+ 
+
 	public void NextCategory()
 	{
 		m_CurrentCategoryIndex++;
@@ -240,6 +290,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 	#region Switch particle
 
 	// Switch to previous particle
+
+    /// <summary>   Previous particle. </summary>
+    ///
+ 
+
 	public void PreviousParticle()
 	{
 		m_CurrentParticleIndex--;
@@ -247,6 +302,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 	}
 
 	// Switch to next particle
+
+    /// <summary>   Next particle. </summary>
+    ///
+ 
+
 	public void NextParticle()
 	{
 		m_CurrentParticleIndex++;
@@ -262,6 +322,11 @@ public class GE_Elementals_Demo : MonoBehaviour
 	#region Show Particles
 
 	// Remove old particle and create new in the scene
+
+    /// <summary>   Shows the particle. </summary>
+    ///
+ 
+
 	public void ShowParticle()
 	{
 		// Clamp m_CurrentCategoryIndex between 0 to 7

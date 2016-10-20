@@ -23,6 +23,10 @@ using System.Collections;
 // This class plays AudioClip and button sounds.
 // ######################################################################
 
+/// <summary>   A ga free demo play sound. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_DemoPlaySound : MonoBehaviour
 {
 
@@ -32,11 +36,15 @@ public class GA_FREE_DemoPlaySound : MonoBehaviour
 	
 	#region Variables
 
+    /// <summary>   Number of audio sources. </summary>
 	public int m_AudioSourceCount = 2;
 	
+    /// <summary>   The audio source. </summary>
 	AudioSource[] m_AudioSource = null;
 	
+    /// <summary>   The first m audio button. </summary>
 	public AudioClip m_Audio_Button1 = null;
+    /// <summary>   The second m audio button. </summary>
 	public AudioClip m_Audio_Button2 = null;
 
 	#endregion // Variables
@@ -50,6 +58,11 @@ public class GA_FREE_DemoPlaySound : MonoBehaviour
 	
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start () {
 
 		// Create AudioSource list
@@ -68,6 +81,11 @@ public class GA_FREE_DemoPlaySound : MonoBehaviour
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update () {		
 	}
 	
@@ -80,6 +98,13 @@ public class GA_FREE_DemoPlaySound : MonoBehaviour
 	#region Play sound
 	
 	// Play AudioClip
+
+    /// <summary>   Play one shot. </summary>
+    ///
+ 
+    ///
+    /// <param name="pAudioClip">   The audio clip. </param>
+
 	void PlayOneShot(AudioClip pAudioClip)
 	{
 
@@ -94,12 +119,22 @@ public class GA_FREE_DemoPlaySound : MonoBehaviour
 	}
 
 	// Play m_Audio_Button1 audio clip
+
+    /// <summary>   Play sound button 1. </summary>
+    ///
+ 
+
 	public void PlaySoundButton1()
 	{
 		PlayOneShot(m_Audio_Button1);
 	}
 	
 	// Play m_Audio_Button2 audio clip
+
+    /// <summary>   Play sound button 2. </summary>
+    ///
+ 
+
 	public void PlaySoundButton2()
 	{
 		PlayOneShot(m_Audio_Button2);

@@ -1,15 +1,29 @@
+// file:	Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CodeBasedAssertionExample.cs
+//
+// summary:	Implements the code based assertion example class
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityTest;
 
+/// <summary>   A code based assertion example. </summary>
+///
+/// <remarks>    . </remarks>
+
 [IntegrationTest.DynamicTestAttribute("ExampleIntegrationTests")]
 [IntegrationTest.SucceedWithAssertions]
 public class CodeBasedAssertionExample : MonoBehaviour
 {
+    /// <summary>   The float field. </summary>
     public float FloatField = 3;
 
+    /// <summary>   The go reference. </summary>
     public GameObject goReference;
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
 
     public void Awake()
     {

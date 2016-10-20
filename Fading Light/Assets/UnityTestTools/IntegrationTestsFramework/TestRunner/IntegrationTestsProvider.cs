@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestsProvider.cs
+//
+// summary:	Implements the integration tests provider class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,11 +9,26 @@ using UnityEngine;
 
 namespace UnityTest.IntegrationTestRunner
 {
+    /// <summary>   An integration tests provider. </summary>
+    ///
+ 
+
     class IntegrationTestsProvider
     {
+        /// <summary>   Collection of tests. </summary>
         internal Dictionary<ITestComponent, HashSet<ITestComponent>> testCollection = new Dictionary<ITestComponent, HashSet<ITestComponent>>();
+        /// <summary>   The current test group. </summary>
         internal ITestComponent currentTestGroup;
+        /// <summary>   The test to run. </summary>
         internal IEnumerable<ITestComponent> testToRun;
+
+        /// <summary>   Constructor. </summary>
+        ///
+     
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <param name="tests">    The tests. </param>
 
         public IntegrationTestsProvider(IEnumerable<ITestComponent> tests)
         {
@@ -28,6 +47,12 @@ namespace UnityTest.IntegrationTestRunner
             }
         }
 
+        /// <summary>   Adds a test to list. </summary>
+        ///
+     
+        ///
+        /// <param name="test"> The test. </param>
+
         private void AddTestToList(ITestComponent test)
         {
             var group = test.GetTestGroup();
@@ -38,6 +63,12 @@ namespace UnityTest.IntegrationTestRunner
             AddTestToList(group);
         }
 
+        /// <summary>   Gets the next test. </summary>
+        ///
+     
+        ///
+        /// <returns>   The next test. </returns>
+
         public ITestComponent GetNextTest()
         {
             var test = testCollection[currentTestGroup].First();
@@ -45,6 +76,12 @@ namespace UnityTest.IntegrationTestRunner
             test.EnableTest(true);
             return test;
         }
+
+        /// <summary>   Tests finish. </summary>
+        ///
+     
+        ///
+        /// <param name="test"> The test. </param>
 
         public void FinishTest(ITestComponent test)
         {
@@ -58,6 +95,16 @@ namespace UnityTest.IntegrationTestRunner
                 Debug.LogException(e);
             }
         }
+
+        /// <summary>   Searches for the next test group. </summary>
+        ///
+     
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <param name="testGroup">    Group the test belongs to. </param>
+        ///
+        /// <returns>   The found test group. </returns>
 
         private ITestComponent FindNextTestGroup(ITestComponent testGroup)
         {
@@ -79,6 +126,14 @@ namespace UnityTest.IntegrationTestRunner
             return FindNextTestGroup(parentTestGroup);
         }
 
+        /// <summary>   Searches for the first inner test group. </summary>
+        ///
+     
+        ///
+        /// <param name="group">    The group. </param>
+        ///
+        /// <returns>   The found inner test group. </returns>
+
         private ITestComponent FindInnerTestGroup(ITestComponent group)
         {
             var innerGroups = testCollection[group];
@@ -91,10 +146,22 @@ namespace UnityTest.IntegrationTestRunner
             return group;
         }
 
+        /// <summary>   Determines if we can any tests left. </summary>
+        ///
+     
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+
         public bool AnyTestsLeft()
         {
             return testCollection.Count != 0;
         }
+
+        /// <summary>   Gets remaining tests. </summary>
+        ///
+     
+        ///
+        /// <returns>   The remaining tests. </returns>
 
         public List<ITestComponent> GetRemainingTests()
         {

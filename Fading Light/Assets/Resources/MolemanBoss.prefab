@@ -2681,9 +2681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IntialHealth: 50
   isDead: 0
-  DEBUG: 0
-  <CurrentHealth>k__BackingField: 0
-  HardActivationDistance: 50
+  HardActivationDistance: 300
   LooseActivationDistance: 120
   AttackSpeed: 1
   AttackDamage: 5
@@ -2695,36 +2693,11 @@ MonoBehaviour:
   SprintSpeed: 35
   AttackCooldown: 0.5
   RotationSpeed: 10
-  HealthCircle: {fileID: 0}
   HealthSlider: {fileID: 0}
   BossName: {fileID: 0}
   BossPanel: {fileID: 0}
-  pathfinder: {fileID: 0}
-  target: {fileID: 0}
-  targetBaseEntity: {fileID: 0}
-  skinMaterial: {fileID: 0}
-  originalColour:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  _animator: {fileID: 0}
-  spawnLocation: {x: 0, y: 0, z: 0}
-  _nextAttackTime: 0
-  _collisionRange: 0
-  _targetCollisionRange: 0
-  _lockedOn: 0
-  _inAttackRange: 0
-  _isSprinting: 0
-  _isMoving: 0
-  _walkCount: 0
-  _canTakeDamage: 1
-  DEBUG: 0
   isBoss: 1
-  _achievementManager: {fileID: 0}
-  _summoning: 0
-  _summonedOnce: 0
-  _summonedTwice: 0
+  EndOfLevelTriggerScript: {fileID: 0}
 --- !u!136 &13626644
 CapsuleCollider:
   m_ObjectHideFlags: 1

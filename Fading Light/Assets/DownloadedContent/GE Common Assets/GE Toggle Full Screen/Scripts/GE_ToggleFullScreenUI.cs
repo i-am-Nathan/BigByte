@@ -20,6 +20,10 @@ using UnityEngine.UI;
 // Handles mouse and touch inputs for orbiting the camera around the target object.
 // ######################################################################
 
+/// <summary>   A ge toggle full screen user interface. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GE_ToggleFullScreenUI : MonoBehaviour
 {
 
@@ -30,7 +34,9 @@ public class GE_ToggleFullScreenUI : MonoBehaviour
 	#region Variables
 
 	// Screen resolutions
+    /// <summary>   Width of the definition. </summary>
 	int m_DefWidth;
+    /// <summary>   Height of the definition. </summary>
 	int m_DefHeight;
 
 	#endregion // Variables
@@ -44,6 +50,11 @@ public class GE_ToggleFullScreenUI : MonoBehaviour
 
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		
@@ -77,6 +88,11 @@ public class GE_ToggleFullScreenUI : MonoBehaviour
 
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update ()
 	{
 	}
@@ -90,6 +106,11 @@ public class GE_ToggleFullScreenUI : MonoBehaviour
 	#region UI Responder
 
 	// User click on Toggle Fullscreen button
+
+    /// <summary>   Executes the button toggle full screen action. </summary>
+    ///
+ 
+
 	public void OnButton_ToggleFullScreen ()
 	{
 		// Disable this button on Unity Editor

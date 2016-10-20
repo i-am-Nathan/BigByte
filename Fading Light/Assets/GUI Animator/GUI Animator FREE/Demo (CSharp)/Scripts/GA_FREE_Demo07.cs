@@ -26,6 +26,10 @@ using System.Collections;
 // Note this class is attached with "-SceneController-" object in "GA FREE - Demo07 (960x600px)" scene.
 // ######################################################################
 
+/// <summary>   A ga free demo 07. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_Demo07 : MonoBehaviour
 {
 
@@ -36,24 +40,35 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	#region Variables
 
 	// Canvas
+    /// <summary>   The canvas. </summary>
 	public Canvas m_Canvas;
 	
 	// GUIAnimFREE objects of title text
+    /// <summary>   The first m title. </summary>
 	public GUIAnimFREE m_Title1;
+    /// <summary>   The second m title. </summary>
 	public GUIAnimFREE m_Title2;
 	
 	// GUIAnimFREE objects of top and bottom bars
+    /// <summary>   The top bar. </summary>
 	public GUIAnimFREE m_TopBar;
+    /// <summary>   The bottom bar. </summary>
 	public GUIAnimFREE m_BottomBar;
 	
 	// GUIAnimFREE object of dialogs
+    /// <summary>   The dialog. </summary>
 	public GUIAnimFREE m_Dialog;
+    /// <summary>   The dialog buttons. </summary>
 	public GUIAnimFREE m_DialogButtons;
 	
 	// GUIAnimFREE objects of buttons
+    /// <summary>   The first m button. </summary>
 	public GUIAnimFREE m_Button1;
+    /// <summary>   The second m button. </summary>
 	public GUIAnimFREE m_Button2;
+    /// <summary>   The third m button. </summary>
 	public GUIAnimFREE m_Button3;
+    /// <summary>   The fourth m button. </summary>
 	public GUIAnimFREE m_Button4;
 	
 	#endregion // Variables
@@ -67,6 +82,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	
 	// Awake is called when the script instance is being loaded.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
+
 	void Awake ()
 	{
 		if(enabled)
@@ -78,6 +98,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		// MoveIn m_TopBar and m_BottomBar
@@ -94,6 +119,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update ()
 	{		
 	}
@@ -107,6 +137,13 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	#region MoveIn/MoveOut
 	
 	// MoveIn m_Title1 and m_Title2
+
+    /// <summary>   Move in title game objects. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInTitleGameObjects()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -120,6 +157,13 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	}
 	
 	// MoveIn all dialogs and buttons
+
+    /// <summary>   Move in primary buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInPrimaryButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -139,6 +183,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	}
 	
 	// MoveOut all dialogs and buttons
+
+    /// <summary>   Hides all gu is. </summary>
+    ///
+ 
+
 	public void HideAllGUIs()
 	{
 		// MoveOut all dialogs
@@ -156,6 +205,13 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	}
 	
 	// MoveOut m_Title1 and m_Title2
+
+    /// <summary>   Hides the title text meshes. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator HideTitleTextMeshes()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -178,6 +234,13 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	#region Enable/Disable buttons
 	
 	// Enable/Disable all scene switch Coroutine
+
+    /// <summary>   Enables all demo buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator EnableAllDemoButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -188,6 +251,16 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	}
 
 	// Disable all buttons for a few seconds
+
+    /// <summary>   Disables the button for seconds. </summary>
+    ///
+ 
+    ///
+    /// <param name="GO">           The go. </param>
+    /// <param name="DisableTime">  The disable time. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator DisableButtonForSeconds(GameObject GO, float DisableTime)
 	{
 		// Disable all buttons
@@ -207,6 +280,10 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	
 	#region UI Responder
 
+    /// <summary>   Executes the button 1 action. </summary>
+    ///
+ 
+
 	public void OnButton_1()
 	{
 		// MoveOut m_Button1
@@ -221,7 +298,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 		// Set next move in of m_Button1 to new position
 		StartCoroutine(SetButtonMove(GUIAnimFREE.ePosMove.UpperScreenEdge, GUIAnimFREE.ePosMove.UpperScreenEdge));
 	}
-	
+
+    /// <summary>   Executes the button 2 action. </summary>
+    ///
+ 
+
 	public void OnButton_2()
 	{
 		// MoveOut m_Button2
@@ -236,7 +317,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 		// Set next move in of m_Button2 to new position
 		StartCoroutine(SetButtonMove(GUIAnimFREE.ePosMove.LeftScreenEdge, GUIAnimFREE.ePosMove.LeftScreenEdge));
 	}
-	
+
+    /// <summary>   Executes the button 3 action. </summary>
+    ///
+ 
+
 	public void OnButton_3()
 	{
 		// MoveOut m_Button3
@@ -251,7 +336,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 		// Set next move in of m_Button3 to new position
 		StartCoroutine(SetButtonMove(GUIAnimFREE.ePosMove.RightScreenEdge, GUIAnimFREE.ePosMove.RightScreenEdge));
 	}
-	
+
+    /// <summary>   Executes the button 4 action. </summary>
+    ///
+ 
+
 	public void OnButton_4()
 	{
 		// MoveOut m_Button4
@@ -266,7 +355,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 		// Set next move in of m_Button3 to new position
 		StartCoroutine(SetButtonMove(GUIAnimFREE.ePosMove.BottomScreenEdge, GUIAnimFREE.ePosMove.BottomScreenEdge));
 	}
-	
+
+    /// <summary>   Executes the dialog button action. </summary>
+    ///
+ 
+
 	public void OnDialogButton()
 	{
 		// MoveOut m_Dialog
@@ -289,6 +382,11 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	#region Move Dialog/Button
 	
 	// MoveOut all buttons
+
+    /// <summary>   Move buttons out. </summary>
+    ///
+ 
+
 	void MoveButtonsOut()
 	{
 		m_Button1.MoveOut(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
@@ -298,6 +396,16 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	}
 	
 	// Set next move in of all buttons to new position
+
+    /// <summary>   Sets button move. </summary>
+    ///
+ 
+    ///
+    /// <param name="PosMoveIn">    The position move in. </param>
+    /// <param name="PosMoveOut">   The position move out. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator SetButtonMove(GUIAnimFREE.ePosMove PosMoveIn, GUIAnimFREE.ePosMove PosMoveOut)
 	{
 		yield return new WaitForSeconds(2.0f);
@@ -332,6 +440,13 @@ public class GA_FREE_Demo07 : MonoBehaviour
 	}
 	
 	// Moves m_Dialog back to screen
+
+    /// <summary>   Dialog move in. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator DialogMoveIn()
 	{
 		yield return new WaitForSeconds(1.5f);

@@ -1,18 +1,36 @@
-﻿using UnityEngine;
+﻿// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\IntegrationTestsHierarchyAnnotation.cs
+//
+// summary:	Implements the integration tests hierarchy annotation class
+
+using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
 namespace UnityTest
 {
+    /// <summary>   An integration tests hierarchy annotation. </summary>
+    ///
+ 
 
     [InitializeOnLoad]
     public class IntegrationTestsHierarchyAnnotation {
-    
+
+        /// <summary>   Static constructor. </summary>
+        ///
+     
+
         static IntegrationTestsHierarchyAnnotation()
         {
             EditorApplication.hierarchyWindowItemOnGUI += DoAnnotationGUI;
         }
-    
+
+        /// <summary>   Executes the annotation graphical user interface operation. </summary>
+        ///
+     
+        ///
+        /// <param name="id">   The identifier. </param>
+        /// <param name="rect"> The rectangle. </param>
+
         public static void DoAnnotationGUI(int id, Rect rect)
         {
             var obj = EditorUtility.InstanceIDToObject(id) as GameObject;

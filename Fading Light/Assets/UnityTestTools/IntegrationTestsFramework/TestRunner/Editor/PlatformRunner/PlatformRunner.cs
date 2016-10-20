@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\PlatformRunner\PlatformRunner.cs
+//
+// summary:	Implements the platform runner class
+
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -9,8 +13,16 @@ using System.Linq;
 
 namespace UnityTest.IntegrationTests
 {
+    /// <summary>   A platform runner. </summary>
+    ///
+ 
+
     public class PlatformRunner
     {
+        /// <summary>   Gets or sets the default build target. </summary>
+        ///
+        /// <value> The default build target. </value>
+
         public static BuildTarget defaultBuildTarget
         {
             get
@@ -30,6 +42,10 @@ namespace UnityTest.IntegrationTests
             set { EditorPrefs.SetString("ITR-platformRunnerBuildTarget", value.ToString()); }
         }
 
+        /// <summary>   Builds and run current scene. </summary>
+        ///
+     
+
         [MenuItem("Unity Test Tools/Platform Runner/Run current scene %#&r")]
         public static void BuildAndRunCurrentScene()
         {
@@ -37,12 +53,22 @@ namespace UnityTest.IntegrationTests
             BuildAndRunInPlayer(new PlatformRunnerConfiguration(defaultBuildTarget));
         }
 
+        /// <summary>   Executes the in player operation. </summary>
+        ///
+     
+
         [MenuItem("Unity Test Tools/Platform Runner/Run on platform %#r")]
         public static void RunInPlayer()
         {
             var w = EditorWindow.GetWindow(typeof(PlatformRunnerSettingsWindow));
             w.Show();
         }
+
+        /// <summary>   Builds and run in player. </summary>
+        ///
+     
+        ///
+        /// <param name="configuration">    The configuration. </param>
 
         public static void BuildAndRunInPlayer(PlatformRunnerConfiguration configuration)
         {
@@ -102,6 +128,12 @@ namespace UnityTest.IntegrationTests
             else if (InternalEditorUtility.inBatchMode)
                 EditorApplication.Exit(Batch.returnCodeTestsOk);
         }
+
+        /// <summary>   Gets default build target. </summary>
+        ///
+     
+        ///
+        /// <returns>   The default build target. </returns>
 
         private static BuildTarget GetDefaultBuildTarget()
         {

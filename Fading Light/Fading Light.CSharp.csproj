@@ -81,6 +81,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CutSceneTrigger.cs" />
     <Compile Include="Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\CamTarget.cs" />
     <Compile Include="Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\CharacterDemoController.cs" />
     <Compile Include="Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\MouseOrbit.cs" />
@@ -137,14 +138,17 @@
     <Compile Include="Assets\Scripts\GameControl\EndOfLevelTrigger.cs" />
     <Compile Include="Assets\Scripts\GameControl\GameData.cs" />
     <Compile Include="Assets\Scripts\GameControl\HighScore.cs" />
+    <Compile Include="Assets\Scripts\GameControl\Level1End.cs" />
     <Compile Include="Assets\Scripts\GameControl\MoleManContoller.cs" />
     <Compile Include="Assets\Scripts\GameControl\Storyline.cs" />
     <Compile Include="Assets\Scripts\GameControl\Storyline_Level2.cs" />
     <Compile Include="Assets\Scripts\GameControl\Storyline_Level3.cs" />
+    <Compile Include="Assets\Scripts\GameControl\Storyline_Level4.cs" />
     <Compile Include="Assets\Scripts\GameControl\Storyline_Tutorial.cs" />
     <Compile Include="Assets\Scripts\GameControl\TorchFuelController.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Breakable_Wall.cs" />
     <Compile Include="Assets\Scripts\Interactables\CandleLight.cs" />
-    <Compile Include="Assets\Scripts\Interactables\FadeObjectInOut.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Fade.cs" />
     <Compile Include="Assets\Scripts\Interactables\FallingFenceLeverLeft.cs" />
     <Compile Include="Assets\Scripts\Interactables\FallingFenceLeverRight.cs" />
     <Compile Include="Assets\Scripts\Interactables\FallingFencePassage.cs" />
@@ -161,9 +165,10 @@
     <Compile Include="Assets\Scripts\Interactables\RaisePath.cs" />
     <Compile Include="Assets\Scripts\Interactables\RotatingDoor.cs" />
     <Compile Include="Assets\Scripts\Interactables\UnsetTraps.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\AchievementPanel.cs" />
     <Compile Include="Assets\Scripts\MainMenu\Achievements\AchievementManager.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\Achievements\AchievementPanel.cs" />
     <Compile Include="Assets\Scripts\MainMenu\Achievements\AchievementSetUp.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\GameAchievement.cs" />
     <Compile Include="Assets\Scripts\MainMenu\HighScorePanel.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelHover.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuFadingLightScript.cs" />
@@ -202,13 +207,14 @@
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\AttackPotion.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\Coins.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\DefensePotion.cs" />
-    <Compile Include="Assets\Scripts\Shop&amp;Collectables\HealthPotion.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\HeartPickUp.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\Item.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\NavigateShop.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\PickupItem.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\ShopKeeper.cs" />
     <Compile Include="Assets\Scripts\Shop&amp;Collectables\TorchFuel.cs" />
+    <Compile Include="Assets\Scripts\Shop&amp;Collectables\healthPotion.cs" />
+    <Compile Include="Assets\Scripts\SoundScripts\SpearTrap.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\AnimationSpeed.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\ControlledPlatform.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\CreatePath.cs" />
@@ -217,6 +223,7 @@
     <Compile Include="Assets\Scripts\TrapScripts\LevelTwoTreasure.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\LeverTraps.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\SawBladePlate.cs" />
+    <Compile Include="Assets\Scripts\TrapScripts\SpearLaunch.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\TrapDamage.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\TrapPlate.cs" />
     <Compile Include="Assets\Scripts\TrapScripts\TutorialSpikeTrap.cs" />
@@ -295,10 +302,12 @@
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
     <None Include="Assets\Text\Level2\FloatingPlatformBoard.txt" />
+    <None Include="Assets\Text\Level2\Level4.txt" />
     <None Include="Assets\Text\Level2\Lvl2_TreasurePost.txt" />
     <None Include="Assets\Text\Level2\Lvl2_Wind.txt" />
     <None Include="Assets\Text\Level2\MoleLevel2.txt" />
     <None Include="Assets\Text\Level2\MoleTalk2.txt" />
+    <None Include="Assets\Text\Level4.txt" />
     <None Include="Assets\Text\MoleMan.txt" />
     <None Include="Assets\Text\Prisoner.txt" />
     <None Include="Assets\Text\Tutorial 1.txt" />

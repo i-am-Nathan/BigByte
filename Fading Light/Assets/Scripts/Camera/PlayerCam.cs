@@ -1,38 +1,64 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Camera\PlayerCam.cs
+//
+// summary:	Implements the player camera class
+
+using UnityEngine;
 
 /// <summary>
-/// Used to control the movement of the main camera
-/// Referenced from https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control
+/// Used to control the movement of the main camera Referenced from
+/// https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control.
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 public class PlayerCam : MonoBehaviour
 {
     //These are all modified in inspector
-	public float DampTime;                 // Approximate time for the camera to refocus.
-	public float ScreenEdgeBuffer;           // Space between the top/bottom most target and the screen edge.
-    public float ScreenEdgeBufferTop;           // Space between the top/bottom most target and the screen edge.
-    public float MinSize;                  // The smallest orthographic size the camera can be.
-	public float MaxSize;                  // The smallest orthographic size the camera can be.
-    public float XOffset;                 //Offsets the camera to account for it being on an angle
-    public Transform[] Targets; // All the targets the camera needs to encompass.
+    /// <summary>   Approximate time for the camera to refocus. </summary>
+	public float DampTime;
+    /// <summary>   Space between the top/bottom most target and the screen edge. </summary>
+	public float ScreenEdgeBuffer;
+    /// <summary>   Space between the top/bottom most target and the screen edge. </summary>
+    public float ScreenEdgeBufferTop;
+    /// <summary>   The smallest orthographic size the camera can be. </summary>
+    public float MinSize;
+    /// <summary>   The smallest orthographic size the camera can be. </summary>
+	public float MaxSize;
+    /// <summary>   Offsets the camera to account for it being on an angle. </summary>
+    public float XOffset;
+    /// <summary>   All the targets the camera needs to encompass. </summary>
+    public Transform[] Targets;
 
 
+    /// <summary>   The swoop position target. </summary>
     public GameObject SwoopPositionTarget;
+    /// <summary>   The swoop angle target. </summary>
     public GameObject SwoopAngleTarget;
 
-	private Camera _camera;                        // Used for referencing the camera.
-	private float _zoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
-	private Vector3 _moveVelocity;                 // Reference velocity for the smooth damping of the position.
-	private Vector3 _desiredPosition;              // The position the camera is moving towards.
+    /// <summary>   Used for referencing the camera. </summary>
+	private Camera _camera;
+    /// <summary>   Reference speed for the smooth damping of the orthographic size. </summary>
+	private float _zoomSpeed;
+    /// <summary>   Reference velocity for the smooth damping of the position. </summary>
+	private Vector3 _moveVelocity;
+    /// <summary>   The position the camera is moving towards. </summary>
+	private Vector3 _desiredPosition;
 
+    /// <summary>   State of the camera. </summary>
     public int CameraState = 0;
 
+    /// <summary>   The start angle. </summary>
     private Vector3 _startAngle;
+    /// <summary>   The start position. </summary>
     private Vector3 _startPosition;
 
+    /// <summary>   The temporary fov. </summary>
     public int tmpFOV = 20;
-    /// <summary>
-    /// Awakes this instance.
-    /// </summary>
+
+    /// <summary>   Awakes this instance. </summary>
+    ///
+ 
+
     private void Awake ()
 	{
 		_camera = GetComponentInChildren<Camera> ();
@@ -40,10 +66,10 @@ public class PlayerCam : MonoBehaviour
         _startPosition = gameObject.transform.position;
 	}
 
+    /// <summary>   Fixeds the update. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Fixeds the update.
-    /// </summary>
     private void FixedUpdate ()
 	{
         if (CameraState == 0)
@@ -67,10 +93,10 @@ public class PlayerCam : MonoBehaviour
 		
 	}
 
+    /// <summary>   Moves this instance. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Moves this instance.
-    /// </summary>
     private void Move ()
 	{
 		// Find the average position of the targets.
@@ -85,10 +111,10 @@ public class PlayerCam : MonoBehaviour
         transform.eulerAngles = new Vector3(anglex, angley, anglez);
     }
 
+    /// <summary>   Finds the average position. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Finds the average position.
-    /// </summary>
     private void FindAveragePosition ()
 	{
 		Vector3 averagePos = new Vector3 ();
@@ -125,10 +151,10 @@ public class PlayerCam : MonoBehaviour
 
     }
 
+    /// <summary>   Zooms this instance. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Zooms this instance.
-    /// </summary>
     private void Zoom ()
 	{
 		// Find the required size based on the desired position and smoothly transition to that size.
@@ -137,11 +163,12 @@ public class PlayerCam : MonoBehaviour
         _camera.fieldOfView = Mathf.SmoothDamp(_camera.fieldOfView, requiredSize, ref _zoomSpeed, DampTime);
     }
 
+    /// <summary>   Finds the size of the required. </summary>
+    ///
+ 
+    ///
+    /// <returns>   The found required size. </returns>
 
-    /// <summary>
-    /// Finds the size of the required.
-    /// </summary>
-    /// <returns></returns>
     private float FindRequiredSize ()
 	{
 		// Find the position the camera rig is moving towards in its local space.
@@ -181,10 +208,10 @@ public class PlayerCam : MonoBehaviour
 		return size;
 	}
 
+    /// <summary>   Sets the start size of the position and. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Sets the start size of the position and.
-    /// </summary>
     public void SetStartPositionAndSize ()
 	{
 		// Find the desired position.
@@ -198,6 +225,10 @@ public class PlayerCam : MonoBehaviour
 		// Find and set the required size of the camera.
 		_camera.orthographicSize = FindRequiredSize ();
 	}
+
+    /// <summary>   Swing down. </summary>
+    ///
+ 
 
     public void SwingDown()
     {

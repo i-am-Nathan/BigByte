@@ -26,6 +26,10 @@ using System.Collections;
 // Note this class is attached with "-SceneController-" object in "GA FREE - Demo05 (960x600px)" scene.
 // ######################################################################
 
+/// <summary>   A ga free demo 05. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_Demo05 : MonoBehaviour
 {
 
@@ -36,20 +40,29 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	#region Variables
 
 	// Canvas
+    /// <summary>   The canvas. </summary>
 	public Canvas m_Canvas;
 	
 	// GUIAnimFREE objects of title text
+    /// <summary>   The first m title. </summary>
 	public GUIAnimFREE m_Title1;
+    /// <summary>   The second m title. </summary>
 	public GUIAnimFREE m_Title2;
 	
 	// GUIAnimFREE objects of top and bottom bars
+    /// <summary>   The top bar. </summary>
 	public GUIAnimFREE m_TopBar;
+    /// <summary>   The bottom bar. </summary>
 	public GUIAnimFREE m_BottomBar;
 
 	// GUIAnimFREE objects of dialogs
+    /// <summary>   The first m dialog. </summary>
 	public GUIAnimFREE m_Dialog1;
+    /// <summary>   The second m dialog. </summary>
 	public GUIAnimFREE m_Dialog2;
+    /// <summary>   The third m dialog. </summary>
 	public GUIAnimFREE m_Dialog3;
+    /// <summary>   The fourth m dialog. </summary>
 	public GUIAnimFREE m_Dialog4;
 	
 	#endregion // Variables
@@ -63,6 +76,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	
 	// Awake is called when the script instance is being loaded.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
+
 	void Awake ()
 	{
 		if(enabled)
@@ -74,6 +92,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		// MoveIn m_TopBar and m_BottomBar
@@ -90,6 +113,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update ()
 	{		
 	}
@@ -103,6 +131,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	#region MoveIn/MoveOut
 	
 	// MoveIn m_Title1 and m_Title2
+
+    /// <summary>   Move in title game objects. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInTitleGameObjects()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -116,6 +151,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	}
 	
 	// MoveIn m_Dialog
+
+    /// <summary>   Move in primary buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator MoveInPrimaryButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -129,7 +171,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		// Enable all scene switch buttons
 		StartCoroutine(EnableAllDemoButtons());
 	}
-	
+
+    /// <summary>   Hides all gu is. </summary>
+    ///
+ 
+
 	public void HideAllGUIs()
 	{
 		// MoveOut dialogs
@@ -143,6 +189,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	}
 	
 	// MoveOut m_Title1 and m_Title2
+
+    /// <summary>   Hides the title text meshes. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator HideTitleTextMeshes()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -165,6 +218,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	#region Enable/Disable buttons
 	
 	// Enable/Disable all scene switch Coroutine	
+
+    /// <summary>   Enables all demo buttons. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator EnableAllDemoButtons()
 	{
 		yield return new WaitForSeconds(1.0f);
@@ -175,6 +235,16 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	}
 	
 	// Disable all buttons for a few seconds
+
+    /// <summary>   Disables the button for seconds. </summary>
+    ///
+ 
+    ///
+    /// <param name="GO">           The go. </param>
+    /// <param name="DisableTime">  The disable time. </param>
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator DisableButtonForSeconds(GameObject GO, float DisableTime)
 	{
 		// Disable all buttons
@@ -193,7 +263,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	// ########################################
 	
 	#region UI Responder
-	
+
+    /// <summary>   Executes the button dialog 1 action. </summary>
+    ///
+ 
+
 	public void OnButton_Dialog1()
 	{			
 		// MoveOut m_Dialog1
@@ -205,7 +279,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		// MoveIn m_Dialog1
 		StartCoroutine(Dialog1_MoveIn());
 	}
-	
+
+    /// <summary>   Executes the button dialog 2 action. </summary>
+    ///
+ 
+
 	public void OnButton_Dialog2()
 	{
 		// MoveOut m_Dialog2
@@ -217,7 +295,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		// MoveIn m_Dialog2
 		StartCoroutine(Dialog2_MoveIn());
 	}
-	
+
+    /// <summary>   Executes the button dialog 3 action. </summary>
+    ///
+ 
+
 	public void OnButton_Dialog3()
 	{
 		// MoveOut m_Dialog3
@@ -229,7 +311,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		// MoveIn m_Dialog3
 		StartCoroutine(Dialog3_MoveIn());
 	}
-	
+
+    /// <summary>   Executes the button dialog 4 action. </summary>
+    ///
+ 
+
 	public void OnButton_Dialog4()
 	{
 		// MoveOut m_Dialog4
@@ -241,7 +327,11 @@ public class GA_FREE_Demo05 : MonoBehaviour
 		// MoveIn m_Dialog4
 		StartCoroutine(Dialog4_MoveIn());
 	}
-	
+
+    /// <summary>   Executes the button move out all dialogs action. </summary>
+    ///
+ 
+
 	public void OnButton_MoveOutAllDialogs()
 	{		
 		// Disable m_Dialog1, m_Dialog2, m_Dialog3, m_Dialog4 for a few seconds
@@ -272,6 +362,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	#region Move Dialog
 	
 	// MoveIn m_Dialog1
+
+    /// <summary>   Dialog 1 move in. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator Dialog1_MoveIn()
 	{
 		yield return new WaitForSeconds(1.5f);
@@ -284,6 +381,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	}
 	
 	// MoveIn m_Dialog2
+
+    /// <summary>   Dialog 2 move in. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator Dialog2_MoveIn()
 	{
 		yield return new WaitForSeconds(1.5f);
@@ -296,6 +400,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	}
 	
 	// MoveIn m_Dialog3
+
+    /// <summary>   Dialog 3 move in. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator Dialog3_MoveIn()
 	{
 		yield return new WaitForSeconds(1.5f);
@@ -308,6 +419,13 @@ public class GA_FREE_Demo05 : MonoBehaviour
 	}
 	
 	// MoveIn m_Dialog4
+
+    /// <summary>   Dialog 4 move in. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	IEnumerator Dialog4_MoveIn()
 	{
 		yield return new WaitForSeconds(1.5f);

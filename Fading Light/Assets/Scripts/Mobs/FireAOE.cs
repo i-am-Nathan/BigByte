@@ -1,10 +1,26 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Mobs\FireAOE.cs
+//
+// summary:	Implements the fire an oe class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A fire an oe. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class FireAOE : MonoBehaviour {
 
+    /// <summary>   The damage per frame. </summary>
     public float DamagePerFrame = 2f;
+    /// <summary>   True to debug. </summary>
     private bool DEBUG = false;
+
+    /// <summary>   Executes the trigger stay action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
     void OnTriggerStay(Collider other)
     {
