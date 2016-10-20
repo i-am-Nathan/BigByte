@@ -79,6 +79,7 @@ GameObject:
   - 23: {fileID: 2348308}
   - 65: {fileID: 6544032}
   - 114: {fileID: 11479976}
+  - 82: {fileID: 8278922}
   m_Layer: 0
   m_Name: SawBlade
   m_TagString: Untagged
@@ -109,10 +110,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148300}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: -81.1, y: 0, z: 16}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: -1}
+  m_LocalPosition: {x: -81.1, y: 0, z: -16.5}
   m_LocalScale: {x: 8, y: 8, z: 8}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -360, z: 0}
   m_Children:
   - {fileID: 448304}
   - {fileID: 448308}
@@ -166,10 +167,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148308}
-  m_LocalRotation: {x: 0.93228644, y: 0, z: 0, w: -0.36172104}
-  m_LocalPosition: {x: 0, y: 0, z: -2.6081522}
+  m_LocalRotation: {x: -0.99961996, y: 0, z: 0, w: -0.027568046}
+  m_LocalPosition: {x: 0, y: 0, z: -1.6545098}
   m_LocalScale: {x: 0.375, y: 0.375, z: 0.375}
-  m_LocalEulerAnglesHint: {x: 2837.5881, y: -180, z: -180}
+  m_LocalEulerAnglesHint: {x: 2523.1594, y: -180, z: -180}
   m_Children: []
   m_Father: {fileID: 448300}
   m_RootOrder: 1
@@ -363,6 +364,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4468539, y: 3.2171524, z: 3.059694}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8278922
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148308}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d509d5d78bd277c4e84b4de36ffdc401, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 0.8
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 100
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!111 &11139774
 Animation:
   m_ObjectHideFlags: 1
@@ -389,8 +464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612bfe6b7ff612549ab2952994b75b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeTillNextHit: 1.1006222
-  damage: 15
+  timeTillNextHit: 2
+  damage: 8
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
