@@ -4637,6 +4637,22 @@ Prefab:
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 142148, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_Name
+      value: AttackParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 105956, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_Name
+      value: DefenseParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 186090, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_Name
+      value: DefenseParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 184754, guid: 1673822d2508371498ef1be030ada982, type: 2}
+      propertyPath: m_Name
+      value: AttackParticles
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1673822d2508371498ef1be030ada982, type: 2}
   m_IsPrefabParent: 0
@@ -5288,7 +5304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df84b711d87f8a4b99aac0ffada4432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlidingSound: {fileID: 0}
+  LeverSound: {fileID: 8300000, guid: d6e780d2552d9f84dac1a157fdd634d8, type: 3}
 --- !u!65 &677271552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8575,6 +8591,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leverPulled: {fileID: 8300000, guid: 1559d0ea91fb7df40a6f0ec68f84420e, type: 3}
+  _playSound: 0
+  WallSound: {fileID: 1016661500}
 --- !u!111 &1016661497
 Animation:
   m_ObjectHideFlags: 0
@@ -16372,6 +16390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a3c9625611b3146872f41be9da76d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LeverSound: {fileID: 8300000, guid: d6e780d2552d9f84dac1a157fdd634d8, type: 3}
 --- !u!65 &1912234652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16652,6 +16671,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1946868503}
   - 114: {fileID: 1946868504}
+  - 82: {fileID: 1946868505}
   m_Layer: 0
   m_Name: Falling Fence Passage
   m_TagString: Untagged
@@ -16683,6 +16703,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f0407f32d73cb4eabb08bd0d46beeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LeverSound: {fileID: 1946868505}
+--- !u!82 &1946868505
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1946868502}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d6e780d2552d9f84dac1a157fdd634d8, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1973599107
 GameObject:
   m_ObjectHideFlags: 0
