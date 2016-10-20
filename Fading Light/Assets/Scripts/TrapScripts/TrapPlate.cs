@@ -14,12 +14,17 @@ public class TrapPlate : MonoBehaviour {
 	public bool Pressed = false;
 	public GameObject[] otherPlates;
 	public bool Disabled;
+	AudioSource ppdown;
+	AudioSource ppup;
 
 
 	/// <summary>
 	/// Initialises my variables and grabs my list of traps.
 	/// </summary>
 	void Awake(){
+		AudioSource[] sounds = GetComponents<AudioSource> ();
+		ppdown = sounds [0];
+		ppup = sounds [1];
 		otherPlates = GameObject.FindGameObjectsWithTag ("SpearTrap");
 		for (int i = 0; i < traps.Length; i++) {
 			_trapList.Add(traps[i]);
@@ -44,6 +49,8 @@ public class TrapPlate : MonoBehaviour {
 		{
 			
 			this.GetComponent<Animation>().Play("PressurePlateDown");
+			ppdown.Play ();
+			
 			//Ensures that the animation plays smoothly.
 			_trapList.Clear ();
 			for (int i = 0; i < traps.Length; i++) {
@@ -71,6 +78,7 @@ public class TrapPlate : MonoBehaviour {
 		bool duplicate = false;
 		if (plate.GetComponent<TrapPlate>().Pressed) {
 			plate.GetComponent<Animation> ().Play ("PressurePlateUp");
+			ppup.Play ();
 			for (int i = 0; i < otherTraps.Length; i++) {
 				duplicate = false;
 				for (int j = 0; j < traps.Length; j++) {
@@ -95,6 +103,7 @@ public class TrapPlate : MonoBehaviour {
 	/// </summary>
 	public void UnsetTraps(){
 		foreach (GameObject o in _trapList) {
+			o.GetComponent<AudioSource> ().Play ();
 			o.GetComponent<Animation>().Play("Anim_TrapNeedle_Hide");
 		}
 	}
@@ -104,7 +113,8 @@ public class TrapPlate : MonoBehaviour {
 	/// </summary>
 	/// <param name="trap">Trap.</param>
 	public void SetTraps(GameObject trap){
-			trap.GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
+		trap.GetComponent<AudioSource> ().Play ();
+		trap.GetComponent<Animation>().Play("Anim_TrapNeedle_Show");
 
 	}
 }
