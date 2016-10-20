@@ -52,8 +52,8 @@ public class Player: BaseEntity
 
     private float _attackPotTimeLeft;
     private float _defensePotTimeLeft;
-    private float _attackPotDuration = 10f;
-    private float _defensePotDuration = 10f;
+    private float _attackPotDuration = 20f;
+    private float _defensePotDuration = 20f;
     
     /// <summary>
     /// Update the timers on certain effects the character is under
