@@ -16,7 +16,6 @@ public class ShopKeeper : MonoBehaviour {
 	public GameObject ItemStand;
 	private bool _hasPlayed;
     private Animator _animator;
-    private bool _colliding;
 
 	public SubInventoryManager SubInventoryManager;
 
@@ -29,7 +28,6 @@ public class ShopKeeper : MonoBehaviour {
 	void Start(){
 		_hasPlayed = false;
 		ItemStand.SetActive (false);
-        _colliding = false;
     }
 
 	void Update(){
