@@ -317,7 +317,7 @@ public class MolemanBoss : BaseEntity
         if (_summoning) return;
         base.Damage(amount, attacker);
 
-        if (CurrentHealth < 150 && !_summonedOnce)
+        if (CurrentHealth < IntialHealth*0.75 && !_summonedOnce)
         {
             _summonedOnce = true;
             Debug.Log("Health reduced to first summoning level");
@@ -325,7 +325,7 @@ public class MolemanBoss : BaseEntity
             return;
         }
 
-        if (CurrentHealth < 40 && !_summonedTwice)
+        if (CurrentHealth < IntialHealth * 0.25 && !_summonedTwice)
         {
             _summonedTwice = true;
             Debug.Log("Health reduced to first summoning level");
@@ -372,7 +372,7 @@ public class MolemanBoss : BaseEntity
         {
             pathfinder.Stop();
             _animator.Play("creature1Die", PlayMode.StopAll);
-            fsm.ChangeState(States.Death);
+            fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         }
         catch { }

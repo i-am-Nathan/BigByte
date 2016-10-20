@@ -73,7 +73,9 @@ public class MolemanMob : BaseEntity
 	{
         if (DEBUG) Debug.Log("The moleman mob wakes.");
         //base.Start();
-        spawnLocation = this.gameObject.transform.position;       
+        spawnLocation = this.gameObject.transform.position;
+
+        this.enabled = false;
 
         //Initlize the pathfinder, collision range and animator 
         pathfinder = GetComponent<NavMeshAgent>();
@@ -245,9 +247,12 @@ public class MolemanMob : BaseEntity
 
     IEnumerator Falling_Enter()
     {
+
         //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, transform.position.y-4, transform.position.z),0.5f);
+        this.enabled = true;
         yield return new WaitForSeconds(2f);
         pathfinder.enabled = false;
+        
 
         MolemanBoss moley = GameObject.FindGameObjectWithTag("MolemanBoss").GetComponent<MolemanBoss>();
 
