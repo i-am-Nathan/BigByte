@@ -145,7 +145,7 @@ public class MolemanBoss : BaseEntity
         yield return new WaitForSeconds(1f);
         _storyline.NextMoleMan();
         yield return new WaitForSeconds(2f);
-        GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("Mud").gameObject.SetActive(false);
         fsm.ChangeState(States.Chase);
     }
 
