@@ -62,6 +62,8 @@ public class MolemanMob : BaseEntity
     private bool _isMoving;
     private int _walkCount;
 
+    public bool FirstWave;
+
     private bool DEBUG = false;
 
 	private AchievementManager _achievementManager;
@@ -246,10 +248,9 @@ public class MolemanMob : BaseEntity
     }
 
     IEnumerator Falling_Enter()
-    {
-
+    {        
         //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, transform.position.y-4, transform.position.z),0.5f);
-        this.enabled = true;
+        
         yield return new WaitForSeconds(2f);
         pathfinder.enabled = false;
         
@@ -258,13 +259,23 @@ public class MolemanMob : BaseEntity
 
         while (true)
         {
-            if (moley.isSummoning())
+            if (moley.isSummoningFirstWave())
             {
-                break;
+                if (FirstWave)
+                {
+                    break;
+                }
+            } else if (moley.isSummoningSecondWave())
+            {
+                if (!FirstWave)
+                {
+                    break;
+                }               
             }
             yield return new WaitForSeconds(0.25f);
         }
 
+        this.enabled = true;
         _animator.Play("Falling", PlayMode.StopAll);
 
         while (transform.position.y > -17.7f)
