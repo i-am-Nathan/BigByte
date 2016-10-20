@@ -12,11 +12,13 @@ public class LightningCollider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(_timer);
         if ((Time.fixedTime - _timer) > 2f)
         {
             Destroy(gameObject);
         }
             
 	}
+
+
+
 }
