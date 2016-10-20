@@ -25,9 +25,17 @@ public class Storyline_Level2 : Storyline
 
     public override void DialogueComplete()
     {
-        _currentStep++;
-        _done = false;
-       // throw new NotImplementedException();
+        if (_currentStep == 1)
+        {
+            _currentStep++;
+            _done = false;
+        }
+        else if (_currentStep == 3)
+        {
+            _currentStep++;
+            _done = false;
+        }
+        // throw new NotImplementedException();
     }
 
     public override void EnableMoleMan()
@@ -89,7 +97,6 @@ public class Storyline_Level2 : Storyline
         }
         else if (_currentStep == 1)
         {
-            Debug.Log("Step 2");
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[0];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[0];
             TorchController.IsDisabled = true;
@@ -97,7 +104,8 @@ public class Storyline_Level2 : Storyline
             _done = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
-            MoleMen[0].IsDisabled = false;
+            //MoleMen[0].IsDisabled = false;
+            MoleMen[1].IsDisabled = true;
             CameraRig.GetComponent<PlayerCam>().CameraState = 1;
             _done = true;
         }
