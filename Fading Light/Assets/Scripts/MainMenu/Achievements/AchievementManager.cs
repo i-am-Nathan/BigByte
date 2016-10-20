@@ -92,6 +92,7 @@ public class AchievementManager : MonoBehaviour
 
     private Text achievementText;
 
+    private GameData Data;
 
     /// <summary>
     ///Making this class into global
@@ -125,8 +126,10 @@ public class AchievementManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        GameObject go = GameObject.FindGameObjectWithTag("Game Data");
+        Data = (GameData)go.GetComponent(typeof(GameData));
         //GOT THE ACHIEVEMENT POPUP
-		AchievementPopup.enabled = false;
+        AchievementPopup.enabled = false;
    //     ValidateAchievements();
       //  UpdateRewardPointTotals();
     }
@@ -189,6 +192,30 @@ public class AchievementManager : MonoBehaviour
     }
 
 
+    public void AchievementObtained(string achievementName)
+    {
+       
+        Achievement achievement = GetAchievementByName(achievementName);
+        if (achievement == null)
+        {
+            Debug.LogWarning("AchievementManager::AddProgressToAchievement() - Trying to add progress to an achievemnet that doesn't exist: " + achievementName);
+            return;
+        }
+          
+        achievement.Earned = true;
+
+       
+
+        AchievementEarned();
+        AchievementPopup.enabled = true;
+        executedTime = Time.time;
+        achievementText.text = achievement.Name;
+        //Debug.Log(Data.GameAchievements.Count);
+        Data.AddAchievment(new GameAchievement(achievement.Name, achievement.Description));
+        //Debug.Log("SIZE" + Data.GameAchievements.Count);
+
+        Debug.Log("ACHIEVEMENT OBTAINED");
+    }
     /// <summary>
     ///This is the one that will be called by the playerController
     /// </summary>
@@ -196,24 +223,7 @@ public class AchievementManager : MonoBehaviour
     /// <param name="progressAmount">The progress amount.</param>
     public void AddProgressToAchievement(string achievementName, float progressAmount)
     {
-        Achievement achievement = GetAchievementByName(achievementName);
-        if (achievement == null)
-        {
-            Debug.LogWarning("AchievementManager::AddProgressToAchievement() - Trying to add progress to an achievemnet that doesn't exist: " + achievementName);
-            return;
-        }
 
-	
-	//If the achievement has been earned than create a pop up for the achievement for 3 seconds
-        if (achievement.AddProgress(progressAmount))
-        {
-            AchievementEarned();
-	    Debug.Log("POPUP ACHIEVEMENT");	
-            AchievementPopup.enabled = true;
-            executedTime = Time.time;
-            achievementText.text = achievement.Name;
-
-        }
     }
 
 
