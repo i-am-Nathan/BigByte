@@ -246,7 +246,7 @@ GameObject:
   - 198: {fileID: 19832920}
   - 199: {fileID: 19964874}
   m_Layer: 2
-  m_Name: AttackParticles
+  m_Name: DefenseParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1743,6 +1743,7 @@ GameObject:
   - 114: {fileID: 11440422}
   - 114: {fileID: 11427820}
   - 222: {fileID: 22205540}
+  - 114: {fileID: 11443164}
   m_Layer: 2
   m_Name: Health Canvas
   m_TagString: Untagged
@@ -1778,7 +1779,7 @@ GameObject:
   - 198: {fileID: 19891438}
   - 199: {fileID: 19985592}
   m_Layer: 2
-  m_Name: DefenseParticles
+  m_Name: AttackParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3528,6 +3529,7 @@ GameObject:
   - 114: {fileID: 11437290}
   - 114: {fileID: 11473508}
   - 222: {fileID: 22246324}
+  - 114: {fileID: 11476916}
   m_Layer: 2
   m_Name: Health Canvas
   m_TagString: Untagged
@@ -3592,7 +3594,7 @@ GameObject:
   - 198: {fileID: 19850300}
   - 199: {fileID: 19986010}
   m_Layer: 2
-  m_Name: DefenseParticles
+  m_Name: AttackParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3640,7 +3642,7 @@ GameObject:
   - 198: {fileID: 19892794}
   - 199: {fileID: 19978866}
   m_Layer: 2
-  m_Name: AttackParticles
+  m_Name: DefenseParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4430,7 +4432,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 411.7, y: 17.4, z: -297.4}
+=======
+  m_LocalPosition: {x: 422, y: 17.4, z: -289.4}
+>>>>>>> origin/develop
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -8692,7 +8698,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 4
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!54 &5490314
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -8707,7 +8713,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 4
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!65 &6524918
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -10154,6 +10160,17 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 100
+--- !u!114 &11443164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c70407f0a4bba6408662a7e2283716d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11443318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10356,6 +10373,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponDamage: 30
+--- !u!114 &11476916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c70407f0a4bba6408662a7e2283716d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11479488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10596,7 +10624,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5765683
-  m_Height: 4
+  m_Height: 2.476366
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &13638846
@@ -10609,7 +10637,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5765683
-  m_Height: 4
+  m_Height: 2.476366
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &13702640

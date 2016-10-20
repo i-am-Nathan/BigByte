@@ -24,6 +24,7 @@ public class Storyline_Level4 : Storyline
     private ToolTips _tips;
     private bool _tipsDone = false;
     private float _startDisplay;
+    private bool _finished = false;
 
     public override void DialogueComplete()
     {
@@ -75,6 +76,8 @@ public class Storyline_Level4 : Storyline
             return;
         }
 
+        _finished = false;
+
         if (_currentStep == 0)
         {
             SmallMoleMan.IsDisabled = true;
@@ -113,7 +116,13 @@ public class Storyline_Level4 : Storyline
             //Transformation done
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             _done = true;
+            _finished = true;
         }
+    }
+
+    public bool IsDone()
+    {
+        return _finished;
     }
 
     public override void CharacterDamageEnabled(bool enabled)

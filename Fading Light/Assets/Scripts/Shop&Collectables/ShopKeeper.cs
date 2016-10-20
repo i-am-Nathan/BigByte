@@ -19,26 +19,37 @@ public class ShopKeeper : MonoBehaviour {
 
 	public SubInventoryManager SubInventoryManager;
 
+	/// <summary>
+	/// Used to set up the shop animation
+	/// </summary>
     void Awake(){
 		ShopKeeperCamera.enabled = false;
 		_transition = ShopKeeperCamera.GetComponent<Animation> ();
-        _animator = GetComponentInChildren<Animator>();//need this...
+        _animator = GetComponentInChildren<Animator>();
     }
 		
+	/// <summary>
+	/// Setting up the item stand
+	/// </summary>
 	void Start(){
 		_hasPlayed = false;
 		ItemStand.SetActive (false);
     }
 
+	/// <summary>
+	/// Playing the animation to rotate the potions
+	/// </summary>
 	void Update(){
 		if (!_transition.isPlaying && _hasPlayed) {
 			ItemStand.SetActive (true);
 			StartCoroutine(DelayAnimation());
 
 		} 
-
 	}
 
+	/// <summary>
+	/// Plays the animation for the moleman at intervals
+	/// </summary>
 	private IEnumerator DelayAnimation()
 	{
 		int rand = Random.Range (1, 3);
