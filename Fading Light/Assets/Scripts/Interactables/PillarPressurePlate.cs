@@ -1,13 +1,30 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\PillarPressurePlate.cs
+//
+// summary:	Implements the pillar pressure plate class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A pillar pressure plate. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class PillarPressurePlate : MonoBehaviour {
 
+    /// <summary>   The things on top. </summary>
     private int _thingsOnTop = 0;
+    /// <summary>   True if pressed. </summary>
     private bool _pressed = false;
+    /// <summary>   True to on cooldown. </summary>
     public bool _onCooldown = false;
+    /// <summary>   The pillar number. </summary>
     public int pillarNumber;
+    /// <summary>   The cooldown start time. </summary>
     private float _cooldownStartTime;
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
 
     void Update()
     {
@@ -17,6 +34,12 @@ public class PillarPressurePlate : MonoBehaviour {
         }
         
     }
+
+    /// <summary>   Executes the trigger enter action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
     void OnTriggerEnter(Collider other)
     {
@@ -47,6 +70,12 @@ public class PillarPressurePlate : MonoBehaviour {
         }
 
     }
+
+    /// <summary>   Executes the trigger exit action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
     void OnTriggerExit(Collider other)
     {
@@ -79,6 +108,10 @@ public class PillarPressurePlate : MonoBehaviour {
 
     }
 
+    /// <summary>   Puts on cool down. </summary>
+    ///
+ 
+
     public void putOnCoolDown()
     {
         transform.Find("Lightning").GetComponent<ParticleSystem>().Stop();
@@ -87,6 +120,10 @@ public class PillarPressurePlate : MonoBehaviour {
         //start timing
         _cooldownStartTime = Time.fixedTime;
     }
+
+    /// <summary>   Take off cool down. </summary>
+    ///
+ 
 
     public void takeOffCoolDown()
     {

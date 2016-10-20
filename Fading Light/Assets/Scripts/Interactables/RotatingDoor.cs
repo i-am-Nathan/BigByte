@@ -1,11 +1,26 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\RotatingDoor.cs
+//
+// summary:	Implements the rotating door class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A rotating door. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class RotatingDoor : MonoBehaviour {
 
+    /// <summary>   Target angle. </summary>
     private int _targetAngle = 0;
+    /// <summary>   The rotate speed. </summary>
     private int _rotateSpeed = 5;
+    /// <summary>   True to moving. </summary>
     private bool _moving = false;
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
 
     void Update()
     {
@@ -24,6 +39,10 @@ public class RotatingDoor : MonoBehaviour {
         }
     }
 
+    /// <summary>   Rotate clockwise. </summary>
+    ///
+ 
+
     public void rotateClockwise()
     {
         if (!_moving)
@@ -37,6 +56,10 @@ public class RotatingDoor : MonoBehaviour {
             Debug.Log(_targetAngle);
         }
     }
+
+    /// <summary>   Rotates this object. </summary>
+    ///
+ 
 
     public void rotate()
     {

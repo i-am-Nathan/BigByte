@@ -1,35 +1,58 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\GameControl\Storyline_Level3.cs
+//
+// summary:	Implements the storyline level 3 class
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
-/// <summary>
-/// Storyline class for the third level
-/// </summary>
+/// <summary>   A storyline level 3. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class Storyline_Level3 : Storyline
 {
-	// Cutscenes and other game objects to be used as part of the storyline
+
+
+    /// <summary>   The first player. </summary>
     public PlayerController Player1;
+    /// <summary>   The second player. </summary>
     public Player2Controller Player2;
+    /// <summary>   The mole men. </summary>
     public List<MoleManContoller> MoleMen;
+    /// <summary>   The torch controller. </summary>
     public TorchFuelController TorchController;
+    /// <summary>   The reference points. </summary>
     public List<GameObject> ReferencePoints;
+    /// <summary>   The camera rig. </summary>
     public GameObject CameraRig;
+    /// <summary>   The prisoner. </summary>
     public PrisonerController Prisoner;
+    /// <summary>   The boss. </summary>
     public SkeleBoss Boss;
+    /// <summary>   The cut scene positions. </summary>
     public List<GameObject> CutScenePositions;
+    /// <summary>   The customer scene targets. </summary>
     public List<GameObject> CustSceneTargets;
 
+    /// <summary>   The current step. </summary>
     public int _currentStep = 0;
+    /// <summary>   True to done. </summary>
     private bool _done = false;
+    /// <summary>   The tips. </summary>
     private ToolTips _tips;
+    /// <summary>   True to tips done. </summary>
     private bool _tipsDone = false;
+    /// <summary>   The start display. </summary>
     private float _startDisplay;
+    /// <summary>   The block. </summary>
     public GameObject Block;
 
-	/// <summary>
-	/// Dialogues the complete
-	/// </summary>
+    /// <summary>   Dialogues the complete. </summary>
+    ///
+ 
+
     public override void DialogueComplete()
     {
         _currentStep++;
@@ -37,11 +60,19 @@ public class Storyline_Level3 : Storyline
        // throw new NotImplementedException();
     }
 
+    /// <summary>   Enables the mole man. </summary>
+    ///
+ 
+
     public override void EnableMoleMan()
     {
         
         //throw new NotImplementedException();
     }
+
+    /// <summary>   Nexts this instance. </summary>
+    ///
+ 
 
     public override void Next()
     {
@@ -53,6 +84,10 @@ public class Storyline_Level3 : Storyline
 
     }
 
+    /// <summary>   Deletes the first mole man from list. </summary>
+    ///
+ 
+
     public override void NextMoleMan()
     {
         if (_currentStep == 4 || _currentStep == 2)
@@ -62,6 +97,10 @@ public class Storyline_Level3 : Storyline
         }
         //throw new NotImplementedException();
     }
+
+    /// <summary>   Disables the mole man. </summary>
+    ///
+ 
 
     public override void StartText()
     {
@@ -73,11 +112,21 @@ public class Storyline_Level3 : Storyline
     }
 
     // Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
     void Start () {
 	
 	}
 	
 	// Update is called once per frame
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update () {
 
         if (_done)
@@ -117,7 +166,6 @@ public class Storyline_Level3 : Storyline
             DestroyObject(Block);
         }else if (_currentStep == 4)
         {
-			// Cutscene and camera movement
             TorchController.IsDisabled = true;
             Player1.IsDisabled = true;
             Player2.IsDisabled = true;
@@ -142,9 +190,12 @@ public class Storyline_Level3 : Storyline
 
     }
 
-	/// <summary>
-	/// Enabling the character damage (as it is disabled during cutscenes)
-	/// </summary>
+    /// <summary>   Character damage enabled. </summary>
+    ///
+ 
+    ///
+    /// <param name="enabled">  True to enable, false to disable. </param>
+
     public override void CharacterDamageEnabled(bool enabled)
     {
         Player1.CanTakeDamage = enabled;

@@ -1,33 +1,45 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\UI\StartLevel.cs
+//
+// summary:	Implements the start level class
+
+using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// This class will be used for the level name at the beginning.
-/// </summary>
+/// <summary>   This class will be used for the level name at the beginning. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class StartLevel : MonoBehaviour
 {
     //The time taken before the text starts to fade.
+    /// <summary>   The wait time. </summary>
     public float WaitTime;
-    /// <summary>
-    /// Start this instance.
-    /// </summary>
+
+    /// <summary>   Start this instance. </summary>
+    ///
+ 
+
     public void Start()
     {
 
         Fade();
     }
-    /// <summary>
-    /// Method which starts a coroutine.
-    /// </summary>
+
+    /// <summary>   Method which starts a coroutine. </summary>
+    ///
+ 
+
     public void Fade()
     {
         StartCoroutine(FadeText());
     }
 
-    /// <summary>
-    /// This function will fade text over a period of time.
-    /// </summary>
-    /// <returns>The text.</returns>
+    /// <summary>   This function will fade text over a period of time. </summary>
+    ///
+ 
+    ///
+    /// <returns>   The text. </returns>
+
     IEnumerator FadeText()
     {
         CanvasGroup cg = GetComponent<CanvasGroup>();

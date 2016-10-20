@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\PlatformRunner\NetworkResultsReceiver.cs
+//
+// summary:	Implements the network results receiver class
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,31 +14,54 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   (Serializable) a network results receiver. </summary>
+    ///
+ 
+
     [Serializable]
     public class NetworkResultsReceiver : EditorWindow
     {
+        /// <summary>   The instance. </summary>
         public static NetworkResultsReceiver Instance;
 
+        /// <summary>   The status label. </summary>
         private string m_StatusLabel;
+        /// <summary>   The listener. </summary>
         private TcpListener m_Listener;
 
+        /// <summary>   The configuration. </summary>
         [SerializeField]
         private PlatformRunnerConfiguration m_Configuration;
 
+        /// <summary>   The test results. </summary>
         private List<ITestResult> m_TestResults = new List<ITestResult>();
 
         #region steering variables
+        /// <summary>   True if run finished. </summary>
         private bool m_RunFinished;
+        /// <summary>   True to repaint. </summary>
         private bool m_Repaint;
 
+        /// <summary>   The test timeout. </summary>
         private TimeSpan m_TestTimeout = TimeSpan.Zero;
+        /// <summary>   The last message received Date/Time. </summary>
         private DateTime m_LastMessageReceived;
+        /// <summary>   True to running. </summary>
         private bool m_Running;
 
+        /// <summary>   The receive message timeout. </summary>
         public TimeSpan ReceiveMessageTimeout = TimeSpan.FromSeconds(30);
+        /// <summary>   The initial connection timeout. </summary>
         private readonly TimeSpan m_InitialConnectionTimeout = TimeSpan.FromSeconds(300);
+        /// <summary>   True if test failed. </summary>
         private bool m_TestFailed;
         #endregion
+
+        /// <summary>   Callback, called when the accept. </summary>
+        ///
+     
+        ///
+        /// <param name="client">   The client. </param>
 
         private void AcceptCallback(TcpClient client)
         {
@@ -109,6 +136,13 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Writes the results to log. </summary>
+        ///
+     
+        ///
+        /// <param name="dto">  The dto. </param>
+        /// <param name="list"> The list. </param>
+
         private void WriteResultsToLog(ResultDTO dto, List<ITestResult> list)
         {
             string result = "Run finished for: " + dto.loadedLevelName;
@@ -123,6 +157,10 @@ namespace UnityTest
             else
                 Debug.LogWarning(result);
         }
+
+        /// <summary>   Updates this object. </summary>
+        ///
+     
 
         public void Update()
         {
@@ -174,6 +212,10 @@ namespace UnityTest
             if (m_Repaint) Repaint();
         }
 
+        /// <summary>   Executes the enable action. </summary>
+        ///
+     
+
         public void OnEnable()
         {
             minSize = new Vector2(300, 100);
@@ -183,6 +225,12 @@ namespace UnityTest
             if (EditorApplication.isCompiling) return;
             EnableServer();
         }
+
+        /// <summary>   Enables the server. </summary>
+        ///
+     
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
 
         private void EnableServer()
         {
@@ -211,12 +259,20 @@ namespace UnityTest
             m_LastMessageReceived = DateTime.Now + m_InitialConnectionTimeout;
         }
 
+        /// <summary>   Executes the disable action. </summary>
+        ///
+     
+
         public void OnDisable()
         {
             Instance = null;
             if (m_Listener != null)
                 m_Listener.Stop();
         }
+
+        /// <summary>   Executes the graphical user interface action. </summary>
+        ///
+     
 
         public void OnGUI()
         {
@@ -231,6 +287,12 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Starts a receiver. </summary>
+        ///
+     
+        ///
+        /// <param name="configuration">    The configuration. </param>
+
         public static void StartReceiver(PlatformRunnerConfiguration configuration)
         {
             var w = (NetworkResultsReceiver)GetWindow(typeof(NetworkResultsReceiver), false);
@@ -242,10 +304,20 @@ namespace UnityTest
             w.Show(true);
         }
 
+        /// <summary>   Sets a configuration. </summary>
+        ///
+     
+        ///
+        /// <param name="configuration">    The configuration. </param>
+
         private void SetConfiguration(PlatformRunnerConfiguration configuration)
         {
             m_Configuration = configuration;
         }
+
+        /// <summary>   Stops a receiver. </summary>
+        ///
+     
 
         public static void StopReceiver()
         {

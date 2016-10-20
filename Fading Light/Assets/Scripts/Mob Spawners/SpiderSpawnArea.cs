@@ -1,23 +1,35 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Mob Spawners\SpiderSpawnArea.cs
+//
+// summary:	Implements the spider spawn area class
+
+using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Used to turn an object into torch fuel collectable
-/// </summary>
+/// <summary>   Used to turn an object into torch fuel collectable. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class SpiderSpawnArea : MonoBehaviour
 {
+    /// <summary>   The fuel amount. </summary>
     public float FuelAmount = 10;
+    /// <summary>   The lower bound. </summary>
     public int LowerBound;
+    /// <summary>   The upper bound. </summary>
     public int UpperBound;
 
+    /// <summary>   The torch fuel controller script. </summary>
     private TorchFuelController TorchFuelControllerScript;
+    /// <summary>   Manager for achievement. </summary>
 	private AchievementManager _achievementManager;
 
+    /// <summary>   True to debug. </summary>
     private bool DEBUG = false;
 
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
+
     void Start()
     {
         float randomNumber = Random.Range(LowerBound, UpperBound);
@@ -39,10 +51,10 @@ public class SpiderSpawnArea : MonoBehaviour
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
     }
 
+    /// <summary>   Update is called once per frame. </summary>
+    ///
+ 
 
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
     void Update()
     {
 

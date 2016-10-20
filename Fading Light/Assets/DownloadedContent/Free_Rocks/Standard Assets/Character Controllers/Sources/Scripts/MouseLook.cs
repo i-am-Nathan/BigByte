@@ -1,3 +1,7 @@
+// file:	Assets\DownloadedContent\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs
+//
+// summary:	Implements the mouse look class
+
 using UnityEngine;
 using System.Collections;
 
@@ -11,24 +15,46 @@ using System.Collections;
 /// - Add FPSInputController script to the capsule
 ///   -> A CharacterMotor and a CharacterController component will be automatically added.
 
+/// <summary>
 /// - Create a camera. Make the camera a child of the capsule. Reset it's transform.
 /// - Add a MouseLook script to the camera.
-///   -> Set the mouse look to use LookY. (You want the camera to tilt up and down like a head. The character already turns.)
+///   -> Set the mouse look to use LookY. (You want the camera to tilt up and down like a head.
+///   The character already turns.)
+/// </summary>
+///
+/// <remarks>    . </remarks>
+
 [AddComponentMenu("Camera-Control/Mouse Look")]
 public class MouseLook : MonoBehaviour {
 
+    /// <summary>   Values that represent rotation axes. </summary>
+    ///
+ 
+
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
+    /// <summary>   The axes. </summary>
 	public RotationAxes axes = RotationAxes.MouseXAndY;
+    /// <summary>   The sensitivity x coordinate. </summary>
 	public float sensitivityX = 15F;
+    /// <summary>   The sensitivity y coordinate. </summary>
 	public float sensitivityY = 15F;
 
+    /// <summary>   The minimum x coordinate. </summary>
 	public float minimumX = -360F;
+    /// <summary>   The maximum x coordinate. </summary>
 	public float maximumX = 360F;
 
+    /// <summary>   The minimum y coordinate. </summary>
 	public float minimumY = -60F;
+    /// <summary>   The maximum y coordinate. </summary>
 	public float maximumY = 60F;
 
+    /// <summary>   The rotation y coordinate. </summary>
 	float rotationY = 0F;
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
 
 	void Update ()
 	{
@@ -53,7 +79,11 @@ public class MouseLook : MonoBehaviour {
 			transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
 		}
 	}
-	
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start ()
 	{
 		// Make the rigid body not change rotation

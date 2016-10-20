@@ -1,30 +1,64 @@
+// file:	Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\CharacterDemoController.cs
+//
+// summary:	Implements the character demo controller class
 
 using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>   A controller for handling character demoes. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class CharacterDemoController : MonoBehaviour 
 {
+    /// <summary>   The animator. </summary>
 	Animator animator;
-	public GameObject		floorPlane;//in this demonstration this is set manually, the Retail Ability system has methods for dealing with this automatically via data structures for environments
 
-	public int 				WeaponState=0;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
-	public bool 			wasAttacking;// we need this so we can take lock the direction we are facing during attacks, mecanim sometimes moves past the target which would flip the character around wildly
+    /// <summary>
+    /// in this demonstration this is set manually, the Retail Ability system has methods for dealing
+    /// with this automatically via data structures for environments.
+    /// </summary>
 
-	float				rotateSpeed = 20.0f; //used to smooth out turning
+	public GameObject		floorPlane;
 
+    /// <summary>   unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield) </summary>
+	public int 				WeaponState=0;
+
+    /// <summary>
+    /// we need this so we can take lock the direction we are facing during attacks, mecanim
+    /// sometimes moves past the target which would flip the character around wildly.
+    /// </summary>
+
+	public bool 			wasAttacking;
+
+    /// <summary>   used to smooth out turning. </summary>
+	float				rotateSpeed = 20.0f;
+
+    /// <summary>   The movement target position. </summary>
 	public Vector3 		movementTargetPosition;
+    /// <summary>   The attack position. </summary>
 	public Vector3 		attackPos;
+    /// <summary>   The look at position. </summary>
 	public Vector3		lookAtPos;
-	float				gravity = 0.3f;//unused in this demonstration
+    /// <summary>   unused in this demonstration. </summary>
+	float				gravity = 0.3f;
 	
+    /// <summary>   The hit. </summary>
 	RaycastHit hit;
+    /// <summary>   The ray. </summary>
 	Ray ray;
 	
-	public bool rightButtonDown=false;//we use this to "skip out" of consecutive right mouse down...
+    /// <summary>   we use this to "skip out" of consecutive right mouse down... </summary>
+	public bool rightButtonDown=false;
 	
 	// Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start () 
 	{	
 		animator = GetComponentInChildren<Animator>();//need this...
@@ -32,6 +66,11 @@ public class CharacterDemoController : MonoBehaviour
 	}
 	
 	// Update is called once per frame
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update () 
 	{
 		//The Update logic does:
@@ -172,7 +211,11 @@ public class CharacterDemoController : MonoBehaviour
 			animator.SetBool("Idling", true);
 		}
 	}
-	
+
+    /// <summary>   Executes the graphical user interface action. </summary>
+    ///
+ 
+
 	void OnGUI()
 	{
 		string tempString = "LMB=move RMB=attack p=pain abc=deaths 12345678 0=change weapons";

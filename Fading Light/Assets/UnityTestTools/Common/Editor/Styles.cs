@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Common\Editor\Styles.cs
+//
+// summary:	Implements the styles class
+
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,18 +9,33 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   A styles. </summary>
+    ///
+ 
+
     public static class Styles
     {
+        /// <summary>   The information. </summary>
         public static GUIStyle info;
+        /// <summary>   List of tests. </summary>
         public static GUIStyle testList;
 
+        /// <summary>   The selected foldout. </summary>
         public static GUIStyle selectedFoldout;
+        /// <summary>   The foldout. </summary>
         public static GUIStyle foldout;
+        /// <summary>   The toolbar label. </summary>
         public static GUIStyle toolbarLabel;
         
+        /// <summary>   Name of the test. </summary>
         public static GUIStyle testName;
 
+        /// <summary>   The selected color. </summary>
         private static readonly Color k_SelectedColor = new Color(0.3f, 0.5f, 0.85f);
+
+        /// <summary>   Static constructor. </summary>
+        ///
+     
 
         static Styles()
         {

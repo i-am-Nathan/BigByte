@@ -23,6 +23,10 @@ using System.Collections;
 // This class handles 8 buttons for changing scene.
 // ######################################################################
 
+/// <summary>   A ga free open other scene. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GA_FREE_OpenOtherScene : MonoBehaviour
 {
 	
@@ -34,11 +38,21 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	
 	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start () {		
 	}
 	
 	// Update is called every frame, if the MonoBehaviour is enabled.
 	// http://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update () {		
 	}
 	
@@ -51,6 +65,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	#region UI Responder
 	
 	// Open Demo Scene 1
+
+    /// <summary>   Button open demo scene 1. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene1 ()
 	{
 		// Disable all buttons
@@ -63,6 +82,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 2
+
+    /// <summary>   Button open demo scene 2. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene2 ()
 	{
 		// Disable all buttons
@@ -75,6 +99,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 3
+
+    /// <summary>   Button open demo scene 3. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene3 ()
 	{
 		// Disable all buttons
@@ -87,6 +116,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 4
+
+    /// <summary>   Button open demo scene 4. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene4 ()
 	{
 		// Disable all buttons
@@ -99,6 +133,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 5
+
+    /// <summary>   Button open demo scene 5. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene5 ()
 	{
 		// Disable all buttons
@@ -111,6 +150,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 6
+
+    /// <summary>   Button open demo scene 6. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene6 ()
 	{
 		// Disable all buttons
@@ -123,6 +167,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 7
+
+    /// <summary>   Button open demo scene 7. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene7 ()
 	{
 		// Disable all buttons
@@ -135,6 +184,11 @@ public class GA_FREE_OpenOtherScene : MonoBehaviour
 	}
 	
 	// Open Demo Scene 8
+
+    /// <summary>   Button open demo scene 8. </summary>
+    ///
+ 
+
 	public void ButtonOpenDemoScene8 ()
 	{
 		// Disable all buttons

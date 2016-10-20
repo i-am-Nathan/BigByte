@@ -1,11 +1,23 @@
+// file:	Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\GameScore.cs
+//
+// summary:	Implements the game score class
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>   A game score. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GameScore : MonoBehaviour
 {
+    /// <summary>   The instance. </summary>
     static GameScore s_Instance;
 
+    /// <summary>   Gets the instance. </summary>
+    ///
+    /// <value> The instance. </value>
 
     static GameScore Instance
     {
@@ -20,6 +32,9 @@ public class GameScore : MonoBehaviour
         }
     }
 
+    /// <summary>   Executes the application quit action. </summary>
+    ///
+ 
 
     public void OnApplicationQuit()
     {
@@ -27,13 +42,20 @@ public class GameScore : MonoBehaviour
     }
 
 
+    /// <summary>   Name of the enemy layer. </summary>
     public string playerLayerName = "Player", enemyLayerName = "Enemies";
 
 
+    /// <summary>   The deaths. </summary>
     int m_Deaths;
+    /// <summary>   The kills. </summary>
     readonly Dictionary<string, int> m_Kills = new Dictionary<string, int>();
+    /// <summary>   The start time. </summary>
     float m_StartTime;
 
+    /// <summary>   Gets the deaths. </summary>
+    ///
+    /// <value> The deaths. </value>
 
     public static int Deaths
     {
@@ -50,6 +72,11 @@ public class GameScore : MonoBehaviour
 
 
     #if !UNITY_FLASH
+
+    /// <summary>   Gets a list of types of the kills. </summary>
+    ///
+    /// <value> A list of types of the kills. </value>
+
     public static ICollection<string> KillTypes
     {
         get
@@ -64,6 +91,13 @@ public class GameScore : MonoBehaviour
     }
     #endif  // if !UNITY_FLASH
 
+    /// <summary>   Gets the kills. </summary>
+    ///
+ 
+    ///
+    /// <param name="type"> The type. </param>
+    ///
+    /// <returns>   The kills. </returns>
 
     public static int GetKills(string type)
     {
@@ -75,6 +109,9 @@ public class GameScore : MonoBehaviour
         return Instance.m_Kills[type];
     }
 
+    /// <summary>   Gets the game time. </summary>
+    ///
+    /// <value> The game time. </value>
 
     public static float GameTime
     {
@@ -89,6 +126,11 @@ public class GameScore : MonoBehaviour
         }
     }
 
+    /// <summary>   Registers the death described by deadObject. </summary>
+    ///
+ 
+    ///
+    /// <param name="deadObject">   The dead object. </param>
 
     public static void RegisterDeath(GameObject deadObject)
     {
@@ -112,6 +154,11 @@ public class GameScore : MonoBehaviour
         }
     }
 
+    /// <summary>   Executes the level was loaded action. </summary>
+    ///
+ 
+    ///
+    /// <param name="level">    The level. </param>
 
     public void OnLevelWasLoaded(int level)
     {

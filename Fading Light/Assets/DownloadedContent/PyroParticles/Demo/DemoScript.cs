@@ -1,37 +1,77 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\PyroParticles\Demo\DemoScript.cs
+//
+// summary:	Implements the demo script class
+
+using UnityEngine;
 using System.Collections;
 
 namespace DigitalRuby.PyroParticles
 {
+    /// <summary>   A demo script. </summary>
+    ///
+ 
+
     public class DemoScript : MonoBehaviour
     {
+        /// <summary>   The prefabs. </summary>
         public GameObject[] Prefabs;
+        /// <summary>   The sun. </summary>
         public Light Sun;
+        /// <summary>   The side camera. </summary>
         public Camera SideCamera;
+        /// <summary>   The time of day slider. </summary>
         public UnityEngine.UI.Slider TimeOfDaySlider;
+        /// <summary>   The mouse look toggle. </summary>
         public UnityEngine.UI.Toggle MouseLookToggle;
+        /// <summary>   The current item text. </summary>
         public UnityEngine.UI.Text CurrentItemText;
 
+        /// <summary>   The current prefab object. </summary>
         private GameObject currentPrefabObject;
+        /// <summary>   The current prefab script. </summary>
         private FireBaseScript currentPrefabScript;
+        /// <summary>   The current prefab index. </summary>
         private int currentPrefabIndex;
+
+        /// <summary>   Values that represent rotation axes. </summary>
+        ///
+     
+
         private enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
+        /// <summary>   The axes. </summary>
         private RotationAxes axes = RotationAxes.MouseXAndY;
+        /// <summary>   The sensitivity x coordinate. </summary>
         private float sensitivityX = 15F;
+        /// <summary>   The sensitivity y coordinate. </summary>
         private float sensitivityY = 15F;
+        /// <summary>   The minimum x coordinate. </summary>
         private float minimumX = -360F;
+        /// <summary>   The maximum x coordinate. </summary>
         private float maximumX = 360F;
+        /// <summary>   The minimum y coordinate. </summary>
         private float minimumY = -60F;
+        /// <summary>   The maximum y coordinate. </summary>
         private float maximumY = 60F;
+        /// <summary>   The rotation x coordinate. </summary>
         private float rotationX = 0F;
+        /// <summary>   The rotation y coordinate. </summary>
         private float rotationY = 0F;
+        /// <summary>   The original rotation. </summary>
         private Quaternion originalRotation;
+
+        /// <summary>   Updates the user interface. </summary>
+        ///
+     
 
         private void UpdateUI()
         {
             Sun.transform.rotation = Quaternion.Euler(TimeOfDaySlider.value, 60.0f, 0.0f);
             CurrentItemText.text = Prefabs[currentPrefabIndex].name;
         }
+
+        /// <summary>   Updates the movement. </summary>
+        ///
+     
 
         private void UpdateMovement()
         {
@@ -75,6 +115,10 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Updates the mouse look. </summary>
+        ///
+     
+
         private void UpdateMouseLook()
         {
             if (!MouseLookToggle.isOn)
@@ -113,6 +157,10 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Updates the effect. </summary>
+        ///
+     
+
         private void UpdateEffect()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -129,6 +177,16 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        /// <summary>   Clamp angle. </summary>
+        ///
+     
+        ///
+        /// <param name="angle">    The angle. </param>
+        /// <param name="min">      The minimum. </param>
+        /// <param name="max">      The maximum. </param>
+        ///
+        /// <returns>   A float. </returns>
+
         private static float ClampAngle(float angle, float min, float max)
         {
             if (angle < -360F)
@@ -142,6 +200,10 @@ namespace DigitalRuby.PyroParticles
 
             return Mathf.Clamp(angle, min, max);
         }
+
+        /// <summary>   Begins an effect. </summary>
+        ///
+     
 
         private void BeginEffect()
         {
@@ -190,11 +252,19 @@ namespace DigitalRuby.PyroParticles
             currentPrefabObject.transform.rotation = rotation;
         }
 
+        /// <summary>   Starts a current. </summary>
+        ///
+     
+
         public void StartCurrent()
         {
             StopCurrent();
             BeginEffect();
         }
+
+        /// <summary>   Stops a current. </summary>
+        ///
+     
 
         private void StopCurrent()
         {
@@ -207,6 +277,10 @@ namespace DigitalRuby.PyroParticles
             currentPrefabScript = null;
         }
 
+        /// <summary>   Next prefab. </summary>
+        ///
+     
+
         public void NextPrefab()
         {
             currentPrefabIndex++;
@@ -216,6 +290,10 @@ namespace DigitalRuby.PyroParticles
             }
             UpdateUI();
         }
+
+        /// <summary>   Previous prefab. </summary>
+        ///
+     
 
         public void PreviousPrefab()
         {
@@ -227,11 +305,19 @@ namespace DigitalRuby.PyroParticles
             UpdateUI();
         }
 
+        /// <summary>   Starts this object. </summary>
+        ///
+     
+
         private void Start()
         {
             originalRotation = transform.localRotation;
             UpdateUI();
         }
+
+        /// <summary>   Updates this object. </summary>
+        ///
+     
 
         private void Update()
         {
@@ -239,6 +325,12 @@ namespace DigitalRuby.PyroParticles
             UpdateMouseLook();
             UpdateEffect();
         }
+
+        /// <summary>   Slider changed. </summary>
+        ///
+     
+        ///
+        /// <param name="value">    The value. </param>
 
         public void SliderChanged(float value)
         {

@@ -1,107 +1,175 @@
-﻿using UnityEngine;
+﻿// file:	assets\scripts\mobs\skeleboss.cs
+//
+// summary:	Implements the skeleboss class
+
+using UnityEngine;
 using System.Collections;
 using MonsterLove.StateMachine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls the AI (using FSM) of the large skeleton bosses (e.i. the one found in the tutorial level)
+/// Controls the AI (using FSM) of the large skeleton bosses (e.i. the one found in the tutorial
+/// level)
 /// </summary>
+///
+/// <remarks>    . </remarks>
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class SkeleBoss : BaseEntity
 {
 	//skeleton states
+
+    /// <summary>   Values that represent states. </summary>
+    ///
+ 
+
 	public enum States
 	{
+        /// <summary>   An enum constant representing the init option. </summary>
 		Init,
+        /// <summary>   An enum constant representing the idle option. </summary>
 		Idle,
+        /// <summary>   An enum constant representing the chase option. </summary>
 		Chase,
+        /// <summary>   An enum constant representing the attack option. </summary>
         Attack,
+        /// <summary>   An enum constant representing the taunt option. </summary>
         Taunt,
+        /// <summary>   An enum constant representing the summoning option. </summary>
         Summoning,
+        /// <summary>   An enum constant representing the sheilding option. </summary>
         Sheilding,
+        /// <summary>   An enum constant representing the death option. </summary>
         Death
 	}
 
     //skeleton stats
+    /// <summary>   The hard activation distance. </summary>
     public float HardActivationDistance = 50;
+    /// <summary>   The loose activation distance. </summary>
     public float LooseActivationDistance = 120;
+    /// <summary>   The attack speed. </summary>
     public float AttackSpeed = 1;
+    /// <summary>   The attack damage. </summary>
     public float AttackDamage = 5;
+    /// <summary>   The health. </summary>
     public float Health = 5000;
+    /// <summary>   The attack range. </summary>
     public float AttackRange = 24;
+    /// <summary>   The range. </summary>
     public float Range = .1f;
+    /// <summary>   The walk speed. </summary>
     public float WalkSpeed = 9f;
+    /// <summary>   The run speed. </summary>
     public float RunSpeed = 15f;
+    /// <summary>   The sprint speed. </summary>
     public float SprintSpeed = 35f;
+    /// <summary>   The attack cooldown. </summary>
     public float AttackCooldown = 0.5f;
+    /// <summary>   The rotation speed. </summary>
     public float RotationSpeed = 10f;
 
+    /// <summary>   The health slider. </summary>
 	public Slider HealthSlider;
+    /// <summary>   Name of the boss. </summary>
 	public Text BossName;
+    /// <summary>   The boss panel. </summary>
 	public GameObject BossPanel;
 
     //Target and navigation variables
+    /// <summary>   The pathfinder. </summary>
     NavMeshAgent pathfinder;
+    /// <summary>   Target for the. </summary>
     Transform target;
+    /// <summary>   Target base entity. </summary>
     BaseEntity targetBaseEntity;
+    /// <summary>   The skin material. </summary>
     Material skinMaterial;
+    /// <summary>   The original colour. </summary>
     Color originalColour;
+    /// <summary>   The animator. </summary>
     Animation _animator;
+    /// <summary>   The spawn location. </summary>
     Vector3 spawnLocation;
 
+    /// <summary>   The fsm. </summary>
     private StateMachine<States> fsm;
 
+    /// <summary>   The next attack time. </summary>
     private float _nextAttackTime; 
+    /// <summary>   The collision range. </summary>
     private float _collisionRange;
+    /// <summary>   Target collision range. </summary>
     private float _targetCollisionRange;
+    /// <summary>   True to enable, false to disable the locked. </summary>
     private bool _lockedOn = false;
+    /// <summary>   True to in attack range. </summary>
     private bool _inAttackRange;
+    /// <summary>   True if this object is sprinting. </summary>
     private bool _isSprinting;
+    /// <summary>   True if this object is moving. </summary>
     private bool _isMoving;
+    /// <summary>   Number of walks. </summary>
     private int _walkCount;
 
+    /// <summary>   True to summoned once. </summary>
     private bool _summonedOnce = false;
+    /// <summary>   True to summoned twice. </summary>
     private bool _summonedTwice = false;
 
+    /// <summary>   True to debug. </summary>
     private bool DEBUG = false;
 
+    /// <summary>   Manager for achievement. </summary>
 	private AchievementManager _achievementManager;
+    /// <summary>   The cloud. </summary>
     private GameObject _cloud;
+    /// <summary>   The storyline. </summary>
     Storyline _storyline;
 
+    /// <summary>   True if this object is attacking. </summary>
     private bool _isAttacking;
 
+    /// <summary>   The death sound. </summary>
 	public AudioSource DeathSound;
+    /// <summary>   The hit sound. </summary>
 	public AudioSource HitSound;
+    /// <summary>   The no mercy. </summary>
 	public AudioSource NoMercy;
+    /// <summary>   The walk sound. </summary>
 	public AudioSource WalkSound;
+    /// <summary>   The hurt sounds. </summary>
 	public AudioSource HurtSounds;
 
+    /// <summary>   The end of level trigger script. </summary>
 	public EndOfLevelTrigger EndOfLevelTriggerScript;
 
-    /// <summary>
-    /// Determines whether this instance is attacking.
-    /// </summary>
-    /// <returns>
-    ///   <c>true</c> if this instance is attacking; otherwise, <c>false</c>.
-    /// </returns>
+    /// <summary>   Determines whether this instance is attacking. </summary>
+    ///
+ 
+    ///
+    /// <returns>   <c>true</c> if this instance is attacking; otherwise, <c>false</c>. </returns>
+
     public bool isAttacking()
     {
         return _isAttacking;
     }
 
-    /// <summary>
-    /// Sets the attacking.
-    /// </summary>
-    /// <param name="a">if set to <c>true</c> [a].</param>
+    /// <summary>   Sets the attacking. </summary>
+    ///
+ 
+    ///
+    /// <param name="a">    if set to <c>true</c> [a]. </param>
+
     public void setAttacking(bool a)
     {
         _isAttacking = a;
     }
 
-    /// <summary>
-    /// Initilized montser location, pathfinding, animation and the AI FSM
-    /// </summary>
+    /// <summary>   Initilized montser location, pathfinding, animation and the AI FSM. </summary>
+    ///
+ 
+
     private void Awake()
 	{
         if (DEBUG) Debug.Log("The skeleton wakes.");
@@ -121,10 +189,18 @@ public class SkeleBoss : BaseEntity
         fsm.ChangeState(States.Init);
     }
 
+    /// <summary>   Mock up. </summary>
+    ///
+ 
+
     public void MockUp()
     {
         base.Start();
     }
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
@@ -140,6 +216,11 @@ public class SkeleBoss : BaseEntity
     /// <summary>
     /// Initial start state for the FSM. Needed for the monster fsm libarary to work.
     /// </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Init_Enter()
     {
         if (DEBUG) Debug.Log("skeleton state machine initilized.");
@@ -150,6 +231,12 @@ public class SkeleBoss : BaseEntity
         _animator.Play("Idle", PlayMode.StopAll);
     }
 
+    /// <summary>   Begins a cutscene. </summary>
+    ///
+ 
+    ///
+    /// <param name="storyline">    The storyline. </param>
+
     public void BeginCutscene(Storyline storyline)
     {
         _storyline = storyline;
@@ -157,8 +244,14 @@ public class SkeleBoss : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to idle
+    /// Entry method for the taunt state. This plays the taunt animation and then transitions back to
+    /// idle.
     /// </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Taunt_Enter()
     {
 		
@@ -179,9 +272,14 @@ public class SkeleBoss : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the attack state. Plays the attack animation once, and deals damage once, before transitioning back to the chase state.
+    /// Entry method for the attack state. Plays the attack animation once, and deals damage once,
+    /// before transitioning back to the chase state.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Attack_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Attack");
@@ -215,13 +313,18 @@ public class SkeleBoss : BaseEntity
         fsm.ChangeState(States.Chase);
     }
 
+    /// <summary>   True to summoning. </summary>
     private bool _summoning = false;
 
     /// <summary>
-    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// skeletons alert area, or comes into attack range.
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks
+    /// if the player leaves the skeletons alert area, or comes into attack range.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Summoning_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Summoning begins");
@@ -258,6 +361,12 @@ public class SkeleBoss : BaseEntity
         }
         fsm.ChangeState(States.Sheilding);
     }
+
+    /// <summary>   Sheilding enter. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
 
     IEnumerator Sheilding_Enter()
     {
@@ -302,10 +411,14 @@ public class SkeleBoss : BaseEntity
     }
 
     /// <summary>
-    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks if the player leaves the 
-    /// skeletons alert area, or comes into attack range.
+    /// Entry method for the chase state. Chooses the closets player and moves towards them. Breaks
+    /// if the player leaves the skeletons alert area, or comes into attack range.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
@@ -392,10 +505,15 @@ public class SkeleBoss : BaseEntity
     }
 
     /// <summary>
-    /// Entry state for the idle state. Waits in place and constantly checks to see if any players have entered its alert area. If a player enters the area
-    /// if transitions to the chase state to chase them down.
+    /// Entry state for the idle state. Waits in place and constantly checks to see if any players
+    /// have entered its alert area. If a player enters the area if transitions to the chase state to
+    /// chase them down.
     /// </summary>
-    /// <returns></returns>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
     IEnumerator Idle_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Idle");
@@ -426,6 +544,12 @@ public class SkeleBoss : BaseEntity
         fsm.ChangeState(States.Chase, StateTransition.Overwrite);
     }
 
+    /// <summary>   Rotate towards. </summary>
+    ///
+ 
+    ///
+    /// <param name="target">   Target for the. </param>
+
     private void RotateTowards(Transform target)
     {
         Vector3 direction = (target.position - transform.position).normalized;
@@ -433,11 +557,22 @@ public class SkeleBoss : BaseEntity
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * RotationSpeed);
     }
 
+    /// <summary>   Death enter. </summary>
+    ///
+ 
+
     private void Death_Enter()
     {
 		BossPanel.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
     }
+
+    /// <summary>   Damages. </summary>
+    ///
+ 
+    ///
+    /// <param name="amount">   The damage. </param>
+    /// <param name="attacker"> The attacker. </param>
 
     public override void Damage(float amount, Transform attacker)
     {
@@ -486,12 +621,22 @@ public class SkeleBoss : BaseEntity
         }
     }
 
+    /// <summary>   Boss dead wait. </summary>
+    ///
+ 
+    ///
+    /// <returns>   An IEnumerator. </returns>
+
 	public IEnumerator BossDeadWait () 
 	{
 		yield return new WaitForSeconds(1f);
         
 		EndOfLevelTriggerScript.TriggerEndOfLevel ();
 	}
+
+    /// <summary>   Killed this object. </summary>
+    ///
+ 
 
     public override void Killed()
     {

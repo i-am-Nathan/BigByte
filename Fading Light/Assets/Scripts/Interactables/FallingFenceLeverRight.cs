@@ -1,15 +1,29 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\FallingFenceLeverRight.cs
+//
+// summary:	Implements the falling fence lever right class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A falling fence lever right. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class FallingFenceLeverRight : MonoBehaviour {
 
+    /// <summary>   True if pulled. </summary>
 	private bool _pulled = false;
+    /// <summary>   True to right wall. </summary>
 	private bool _rightWall = false;
+    /// <summary>   The lever sound. </summary>
 	public AudioSource LeverSound;
 
-	/// <summary>
-	/// Called when the player is close enough to the lever, and presses T
-	/// </summary>
+    /// <summary>   Called when the player is close enough to the lever, and presses T. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
 	void OnTriggerStay(Collider other)
 	{
 		//if T is pressed to interact with the lever, the walls move

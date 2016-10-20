@@ -1,15 +1,33 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Interactables\CandleLight.cs
+//
+// summary:	Implements the candle light class
+
+using UnityEngine;
 using System.Collections;
 
+/// <summary>   A candle light. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class CandleLight : MonoBehaviour {
+    /// <summary>   True to active. </summary>
     public bool _active = false;
+    /// <summary>   True if triggered. </summary>
     private bool _triggered = false;
 
+    /// <summary>   The radius. </summary>
     public float Radius = 20f;
+    /// <summary>   The flame. </summary>
     public GameObject _flame;
+    /// <summary>   The spotlight. </summary>
     public GameObject _spotlight;
 
     // Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
     void Start () {
 		if (!_active) {
 			_flame.GetComponent<ParticleSystem> ().Stop ();
@@ -20,19 +38,37 @@ public class CandleLight : MonoBehaviour {
             _spotlight.GetComponent<Light>().spotAngle = 100;
         }
     }
-	
+
+    /// <summary>   Query if this object is active. </summary>
+    ///
+ 
+    ///
+    /// <returns>   True if active, false if not. </returns>
+
     public bool isActive()
     {
         return _active;
     }
 
 	// Update is called once per frame
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update () {
 
     }
 
     //check collision with a player holding the torch
     // When collision occurs between two objects
+
+    /// <summary>   Executes the trigger stay action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnTriggerStay(Collider other)
     {
         //get the torch fuel controller to get the check to see if player one has the torch or not

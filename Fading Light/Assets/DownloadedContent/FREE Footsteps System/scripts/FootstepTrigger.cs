@@ -1,14 +1,27 @@
-﻿using UnityEngine;
+﻿// file:	Assets\DownloadedContent\FREE Footsteps System\scripts\FootstepTrigger.cs
+//
+// summary:	Implements the footstep trigger class
+
+using UnityEngine;
 using System.Collections;
 
 namespace Footsteps {
 
+    /// <summary>   A footstep trigger. </summary>
+    ///
+ 
+
 	[RequireComponent(typeof(Collider), typeof(Rigidbody))]
 	public class FootstepTrigger : MonoBehaviour {
 
+        /// <summary>   this collider. </summary>
 		Collider thisCollider;
+        /// <summary>   The footsteps. </summary>
 		CharacterFootsteps footsteps;
 
+        /// <summary>   Starts this object. </summary>
+        ///
+     
 
 		void Start() {
 			thisCollider = GetComponent<Collider>();
@@ -36,15 +49,29 @@ namespace Footsteps {
 			}
 		}
 
+        /// <summary>   Executes the enable action. </summary>
+        ///
+     
+
 		void OnEnable() {
 			SetCollisions();
 		}
+
+        /// <summary>   Executes the trigger enter action. </summary>
+        ///
+     
+        ///
+        /// <param name="other">    The other. </param>
 
 		void OnTriggerEnter(Collider other) {
 			if(footsteps) {
 				footsteps.TryPlayFootstep();
 			}
 		}
+
+        /// <summary>   Sets the collisions. </summary>
+        ///
+     
 
 		void SetCollisions() {
 			if(!footsteps) return;

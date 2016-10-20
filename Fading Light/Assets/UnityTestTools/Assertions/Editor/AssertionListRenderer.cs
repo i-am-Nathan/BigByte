@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\Assertions\Editor\AssertionListRenderer.cs
+//
+// summary:	Implements the assertion list renderer class
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,22 +10,54 @@ using UnityEngine;
 
 namespace UnityTest
 {
+    /// <summary>   Interface for list renderer. </summary>
+    ///
+ 
+
     public interface IListRenderer
     {
+        /// <summary>   Renders this object. </summary>
+        ///
+        /// <param name="allAssertions">    all assertions. </param>
+        /// <param name="foldMarkers">      The fold markers. </param>
+
         void Render(IEnumerable<AssertionComponent> allAssertions, List<string> foldMarkers);
     }
 
+    /// <summary>   An assertion list renderer. </summary>
+    ///
+ 
+    ///
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+
     public abstract class AssertionListRenderer<T> : IListRenderer
     {
+        /// <summary>   A styles. </summary>
+        ///
+     
+
         private static class Styles
         {
+            /// <summary>   The red label. </summary>
             public static readonly GUIStyle redLabel;
+
+            /// <summary>   Static constructor. </summary>
+            ///
+         
+
             static Styles()
             {
                 redLabel = new GUIStyle(EditorStyles.label);
                 redLabel.normal.textColor = Color.red;
             }
         }
+
+        /// <summary>   Renders this object. </summary>
+        ///
+     
+        ///
+        /// <param name="allAssertions">    all assertions. </param>
+        /// <param name="foldMarkers">      The fold markers. </param>
 
         public void Render(IEnumerable<AssertionComponent> allAssertions, List<string> foldMarkers)
         {
@@ -90,12 +126,39 @@ namespace UnityTest
             }
         }
 
+        /// <summary>   Enumerates group result in this collection. </summary>
+        ///
+     
+        ///
+        /// <param name="assertionComponents">  The assertion components. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process group result in this collection.
+        /// </returns>
+
         protected abstract IEnumerable<IGrouping<T, AssertionComponent>> GroupResult(IEnumerable<AssertionComponent> assertionComponents);
+
+        /// <summary>   Gets string key. </summary>
+        ///
+     
+        ///
+        /// <param name="key">  The key. </param>
+        ///
+        /// <returns>   The string key. </returns>
 
         protected virtual string GetStringKey(T key)
         {
             return key.GetHashCode().ToString();
         }
+
+        /// <summary>   Print foldout. </summary>
+        ///
+     
+        ///
+        /// <param name="isFolded"> True if this object is folded. </param>
+        /// <param name="key">      The key. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
 
         protected virtual bool PrintFoldout(bool isFolded, T key)
         {
@@ -113,10 +176,24 @@ namespace UnityTest
             return !res;
         }
 
+        /// <summary>   Gets foldout display name. </summary>
+        ///
+     
+        ///
+        /// <param name="key">  The key. </param>
+        ///
+        /// <returns>   The foldout display name. </returns>
+
         protected virtual string GetFoldoutDisplayName(T key)
         {
             return key.ToString();
         }
+
+        /// <summary>   Print folded assertion line. </summary>
+        ///
+     
+        ///
+        /// <param name="assertionComponent">   The assertion component. </param>
 
         protected virtual void PrintFoldedAssertionLine(AssertionComponent assertionComponent)
         {
@@ -178,6 +255,12 @@ namespace UnityTest
             EditorGUILayout.Space();
         }
 
+        /// <summary>   Print assertion line details. </summary>
+        ///
+     
+        ///
+        /// <param name="assertionComponent">   The assertion component. </param>
+
         protected virtual void PrintAssertionLineDetails(AssertionComponent assertionComponent)
         {
             EditorGUILayout.BeginHorizontal();
@@ -214,6 +297,13 @@ namespace UnityTest
 
             EditorGUILayout.EndHorizontal();
         }
+
+        /// <summary>   Print path. </summary>
+        ///
+     
+        ///
+        /// <param name="go">           The go. </param>
+        /// <param name="propertyPath"> Full pathname of the property file. </param>
 
         private void PrintPath(GameObject go, string propertyPath)
         {

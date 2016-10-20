@@ -1,16 +1,33 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\TrapScripts\LevelTwoTreasure.cs
+//
+// summary:	Implements the level two treasure class
+
+using UnityEngine;
 using System.Collections;
+
+/// <summary>   A level two treasure. </summary>
+///
+/// <remarks>    . </remarks>
 
 public class LevelTwoTreasure : MonoBehaviour
 {
 
+    /// <summary>   The hammer trap. </summary>
     public GameObject[] hammerTrap;
+    /// <summary>   The spear trap. </summary>
     public GameObject[] spearTrap;
+    /// <summary>   True if pulled. </summary>
     private bool _pulled = false;
 
+    /// <summary>   The lever sound. </summary>
     public AudioSource LeverSound;
 
     // Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
     void Start()
     {
         foreach (GameObject obj in hammerTrap)
@@ -23,10 +40,12 @@ public class LevelTwoTreasure : MonoBehaviour
         }
     }
 
+    /// <summary>   Called when the player is close enough to the lever, and presses T. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
-    /// <summary>
-    /// Called when the player is close enough to the lever, and presses T
-    /// </summary>
     void OnTriggerStay(Collider other)
     {
         //if Q is pressed to interact with the lever, the walls move

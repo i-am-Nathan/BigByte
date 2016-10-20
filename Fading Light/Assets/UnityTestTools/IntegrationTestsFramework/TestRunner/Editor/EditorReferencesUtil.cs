@@ -1,4 +1,8 @@
-﻿using System;
+﻿// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\EditorReferencesUtil.cs
+//
+// summary:	Implements the editor references utility class
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,8 +12,19 @@ using Object = UnityEngine.Object;
 
 namespace UnityTest
 {
+    /// <summary>   An editor references utility. </summary>
+    ///
+ 
+
     public static class EditorReferencesUtil
     {
+        /// <summary>   Searches for the first scenes which contain asset. </summary>
+        ///
+     
+        ///
+        /// <param name="file"> The file. </param>
+        ///
+        /// <returns>   The found scenes which contain asset. </returns>
 
         public static List<Object> FindScenesWhichContainAsset(string file)
         {
@@ -18,12 +33,28 @@ namespace UnityTest
             return AllScenes.Where(a => ADependsOnB(a, cur)).ToList();
         }
 
+        /// <summary>   Clean path separators. </summary>
+        ///
+     
+        ///
+        /// <param name="s">    The string. </param>
+        ///
+        /// <returns>   A string. </returns>
+
         private static string CleanPathSeparators(string s)
         {
             const string forwardSlash = "/";
             const string backSlash = "\\";
             return s.Replace(backSlash, forwardSlash);
         }
+
+        /// <summary>   Gets relative asset path from full path. </summary>
+        ///
+     
+        ///
+        /// <param name="fullPath"> Full pathname of the full file. </param>
+        ///
+        /// <returns>   The relative asset path from full path. </returns>
 
         private static string GetRelativeAssetPathFromFullPath(string fullPath)
         {
@@ -35,6 +66,14 @@ namespace UnityTest
             Debug.LogWarning("Path does not point to a location within Assets: " + fullPath);
             return null;
         }
+
+        /// <summary>   Gets asset path from file name and extension. </summary>
+        ///
+     
+        ///
+        /// <param name="assetName">    Name of the asset. </param>
+        ///
+        /// <returns>   The asset path from file name and extension. </returns>
 
         private static string GetAssetPathFromFileNameAndExtension(string assetName)
         {
@@ -51,6 +90,15 @@ namespace UnityTest
             return assetPath;
         }
 
+        /// <summary>   Dir search. </summary>
+        ///
+     
+        ///
+        /// <param name="d">            The DirectoryInfo to process. </param>
+        /// <param name="searchFor">    The search for. </param>
+        ///
+        /// <returns>   A List&lt;FileInfo&gt; </returns>
+
         private static List<FileInfo> DirSearch(DirectoryInfo d, string searchFor)
         {
             List<FileInfo> founditems = d.GetFiles(searchFor).ToList();
@@ -62,6 +110,10 @@ namespace UnityTest
             
             return (founditems);
         }
+
+        /// <summary>   Gets all scenes. </summary>
+        ///
+        /// <value> all scenes. </value>
 
         private static List<Object> AllScenes
         {
@@ -82,6 +134,15 @@ namespace UnityTest
                 return assetRefs;
             }
         }
+
+        /// <summary>   Depends on b. </summary>
+        ///
+     
+        ///
+        /// <param name="obj">          The object. </param>
+        /// <param name="selectedObj">  The selected object. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
 
         private static bool ADependsOnB(Object obj, Object selectedObj)
         {

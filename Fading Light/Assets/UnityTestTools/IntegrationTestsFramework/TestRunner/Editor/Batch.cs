@@ -1,3 +1,7 @@
+// file:	Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\Editor\Batch.cs
+//
+// summary:	Implements the batch class
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,17 +14,33 @@ using UnityEditor.SceneManagement;
 
 namespace UnityTest
 {
+    /// <summary>   A batch. </summary>
+    ///
+ 
+
     public static partial class Batch
 	{
+        /// <summary>   . </summary>
 		const string k_ResultFilePathParam = "-resultFilePath=";
+        /// <summary>   . </summary>
         private const string k_TestScenesParam = "-testscenes=";
+        /// <summary>   . </summary>
         private const string k_OtherBuildScenesParam = "-includeBuildScenes=";
+        /// <summary>   . </summary>
         const string k_TargetPlatformParam = "-targetPlatform=";
+        /// <summary>   . </summary>
         const string k_ResultFileDirParam = "-resultsFileDirectory=";
 
+        /// <summary>   The return code tests ok. </summary>
         public static int returnCodeTestsOk = 0;
+        /// <summary>   The return code tests failed. </summary>
         public static int returnCodeTestsFailed = 2;
+        /// <summary>   The return code run error. </summary>
         public static int returnCodeRunError = 3;
+
+        /// <summary>   Executes the integration tests. </summary>
+        ///
+     
 
         public static void RunIntegrationTests()
         {
@@ -33,13 +53,26 @@ namespace UnityTest
 
             RunIntegrationTests(targetPlatform, testScenes, otherBuildScenes);
         }
-        
+
+        /// <summary>   Executes the integration tests. </summary>
+        ///
+     
+        ///
+        /// <param name="targetPlatform">   Target platform. </param>
+
         public static void RunIntegrationTests(BuildTarget ? targetPlatform)
         {
             var sceneList = FindTestScenesInProject();
             RunIntegrationTests(targetPlatform, sceneList, new List<string>());
         }
 
+        /// <summary>   Executes the integration tests. </summary>
+        ///
+     
+        ///
+        /// <param name="targetPlatform">   Target platform. </param>
+        /// <param name="testScenes">       The test scenes. </param>
+        /// <param name="otherBuildScenes"> The other build scenes. </param>
 
         public static void RunIntegrationTests(BuildTarget? targetPlatform, List<string> testScenes, List<string> otherBuildScenes)
         {
@@ -48,7 +81,15 @@ namespace UnityTest
             else
                 RunInEditor(testScenes,  otherBuildScenes);
         }
-        
+
+        /// <summary>   Builds and run. </summary>
+        ///
+     
+        ///
+        /// <param name="target">           Target for the. </param>
+        /// <param name="testScenes">       The test scenes. </param>
+        /// <param name="otherBuildScenes"> The other build scenes. </param>
+
         private static void BuildAndRun(BuildTarget target, List<string> testScenes, List<string> otherBuildScenes)
         {
             var resultFilePath = GetParameterArgument(k_ResultFileDirParam);
@@ -77,6 +118,13 @@ namespace UnityTest
 
             PlatformRunner.BuildAndRunInPlayer(config);
         }
+
+        /// <summary>   Executes the in editor operation. </summary>
+        ///
+     
+        ///
+        /// <param name="testScenes">       The test scenes. </param>
+        /// <param name="otherBuildScenes"> The other build scenes. </param>
 
         private static void RunInEditor(List<string> testScenes, List<string> otherBuildScenes)
         {
@@ -120,6 +168,14 @@ namespace UnityTest
             EditorApplication.isPlaying = true;
         }
 
+        /// <summary>   Gets parameter argument. </summary>
+        ///
+     
+        ///
+        /// <param name="parameterName">    Name of the parameter. </param>
+        ///
+        /// <returns>   The parameter argument. </returns>
+
         private static string GetParameterArgument(string parameterName)
         {
             foreach (var arg in Environment.GetCommandLineArgs())
@@ -132,6 +188,10 @@ namespace UnityTest
             return null;
         }
 
+        /// <summary>   Check active build target. </summary>
+        ///
+     
+
         static void CheckActiveBuildTarget()
         {
             var notSupportedPlatforms = new[] { "MetroPlayer", "WebPlayer", "WebPlayerStreamed" };
@@ -142,6 +202,12 @@ namespace UnityTest
                     " use buildTarget parameter to open Unity.");
             }
         }
+
+        /// <summary>   Gets target platform. </summary>
+        ///
+     
+        ///
+        /// <returns>   The target platform. </returns>
 
         private static BuildTarget ? GetTargetPlatform()
         {
@@ -167,11 +233,25 @@ namespace UnityTest
             return buildTarget;
         }
 
+        /// <summary>   Searches for the first test scenes in project. </summary>
+        ///
+     
+        ///
+        /// <returns>   The found test scenes in project. </returns>
+
         private static List<string> FindTestScenesInProject()
         {
             var integrationTestScenePattern = "*Test?.unity";
             return Directory.GetFiles("Assets", integrationTestScenePattern, SearchOption.AllDirectories).ToList();
         }
+
+        /// <summary>   Gets scene list from parameter. </summary>
+        ///
+     
+        ///
+        /// <param name="param">    The parameter. </param>
+        ///
+        /// <returns>   The scene list from parameter. </returns>
 
         private static List<string> GetSceneListFromParam(string param)
         {

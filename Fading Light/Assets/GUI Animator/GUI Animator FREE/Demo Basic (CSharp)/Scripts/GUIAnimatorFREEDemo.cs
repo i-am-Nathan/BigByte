@@ -25,6 +25,10 @@ using UnityEngine.UI;
 // This class shows buttons and it plays Move-In and Move-Out animations when user pressed the buttons.
 // ######################################################################
 
+/// <summary>   A graphical user interface animator free demo. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class GUIAnimatorFREEDemo : MonoBehaviour
 {
 
@@ -34,11 +38,19 @@ public class GUIAnimatorFREEDemo : MonoBehaviour
 
 	#region MonoBehaviour Functions
 
+    /// <summary>   The wait time. </summary>
 	private float m_WaitTime = 4.0f;
+    /// <summary>   Number of wait times. </summary>
 	private float m_WaitTimeCount = 0;
+    /// <summary>   True to show, false to hide the move in button. </summary>
 	private bool m_ShowMoveInButton = true;
 
 	// Use this for initialization
+
+    /// <summary>   Awakes this object. </summary>
+    ///
+ 
+
 	void Awake()
 	{
 		// Set GUIAnimSystemFREE.Instance.m_AutoAnimation to false, 
@@ -51,11 +63,21 @@ public class GUIAnimatorFREEDemo : MonoBehaviour
 	}
 
 	// Use this for initialization
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start()
 	{
 	}
 
 	// Update is called once per frame
+
+    /// <summary>   Updates this object. </summary>
+    ///
+ 
+
 	void Update()
 	{
 
@@ -72,6 +94,10 @@ public class GUIAnimatorFREEDemo : MonoBehaviour
 			}
 		}
 	}
+
+    /// <summary>   Executes the graphical user interface action. </summary>
+    ///
+ 
 
 	void OnGUI()
 	{

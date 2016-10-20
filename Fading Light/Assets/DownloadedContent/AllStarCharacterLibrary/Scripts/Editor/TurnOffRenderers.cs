@@ -1,12 +1,24 @@
+// file:	Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\Editor\TurnOffRenderers.cs
+//
+// summary:	Implements the turn off renderers class
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
- 
+
+/// <summary>   A turn off renderers. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class TurnOffRenderers : ScriptableObject
 {
+    /// <summary>   Menu dump models. </summary>
+    ///
+ 
+
      [MenuItem ("Window/TurnOffRenderers")]
     static void MenuDumpModels()
     {

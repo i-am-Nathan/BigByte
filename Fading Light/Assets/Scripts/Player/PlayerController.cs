@@ -1,49 +1,78 @@
-﻿using UnityEngine;
+﻿// file:	Assets\Scripts\Player\PlayerController.cs
+//
+// summary:	Implements the player controller class
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-/// <summary>
-/// Used to control player 1
-/// </summary>
+/// <summary>   Used to control player 1. </summary>
+///
+/// <remarks>    . </remarks>
+
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : Player
 {
+    /// <summary>   Manager for achievement. </summary>
     public AchievementManager AchievementManager;
     // Health image on floor
-    public Image healthCircle;                                          // Reference to the UI's health circle.
-    private bool damaged;                                               // True when the player gets damaged.
+    /// <summary>   Reference to the UI's health circle. </summary>
+    public Image healthCircle;
+    /// <summary>   True when the player gets damaged. </summary>
+    private bool damaged;
 
     // Handling
+    /// <summary>   The rotation speed. </summary>
     public float RotationSpeed;
+    /// <summary>   The walk speed. </summary>
     public float WalkSpeed;
+    /// <summary>   State of the weapon. </summary>
     public int WeaponState;
 
+    /// <summary>   The push power. </summary>
     public int PushPower = 20;
+    /// <summary>   True if this object is disabled. </summary>
     public bool IsDisabled;
+    /// <summary>   True if last pressed. </summary>
     private bool _lastPressed = false;
+    /// <summary>   The torch fuel controller script. </summary>
     private TorchFuelController TorchFuelControllerScript;
 
+    /// <summary>   Target rotation. </summary>
     private Quaternion _targetRotation;
+    /// <summary>   The animator. </summary>
     private Animator _animator;
+    /// <summary>   The torch. </summary>
     private GameObject _torch;
+    /// <summary>   The controller. </summary>
     private CharacterController _controller;
 
     // UI
+    /// <summary>   The health slider. </summary>
     private Slider _healthSlider;
+    /// <summary>   The life manager script. </summary>
     private LifeManager _lifeManagerScript;
+    /// <summary>   The last jump time. </summary>
     private float _lastJumpTime;
+    /// <summary>   The last attack. </summary>
 	private float _lastAttack;
     //audio
+    /// <summary>   The walking sounds. </summary>
     public AudioSource WalkingSounds;
+    /// <summary>   The death sound. </summary>
     public AudioSource DeathSound;
+    /// <summary>   The hurt sounds. </summary>
     public AudioSource HurtSounds;
+    /// <summary>   The hit sounds. </summary>
     public AudioSource HitSounds;
     
+    /// <summary>   True if this object is main menu. </summary>
     public bool IsMainMenu = false;
-    
-    /// <summary>
-    /// Starts this instance.
-    /// </summary>
+
+    /// <summary>   Starts this instance. </summary>
+    ///
+ 
+
     protected override void Start()
     {
         base.Start();
@@ -66,14 +95,19 @@ public class PlayerController : Player
 
     }
 
+    /// <summary>   Mock up. </summary>
+    ///
+ 
+
     public void MockUp()
     {
         base.Start();
     }
 
-    /// <summary>
-    /// Updates this instance.
-    /// </summary>
+    /// <summary>   Updates this instance. </summary>
+    ///
+ 
+
     void Update()
     {
         if (IsDisabled || isDead)
@@ -100,9 +134,10 @@ public class PlayerController : Player
 		UpdateEffects ();
     }
 
-    /// <summary>
-    /// Controls this character with its keys
-    /// </summary>
+    /// <summary>   Controls this character with its keys. </summary>
+    ///
+ 
+
     void ControlWASD()
     {
         if (IsDisabled)
@@ -152,13 +187,12 @@ public class PlayerController : Player
 
     }
 
+    /// <summary>   When collision occurs between two objects. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
 
-        
-
-    /// <summary>
-    /// When collision occurs between two objects
-    /// </summary>
-    /// <param name="other">The other.</param>
     void OnTriggerStay(Collider other)
     {
 
@@ -178,11 +212,12 @@ public class PlayerController : Player
         }
     }
 
+    /// <summary>   Used to push rigid body objects in the scene. </summary>
+    ///
+ 
+    ///
+    /// <param name="hit">  The hit. </param>
 
-    /// <summary>
-    /// Used to push rigid body objects in the scene
-    /// </summary>
-    /// <param name="hit">The hit.</param>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
 
@@ -195,11 +230,13 @@ public class PlayerController : Player
 
     }
 
-    /// <summary>
-    /// Damages the specified amount.
-    /// </summary>
-    /// <param name="amount">The amount.</param>
-    /// <param name="attacker">The attacker.</param>
+    /// <summary>   Damages the specified amount. </summary>
+    ///
+ 
+    ///
+    /// <param name="amount">   The amount. </param>
+    /// <param name="attacker"> The attacker. </param>
+
     public override void Damage(float amount, Transform attacker)
     {
         if (!CanTakeDamage)
@@ -244,9 +281,10 @@ public class PlayerController : Player
         catch { }
     }
 
-    /// <summary>
-    /// Killeds this instance.
-    /// </summary>
+    /// <summary>   Killeds this instance. </summary>
+    ///
+ 
+
     public override void Killed()
     {
         // Set the death flag so this function won't be called again.
@@ -260,13 +298,21 @@ public class PlayerController : Player
         catch { }
     }
 
-    /// <summary>
-    /// Hides the health.
-    /// </summary>
+    /// <summary>   Hides the health. </summary>
+    ///
+ 
+
     public void HideHealth()
     {
         healthCircle.enabled = false;
     }
+
+    /// <summary>   Executes the particle collision action. </summary>
+    ///
+ 
+    ///
+    /// <param name="other">    The other. </param>
+
     void OnParticleCollision(GameObject other)
     {
 		if(other.name.Equals("Afterburner")){
@@ -279,9 +325,10 @@ public class PlayerController : Player
         }
     }
 
-	/// <summary>
-	/// Increases health sliders when health pot is activated
-	/// </summary>
+    /// <summary>   Increases health sliders when health pot is activated. </summary>
+    ///
+ 
+
 	public void UpdateHealthUI () {
 		healthCircle.fillAmount += 30f;
 		_healthSlider.value += 30f;

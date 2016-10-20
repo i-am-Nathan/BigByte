@@ -1,16 +1,33 @@
+// file:	Assets\DownloadedContent\AllStarCharacterLibrary\Scripts\MouseOrbit.cs
+//
+// summary:	Implements the mouse orbit class
+
 using UnityEngine;
 using System.Collections;
 
+/// <summary>   A mouse orbit. </summary>
+///
+/// <remarks>    . </remarks>
+
 public class MouseOrbit : MonoBehaviour 
 {
+    /// <summary>   Target for the. </summary>
 	public Transform target;
+    /// <summary>   The distance. </summary>
 	float distance = 15f;
+    /// <summary>   The speed. </summary>
 	float xSpeed = 4.0f;
+    /// <summary>   The speed. </summary>
 	float ySpeed = 1.0f;
+    /// <summary>   The x coordinate. </summary>
 	float x = 0.0f;
+    /// <summary>   The y coordinate. </summary>
 	float y = 2.0f;
-	
-	
+
+    /// <summary>   Starts this object. </summary>
+    ///
+ 
+
 	void Start () 
 	{
 	    Vector3 angles = transform.eulerAngles;
@@ -25,6 +42,11 @@ public class MouseOrbit : MonoBehaviour
 	}
 	
 	// Update is called once per frame
+
+    /// <summary>   Late update. </summary>
+    ///
+ 
+
 	void LateUpdate () 
 	{
 		distance += Input.GetAxis("Mouse ScrollWheel") * 5 ;
@@ -57,7 +79,15 @@ public class MouseOrbit : MonoBehaviour
 		}
 		transform.position = target.transform.position - (transform.forward * distance);
 	}
-	
+
+    /// <summary>   Clamp angle. </summary>
+    ///
+ 
+    ///
+    /// <param name="angle">    The angle. </param>
+    ///
+    /// <returns>   A float. </returns>
+
 	float ClampAngle (float angle) 
 	{
 		if (angle < -360)
@@ -66,7 +96,11 @@ public class MouseOrbit : MonoBehaviour
 			angle -= 360;
 		return angle;
 	}
-	
+
+/// <summary>   Executes the graphical user interface action. </summary>
+///
+/// <remarks>    . </remarks>
+
 void OnGUI()
 	{
 
