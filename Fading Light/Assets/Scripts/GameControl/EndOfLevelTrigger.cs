@@ -37,12 +37,13 @@ public class EndOfLevelTrigger : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Obtaining the correct informationa and sending it to the database
+	/// Obtaining the correct information and sending it to the database
 	/// </summary>
 	public void SendToDatabase () {
 		Player1Name = Player1Name.GetComponent<Text>();
 		Player2Name = Player2Name.GetComponent<Text>();
 
+		// Obtaining data from the UI for names and the game data script
 		string playersNames = Player1Name.text + "-" + Player2Name.text;
 		int gold = _gameDataScript.GetAmountOfGold ();
 		float totalTime = _gameDataScript.GetTotalTime ();
@@ -54,6 +55,7 @@ public class EndOfLevelTrigger : MonoBehaviour {
 		float mins = Mathf.Floor(totalTime / 60);
 		float secs = Mathf.RoundToInt(totalTime % 60);
 
+		// Sending to database
 		StartCoroutine(_dbScoresScript.PostScores (playersNames, gold, player1Accuracy, player2Accuracy, mins, secs, monstersKilled, timesKilled, chestsMissed));
 	}
 

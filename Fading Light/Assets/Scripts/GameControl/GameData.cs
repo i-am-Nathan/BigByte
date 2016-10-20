@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
+/// <summary>
+/// Achievement class used to track achievements throughout the game
+/// </summary>
 [System.Serializable]
 public class Achievement
 {
@@ -15,8 +18,6 @@ public class Achievement
     public string Reward;
     public float TargetProgress;
     public bool Secret;
-
-    
 
     [HideInInspector]
     public bool Earned = false;
@@ -70,6 +71,9 @@ public class Achievement
 
 }
 
+/// <summary>
+/// Game data which persists through levels and stores all relevant information
+/// </summary>
 public class GameData : MonoBehaviour {
 
     // Shared attributes between scenes
@@ -78,15 +82,12 @@ public class GameData : MonoBehaviour {
     private float _totalTime;
     private int _sharedGold;
 
-    
-
     private int _torchFuel;
     private Slider _torchFuelSlider;
 
     private float _timesKilled;
     private float _monstersKilled;
     private float _chestsMissed;
-    //private float _playerTwoTotalDamageTaken;
 
     private float _playerOneAccuracy = 0f;
     private float _playerTwoAccuracy = 0f;
@@ -106,17 +107,22 @@ public class GameData : MonoBehaviour {
     //Achievements
     public Achievement[] Achievements;
     public Canvas AchievementPopup;
-    //public AudioClip EarnedSound;
     private Text achievementText;
     private float currentTime = 0.0f, executedTime = 0.0f, timeToWait = 3.0f;
 
     public bool isMainMenu = false;
 
+	/// <summary>
+	/// Adds a new achievement
+	/// </summary>
     public void AddAchievment(GameAchievement ac)
     {
         GameAchievements.Add(ac);
     }
 
+	/// <summary>
+	/// Returns achievements
+	/// </summary>
     public List<GameAchievement> GetGameAchievements()
     {
         return GameAchievements;
@@ -133,9 +139,7 @@ public class GameData : MonoBehaviour {
         // Checking if this game data object already exists
 		if (!(objects.Length > 0))
         {
-            Debug.Log("HELLO AMMAR");
-            // Used to initialise this object with 3 lives and a time of 0
-            // Assigning a tag and instantiating number of lives
+            // Used to initialise this object with intial game values and assigning a tag
             _numberOfLivesLeft = 3;
             this.gameObject.tag = "Game Data";
             _totalTime = 0f;
@@ -155,11 +159,10 @@ public class GameData : MonoBehaviour {
         }
     }
 
+	/// <summary>
+	/// Start method to initialise appropriate ui manager
+	/// </summary>
 	void Start() {
-        Debug.Log("STARTING G");
-       // GameAchievements.Add(new GameAchievement("Blank", "DESC"));
-        Debug.Log("SIZE2" + GameAchievements.Count);
-        Debug.Log("BAAAH");
         if (!isMainMenu)
         {
             // Getting the game data object which shows the total lives left
@@ -229,7 +232,7 @@ public class GameData : MonoBehaviour {
     }
 
 
-     /// <summary>
+    /// <summary>
     /// Updates the gold.
     /// </summary>
     /// <param name="amount">The amount.</param>
@@ -238,16 +241,27 @@ public class GameData : MonoBehaviour {
         _sharedGold += amount;
 		_inGameUiManager.UpdateGold (_sharedGold);
     }
+
+	/// <summary>
+	/// Returns an achievement
+	/// </summary>
      private Achievement GetAchievementByName(string achievementName)
     {
         return Achievements.FirstOrDefault(achievement => achievement.Name == achievementName);
-
     }
+
+	/// <summary>
+	/// Used to play sounds when an achievement is earned
+	/// </summary>
     private void AchievementEarned()
     {
         //  UpdateRewardPointTotals();
         //AudioSource.PlayClipAtPoint(EarnedSound, Camera.main.transform.position);
     }
+
+	/// <summary>
+	/// Closes the pop up for the achievement
+	/// </summary>
     void ClosePopUpTimer()
     {
         currentTime = Time.time;
@@ -258,16 +272,17 @@ public class GameData : MonoBehaviour {
         }
     }
 
+	/// <summary>
+	/// Updating the achievement to check whether it has been met yet
+	/// </summary>
     public void AddProgressToAchievement(string achievementName, float progressAmount)
     {
         Achievement achievement = GetAchievementByName(achievementName);
         if (achievement == null)
         {
-            Debug.LogWarning("AchievementManager::AddProgressToAchievement() - Trying to add progress to an achievemnet that doesn't exist: " + achievementName);
             return;
         }
-
-
+			
         //If the achievement has been earned than create a pop up for the achievement for 3 seconds
         if (achievement.AddProgress(progressAmount))
         {
@@ -278,10 +293,16 @@ public class GameData : MonoBehaviour {
         }
     }
 
+	/// <summary>
+	/// Setting player 1 accuracy
+	/// </summary>
 	public void SetPlayer1Accuracy(float acc) {
 		_playerOneAccuracy = acc;
 	}
 
+	/// <summary>
+	/// Getting player 1 accuracy
+	/// </summary>
 	public float GetPlayer1Accuracy() {
 		float totalSwings = _playerOneNumHitsAchieved + _playerOneNumHitsMissed;
 		if (totalSwings != 0) {
@@ -290,10 +311,16 @@ public class GameData : MonoBehaviour {
 		return _playerOneAccuracy;
 	}
 
+	/// <summary>
+	/// Setting player 2 accuracy
+	/// </summary>
 	public void SetPlayer2Accuracy(float acc) {
 		_playerTwoAccuracy = acc;
 	}
 
+	/// <summary>
+	/// Getting player 2 accuracy
+	/// </summary>
 	public float GetPlayer2Accuracy() {
 		float totalSwings = _playerTwoNumHitsAchieved + _playerTwoNumHitsMissed;
 
@@ -303,46 +330,79 @@ public class GameData : MonoBehaviour {
 		return _playerTwoAccuracy;
 	}
 
+	/// <summary>
+	/// Updating the number of chests missed (chests missed = total chests - chests missed)
+	/// </summary>
 	public void UpdateChestsMissed() {
 		_chestsMissed++;
 	}
 
+	/// <summary>
+	/// Getting the number of chests missed
+	/// </summary>
 	public float GetChestsMissed() {
 		return _chestsMissed;
 	}
 
+	/// <summary>
+	/// Updating the number of times the players have been killed
+	/// </summary>
 	public void UpdateTimesKilled() {
 		_timesKilled++;
 	}
 
+	/// <summary>
+	/// Getting the number of times the players have been killed
+	/// </summary>
 	public float GetTimesKilled() {
 		return _timesKilled;
 	}
 
+	/// <summary>
+	/// Updating the monsters killed
+	/// </summary>
 	public void UpdateMonstersKilled() {
 		_monstersKilled++;
 	}
 
+	/// <summary>
+	/// Getting the number of monsters killed
+	/// </summary>
 	public float GetMonstersKilled() {
 		return _monstersKilled;
 	}
 
+	/// <summary>
+	/// Getting the dictionary of items
+	/// </summary>
 	public Dictionary<string,int> GetPlayer1ItemQuantityDictionary() {
 		return _player1ItemQuantityDictionary;
 	}
 
+	/// <summary>
+	/// Getting the dictionary of items
+	/// </summary>
 	public Dictionary<string,int> GetPlayer2ItemQuantityDictionary() {
 		return _player2ItemQuantityDictionary;
 	}
 
+	/// <summary>
+	/// Setting the dictionary of items
+	/// </summary>
 	public void SetPlayer1ItemQuantityDictionary(string item, int num) {
 		_player1ItemQuantityDictionary [item] = num;
 	}
 
+	/// <summary>
+	/// Setting the dictionary of items
+	/// </summary>
 	public void SetPlayer2ItemQuantityDictionary(string item, int num) {
 		_player2ItemQuantityDictionary [item] = num;
 	}
 
+	/// <summary>
+	/// Updating the number of times the player has not hit an enemy
+	/// </summary>
 	public void UpdatePlayerNumHitsMissed (bool isPlayer1) {
 		if (isPlayer1) {
 			_playerOneNumHitsMissed++;
@@ -351,6 +411,9 @@ public class GameData : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Updating the number of times the player has hit an enemy
+	/// </summary>
 	public void UpdatePlayerNumHitsAchieved (bool isPlayer1) {
 		if (isPlayer1) {
 			_playerOneNumHitsAchieved++;
