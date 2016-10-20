@@ -99,7 +99,7 @@ public class SkeleBoss : BaseEntity
         //base.Start();
         spawnLocation = this.gameObject.transform.position;
 
-        _cloud = GameObject.Find("Holy Shine");
+        _cloud = GameObject.Find("Shield");
         _cloud.SetActive(false);
 
         //Initlize the pathfinder, collision range and animator 
