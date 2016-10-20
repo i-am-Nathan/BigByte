@@ -34,7 +34,7 @@ public class Storyline_Level3 : Storyline
 
     public override void EnableMoleMan()
     {
-       
+        
         //throw new NotImplementedException();
     }
 
@@ -46,12 +46,11 @@ public class Storyline_Level3 : Storyline
             _currentStep++;
         }
 
-        //throw new NotImplementedException();
     }
 
     public override void NextMoleMan()
     {
-        if (_currentStep == 4)
+        if (_currentStep == 4 || _currentStep == 2)
         {
             _done = false;
             _currentStep++;
@@ -88,6 +87,7 @@ public class Storyline_Level3 : Storyline
         }
         else if(_currentStep == 1)
         {
+            CharacterDamageEnabled(false);
             //zoom in on prisoner
             CameraRig.GetComponent<PlayerCam>().SwoopPositionTarget = CutScenePositions[0];
             CameraRig.GetComponent<PlayerCam>().SwoopAngleTarget = CustSceneTargets[0];
@@ -107,6 +107,7 @@ public class Storyline_Level3 : Storyline
         else if (_currentStep == 3)
         {
             //zoom back out
+            CharacterDamageEnabled(true);
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
             DestroyObject(Block);
         }else if (_currentStep == 4)
@@ -125,6 +126,10 @@ public class Storyline_Level3 : Storyline
         else if (_currentStep == 5)
         {
             //zoom back out
+            CharacterDamageEnabled(true);
+            TorchController.IsDisabled = false;
+            Player1.IsDisabled = false;
+            Player2.IsDisabled = false;
             CameraRig.GetComponent<PlayerCam>().CameraState = 0;
         }
 
