@@ -5,6 +5,8 @@ public class LevelTwoMiddleTrap : MonoBehaviour {
     public GameObject[] sawTrap;
     public GameObject[] axeTrap;
     public GameObject door;
+    public AudioSource LeverSound;
+
     private bool _pulled = false;
 
     // Use this for initialization
@@ -33,6 +35,7 @@ public class LevelTwoMiddleTrap : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.O) && !_pulled && other.gameObject.tag.Equals("Player"))
         {
             this.GetComponent<Animation>().Play("Armature|LeverDown");
+            LeverSound.Play();
             foreach (GameObject obj in sawTrap)
             {
                 obj.GetComponent<Animation>().Play();
@@ -48,6 +51,7 @@ public class LevelTwoMiddleTrap : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Q) && !_pulled && other.gameObject.tag.Equals("Player2"))
 		{
 			this.GetComponent<Animation>().Play("Armature|LeverDown");
+            LeverSound.Play();
 			foreach (GameObject obj in sawTrap)
 			{
 				obj.GetComponent<Animation>().Play();
