@@ -13,8 +13,10 @@ public class FloatingPlate : MonoBehaviour {
     private float _velocity = 50;
 	public Collider StartBoundary;
 	public Collider EndBoundary;
-	private int _direction =1 ;
+	public int _direction =1 ;
 	public bool Pressed;
+	private bool _locked;
+	public bool RequireCharacter;
 
 	/// <summary>
 	/// Sets an initial direction.
@@ -33,7 +35,7 @@ public class FloatingPlate : MonoBehaviour {
 		if (other.name == "Player 1" || other.name == "Player2") 
         {
 			if (other.transform.parent.name != "Floating") {
-				
+				_locked = true;
 				other.transform.parent = transform;
 			}
 
@@ -56,7 +58,7 @@ public class FloatingPlate : MonoBehaviour {
 	void OnTriggerStay(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") 
 		{
-
+			_locked = true;
 			other.transform.parent = transform;
 
 		}
@@ -85,7 +87,9 @@ public class FloatingPlate : MonoBehaviour {
 	/// </summary>
 	void FixedUpdate(){
 		if (Pressed) {
-			transform.Translate (new Vector3(1,0,0)* TravelSpeed * _direction * Time.deltaTime);
+			if (RequireCharacter && _locked || !RequireCharacter) {
+				transform.Translate (new Vector3 (1, 0, 0) * TravelSpeed * _direction * Time.deltaTime);
+			}
 		}
 	}
 
@@ -98,6 +102,7 @@ public class FloatingPlate : MonoBehaviour {
     {
 		if (other.name == "Player 1" || other.name == "Player2") {
 			if (other.transform.parent == transform) {
+				_locked = false;
 				other.transform.parent = null;
 			}
 

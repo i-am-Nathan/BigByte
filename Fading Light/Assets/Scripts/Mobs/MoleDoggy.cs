@@ -37,7 +37,9 @@ public class MoleDoggy : BaseEntity
     public float RotationSpeed = 10f;
 
 
-    public Image healthCircle;                                 // Reference to the UI's health circle.
+	public Slider HealthSlider;
+	public Text BossName;
+	public GameObject BossPanel;
 
     //Target and navigation variables
     NavMeshAgent pathfinder;
@@ -83,7 +85,10 @@ public class MoleDoggy : BaseEntity
 
         if (DEBUG) Debug.Log("The molemans dog wakes.");
         //base.Start();
-        spawnLocation = this.gameObject.transform.position;       
+        spawnLocation = this.gameObject.transform.position;
+
+        Transform collider = this.transform.Find("AOECollider");
+        collider.gameObject.SetActive(false);
 
         //Initlize the pathfinder, collision range and animator 
         pathfinder = GetComponent<NavMeshAgent>();
@@ -102,8 +107,12 @@ public class MoleDoggy : BaseEntity
 
     private void Start(){
 		_achievementManager = (AchievementManager)GameObject.FindGameObjectWithTag ("AchievementManager").GetComponent(typeof(AchievementManager));
-        //healthCircle.enabled = false;
         CurrentHealth = Health;
+		HealthSlider = HealthSlider.GetComponent<Slider>();
+		HealthSlider.value = CurrentHealth;
+		BossName = BossName.GetComponent<Text>();
+		BossName.text = "Mole Dog";
+		BossPanel.SetActive(false);
 	}
 
     /// <summary>
@@ -133,7 +142,7 @@ public class MoleDoggy : BaseEntity
         if (!isDead)
         {
             if (DEBUG) Debug.Log("Entered state: Attack");
-
+			BossPanel.SetActive(true);
             RotateTowards(target, false);
 
             pathfinder.enabled = false;
@@ -176,6 +185,8 @@ public class MoleDoggy : BaseEntity
     {        
         _cloud.SetActive(true);
         pathfinder.enabled = false;
+        Transform collider = this.transform.Find("AOECollider");
+        collider.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(3f);
 
@@ -233,6 +244,7 @@ public class MoleDoggy : BaseEntity
 
         _cloud.SetActive(false);
         pathfinder.enabled = true;
+        collider.gameObject.SetActive(false);
 
         fsm.ChangeState(States.Chase);
     }
@@ -272,7 +284,7 @@ public class MoleDoggy : BaseEntity
     IEnumerator Chase_Enter()
     {
         if (DEBUG) Debug.Log("Entered state: Chase");
-
+		BossPanel.SetActive(true);
         float refreshRate = !_isSprinting ? 0.3f : 0.05f;
         _lockedOn = true;
 
@@ -356,7 +368,7 @@ public class MoleDoggy : BaseEntity
         if (DEBUG) Debug.Log("Entered state: Idle");
         float refreshRate = 0.8f;
         _animator.Play("Idle", PlayMode.StopSameLayer);
-
+		BossPanel.SetActive(false);
         //Check to see if either player is within activation range
         while (!_lockedOn)
         {
@@ -399,6 +411,7 @@ public class MoleDoggy : BaseEntity
     {
         _source.PlayOneShot(Death);
         _cloud.SetActive(false);
+		BossPanel.SetActive(false);
         if (DEBUG) Debug.Log("Entered state: Death");
     }
 
@@ -432,10 +445,7 @@ public class MoleDoggy : BaseEntity
             // Set the health bar's value to the current health.
             try
             {
-                healthCircle.enabled = true;
-                healthCircle.fillAmount -= amount / base.IntialHealth;
-                Debug.Log("YOYOYOYO " + healthCircle.fillAmount);
-                Invoke("HideHealth", 3);
+				HealthSlider.value -= amount/base.IntialHealth;
             }
             catch { }
 
@@ -470,15 +480,6 @@ public class MoleDoggy : BaseEntity
             fsm.ChangeState(States.Death, StateTransition.Overwrite);
             _achievementManager.AddProgressToAchievement("First Blood", 1.0f);
         } catch { }        
-    }
-
-    /// <summary>
-    /// Hides the health.
-    /// </summary>
-    public void HideHealth()
-    {
-        Debug.Log("aaa");
-        healthCircle.enabled = false;
     }
 }
 
