@@ -199,7 +199,7 @@ public class MolemanBoss : BaseEntity
 
         fsm.ChangeState(States.Chase);
         pathfinder.enabled = true;
-        _summoning = true;
+        _summoning = false;
     }
 
     IEnumerator Chase_Enter()
