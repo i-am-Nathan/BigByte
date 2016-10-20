@@ -111,7 +111,7 @@ public class SpiderMob : BaseEntity
     /// <returns></returns>
     IEnumerator Attack_Enter()
     {
-        if (isDead)
+        if (!isDead)
         {
             if (DEBUG) Debug.Log("Entered state: Attack");
 
