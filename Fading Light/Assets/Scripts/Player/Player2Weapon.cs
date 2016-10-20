@@ -25,6 +25,10 @@ public class Player2Weapon : MonoBehaviour {
 
         if (DEBUG) Debug.Log(other.GetComponent<BaseEntity>());
 
+		if(player2.isAttacking()&&other.name.StartsWith("Breakable Wall")){
+			FadeObjectInOut fade = (FadeObjectInOut)other.GetComponent (typeof(FadeObjectInOut));
+			fade.FadeOut ();
+		}
 		if (player2.isAttacking () && other.tag == "Enemy") {
 			// Updating player 2's accuracy
 			_gameDataScript.UpdatePlayerNumHitsAchieved (false);
