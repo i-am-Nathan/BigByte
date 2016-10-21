@@ -106,19 +106,20 @@ public class ActivateText : MonoBehaviour
 				}
 			}
 		}
-
 	}
+
+
 
     /// <summary>
     /// Ensures that if a player leaves the radius of a NPC, pressing the talk key (T) won't enable
     /// dialogue.
     /// </summary>
     ///
- 
+
     ///
     /// <param name="other">    Other. </param>
 
-	void OnTriggerExit(Collider other){
+    void OnTriggerExit(Collider other){
 		if (other.name == "Player 1" || other.name == "Player2") {
 			//print ("EXITING");
 			_waitForPress = false;
